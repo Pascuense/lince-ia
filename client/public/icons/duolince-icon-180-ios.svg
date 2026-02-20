@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#0f2810"/>
+      <stop offset="100%" stop-color="#030a04"/>
+    </radialGradient>
+    <radialGradient id="face" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#f5c842"/>
+      <stop offset="70%" stop-color="#d4a020"/>
+      <stop offset="100%" stop-color="#a07015"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00FF88" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#00FF88" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- iOS icons have no border radius - the OS applies it -->
+  <rect width="180" height="180" fill="url(#bg)"/>
+  <!-- Glow -->
+  <ellipse cx="90" cy="90" rx="75" ry="75" fill="url(#glow)"/>
+
+  <!-- EAR TUFTS - defining feature -->
+  <path d="M52 68 Q44 44 47 20 Q54 32 58 52 Q61 62 62 72 Z" fill="#c09018"/>
+  <path d="M47 20 Q50 8 57 4 Q58 20 56 42 Q54 56 50 68 Z" fill="#0a0a0a"/>
+  <path d="M52 68 Q56 50 60 62 Q62 68 64 74 Z" fill="#e8b828" opacity="0.8"/>
+
+  <path d="M128 68 Q136 44 133 20 Q126 32 122 52 Q119 62 118 72 Z" fill="#c09018"/>
+  <path d="M133 20 Q130 8 123 4 Q122 20 124 42 Q126 56 130 68 Z" fill="#0a0a0a"/>
+  <path d="M128 68 Q124 50 120 62 Q118 68 116 74 Z" fill="#e8b828" opacity="0.8"/>
+
+  <!-- Head -->
+  <ellipse cx="90" cy="104" rx="56" ry="52" fill="url(#face)"/>
+
+  <!-- Cheek ruff -->
+  <ellipse cx="40" cy="112" rx="22" ry="17" fill="#e0a820" transform="rotate(-15,40,112)"/>
+  <ellipse cx="140" cy="112" rx="22" ry="17" fill="#e0a820" transform="rotate(15,140,112)"/>
+
+  <!-- Forehead spots -->
+  <ellipse cx="72" cy="82" rx="9" ry="6" fill="#7a5010" opacity="0.65" transform="rotate(-20,72,82)"/>
+  <ellipse cx="108" cy="82" rx="9" ry="6" fill="#7a5010" opacity="0.65" transform="rotate(20,108,82)"/>
+
+  <!-- LEFT EYE -->
+  <ellipse cx="68" cy="100" rx="16" ry="14" fill="#f0e8c0"/>
+  <ellipse cx="68" cy="100" rx="11" ry="13" fill="#00cc66"/>
+  <ellipse cx="68" cy="100" rx="11" ry="9" fill="#009944"/>
+  <ellipse cx="68" cy="100" rx="3.5" ry="12" fill="#060606"/>
+  <ellipse cx="64" cy="95" rx="3" ry="2.2" fill="white" opacity="0.9"/>
+  <ellipse cx="68" cy="100" rx="16" ry="14" fill="none" stroke="#6a4a05" stroke-width="1.5"/>
+
+  <!-- RIGHT EYE -->
+  <ellipse cx="112" cy="100" rx="16" ry="14" fill="#f0e8c0"/>
+  <ellipse cx="112" cy="100" rx="11" ry="13" fill="#00cc66"/>
+  <ellipse cx="112" cy="100" rx="11" ry="9" fill="#009944"/>
+  <ellipse cx="112" cy="100" rx="3.5" ry="12" fill="#060606"/>
+  <ellipse cx="108" cy="95" rx="3" ry="2.2" fill="white" opacity="0.9"/>
+  <ellipse cx="112" cy="100" rx="16" ry="14" fill="none" stroke="#6a4a05" stroke-width="1.5"/>
+
+  <!-- Nose -->
+  <path d="M90 118 Q83 126 78 130 Q84 135 90 133 Q96 135 102 130 Q97 126 90 118 Z" fill="#d44060"/>
+  <line x1="90" y1="110" x2="90" y2="118" stroke="#8a6010" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Mouth -->
+  <path d="M78 130 Q90 142 102 130" fill="none" stroke="#8a4050" stroke-width="2" stroke-linecap="round"/>
+  <path d="M90 136 Q85 144 78 147" fill="none" stroke="#8a4050" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M90 136 Q95 144 102 147" fill="none" stroke="#8a4050" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- White chin -->
+  <ellipse cx="90" cy="148" rx="20" ry="14" fill="#f5edd5" opacity="0.85"/>
+
+  <!-- Whiskers -->
+  <line x1="72" y1="126" x2="28" y2="118" stroke="white" stroke-width="1.5" opacity="0.8"/>
+  <line x1="72" y1="130" x2="26" y2="128" stroke="white" stroke-width="1.5" opacity="0.75"/>
+  <line x1="72" y1="134" x2="30" y2="138" stroke="white" stroke-width="1.5" opacity="0.7"/>
+  <line x1="108" y1="126" x2="152" y2="118" stroke="white" stroke-width="1.5" opacity="0.8"/>
+  <line x1="108" y1="130" x2="154" y2="128" stroke="white" stroke-width="1.5" opacity="0.75"/>
+  <line x1="108" y1="134" x2="150" y2="138" stroke="white" stroke-width="1.5" opacity="0.7"/>
+
+  <!-- DUOLINCE label bottom -->
+  <rect x="22" y="161" width="136" height="14" rx="7" fill="#00FF88"/>
+  <text x="90" y="172" font-family="Arial Black,sans-serif" font-size="9" font-weight="900" text-anchor="middle" fill="#032808" letter-spacing="1.5">DUOLINCE</text>
+
+  <!-- Circuit accent -->
+  <line x1="142" y1="38" x2="155" y2="32" stroke="#00FF88" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="155" cy="32" r="2.5" fill="#00FF88" opacity="0.7"/>
+</svg>

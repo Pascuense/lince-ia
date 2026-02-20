@@ -1,0 +1,221 @@
+{
+  "id": "/",
+  "name": "LINCE — Aprende IA Jugando",
+  "short_name": "LINCE",
+  "description": "Aprende IA Jugando — Plataforma gamificada de formación en inteligencia artificial para todas las edades. Avatares adaptativos, gamificación avanzada y lecciones personalizadas.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "tabbed", "window-controls-overlay"],
+  "background_color": "#030a04",
+  "theme_color": "#00E5FF",
+  "orientation": "any",
+  "dir": "ltr",
+  "lang": "es",
+  "categories": ["education", "games", "entertainment"],
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
+  "prefer_related_applications": false,
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=app.lince.ia",
+      "id": "app.lince.ia"
+    }
+  ],
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "handle_links": "preferred",
+  "scope_extensions": [
+    {
+      "origin": "https://*.lince.app"
+    },
+    {
+      "origin": "https://*.manuscdn.com"
+    }
+  ],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "file_handlers": [
+    {
+      "action": "/",
+      "accept": {
+        "application/json": [".json", ".lince"],
+        "text/plain": [".txt"]
+      }
+    }
+  ],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "note_taking": {
+    "new_note_url": "/jugar"
+  },
+  "widgets": [
+    {
+      "name": "Desafío Diario LINCE",
+      "description": "Tu reto diario de IA",
+      "tag": "daily-challenge",
+      "ms_ac_template": "widget/daily-challenge",
+      "screenshots": [
+        {
+          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/CkJPAoRrGuirECtr.png",
+          "sizes": "540x960",
+          "label": "Widget de desafío diario"
+        }
+      ],
+      "icons": [
+        {
+          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WxkxBHTXnNFkLacG.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "icons": [
+    {
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/xHYZDFLMoTyrqwZM.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/AYbDVcpClYbIbYpx.png",
+      "sizes": "64x64",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/TGhpXjNAvQVlicbR.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WxkxBHTXnNFkLacG.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WxkxBHTXnNFkLacG.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/PXyLXFqVrwNVjBCF.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/gOAvsagmSClgXxFC.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/hSpdbeEDnddhslBd.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/hSpdbeEDnddhslBd.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/xEzDOwGgXNNQpfwx.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "LINCE — Pantalla principal: Aprende IA Jugando con avatares adaptativos"
+    },
+    {
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KHudbeOqrCxosptY.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Sistema de gamificación: LinceCoins, XP, Raids PvP y más"
+    },
+    {
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/CkJPAoRrGuirECtr.png",
+      "sizes": "540x960",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "LINCE en móvil — Interfaz adaptativa para aprender IA"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Jugar",
+      "short_name": "Jugar",
+      "description": "Accede directamente a las lecciones de IA",
+      "url": "/jugar",
+      "icons": [
+        {
+          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WxkxBHTXnNFkLacG.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Mundo LINCE",
+      "short_name": "Mundo",
+      "description": "Explora el mundo interactivo de LINCE",
+      "url": "/mundo",
+      "icons": [
+        {
+          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WxkxBHTXnNFkLacG.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Raids",
+      "short_name": "Raids",
+      "description": "Compite en batallas PvP de conocimiento IA",
+      "url": "/raids",
+      "icons": [
+        {
+          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WxkxBHTXnNFkLacG.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Academia",
+      "short_name": "Academia",
+      "description": "Cursos completos de inteligencia artificial",
+      "url": "/academia",
+      "icons": [
+        {
+          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WxkxBHTXnNFkLacG.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+lince",
+      "url": "/%s"
+    }
+  ]
+}

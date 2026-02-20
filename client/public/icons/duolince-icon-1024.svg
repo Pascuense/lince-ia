@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#0d1f0f"/>
+      <stop offset="100%" stop-color="#030a04"/>
+    </radialGradient>
+    <radialGradient id="faceGrad" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#f5c842"/>
+      <stop offset="60%" stop-color="#d4a020"/>
+      <stop offset="100%" stop-color="#a07015"/>
+    </radialGradient>
+    <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00FF88" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#00FF88" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softShadow">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="1024" rx="224" fill="url(#bgGrad)"/>
+
+  <!-- Green glow behind head -->
+  <ellipse cx="512" cy="520" rx="320" ry="300" fill="url(#glowGrad)"/>
+
+  <!-- Outer ring accent -->
+  <circle cx="512" cy="512" r="460" fill="none" stroke="#00FF88" stroke-width="3" opacity="0.15"/>
+  <circle cx="512" cy="512" r="420" fill="none" stroke="#00FF88" stroke-width="1" opacity="0.08"/>
+
+  <!-- ====== LYNX HEAD ====== -->
+
+  <!-- Neck / lower body -->
+  <ellipse cx="512" cy="820" rx="155" ry="90" fill="#c09018" filter="url(#softShadow)"/>
+  <ellipse cx="512" cy="800" rx="140" ry="80" fill="#d4a020"/>
+
+  <!-- Main head shape -->
+  <ellipse cx="512" cy="530" rx="230" ry="215" fill="url(#faceGrad)" filter="url(#softShadow)"/>
+
+  <!-- Cheek ruff (lynx characteristic) -->
+  <ellipse cx="308" cy="590" rx="95" ry="75" fill="#e8b828" transform="rotate(-15, 308, 590)"/>
+  <ellipse cx="716" cy="590" rx="95" ry="75" fill="#e8b828" transform="rotate(15, 716, 590)"/>
+  <!-- Cheek fur detail lines -->
+  <path d="M260 570 Q295 580 320 600" stroke="#c09018" stroke-width="3" fill="none" opacity="0.6"/>
+  <path d="M248 595 Q285 600 312 618" stroke="#c09018" stroke-width="3" fill="none" opacity="0.6"/>
+  <path d="M764 570 Q729 580 704 600" stroke="#c09018" stroke-width="3" fill="none" opacity="0.6"/>
+  <path d="M776 595 Q739 600 712 618" stroke="#c09018" stroke-width="3" fill="none" opacity="0.6"/>
+
+  <!-- ====== EAR TUFTS (iconic lynx trait - very prominent and stylized) ====== -->
+  <!-- Left ear base -->
+  <path d="M338 360 Q310 270 290 190 Q320 210 360 260 Q390 300 400 355 Z" fill="#c09018"/>
+  <!-- Left ear tuft - BLACK (defining feature) -->
+  <path d="M298 200 Q285 120 302 62 Q320 100 330 160 Q342 210 338 260 Z" fill="#0a0a0a"/>
+  <path d="M302 62 Q318 32 340 20 Q345 70 338 130 Q332 175 320 210 Z" fill="#1a1a1a"/>
+  <!-- Left ear inner -->
+  <path d="M338 360 Q325 295 315 240 Q330 265 355 320 Q375 350 390 370 Z" fill="#e8b828"/>
+
+  <!-- Right ear base -->
+  <path d="M686 360 Q714 270 734 190 Q704 210 664 260 Q634 300 624 355 Z" fill="#c09018"/>
+  <!-- Right ear tuft - BLACK -->
+  <path d="M726 200 Q739 120 722 62 Q704 100 694 160 Q682 210 686 260 Z" fill="#0a0a0a"/>
+  <path d="M722 62 Q706 32 684 20 Q679 70 686 130 Q692 175 704 210 Z" fill="#1a1a1a"/>
+  <!-- Right ear inner -->
+  <path d="M686 360 Q699 295 709 240 Q694 265 669 320 Q649 350 634 370 Z" fill="#e8b828"/>
+
+  <!-- Forehead spots (lynx pattern) -->
+  <ellipse cx="452" cy="400" rx="28" ry="18" fill="#8a6010" opacity="0.7" transform="rotate(-20,452,400)"/>
+  <ellipse cx="572" cy="400" rx="28" ry="18" fill="#8a6010" opacity="0.7" transform="rotate(20,572,400)"/>
+  <ellipse cx="512" cy="375" rx="20" ry="14" fill="#8a6010" opacity="0.5"/>
+
+  <!-- Cheek spots -->
+  <ellipse cx="360" cy="540" rx="22" ry="16" fill="#8a6010" opacity="0.6" transform="rotate(-10,360,540)"/>
+  <ellipse cx="660" cy="540" rx="22" ry="16" fill="#8a6010" opacity="0.6" transform="rotate(10,660,540)"/>
+
+  <!-- ====== EYES ====== -->
+  <!-- Left eye shadow -->
+  <ellipse cx="420" cy="498" rx="58" ry="48" fill="#0a0a0a" opacity="0.4"/>
+  <!-- Left eye white/sclera -->
+  <ellipse cx="420" cy="495" rx="54" ry="44" fill="#f0e8c0"/>
+  <!-- Left iris - electric green -->
+  <ellipse cx="420" cy="495" rx="36" ry="38" fill="#00cc66"/>
+  <ellipse cx="420" cy="495" rx="26" ry="30" fill="#00aa44"/>
+  <!-- Left pupil (vertical slit - cat eye) -->
+  <ellipse cx="420" cy="495" rx="8" ry="34" fill="#050505"/>
+  <!-- Left eye shine -->
+  <ellipse cx="408" cy="482" rx="8" ry="6" fill="white" opacity="0.9"/>
+  <ellipse cx="430" cy="490" rx="4" ry="3" fill="white" opacity="0.5"/>
+  <!-- Left eye outline -->
+  <ellipse cx="420" cy="495" rx="54" ry="44" fill="none" stroke="#6a4a05" stroke-width="3"/>
+
+  <!-- Right eye shadow -->
+  <ellipse cx="604" cy="498" rx="58" ry="48" fill="#0a0a0a" opacity="0.4"/>
+  <!-- Right eye white/sclera -->
+  <ellipse cx="604" cy="495" rx="54" ry="44" fill="#f0e8c0"/>
+  <!-- Right iris -->
+  <ellipse cx="604" cy="495" rx="36" ry="38" fill="#00cc66"/>
+  <ellipse cx="604" cy="495" rx="26" ry="30" fill="#00aa44"/>
+  <!-- Right pupil -->
+  <ellipse cx="604" cy="495" rx="8" ry="34" fill="#050505"/>
+  <!-- Right eye shine -->
+  <ellipse cx="592" cy="482" rx="8" ry="6" fill="white" opacity="0.9"/>
+  <ellipse cx="614" cy="490" rx="4" ry="3" fill="white" opacity="0.5"/>
+  <!-- Right eye outline -->
+  <ellipse cx="604" cy="495" rx="54" ry="44" fill="none" stroke="#6a4a05" stroke-width="3"/>
+
+  <!-- ====== NOSE ====== -->
+  <path d="M512 590 Q494 610 480 622 Q496 634 512 630 Q528 634 544 622 Q530 610 512 590 Z" fill="#d44060"/>
+  <path d="M512 590 Q494 610 480 622 Q496 628 512 624 Q528 628 544 622 Q530 610 512 590 Z" fill="#e85070"/>
+  <!-- Nose bridge line -->
+  <line x1="512" y1="560" x2="512" y2="590" stroke="#8a6010" stroke-width="3" opacity="0.5"/>
+
+  <!-- ====== MOUTH ====== -->
+  <path d="M480 622 Q512 650 544 622" fill="none" stroke="#8a4050" stroke-width="3" stroke-linecap="round"/>
+  <path d="M512 636 Q500 658 485 665" fill="none" stroke="#8a4050" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M512 636 Q524 658 539 665" fill="none" stroke="#8a4050" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- ====== WHISKERS ====== -->
+  <!-- Left whiskers -->
+  <line x1="415" y1="618" x2="230" y2="592" stroke="white" stroke-width="2.5" opacity="0.85"/>
+  <line x1="415" y1="628" x2="225" y2="618" stroke="white" stroke-width="2.5" opacity="0.80"/>
+  <line x1="415" y1="638" x2="232" y2="645" stroke="white" stroke-width="2.5" opacity="0.75"/>
+  <line x1="415" y1="648" x2="238" y2="668" stroke="white" stroke-width="2" opacity="0.65"/>
+  <!-- Right whiskers -->
+  <line x1="609" y1="618" x2="794" y2="592" stroke="white" stroke-width="2.5" opacity="0.85"/>
+  <line x1="609" y1="628" x2="799" y2="618" stroke="white" stroke-width="2.5" opacity="0.80"/>
+  <line x1="609" y1="638" x2="792" y2="645" stroke="white" stroke-width="2.5" opacity="0.75"/>
+  <line x1="609" y1="648" x2="786" y2="668" stroke="white" stroke-width="2" opacity="0.65"/>
+
+  <!-- ====== WHITE CHIN ====== -->
+  <ellipse cx="512" cy="680" rx="72" ry="48" fill="#f8f0d0" opacity="0.9"/>
+  <ellipse cx="512" cy="690" rx="55" ry="35" fill="#f5edd5" opacity="0.7"/>
+
+  <!-- ====== GREEN AI CIRCUIT DETAIL (DUOLINCE identity) ====== -->
+  <!-- Small circuit lines around one eye -->
+  <line x1="474" y1="458" x2="455" y2="440" stroke="#00FF88" stroke-width="2" opacity="0.6"/>
+  <line x1="455" y1="440" x2="440" y2="440" stroke="#00FF88" stroke-width="2" opacity="0.6"/>
+  <circle cx="440" cy="440" r="4" fill="#00FF88" opacity="0.8"/>
+  <line x1="366" y1="458" x2="345" y2="448" stroke="#00FF88" stroke-width="2" opacity="0.5"/>
+  <circle cx="345" cy="448" r="3" fill="#00FF88" opacity="0.7"/>
+
+  <!-- ====== DUOLINCE TEXT ====== -->
+  <!-- Text background pill -->
+  <rect x="352" y="870" width="320" height="64" rx="32" fill="#00FF88"/>
+  <!-- Shadow text for depth -->
+  <text x="514" y="914" font-family="Arial Black, Impact, sans-serif" font-size="38" font-weight="900" text-anchor="middle" fill="#032808" letter-spacing="3">DUOLINCE</text>
+
+  <!-- Small AI dot accent -->
+  <circle cx="182" cy="870" r="8" fill="#00FF88" opacity="0.4"/>
+  <circle cx="842" cy="870" r="8" fill="#00FF88" opacity="0.4"/>
+  <circle cx="165" cy="890" r="5" fill="#00FF88" opacity="0.25"/>
+  <circle cx="859" cy="890" r="5" fill="#00FF88" opacity="0.25"/>
+</svg>

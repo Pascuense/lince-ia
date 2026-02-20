@@ -1,0 +1,83 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1770500078614,
+      "tag": "0000_blushing_dazzler",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1770500222348,
+      "tag": "0001_curly_sabretooth",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1770506057297,
+      "tag": "0002_last_speed",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1770593389135,
+      "tag": "0003_yielding_alex_power",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1770658310724,
+      "tag": "0004_familiar_wild_pack",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1770847178614,
+      "tag": "0005_quiet_otto_octavius",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1770866319891,
+      "tag": "0006_stormy_fallen_one",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1770897480629,
+      "tag": "0007_majestic_paladin",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1771109590135,
+      "tag": "0008_lame_changeling",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1771364122057,
+      "tag": "0009_glamorous_paper_doll",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1771369731305,
+      "tag": "0010_vengeful_energizer",
+      "breakpoints": true
+    }
+  ]
+}

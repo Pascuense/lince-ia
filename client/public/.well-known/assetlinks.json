@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "APP.LINCE.IA",
+        "sha256_cert_fingerprints": ["0A:DA:B9:C2:EC:96:4C:4F:50:B3:EA:C2:3B:3B:07:13:24:32:82:A5:28:4D:ED:E0:DF:5C:43:67:51:E5:41:81"]
+      }
+    }]

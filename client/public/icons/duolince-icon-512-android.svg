@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Android adaptive icon foreground layer (transparent bg, content in safe zone 66px each side) -->
+  <defs>
+    <radialGradient id="face" cx="50%" cy="44%" r="55%">
+      <stop offset="0%" stop-color="#f5c842"/>
+      <stop offset="65%" stop-color="#d4a020"/>
+      <stop offset="100%" stop-color="#a07015"/>
+    </radialGradient>
+    <radialGradient id="eyeGreen" cx="35%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#00FF88"/>
+      <stop offset="50%" stop-color="#00cc66"/>
+      <stop offset="100%" stop-color="#009944"/>
+    </radialGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Background for Android icon (the bg layer is separate - here we use dark) -->
+  <rect width="512" height="512" fill="#061208"/>
+
+  <!-- Glow effect -->
+  <radialGradient id="glow" cx="50%" cy="50%" r="45%">
+    <stop offset="0%" stop-color="#00FF88" stop-opacity="0.18"/>
+    <stop offset="100%" stop-color="#00FF88" stop-opacity="0"/>
+  </radialGradient>
+  <ellipse cx="256" cy="256" rx="200" ry="200" fill="url(#glow)"/>
+
+  <!-- EAR TUFTS - bold and prominent -->
+  <!-- Left ear -->
+  <path d="M142 198 Q124 130 130 62 Q150 90 162 148 Q170 175 172 205 Z" fill="#c09018" filter="url(#shadow)"/>
+  <path d="M130 62 Q140 22 158 8 Q162 55 158 108 Q154 148 144 185 Z" fill="#0c0c0c"/>
+  <path d="M158 8 Q174 0 188 6 Q178 48 165 102 Q157 140 148 182 Z" fill="#1e1e1e"/>
+  <path d="M142 198 Q152 150 165 185 Q168 200 170 212 Z" fill="#e8b828" opacity="0.7"/>
+
+  <!-- Right ear -->
+  <path d="M370 198 Q388 130 382 62 Q362 90 350 148 Q342 175 340 205 Z" fill="#c09018" filter="url(#shadow)"/>
+  <path d="M382 62 Q372 22 354 8 Q350 55 354 108 Q358 148 368 185 Z" fill="#0c0c0c"/>
+  <path d="M354 8 Q338 0 324 6 Q334 48 347 102 Q355 140 364 182 Z" fill="#1e1e1e"/>
+  <path d="M370 198 Q360 150 347 185 Q344 200 342 212 Z" fill="#e8b828" opacity="0.7"/>
+
+  <!-- Head -->
+  <ellipse cx="256" cy="310" rx="165" ry="155" fill="url(#face)" filter="url(#shadow)"/>
+
+  <!-- Cheek ruff -->
+  <ellipse cx="104" cy="330" rx="68" ry="52" fill="#d4a020" transform="rotate(-18,104,330)"/>
+  <ellipse cx="408" cy="330" rx="68" ry="52" fill="#d4a020" transform="rotate(18,408,330)"/>
+  <!-- Cheek fur lines -->
+  <path d="M74 315 Q104 322 126 340" stroke="#b08010" stroke-width="3" fill="none" opacity="0.6"/>
+  <path d="M68 335 Q100 338 122 354" stroke="#b08010" stroke-width="3" fill="none" opacity="0.5"/>
+  <path d="M438 315 Q408 322 386 340" stroke="#b08010" stroke-width="3" fill="none" opacity="0.6"/>
+  <path d="M444 335 Q412 338 390 354" stroke="#b08010" stroke-width="3" fill="none" opacity="0.5"/>
+
+  <!-- Forehead spots -->
+  <ellipse cx="210" cy="242" rx="28" ry="18" fill="#7a5010" opacity="0.7" transform="rotate(-22,210,242)"/>
+  <ellipse cx="302" cy="242" rx="28" ry="18" fill="#7a5010" opacity="0.7" transform="rotate(22,302,242)"/>
+  <ellipse cx="256" cy="222" rx="18" ry="12" fill="#7a5010" opacity="0.5"/>
+
+  <!-- LEFT EYE -->
+  <ellipse cx="188" cy="298" rx="52" ry="46" fill="#1a1a1a" opacity="0.3"/>
+  <ellipse cx="188" cy="295" rx="50" ry="44" fill="#f2e8c0"/>
+  <ellipse cx="188" cy="295" rx="34" ry="38" fill="url(#eyeGreen)"/>
+  <ellipse cx="188" cy="295" rx="24" ry="30" fill="#009944"/>
+  <ellipse cx="188" cy="295" rx="8" ry="34" fill="#080808"/>
+  <ellipse cx="177" cy="283" rx="9" ry="7" fill="white" opacity="0.92"/>
+  <ellipse cx="194" cy="290" rx="4.5" ry="3.5" fill="white" opacity="0.5"/>
+  <ellipse cx="188" cy="295" rx="50" ry="44" fill="none" stroke="#6a4a05" stroke-width="2.5"/>
+
+  <!-- RIGHT EYE -->
+  <ellipse cx="324" cy="298" rx="52" ry="46" fill="#1a1a1a" opacity="0.3"/>
+  <ellipse cx="324" cy="295" rx="50" ry="44" fill="#f2e8c0"/>
+  <ellipse cx="324" cy="295" rx="34" ry="38" fill="url(#eyeGreen)"/>
+  <ellipse cx="324" cy="295" rx="24" ry="30" fill="#009944"/>
+  <ellipse cx="324" cy="295" rx="8" ry="34" fill="#080808"/>
+  <ellipse cx="313" cy="283" rx="9" ry="7" fill="white" opacity="0.92"/>
+  <ellipse cx="330" cy="290" rx="4.5" ry="3.5" fill="white" opacity="0.5"/>
+  <ellipse cx="324" cy="295" rx="50" ry="44" fill="none" stroke="#6a4a05" stroke-width="2.5"/>
+
+  <!-- Nose -->
+  <path d="M256 358 Q240 376 225 386 Q240 398 256 394 Q272 398 287 386 Q272 376 256 358 Z" fill="#cc3050"/>
+  <path d="M256 358 Q240 376 225 386 Q240 393 256 390 Q272 393 287 386 Q272 376 256 358 Z" fill="#e04568"/>
+  <line x1="256" y1="340" x2="256" y2="358" stroke="#8a6010" stroke-width="2" opacity="0.5"/>
+
+  <!-- Mouth -->
+  <path d="M225 386 Q256 410 287 386" fill="none" stroke="#8a4050" stroke-width="3" stroke-linecap="round"/>
+  <path d="M256 398 Q244 420 228 428" fill="none" stroke="#8a4050" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M256 398 Q268 420 284 428" fill="none" stroke="#8a4050" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- White chin -->
+  <ellipse cx="256" cy="450" rx="64" ry="44" fill="#f5edd5" opacity="0.9"/>
+
+  <!-- Whiskers -->
+  <line x1="222" y1="376" x2="80" y2="356" stroke="white" stroke-width="2.5" opacity="0.82"/>
+  <line x1="222" y1="386" x2="75" y2="380" stroke="white" stroke-width="2.5" opacity="0.78"/>
+  <line x1="222" y1="396" x2="82" y2="405" stroke="white" stroke-width="2" opacity="0.72"/>
+  <line x1="290" y1="376" x2="432" y2="356" stroke="white" stroke-width="2.5" opacity="0.82"/>
+  <line x1="290" y1="386" x2="437" y2="380" stroke="white" stroke-width="2.5" opacity="0.78"/>
+  <line x1="290" y1="396" x2="430" y2="405" stroke="white" stroke-width="2" opacity="0.72"/>
+
+  <!-- AI Circuit lines (DUOLINCE identity) -->
+  <line x1="340" y1="215" x2="365" y2="198" stroke="#00FF88" stroke-width="2.5" opacity="0.65"/>
+  <line x1="365" y1="198" x2="388" y2="198" stroke="#00FF88" stroke-width="2.5" opacity="0.65"/>
+  <circle cx="388" cy="198" r="5" fill="#00FF88" opacity="0.85" filter="url(#shadow)"/>
+  <line x1="368" y1="215" x2="380" y2="208" stroke="#00FF88" stroke-width="1.5" opacity="0.4"/>
+  <circle cx="380" cy="208" r="3" fill="#00FF88" opacity="0.55"/>
+
+  <!-- Bottom text pill -->
+  <rect x="156" y="484" width="200" height="22" rx="11" fill="#00FF88"/>
+  <text x="256" y="499" font-family="Arial Black,Impact,sans-serif" font-size="13" font-weight="900" text-anchor="middle" fill="#032808" letter-spacing="2">DUOLINCE</text>
+</svg>

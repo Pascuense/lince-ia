@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#0d1f0f"/>
+      <stop offset="100%" stop-color="#030a04"/>
+    </radialGradient>
+  </defs>
+  <rect width="32" height="32" rx="7" fill="url(#bg)"/>
+  <!-- Ear tufts -->
+  <path d="M7 14 Q5 7 7 2 Q10 6 11 12 Z" fill="#f5c842"/>
+  <path d="M7 2 Q8 0 10 0 Q9 5 8 10 Z" fill="#0a0a0a"/>
+  <path d="M25 14 Q27 7 25 2 Q22 6 21 12 Z" fill="#f5c842"/>
+  <path d="M25 2 Q24 0 22 0 Q23 5 24 10 Z" fill="#0a0a0a"/>
+  <!-- Head -->
+  <ellipse cx="16" cy="19" rx="11" ry="10" fill="#f5c842"/>
+  <!-- Cheek ruff -->
+  <ellipse cx="6.5" cy="21" rx="4.5" ry="3.5" fill="#e8b828"/>
+  <ellipse cx="25.5" cy="21" rx="4.5" ry="3.5" fill="#e8b828"/>
+  <!-- Eyes -->
+  <ellipse cx="11.5" cy="18" rx="3.2" ry="3.5" fill="#00cc66"/>
+  <ellipse cx="11.5" cy="18" rx="1.2" ry="3.2" fill="#050505"/>
+  <ellipse cx="10.8" cy="16.8" rx="0.9" ry="0.7" fill="white" opacity="0.9"/>
+  <ellipse cx="20.5" cy="18" rx="3.2" ry="3.5" fill="#00cc66"/>
+  <ellipse cx="20.5" cy="18" rx="1.2" ry="3.2" fill="#050505"/>
+  <ellipse cx="19.8" cy="16.8" rx="0.9" ry="0.7" fill="white" opacity="0.9"/>
+  <!-- Nose -->
+  <ellipse cx="16" cy="22.5" rx="1.8" ry="1.2" fill="#d44060"/>
+  <!-- Green dot accent -->
+  <circle cx="27" cy="6" r="2" fill="#00FF88"/>
+</svg>

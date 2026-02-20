@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#0f2810"/>
+      <stop offset="100%" stop-color="#020804"/>
+    </radialGradient>
+    <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00FF88" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#00FF88" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="textGlow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="face" cx="50%" cy="44%" r="55%">
+      <stop offset="0%" stop-color="#f5c842"/>
+      <stop offset="65%" stop-color="#d4a020"/>
+      <stop offset="100%" stop-color="#a07015"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grid lines subtle -->
+  <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+    <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#00FF88" stroke-width="0.3" opacity="0.08"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Central glow -->
+  <ellipse cx="600" cy="315" rx="400" ry="350" fill="url(#glow1)"/>
+
+  <!-- ====== MINI LYNX HEAD (centered, smaller version) ====== -->
+  <!-- Ear tufts -->
+  <path d="M530 210 Q516 162 520 116 Q532 135 538 168 Q542 188 543 218 Z" fill="#c09018"/>
+  <path d="M520 116 Q526 90 538 84 Q539 106 536 140 Q534 162 528 192 Z" fill="#0c0c0c"/>
+  <path d="M670 210 Q684 162 680 116 Q668 135 662 168 Q658 188 657 218 Z" fill="#c09018"/>
+  <path d="M680 116 Q674 90 662 84 Q661 106 664 140 Q666 162 672 192 Z" fill="#0c0c0c"/>
+
+  <!-- Head -->
+  <ellipse cx="600" cy="330" rx="140" ry="132" fill="url(#face)"/>
+  <!-- Cheek ruff -->
+  <ellipse cx="476" cy="345" rx="58" ry="44" fill="#d4a020" transform="rotate(-15,476,345)"/>
+  <ellipse cx="724" cy="345" rx="58" ry="44" fill="#d4a020" transform="rotate(15,724,345)"/>
+
+  <!-- Eyes -->
+  <ellipse cx="550" cy="315" rx="42" ry="38" fill="#f0e8c0"/>
+  <ellipse cx="550" cy="315" rx="28" ry="32" fill="#00cc66"/>
+  <ellipse cx="550" cy="315" rx="18" ry="25" fill="#009944"/>
+  <ellipse cx="550" cy="315" rx="7" ry="29" fill="#080808"/>
+  <ellipse cx="543" cy="306" rx="8" ry="6" fill="white" opacity="0.9"/>
+  <ellipse cx="550" cy="315" rx="42" ry="38" fill="none" stroke="#6a4a05" stroke-width="2"/>
+
+  <ellipse cx="650" cy="315" rx="42" ry="38" fill="#f0e8c0"/>
+  <ellipse cx="650" cy="315" rx="28" ry="32" fill="#00cc66"/>
+  <ellipse cx="650" cy="315" rx="18" ry="25" fill="#009944"/>
+  <ellipse cx="650" cy="315" rx="7" ry="29" fill="#080808"/>
+  <ellipse cx="643" cy="306" rx="8" ry="6" fill="white" opacity="0.9"/>
+  <ellipse cx="650" cy="315" rx="42" ry="38" fill="none" stroke="#6a4a05" stroke-width="2"/>
+
+  <!-- Nose -->
+  <path d="M600 362 Q588 375 579 381 Q588 389 600 386 Q612 389 621 381 Q612 375 600 362 Z" fill="#d44060"/>
+  <!-- Mouth -->
+  <path d="M579 381 Q600 397 621 381" fill="none" stroke="#8a4050" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- White chin -->
+  <ellipse cx="600" cy="415" rx="52" ry="35" fill="#f5edd5" opacity="0.85"/>
+
+  <!-- Whiskers -->
+  <line x1="574" y1="374" x2="466" y2="360" stroke="white" stroke-width="2" opacity="0.78"/>
+  <line x1="574" y1="381" x2="463" y2="380" stroke="white" stroke-width="2" opacity="0.73"/>
+  <line x1="626" y1="374" x2="734" y2="360" stroke="white" stroke-width="2" opacity="0.78"/>
+  <line x1="626" y1="381" x2="737" y2="380" stroke="white" stroke-width="2" opacity="0.73"/>
+
+  <!-- ====== MAIN TITLE TEXT ====== -->
+  <!-- "DUOLINCE" large -->
+  <text x="600" y="530" font-family="Arial Black, Impact, sans-serif" font-size="96" font-weight="900" text-anchor="middle" fill="#00FF88" letter-spacing="8" filter="url(#textGlow)">DUOLINCE</text>
+
+  <!-- Tagline -->
+  <text x="600" y="580" font-family="Arial, sans-serif" font-size="24" font-weight="400" text-anchor="middle" fill="#ffffff" opacity="0.7" letter-spacing="3">El Duolingo de la Inteligencia Artificial</text>
+
+  <!-- Decorative circuit elements -->
+  <line x1="80" y1="315" x2="420" y2="315" stroke="#00FF88" stroke-width="1" opacity="0.15"/>
+  <line x1="780" y1="315" x2="1120" y2="315" stroke="#00FF88" stroke-width="1" opacity="0.15"/>
+  <circle cx="80" cy="315" r="4" fill="#00FF88" opacity="0.3"/>
+  <circle cx="1120" cy="315" r="4" fill="#00FF88" opacity="0.3"/>
+  <circle cx="420" cy="315" r="6" fill="#00FF88" opacity="0.25"/>
+  <circle cx="780" cy="315" r="6" fill="#00FF88" opacity="0.25"/>
+
+  <!-- Small dots constellation -->
+  <circle cx="140" cy="120" r="2" fill="#00FF88" opacity="0.4"/>
+  <circle cx="180" cy="145" r="1.5" fill="#00FF88" opacity="0.3"/>
+  <circle cx="155" cy="170" r="2.5" fill="#00FF88" opacity="0.35"/>
+  <circle cx="1060" cy="120" r="2" fill="#00FF88" opacity="0.4"/>
+  <circle cx="1020" cy="145" r="1.5" fill="#00FF88" opacity="0.3"/>
+  <circle cx="1045" cy="170" r="2.5" fill="#00FF88" opacity="0.35"/>
+
+  <!-- Corner accents -->
+  <path d="M40 40 L80 40 L80 44" fill="none" stroke="#00FF88" stroke-width="2" opacity="0.4"/>
+  <path d="M40 40 L40 80" fill="none" stroke="#00FF88" stroke-width="2" opacity="0.4"/>
+  <path d="M1160 40 L1120 40 L1120 44" fill="none" stroke="#00FF88" stroke-width="2" opacity="0.4"/>
+  <path d="M1160 40 L1160 80" fill="none" stroke="#00FF88" stroke-width="2" opacity="0.4"/>
+  <path d="M40 590 L80 590 L80 586" fill="none" stroke="#00FF88" stroke-width="2" opacity="0.4"/>
+  <path d="M40 590 L40 550" fill="none" stroke="#00FF88" stroke-width="2" opacity="0.4"/>
+  <path d="M1160 590 L1120 590 L1120 586" fill="none" stroke="#00FF88" stroke-width="2" opacity="0.4"/>
+  <path d="M1160 590 L1160 550" fill="none" stroke="#00FF88" stroke-width="2" opacity="0.4"/>
+</svg>
