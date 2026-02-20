@@ -30,9 +30,10 @@ jobs:
 
       - name: Prepare production package
         run: |
-          cp package.json dist/
-          cp package-lock.json dist/
-          cd dist && npm install --omit=dev --legacy-peer-deps
+          cd dist
+          echo '{"name":"lince-app","version":"1.0.0"}' > package.json
+          cp ../package-lock.json .
+          npm install --omit=dev --legacy-peer-deps
 
 
       - name: Upload artifact for deployment job
@@ -60,5 +61,6 @@ jobs:
           package: .
 
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C33591B88D5B4BB7B54DC0945C555A20 }}
+
 
 
