@@ -55,4 +55,5 @@ jobs:
           app-name: 'lince-app'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C33591B88D5B4B87B54DC0945C555A20 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C33591B88D5B4BB7B54DC0945C555A20 }}
+          
