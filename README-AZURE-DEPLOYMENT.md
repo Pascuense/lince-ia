@@ -246,11 +246,11 @@ az webapp config set \
   --resource-group rg-lince \
   --startup-file "npm start"
 
-# Asegurar build durante despliegue (si usas OneDeploy/ZipDeploy)
+# Desactivar build automático en Azure (evita conflictos de Oryx al desplegar artifact ya compilado)
 az webapp config appsettings set \
   --name lince-app \
   --resource-group rg-lince \
-  --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true
+  --settings SCM_DO_BUILD_DURING_DEPLOYMENT=false ENABLE_ORYX_BUILD=false
 
 # Habilitar WebSockets (para tRPC batch)
 az webapp config set \
@@ -269,12 +269,23 @@ az webapp config set \
 
 ## Diagnóstico rápido en Azure (portal en español)
 
+### Atajo automático (script local)
+
+Puedes aplicar toda la recuperación con un solo comando:
+
+```bash
+./scripts/azure-recover.sh lince-app rg-lince
+```
+
+Si omites argumentos, usa por defecto `lince-app` y `rg-lince`.
+
 Si la página no abre, sigue este flujo:
 
 1. **Implementación → Centro de implementación**
 2. Entra a **Registros**
 3. Abre el último despliegue y verifica si se ejecutaron `npm install` y `npm run build`
 4. Si hay error (por ejemplo `vite not found`, `tsc`, `module not found`), copia 20–40 líneas alrededor
+5. Si aparece conflicto de peer deps de `vite` durante deploy, confirma que estén en `false` estas app settings: `SCM_DO_BUILD_DURING_DEPLOYMENT` y `ENABLE_ORYX_BUILD`.
 
 ### Verificación definitiva de build (Kudu)
 
@@ -441,7 +452,7 @@ pnpm check:env -- --file .env.production
 ### La app no arranca
 
 - Revisar logs: `az webapp log tail --name lince-app --resource-group rg-lince`
-- Verificar startup command: `npm start` (o `node dist/index.js`)
+- Verificar startup command: `npm start` (package en `dist/` con `start: node index.js`)
 - Comprobar que todas las variables de entorno están configuradas
 
 ---
