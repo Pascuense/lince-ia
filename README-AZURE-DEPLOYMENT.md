@@ -269,6 +269,16 @@ az webapp config set \
 
 ## Diagnóstico rápido en Azure (portal en español)
 
+### Atajo automático (script local)
+
+Puedes aplicar toda la recuperación con un solo comando:
+
+```bash
+./scripts/azure-recover.sh lince-app rg-lince
+```
+
+Si omites argumentos, usa por defecto `lince-app` y `rg-lince`.
+
 Si la página no abre, sigue este flujo:
 
 1. **Implementación → Centro de implementación**
