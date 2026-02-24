@@ -244,7 +244,13 @@ az webapp config set \
 az webapp config set \
   --name lince-app \
   --resource-group rg-lince \
-  --startup-file "node index.js"
+  --startup-file "npm start"
+
+# Asegurar build durante despliegue (si usas OneDeploy/ZipDeploy)
+az webapp config appsettings set \
+  --name lince-app \
+  --resource-group rg-lince \
+  --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true
 
 # Habilitar WebSockets (para tRPC batch)
 az webapp config set \
@@ -260,6 +266,30 @@ az webapp config set \
 ```
 
 ---
+
+## Diagnóstico rápido en Azure (portal en español)
+
+Si la página no abre, sigue este flujo:
+
+1. **Implementación → Centro de implementación**
+2. Entra a **Registros**
+3. Abre el último despliegue y verifica si se ejecutaron `npm install` y `npm run build`
+4. Si hay error (por ejemplo `vite not found`, `tsc`, `module not found`), copia 20–40 líneas alrededor
+
+### Verificación definitiva de build (Kudu)
+
+1. **Herramientas de desarrollo → Herramientas avanzadas**
+2. Pulsa **Ir**
+3. En Kudu: **Debug console → Bash**
+4. Ejecuta:
+
+```bash
+ls -la
+ls -la dist || echo "NO HAY dist"
+ls -la dist/index.js || echo "NO HAY dist/index.js"
+```
+
+Si no existe `dist/index.js`, el despliegue no está dejando el build correcto para el comando de inicio.
 
 ## Paso 8: Crear el Primer Administrador
 
