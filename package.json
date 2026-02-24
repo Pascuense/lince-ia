@@ -6,14 +6,13 @@
   "description": "LINCE - Plataforma EdTech gamificada de formación en IA. Versión Azure independiente.",
   "scripts": {
     "dev": "NODE_ENV=development tsx watch server/index.ts",
-    "build": "vite build && esbuild server/index.ts --platform=node --bundle --format=esm --outdir=dist --external:lightningcss --external:@tailwindcss/oxide --external:*.node --external:fsevents --external:@babel/preset-typescript",
+ "build": "vite build && esbuild server/index.ts --platform=node --bundle --format=esm --outdir=dist --external:lightningcss --external:@tailwindcss/oxide --external:*.node --external:fsevents --external:@babel/preset-typescript",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc --noEmit",
     "format": "prettier --write .",
     "test": "vitest run",
     "db:push": "drizzle-kit generate && drizzle-kit migrate",
-    "db:seed": "tsx server/seed.ts",
-    "check:env": "node scripts/validate-env.mjs"
+    "db:seed": "tsx server/seed.ts"
   },
   "dependencies": {
     "@azure/storage-blob": "^12.25.0",
