@@ -279,6 +279,16 @@ Puedes aplicar toda la recuperación con un solo comando:
 
 Si omites argumentos, usa por defecto `lince-app` y `rg-lince`.
 
+> ⚠️ Nota: `./scripts/azure-recover.sh` se ejecuta en tu repo local. En Azure Cloud Shell (directorio `~`) ese archivo no existe si no clonaste el repositorio.
+
+Comandos equivalentes en Cloud Shell:
+
+```bash
+az webapp config appsettings set --name lince-app --resource-group rg-lince --settings SCM_DO_BUILD_DURING_DEPLOYMENT=false ENABLE_ORYX_BUILD=false
+az webapp config set --name lince-app --resource-group rg-lince --startup-file "npm start"
+az webapp restart --name lince-app --resource-group rg-lince
+```
+
 Si la página no abre, sigue este flujo:
 
 1. **Implementación → Centro de implementación**
@@ -301,6 +311,21 @@ ls -la dist/index.js || echo "NO HAY dist/index.js"
 ```
 
 Si no existe `dist/index.js`, el despliegue no está dejando el build correcto para el comando de inicio.
+
+### Extraer error real de runtime (cuando solo ves `ERR_MODULE_NOT_FOUND`)
+
+```bash
+rm -rf logs_dump
+az webapp log download --name lince-app --resource-group rg-lince
+unzip -o *.zip -d logs_dump
+grep -RniE "ERR_MODULE_NOT_FOUND|Cannot find package|Cannot find module" logs_dump/LogFiles | head -n 80
+```
+
+Con la ruta/linea encontrada, abre contexto (20-40 líneas):
+
+```bash
+sed -n '1,260p' logs_dump/LogFiles/*default_docker.log | sed -n '/ERR_MODULE_NOT_FOUND/,+35p'
+```
 
 ## Paso 8: Crear el Primer Administrador
 
