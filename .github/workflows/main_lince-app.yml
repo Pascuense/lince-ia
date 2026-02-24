@@ -29,8 +29,8 @@ jobs:
         run: |
           cp package.json dist/
           cp package-lock.json dist/
+          node -e "const fs=require('fs');const p='dist/package.json';const j=JSON.parse(fs.readFileSync(p,'utf8'));j.scripts={...(j.scripts||{}),start:'node index.js'};fs.writeFileSync(p,JSON.stringify(j,null,2));"
           cd dist && npm install --omit=dev --legacy-peer-deps
-          rm -f package.json package-lock.json
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

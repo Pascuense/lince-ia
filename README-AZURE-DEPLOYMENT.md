@@ -244,7 +244,7 @@ az webapp config set \
 az webapp config set \
   --name lince-app \
   --resource-group rg-lince \
-  --startup-file "node index.js"
+  --startup-file "npm start"
 
 # Desactivar build automático en Azure (evita conflictos de Oryx al desplegar artifact ya compilado)
 az webapp config appsettings set \
@@ -452,7 +452,7 @@ pnpm check:env -- --file .env.production
 ### La app no arranca
 
 - Revisar logs: `az webapp log tail --name lince-app --resource-group rg-lince`
-- Verificar startup command: `node index.js` (cuando despliegas el contenido de `dist/`)
+- Verificar startup command: `npm start` (package en `dist/` con `start: node index.js`)
 - Comprobar que todas las variables de entorno están configuradas
 
 ---
