@@ -2,7 +2,6 @@
  * LINCE — Server Entry Point (Azure Edition)
  * Sin dependencias de Manus. Express + tRPC + Vite.
  */
-import "dotenv/config";
 import express from "express";
 import { createServer } from "http";
 import net from "net";
@@ -17,7 +16,7 @@ import fs from "fs";
 import path from "path";
 
 function isPortAvailable(port: number): Promise<boolean> {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const server = net.createServer();
     server.listen(port, () => {
       server.close(() => resolve(true));
@@ -43,11 +42,30 @@ async function startServer() {
       contentSecurityPolicy: {
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://fonts.googleapis.com"],
-          styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-          imgSrc: ["'self'", "data:", "blob:", "https://files.manuscdn.com", "https://*.blob.core.windows.net"],
+          scriptSrc: [
+            "'self'",
+            "'unsafe-inline'",
+            "'unsafe-eval'",
+            "https://fonts.googleapis.com",
+          ],
+          styleSrc: [
+            "'self'",
+            "'unsafe-inline'",
+            "https://fonts.googleapis.com",
+          ],
+          imgSrc: [
+            "'self'",
+            "data:",
+            "blob:",
+            "https://files.manuscdn.com",
+            "https://*.blob.core.windows.net",
+          ],
           fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
-          connectSrc: ["'self'", "https://*.openai.azure.com", "https://*.blob.core.windows.net"],
+          connectSrc: [
+            "'self'",
+            "https://*.openai.azure.com",
+            "https://*.blob.core.windows.net",
+          ],
           frameSrc: ["'none'"],
           objectSrc: ["'none'"],
           baseUri: ["'self'"],
@@ -91,12 +109,16 @@ async function startServer() {
         res.sendFile(path.resolve(distPath, "index.html"));
       });
     } else {
-      console.error(`Build directory not found: ${distPath}. Run 'pnpm build' first.`);
+      console.error(
+        `Build directory not found: ${distPath}. Run 'pnpm build' first.`
+      );
     }
   }
 
   // ─── Ensure Azure Blob container exists ───
-  await ensureContainer().catch((e) => console.warn("[Storage] Container init:", e.message));
+  await ensureContainer().catch(e =>
+    console.warn("[Storage] Container init:", e.message)
+  );
 
   // ─── Start Push Scheduler ───
   try {
@@ -115,7 +137,9 @@ async function startServer() {
 
   server.listen(port, () => {
     console.log(`LINCE server running on http://localhost:${port}/`);
-    console.log(`Environment: ${ENV.isProduction ? "production" : "development"}`);
+    console.log(
+      `Environment: ${ENV.isProduction ? "production" : "development"}`
+    );
   });
 }
 
