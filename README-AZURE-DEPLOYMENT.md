@@ -480,6 +480,7 @@ pnpm check:env -- --file .env.production
 - Verificar startup command: `npm start` (package en `dist/` con `start: node index.js`)
 - Comprobar que todas las variables de entorno están configuradas
 - Si aparece `Cannot find package 'lightningcss' imported from /home/site/wwwroot/index.js`, actualiza y redepliega con este commit (el build ya no externaliza dependencias de Vite/Tailwind en runtime).
+- Si en GitHub Actions (build) aparece `Could not resolve "@babel/preset-typescript/package.json"`, `Could not resolve "../pkg"` o `No loader is configured for ".node"`, actualiza y redepliega con este commit (el bundle del server excluye `./vite` en producción y evita empaquetar toolchain de Vite/Tailwind).
 
 ---
 
