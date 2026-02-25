@@ -479,6 +479,7 @@ pnpm check:env -- --file .env.production
 - Revisar logs: `az webapp log tail --name lince-app --resource-group rg-lince`
 - Verificar startup command: `npm start` (package en `dist/` con `start: node index.js`)
 - Comprobar que todas las variables de entorno están configuradas
+- Si aparece `Cannot find package 'lightningcss' imported from /home/site/wwwroot/index.js`, actualiza y redepliega con este commit (el build ya no externaliza dependencias de Vite/Tailwind en runtime).
 
 ---
 
