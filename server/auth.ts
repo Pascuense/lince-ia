@@ -18,6 +18,61 @@ const COOKIE_NAME = "lince_session";
 const SALT_ROUNDS = 12;
 const TOKEN_EXPIRY = "365d"; // 1 año
 
+// ─── Account Lockout (brute-force protection) ───
+const MAX_FAILED_ATTEMPTS = 5;
+const LOCKOUT_DURATION_MS = 15 * 60 * 1000; // 15 minutes
+const loginFailureMap = new Map<string, { count: number; lockedUntil: number | null }>();
+
+function getLockoutKey(email: string, ip: string): string {
+  return `${email.toLowerCase()}::${ip}`;
+}
+
+function checkAccountLockout(email: string, ip: string): void {
+  const key = getLockoutKey(email, ip);
+  const entry = loginFailureMap.get(key);
+  if (!entry) return;
+
+  if (entry.lockedUntil && Date.now() < entry.lockedUntil) {
+    const remainingSeconds = Math.ceil((entry.lockedUntil - Date.now()) / 1000);
+    throw Object.assign(new Error("Account locked"), {
+      statusCode: 429,
+      message: `Demasiados intentos fallidos. Cuenta bloqueada. Intenta de nuevo en ${remainingSeconds} segundos.`,
+    });
+  }
+
+  // Lockout expired — reset
+  if (entry.lockedUntil && Date.now() >= entry.lockedUntil) {
+    loginFailureMap.delete(key);
+  }
+}
+
+function recordFailedLogin(email: string, ip: string): void {
+  const key = getLockoutKey(email, ip);
+  const entry = loginFailureMap.get(key) ?? { count: 0, lockedUntil: null };
+  entry.count++;
+
+  if (entry.count >= MAX_FAILED_ATTEMPTS) {
+    entry.lockedUntil = Date.now() + LOCKOUT_DURATION_MS;
+    console.warn(`[Auth] Account locked for ${email} from IP ${ip} after ${entry.count} failed attempts`);
+  }
+
+  loginFailureMap.set(key, entry);
+}
+
+function clearFailedLogins(email: string, ip: string): void {
+  loginFailureMap.delete(getLockoutKey(email, ip));
+}
+
+// Cleanup expired lockouts every 10 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, entry] of loginFailureMap.entries()) {
+    if (!entry.lockedUntil || now >= entry.lockedUntil) {
+      loginFailureMap.delete(key);
+    }
+  }
+}, 10 * 60 * 1000);
+
 // ─── JWT Helpers ───
 
 export interface JwtPayload {
@@ -138,17 +193,35 @@ export function registerAuthRoutes(app: Express) {
         return;
       }
 
+      const clientIP =
+        (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() ||
+        req.socket?.remoteAddress ||
+        "unknown";
+
+      // Check account lockout before hitting the DB
+      try {
+        checkAccountLockout(email, clientIP);
+      } catch (lockErr: any) {
+        res.status(429).json({ error: lockErr.message });
+        return;
+      }
+
       const user = await db.getUserByEmail(email);
       if (!user || !user.passwordHash) {
+        recordFailedLogin(email, clientIP);
         res.status(401).json({ error: "Credenciales incorrectas." });
         return;
       }
 
       const valid = await comparePassword(password, user.passwordHash);
       if (!valid) {
+        recordFailedLogin(email, clientIP);
         res.status(401).json({ error: "Credenciales incorrectas." });
         return;
       }
+
+      // Successful login — clear failure counter
+      clearFailedLogins(email, clientIP);
 
       // Update last sign in
       await db.updateUserLastSignIn(user.id);

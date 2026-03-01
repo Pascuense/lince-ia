@@ -79,9 +79,9 @@ async function startServer() {
     })
   );
 
-  // Body parser
-  app.use(express.json({ limit: "50mb" }));
-  app.use(express.urlencoded({ limit: "50mb", extended: true }));
+  // Body parser — 10mb covers base64-encoded images (actual limit enforced in storage layer)
+  app.use(express.json({ limit: "10mb" }));
+  app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
   // ─── Auth Routes (JWT/bcrypt) ───
   registerAuthRoutes(app);
@@ -102,7 +102,7 @@ async function startServer() {
     await setupVite(app, server);
   } else {
     // Serve built static files
-    const distPath = path.resolve(import.meta.dirname, "public");
+    const distPath = path.resolve(__dirname, "public");
     if (fs.existsSync(distPath)) {
       app.use(express.static(distPath));
       app.use("*", (_req, res) => {
