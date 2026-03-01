@@ -39,6 +39,17 @@ export async function ensureContainer(): Promise<void> {
   }
 }
 
+// ─── Upload Validation ───
+const ALLOWED_MIME_TYPES = new Set([
+  "image/png",
+  "image/jpeg",
+  "image/jpg",
+  "image/webp",
+  "image/gif",
+  "image/svg+xml",
+]);
+const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB
+
 /**
  * Upload a file to Azure Blob Storage.
  * @param key - The blob name/path (e.g., "avatars/image.png")
@@ -51,14 +62,25 @@ export async function storagePut(
   data: Buffer | Uint8Array | string,
   contentType?: string
 ): Promise<{ key: string; url: string }> {
+  const buffer = typeof data === "string" ? Buffer.from(data) : Buffer.from(data);
+
+  // Validate file size
+  if (buffer.byteLength > MAX_FILE_SIZE_BYTES) {
+    throw new Error(`El archivo supera el tamaño máximo permitido de ${MAX_FILE_SIZE_BYTES / 1024 / 1024} MB.`);
+  }
+
+  // Validate MIME type
+  const resolvedType = contentType || "application/octet-stream";
+  if (!ALLOWED_MIME_TYPES.has(resolvedType)) {
+    throw new Error(`Tipo de archivo no permitido: ${resolvedType}. Solo se aceptan imágenes.`);
+  }
+
   const containerClient = getContainerClient();
   const blockBlobClient = containerClient.getBlockBlobClient(key);
 
-  const buffer = typeof data === "string" ? Buffer.from(data) : Buffer.from(data);
-
   await blockBlobClient.uploadData(buffer, {
     blobHTTPHeaders: {
-      blobContentType: contentType || "application/octet-stream",
+      blobContentType: resolvedType,
     },
   });
 
