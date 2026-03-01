@@ -102,7 +102,7 @@ async function startServer() {
     await setupVite(app, server);
   } else {
     // Serve built static files
-    const distPath = path.resolve(import.meta.dirname, "public");
+    const distPath = path.resolve(__dirname, "public");
     if (fs.existsSync(distPath)) {
       app.use(express.static(distPath));
       app.use("*", (_req, res) => {
