@@ -315,6 +315,11 @@ export const ALL_CHARACTERS: CharacterData[] = [
 
 // ─── HELPER: get avatar image by key from any collection ───
 export function getAvatarImage(key: string): string {
+  return AVATAR_FRONTAL[key] || AVATAR_MUSICALIN[key] || AVATAR_ZARAGOZA_HISTORICO[key] || AVATAR_PROFILE_PIC[key] || '';
+}
+
+// Helper: get profile pic (for small thumbnails in sidebar)
+export function getAvatarProfilePic(key: string): string {
   return AVATAR_PROFILE_PIC[key] || AVATAR_FRONTAL[key] || AVATAR_MUSICALIN[key] || AVATAR_ZARAGOZA_HISTORICO[key] || '';
 }
 

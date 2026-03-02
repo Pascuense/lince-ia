@@ -91,7 +91,7 @@ const T: Record<string, Record<string, string>> = {
     photoAnalyzed: "¡Rasgos detectados! Revisa y ajusta si quieres:",
     minutes: "min",
     seconds: "seg",
-    followUs: "Síguenos en Instagram para ver los mejores LINCELINS",
+    followUs: "Síguenos en Instagram para ver los mejores avatares",
     madeWith: "Hecho con LINCE — Aprende IA de forma fácil y divertida",
   },
   en: {
@@ -133,7 +133,7 @@ const T: Record<string, Record<string, string>> = {
     photoAnalyzed: "Features detected! Review and adjust if needed:",
     minutes: "min",
     seconds: "sec",
-    followUs: "Follow us on Instagram to see the best LINCELINS",
+    followUs: "Follow us on Instagram to see the best avatars",
     madeWith: "Made with LINCE — Learn AI the easy and fun way",
   },
   zh: {
@@ -175,7 +175,7 @@ const T: Record<string, Record<string, string>> = {
     photoAnalyzed: "特征已检测！如需调整请修改：",
     minutes: "分",
     seconds: "秒",
-    followUs: "在Instagram上关注我们，查看最佳LINCELINS",
+    followUs: "在Instagram上关注我们，查看最佳角色",
     madeWith: "由LINCE制作 — 轻松有趣地学习AI",
   },
 };

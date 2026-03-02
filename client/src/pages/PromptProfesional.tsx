@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { trpc } from "@/lib/trpc";
 import { useGuest } from "@/contexts/GuestContext";
 import { Button } from "@/components/ui/button";
@@ -149,7 +149,8 @@ function quickScore(role: string, task: string, format: string, example: string)
   return Math.min(score, 100);
 }
 
-export default function PromptProfesional() {
+export default function PromptProfesional(props: any) {
+  const embedded = props?.embedded === true;
   const [role, setRole] = useState("");
   const [task, setTask] = useState("");
   const [selectedFormat, setSelectedFormat] = useState("");
@@ -240,6 +241,235 @@ export default function PromptProfesional() {
 
   const isGenerating = enhanceMutation.isPending;
 
+  if (embedded) {
+    return (
+      <div className="bg-[#0d1219] overflow-y-auto h-full">
+        <div className="max-w-4xl mx-auto px-4 sm:px-8 pt-6 pb-20">
+          {/* Hero - Igual que PromptStudio */}
+          <div className="text-center mb-10">
+            <div className="flex justify-center mb-4">
+              <div className="relative">
+                <img src={PRO_AVATARS[0].img} alt={PRO_AVATARS[0].name} className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-3" style={{ borderColor: '#D4A843' }} />
+                <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-[#D4A843] flex items-center justify-center">
+                  <Brain className="w-4 h-4 text-[#0A0A0A]" />
+                </div>
+              </div>
+            </div>
+            <h2 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl text-white mb-2">
+              Generar <span className="text-[#D4A843]">Prompt</span> con IA
+            </h2>
+            <p className="text-white/60 text-base sm:text-lg max-w-lg mx-auto leading-relaxed">
+              Rellena los <span className="text-[#D4A843] font-bold">4 pasos</span> y genera tu prompt profesional.
+            </p>
+          </div>
+
+          {/* Puntuación simplificada - Igual que PromptStudio */}
+          <div className="mb-10 p-5 sm:p-6 bg-gradient-to-r from-[#D4A843]/[0.05] to-[#00E5FF]/[0.05] border border-white/[0.1] rounded-2xl">
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="font-['Space_Grotesk'] font-bold text-white text-lg sm:text-xl flex items-center gap-2">
+                <Target className="w-5 h-5 text-[#D4A843]" />
+                Tu puntuación
+              </h3>
+              <div className="flex items-center gap-3">
+                <span className="font-['Space_Grotesk'] font-black text-3xl sm:text-4xl" style={{ color: scoreColor }}>{localScore}%</span>
+                <div className="w-16 h-16 relative">
+                  <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="3.5" />
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke={scoreColor} strokeWidth="3.5" strokeDasharray={`${localScore}, 100`} className="transition-all duration-500" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {[
+                { key: "rol", name: "Rol", icon: "🎭", color: "#00E5FF", score: role.length > 50 ? 25 : role.length > 20 ? 15 : role.length > 0 ? 8 : 0, max: 25 },
+                { key: "tarea", name: "Tarea", icon: "🎯", color: "#D4A843", score: task.length > 100 ? 35 : task.length > 40 ? 22 : task.length > 0 ? 10 : 0, max: 35 },
+                { key: "formato", name: "Formato", icon: "📋", color: "#00C853", score: formatString.length > 30 ? 25 : formatString.length > 10 ? 15 : formatString.length > 0 ? 8 : 0, max: 25 },
+                { key: "ejemplo", name: "Ejemplo", icon: "💡", color: "#9C27B0", score: example.length > 50 ? 15 : example.length > 10 ? 8 : 0, max: 15 },
+              ].map((crit) => {
+                const pct = Math.round((crit.score / crit.max) * 100);
+                return (
+                  <div key={crit.key} className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xl">{crit.icon}</span>
+                      <span className="text-sm font-bold text-white">{crit.name}</span>
+                    </div>
+                    <div className="h-3 rounded-full bg-white/[0.08] overflow-hidden mb-1">
+                      <div className="h-full rounded-full transition-all duration-500" style={{ width: `${pct}%`, backgroundColor: crit.color }} />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold" style={{ color: crit.color }}>{crit.score}/{crit.max}</span>
+                      <span className="text-xs font-bold" style={{ color: pct >= 80 ? '#00C853' : pct >= 50 ? '#D4A843' : '#FF5252' }}>
+                        {pct >= 80 ? '\u2705' : pct >= 50 ? '\u{1F7E1}' : pct > 0 ? '\u{1F534}' : ''}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Formulario - Dos columnas en desktop (igual que PromptStudio) */}
+          <div className="grid lg:grid-cols-[1fr_400px] gap-8">
+            <div className="space-y-8">
+              {/* PASO 1: Rol y Contexto */}
+              <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border-2 border-[#00E5FF]/20">
+                <label className="flex items-center gap-3 text-white font-['Space_Grotesk'] font-bold text-lg sm:text-xl mb-4">
+                  <span className="w-10 h-10 rounded-full bg-[#00E5FF]/20 flex items-center justify-center text-[#00E5FF] font-black text-lg">1</span>
+                  ¿Quién eres?
+                  <span className="text-[#FF5252] text-sm">*</span>
+                </label>
+                <Textarea value={role} onChange={(e) => setRole(e.target.value)}
+                  placeholder="Ej: Director de formación de una PYME que necesita capacitar a 50 empleados en IA"
+                  className="bg-white/[0.05] border-2 border-white/[0.15] text-white text-base sm:text-lg placeholder:text-white/30 focus:border-[#00E5FF]/60 min-h-[80px] resize-none rounded-xl px-5 py-4"
+                  maxLength={500} />
+                <p className="text-white/40 text-sm mt-2">{role.length}/500 caracteres</p>
+              </div>
+
+              {/* PASO 2: Tarea */}
+              <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border-2 border-[#D4A843]/20">
+                <label className="flex items-center gap-3 text-white font-['Space_Grotesk'] font-bold text-lg sm:text-xl mb-4">
+                  <span className="w-10 h-10 rounded-full bg-[#D4A843]/20 flex items-center justify-center text-[#D4A843] font-black text-lg">2</span>
+                  ¿Qué necesitas?
+                  <span className="text-[#FF5252] text-sm">*</span>
+                </label>
+                <Textarea value={task} onChange={(e) => setTask(e.target.value)}
+                  placeholder="Ej: Crea un plan de formación de 7 horas sobre IA generativa con objetivos medibles"
+                  className="bg-white/[0.05] border-2 border-white/[0.15] text-white text-base sm:text-lg placeholder:text-white/30 focus:border-[#D4A843]/60 min-h-[100px] resize-none rounded-xl px-5 py-4"
+                  maxLength={2000} />
+                <p className="text-white/40 text-sm mt-2">{task.length}/2000 caracteres</p>
+              </div>
+
+              {/* PASO 3: Formato y Tono */}
+              <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border-2 border-[#00C853]/20">
+                <label className="flex items-center gap-3 text-white font-['Space_Grotesk'] font-bold text-lg sm:text-xl mb-4">
+                  <span className="w-10 h-10 rounded-full bg-[#00C853]/20 flex items-center justify-center text-[#00C853] font-black text-lg">3</span>
+                  Elige formato y tono
+                  <span className="text-[#FF5252] text-sm">*</span>
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+                  {FORMAT_OPTIONS.map((opt) => (
+                    <button key={opt.value} onClick={() => setSelectedFormat(selectedFormat === opt.value ? "" : opt.value)}
+                      className={`p-4 rounded-xl text-center transition-all border-2 font-semibold ${
+                        selectedFormat === opt.value
+                          ? "bg-[#00C853]/15 border-[#00C853] text-[#00C853] shadow-[0_0_15px_rgba(0,200,83,0.2)]"
+                          : "bg-white/[0.03] border-white/[0.08] text-white/70 hover:border-white/[0.2] hover:bg-white/[0.05]"
+                      }`}>
+                      <span className="text-2xl sm:text-3xl block mb-2">{opt.icon}</span>
+                      <span className="text-xs sm:text-sm block leading-tight">{opt.label}</span>
+                    </button>
+                  ))}
+                </div>
+                <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 mb-4">
+                  {TONE_OPTIONS.map((opt) => (
+                    <button key={opt.value} onClick={() => setSelectedTone(selectedTone === opt.value ? "" : opt.value)}
+                      className={`p-3 rounded-xl text-center transition-all border-2 font-semibold ${
+                        selectedTone === opt.value
+                          ? "bg-[#D4A843]/15 border-[#D4A843] text-[#D4A843] shadow-[0_0_15px_rgba(212,168,67,0.2)]"
+                          : "bg-white/[0.03] border-white/[0.08] text-white/70 hover:border-white/[0.2] hover:bg-white/[0.05]"
+                      }`}>
+                      <span className="text-xl block mb-1">{opt.icon}</span>
+                      <span className="text-[10px] sm:text-xs block leading-tight">{opt.label}</span>
+                    </button>
+                  ))}
+                </div>
+                <Textarea value={formatCustom} onChange={(e) => setFormatCustom(e.target.value)}
+                  placeholder="Instrucciones extra: máximo 500 palabras, incluir tabla, usar viñetas..."
+                  className="bg-white/[0.05] border-2 border-white/[0.15] text-white text-base placeholder:text-white/30 focus:border-[#00C853]/60 min-h-[60px] resize-none rounded-xl px-5 py-3"
+                  maxLength={500} />
+              </div>
+
+              {/* PASO 4: Ejemplo */}
+              <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border-2 border-[#9C27B0]/20">
+                <label className="flex items-center gap-3 text-white font-['Space_Grotesk'] font-bold text-lg sm:text-xl mb-4">
+                  <span className="w-10 h-10 rounded-full bg-[#9C27B0]/20 flex items-center justify-center text-[#9C27B0] font-black text-lg">4</span>
+                  Ejemplo
+                  <span className="text-white/40 text-sm ml-1">(opcional)</span>
+                </label>
+                <Textarea value={example} onChange={(e) => setExample(e.target.value)}
+                  placeholder="Ej: Bloque 1 (1h): Qué es la IA generativa — Objetivo: El alumno identifica 5 herramientas"
+                  className="bg-white/[0.05] border-2 border-white/[0.15] text-white text-base sm:text-lg placeholder:text-white/30 focus:border-[#9C27B0]/60 min-h-[80px] resize-none rounded-xl px-5 py-4"
+                  maxLength={2000} />
+              </div>
+
+              {/* Botones de acción - GRANDES */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button onClick={handleGenerate} disabled={!isFormValid || isGenerating}
+                  className="flex-1 h-16 sm:h-18 text-lg sm:text-xl bg-[#D4A843] text-[#0A0A0A] font-['Space_Grotesk'] font-black hover:bg-[#D4A843]/90 shadow-[0_0_30px_rgba(212,168,67,0.3)] disabled:opacity-40 rounded-2xl">
+                  {isGenerating ? (<><Loader2 className="w-6 h-6 mr-3 animate-spin" />Generando...</>) : (<><Wand2 className="w-6 h-6 mr-3" />GENERAR PROMPT</>)}
+                </Button>
+                <Button onClick={handleReset} variant="outline" className="h-16 sm:h-18 text-base border-2 border-white/15 text-white/50 hover:bg-white/5 rounded-2xl px-6">
+                  <RefreshCw className="w-5 h-5 mr-2" /> Limpiar
+                </Button>
+              </div>
+            </div>
+
+            {/* Columna derecha: Resultado */}
+            <div className="space-y-4">
+              {enhancedPrompt && (
+                <div className="p-5 bg-[#D4A843]/5 border border-[#D4A843]/20 rounded-2xl">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-['Space_Grotesk'] font-bold text-[#D4A843] text-base flex items-center gap-2"><Wand2 className="w-4 h-4" /> Tu Prompt Profesional</h4>
+                    <button onClick={copyPrompt} className="text-[#B0B0B0] hover:text-white transition-colors p-2"><Copy className="w-5 h-5" /></button>
+                  </div>
+                  <div className="text-[#B0B0B0] text-sm leading-relaxed whitespace-pre-wrap max-h-[400px] overflow-y-auto pr-2">
+                    {enhancedPrompt}
+                  </div>
+                </div>
+              )}
+
+              {aiScore !== null && (
+                <div className="p-4 bg-[#00E5FF]/5 border border-[#00E5FF]/20 rounded-2xl">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-['Space_Grotesk'] font-bold text-[#00E5FF] text-sm flex items-center gap-2"><Zap className="w-4 h-4" /> Análisis IA</h4>
+                    <span className="font-['Space_Grotesk'] font-bold text-xl" style={{ color: aiScore >= 70 ? '#00C853' : aiScore >= 40 ? '#D4A843' : '#FF5252' }}>{aiScore}/100</span>
+                  </div>
+                  {technique && (
+                    <div className="flex items-center gap-2 mb-3 p-2 bg-[#9C27B0]/10 border border-[#9C27B0]/20 rounded-lg">
+                      <Brain className="w-3 h-3 text-[#9C27B0]" />
+                      <span className="text-[#9C27B0] text-xs font-bold">{technique}</span>
+                    </div>
+                  )}
+                  {tips.length > 0 && (
+                    <div className="space-y-1.5">
+                      {tips.map((tip, i) => (
+                        <div key={i} className="flex items-start gap-2">
+                          <Star className="w-3 h-3 text-[#D4A843] mt-0.5 flex-shrink-0" />
+                          <span className="text-[#B0B0B0] text-xs">{tip}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {isGenerating && (
+                <div className="aspect-square bg-white/[0.02] border-2 border-[#D4A843]/20 rounded-2xl flex flex-col items-center justify-center gap-4">
+                  <div className="relative"><div className="w-16 h-16 rounded-full border-3 border-[#D4A843]/30 border-t-[#D4A843] animate-spin" /><Brain className="w-7 h-7 text-[#D4A843] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" /></div>
+                  <p className="text-white font-bold text-lg">Generando tu prompt...</p>
+                  <p className="text-white/40 text-sm">Aplicando las 6 técnicas de Anthropic</p>
+                </div>
+              )}
+
+              {!enhancedPrompt && !isGenerating && (
+                <div className="aspect-square bg-white/[0.02] border-2 border-white/[0.08] rounded-2xl flex flex-col items-center justify-center gap-4 border-dashed">
+                  <img src={PRO_AVATARS[0].expr?.pensando || PRO_AVATARS[0].img} alt="" className="w-20 h-20 rounded-full object-cover opacity-30" />
+                  <p className="text-white/40 text-base text-center px-6">Tu prompt aparecerá aquí</p>
+                  <p className="text-white/25 text-sm text-center px-6">Rellena los 4 pasos y pulsa "Generar Prompt"</p>
+                </div>
+              )}
+
+              <div className="flex items-center gap-3 p-4 bg-[#9C27B0]/5 border border-[#9C27B0]/20 rounded-xl">
+                <Brain className="w-5 h-5 text-[#9C27B0]" />
+                <p className="text-[#9C27B0] text-sm font-bold">Metodología Anthropic · 6 técnicas profesionales</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="pt-14 bg-[#0A0A0A] min-h-screen">
       <BackButton variant="inline" />
@@ -249,19 +479,12 @@ export default function PromptProfesional() {
         <div className="container flex items-center justify-between h-16">
           <a href="/" className="flex items-center gap-1">
             <ArrowLeft className="w-4 h-4 text-[#B0B0B0]" />
-            
-            <span className="font-['Space_Grotesk'] font-bold text-base text-[#00E5FF]">LINCE</span>
+            <span className="font-['Space_Grotesk'] font-bold text-base text-[#00E5FF]">LINCE IA</span>
           </a>
           <div className="flex items-center gap-3">
-            {/* Mode Toggle */}
             <div className="flex rounded-full border border-white/10 overflow-hidden">
-              <a href="/prompt-studio"
-                className="px-3 py-1.5 text-xs font-medium text-[#B0B0B0] hover:text-white hover:bg-white/5 transition-all">
-                Imagen
-              </a>
-              <span className="px-3 py-1.5 text-xs font-bold text-[#0A0A0A] bg-[#D4A843]">
-                Texto Pro
-              </span>
+              <a href="/prompt-studio" className="px-3 py-1.5 text-xs font-medium text-[#B0B0B0] hover:text-white hover:bg-white/5 transition-all">Imagen</a>
+              <span className="px-3 py-1.5 text-xs font-bold text-[#0A0A0A] bg-[#D4A843]">Texto Pro</span>
             </div>
             <span className="text-[#D4A843] text-xs font-medium px-3 py-1 rounded-full bg-[#D4A843]/10 border border-[#D4A843]/30 flex items-center gap-1.5">
               <Brain className="w-3 h-3" /> Anthropic AI
@@ -277,374 +500,20 @@ export default function PromptProfesional() {
           <div className="text-center mb-10">
             <div className="flex justify-center mb-4">
               <div className="relative">
-                <img
-                  src={PRO_AVATARS[0].img}
-                  alt={PRO_AVATARS[0].name}
-                  className="w-20 h-20 rounded-full object-cover border-2 border-[#D4A843]"
-                />
+                <img src={PRO_AVATARS[0].img} alt={PRO_AVATARS[0].name} className="w-20 h-20 rounded-full object-cover border-2 border-[#D4A843]" />
                 <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-[#D4A843] flex items-center justify-center">
                   <Brain className="w-3 h-3 text-[#0A0A0A]" />
                 </div>
               </div>
-            </div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#D4A843]/30 bg-[#D4A843]/5 mb-4">
-              <Brain className="w-4 h-4 text-[#D4A843]" />
-              <span className="text-[#D4A843] text-sm font-medium">Modo Profesional — Prompts de Texto con IA</span>
             </div>
             <h1 className="font-['Space_Grotesk'] font-bold text-4xl sm:text-5xl text-white mb-4">
               Prompt <span className="text-[#D4A843]">Profesional</span>
             </h1>
             <p className="text-[#B0B0B0] text-lg max-w-2xl mx-auto">
               Crea prompts de trabajo con <span className="text-[#D4A843] font-bold">4 campos inteligentes</span>.
-              La IA aplica internamente las <span className="text-[#00E5FF] font-bold">6 técnicas de Anthropic</span> para
-              generar prompts profesionales que puedes copiar y usar en cualquier IA.
-            </p>
-            {/* Avatar speech bubble */}
-            <div className="mt-4 inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-white/[0.03] border border-[#D4A843]/15">
-              <img src={PRO_AVATARS[0].expr?.feliz || PRO_AVATARS[0].img} alt="" className="w-10 h-10 rounded-full object-cover" />
-              <p className="text-[#B0B0B0] text-sm italic text-left">
-                "Yo soy <span className="text-[#00E5FF] font-bold">{PRO_AVATARS[0].name.replace('_', ' ')}</span>, el abuelo sabio.
-                Aquí cada miembro de la familia te enseña a crear prompts profesionales."
-              </p>
-            </div>
-            <p className="text-[#B0B0B0]/50 text-xs mt-3 italic">
-              "Saber hacer prompts es supervivencia profesional" — Dario Amodei, CEO Anthropic
             </p>
           </div>
-
-          {/* ─── LIVE SCORE ─── */}
-          <div className="mb-8 p-4 bg-gradient-to-r from-[#D4A843]/[0.04] via-white/[0.01] to-[#00E5FF]/[0.04] border border-white/[0.08] rounded-xl">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Target className="w-5 h-5 text-[#D4A843]" />
-                <span className="font-['Space_Grotesk'] font-bold text-white text-sm">Calidad del Prompt</span>
-                <span className="text-[#B0B0B0]/50 text-xs">(se actualiza mientras escribes)</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="font-['Space_Grotesk'] font-bold text-2xl" style={{ color: scoreColor }}>{localScore}%</span>
-                <div className="w-12 h-12 relative">
-                  <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
-                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="3" />
-                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke={scoreColor} strokeWidth="3" strokeDasharray={`${localScore}, 100`} className="transition-all duration-500" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* ─── AVATAR-DRIVEN TEMPLATES ─── */}
-          <div className="mb-8">
-            <h3 className="font-['Space_Grotesk'] font-semibold text-white text-sm mb-3 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#D4A843]" />
-              La familia LINCE te muestra ejemplos — haz clic para cargar
-            </h3>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {PRO_TEMPLATES.map((tpl, i) => {
-                const avatar = PRO_AVATARS[tpl.avatarIdx ?? 0];
-                return (
-                  <button key={i} onClick={() => handleTemplate(tpl)}
-                    className="text-left p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl hover:border-white/[0.2] transition-all group">
-                    <div className="flex items-start gap-3 mb-2">
-                      <img
-                        src={avatar.img}
-                        alt={avatar.name}
-                        className="w-12 h-12 rounded-full object-cover border-2 flex-shrink-0 group-hover:scale-105 transition-transform"
-                        style={{ borderColor: avatar.color }}
-                      />
-                      <div>
-                        <div className="flex items-center gap-2 mb-0.5">
-                          {tpl.icon}
-                          <span className="text-xs font-bold" style={{ color: avatar.color }}>{tpl.name}</span>
-                        </div>
-                        <p className="text-[#B0B0B0]/60 text-[10px]">{avatar.name.replace('_', ' ')} — {avatar.specialty}</p>
-                      </div>
-                    </div>
-                    <p className="text-[#B0B0B0] text-[11px] italic leading-snug">"{tpl.quote}"</p>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* ─── FORM + RESULT ─── */}
-          <div className="grid lg:grid-cols-[1fr_420px] gap-8">
-            {/* Left: Form */}
-            <div className="space-y-6">
-              {/* Field 1: Role + Context */}
-              <div>
-                <label className="flex items-center gap-2 text-white font-['Space_Grotesk'] font-bold text-sm mb-2">
-                  <Briefcase className="w-4 h-4 text-[#00E5FF]" />
-                  <span className="text-[#00E5FF]">1.</span> Rol y Contexto
-                  <span className="text-[#FF5252] text-xs">*</span>
-                </label>
-                <p className="text-[#B0B0B0]/60 text-xs mb-2">¿Quién eres y para qué contexto? La IA asumirá esta expertise.</p>
-                <Textarea
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  placeholder="Ej: Director de formación de una PYME industrial que necesita capacitar a 50 empleados en IA aplicada a producción"
-                  className="bg-white/[0.03] border-white/[0.08] text-white placeholder:text-[#B0B0B0]/40 focus:border-[#00E5FF]/50 min-h-[70px] resize-none"
-                  maxLength={500}
-                />
-                <p className="text-[#B0B0B0]/40 text-[10px] mt-1">{role.length}/500</p>
-              </div>
-
-              {/* Field 2: Task */}
-              <div>
-                <label className="flex items-center gap-2 text-white font-['Space_Grotesk'] font-bold text-sm mb-2">
-                  <FileText className="w-4 h-4 text-[#D4A843]" />
-                  <span className="text-[#D4A843]">2.</span> Tarea
-                  <span className="text-[#FF5252] text-xs">*</span>
-                </label>
-                <p className="text-[#B0B0B0]/60 text-xs mb-2">¿Qué necesitas exactamente? Sé lo más específico posible.</p>
-                <Textarea
-                  value={task}
-                  onChange={(e) => setTask(e.target.value)}
-                  placeholder="Ej: Crea un plan de formación de 7 horas sobre IA generativa para el departamento comercial, con objetivos medibles por bloque y actividades prácticas que puedan aplicar al día siguiente"
-                  className="bg-white/[0.03] border-white/[0.08] text-white placeholder:text-[#B0B0B0]/40 focus:border-[#D4A843]/50 min-h-[100px] resize-none"
-                  maxLength={2000}
-                />
-                <p className="text-[#B0B0B0]/40 text-[10px] mt-1">{task.length}/2000</p>
-              </div>
-
-              {/* Field 3: Format + Tone */}
-              <div>
-                <label className="flex items-center gap-2 text-white font-['Space_Grotesk'] font-bold text-sm mb-2">
-                  <Target className="w-4 h-4 text-[#00C853]" />
-                  <span className="text-[#00C853]">3.</span> Formato y Tono
-                  <span className="text-[#FF5252] text-xs">*</span>
-                </label>
-                <p className="text-[#B0B0B0]/60 text-xs mb-3">¿Cómo lo quieres? Selecciona formato y tono, o escribe tu propio.</p>
-
-                {/* Format chips */}
-                <div className="mb-3">
-                  <p className="text-[#B0B0B0]/50 text-[10px] mb-1.5 uppercase tracking-wider">Formato</p>
-                  <div className="flex flex-wrap gap-2">
-                    {FORMAT_OPTIONS.map((opt) => (
-                      <button key={opt.value} onClick={() => setSelectedFormat(selectedFormat === opt.value ? "" : opt.value)}
-                        className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all border ${
-                          selectedFormat === opt.value
-                            ? "bg-[#00C853]/15 border-[#00C853]/50 text-[#00C853]"
-                            : "bg-white/[0.02] border-white/[0.06] text-[#B0B0B0] hover:border-white/[0.15] hover:text-white"
-                        }`}>
-                        {opt.icon} {opt.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Tone chips */}
-                <div className="mb-3">
-                  <p className="text-[#B0B0B0]/50 text-[10px] mb-1.5 uppercase tracking-wider">Tono</p>
-                  <div className="flex flex-wrap gap-2">
-                    {TONE_OPTIONS.map((opt) => (
-                      <button key={opt.value} onClick={() => setSelectedTone(selectedTone === opt.value ? "" : opt.value)}
-                        className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all border ${
-                          selectedTone === opt.value
-                            ? "bg-[#D4A843]/15 border-[#D4A843]/50 text-[#D4A843]"
-                            : "bg-white/[0.02] border-white/[0.06] text-[#B0B0B0] hover:border-white/[0.15] hover:text-white"
-                        }`}>
-                        {opt.icon} {opt.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Custom format text */}
-                <Textarea
-                  value={formatCustom}
-                  onChange={(e) => setFormatCustom(e.target.value)}
-                  placeholder="Instrucciones adicionales de formato: máximo 500 palabras, incluir tabla comparativa, usar viñetas..."
-                  className="bg-white/[0.03] border-white/[0.08] text-white placeholder:text-[#B0B0B0]/40 focus:border-[#00C853]/50 min-h-[60px] resize-none"
-                  maxLength={500}
-                />
-              </div>
-
-              {/* Field 4: Example (optional) */}
-              <div>
-                <label className="flex items-center gap-2 text-white font-['Space_Grotesk'] font-bold text-sm mb-2">
-                  <Lightbulb className="w-4 h-4 text-[#9C27B0]" />
-                  <span className="text-[#9C27B0]">4.</span> Ejemplo
-                  <span className="text-[#B0B0B0] text-xs font-normal">(opcional pero potente)</span>
-                </label>
-                <p className="text-[#B0B0B0]/60 text-xs mb-2">Muéstrale a la IA un ejemplo de lo que quieres. Esto activa el <span className="text-[#9C27B0] font-bold">few-shot learning</span> — la técnica más poderosa de Anthropic.</p>
-                <Textarea
-                  value={example}
-                  onChange={(e) => setExample(e.target.value)}
-                  placeholder="Ej: Bloque 1 (1h): Qué es la IA generativa — Objetivo: El alumno identifica 5 herramientas de IA generativa y su aplicación en marketing"
-                  className="bg-white/[0.03] border-white/[0.08] text-white placeholder:text-[#B0B0B0]/40 focus:border-[#9C27B0]/50 min-h-[70px] resize-none"
-                  maxLength={2000}
-                />
-                <p className="text-[#B0B0B0]/40 text-[10px] mt-1">{example.length}/2000</p>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Button onClick={handleGenerate} disabled={!isFormValid || isGenerating}
-                  className="flex-1 h-12 bg-[#D4A843] text-[#0A0A0A] font-['Space_Grotesk'] font-bold hover:bg-[#D4A843]/90 shadow-[0_0_20px_rgba(212,168,67,0.3)] disabled:opacity-40">
-                  {isGenerating ? (<><Loader2 className="w-5 h-5 mr-2 animate-spin" />Generando prompt...</>) : (<><Wand2 className="w-5 h-5 mr-2" />Generar Prompt Profesional</>)}
-                </Button>
-                <Button onClick={handleReset} variant="outline" className="h-12 border-white/10 text-[#B0B0B0] hover:bg-white/5">
-                  <RefreshCw className="w-4 h-4 mr-2" />Limpiar
-                </Button>
-              </div>
-            </div>
-
-            {/* Right: Result Panel */}
-            <div className="space-y-4">
-              {/* Enhanced Prompt Result */}
-              {enhancedPrompt && (
-                <div className="p-5 bg-[#D4A843]/5 border border-[#D4A843]/20 rounded-xl">
-                  <div className="flex items-center justify-between mb-3">
-                    <h4 className="font-['Space_Grotesk'] font-bold text-[#D4A843] text-sm flex items-center gap-2">
-                      <Wand2 className="w-4 h-4" /> Prompt Profesional Generado
-                    </h4>
-                    <button onClick={copyPrompt} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#D4A843]/10 text-[#D4A843] text-xs font-bold hover:bg-[#D4A843]/20 transition-colors">
-                      <Copy className="w-3.5 h-3.5" /> Copiar
-                    </button>
-                  </div>
-                  <div className="text-[#B0B0B0] text-xs leading-relaxed font-['JetBrains_Mono'] whitespace-pre-wrap max-h-[400px] overflow-y-auto pr-2">
-                    {enhancedPrompt}
-                  </div>
-                </div>
-              )}
-
-              {/* AI Score + Tips */}
-              {aiScore !== null && (
-                <div className="p-4 bg-[#00E5FF]/5 border border-[#00E5FF]/20 rounded-xl">
-                  <div className="flex items-center justify-between mb-3">
-                    <h4 className="font-['Space_Grotesk'] font-bold text-[#00E5FF] text-sm flex items-center gap-2">
-                      <Zap className="w-4 h-4" /> Análisis IA
-                    </h4>
-                    <span className="font-['Space_Grotesk'] font-bold text-lg" style={{ color: aiScore >= 70 ? "#00C853" : aiScore >= 40 ? "#D4A843" : "#FF5252" }}>
-                      {aiScore}/100
-                    </span>
-                  </div>
-
-                  {technique && (
-                    <div className="flex items-center gap-2 mb-3 p-2 bg-[#9C27B0]/10 border border-[#9C27B0]/20 rounded-lg">
-                      <Brain className="w-3.5 h-3.5 text-[#9C27B0]" />
-                      <span className="text-[#9C27B0] text-[11px] font-bold">Técnica Anthropic aplicada:</span>
-                      <span className="text-[#B0B0B0] text-[11px]">{technique}</span>
-                    </div>
-                  )}
-
-                  {tips.length > 0 && (
-                    <div className="space-y-2">
-                      <p className="text-[#00E5FF] text-[11px] font-bold">Consejos para mejorar:</p>
-                      {tips.map((tip, i) => (
-                        <div key={i} className="flex items-start gap-2">
-                          <Star className="w-3 h-3 text-[#D4A843] mt-0.5 flex-shrink-0" />
-                          <span className="text-[#B0B0B0] text-[11px]">{tip}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Loading state with avatar */}
-              {isGenerating && (
-                <div className="p-8 bg-white/[0.02] border border-[#D4A843]/20 rounded-xl flex flex-col items-center justify-center gap-4">
-                  <div className="relative">
-                    <div className="w-16 h-16 rounded-full border-2 border-[#D4A843]/30 border-t-[#D4A843] animate-spin" />
-                    <img src={PRO_AVATARS[0].expr?.pensando || PRO_AVATARS[0].img} alt="" className="w-8 h-8 rounded-full object-cover absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-                  </div>
-                  <div className="text-center">
-                    <p className="text-white font-['Space_Grotesk'] font-bold text-sm">Aplicando las 6 técnicas de Anthropic...</p>
-                    <p className="text-[#B0B0B0] text-xs mt-1">La familia LINCE está construyendo tu prompt profesional</p>
-                  </div>
-                </div>
-              )}
-
-              {/* Empty state with avatar */}
-              {!enhancedPrompt && !isGenerating && (
-                <div className="p-8 bg-white/[0.02] border border-white/[0.06] rounded-xl flex flex-col items-center justify-center gap-3 border-dashed">
-                  <img src={PRO_AVATARS[0].expr?.pensando || PRO_AVATARS[0].img} alt="" className="w-16 h-16 rounded-full object-cover opacity-30" />
-                  <p className="text-[#B0B0B0]/40 text-sm text-center">Tu prompt profesional aparecerá aquí</p>
-                  <p className="text-[#B0B0B0]/30 text-[10px] text-center px-4">Rellena los campos y haz clic en "Generar Prompt Profesional"</p>
-                </div>
-              )}
-
-              {/* Anthropic Badge */}
-              <div className="p-3 bg-[#9C27B0]/5 border border-[#9C27B0]/15 rounded-lg">
-                <p className="text-[#B0B0B0] text-[10px]">
-                  <span className="text-[#9C27B0] font-bold">Metodología Anthropic:</span> Este modo aplica internamente las 6 técnicas oficiales de ingeniería de prompts:
-                  especificidad, ejemplos (few-shot), cadena de pensamiento, formato estructurado, asignación de rol y restricciones.
-                </p>
-              </div>
-
-              {/* Security badge */}
-              <div className="p-3 bg-[#00C853]/5 border border-[#00C853]/15 rounded-lg flex items-center gap-2">
-                <Shield className="w-4 h-4 text-[#00C853] flex-shrink-0" />
-                <p className="text-[#B0B0B0] text-[10px]">
-                  <span className="text-[#00C853] font-bold">Seguro:</span> Inputs sanitizados, rate limiting activo. Tus prompts no se almacenan.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* ─── METHODOLOGY ACCORDION ─── */}
-          <div className="mt-12 mb-8">
-            <button
-              onClick={() => setShowMethodology(!showMethodology)}
-              className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-[#D4A843]/5 via-[#9C27B0]/5 to-[#00E5FF]/5 border border-[#D4A843]/20 rounded-xl hover:border-[#D4A843]/40 transition-all"
-            >
-              <div className="flex items-center gap-3">
-                <Brain className="w-5 h-5 text-[#D4A843]" />
-                <span className="font-['Space_Grotesk'] font-bold text-white text-sm">Las 6 Técnicas de Anthropic — Cómo funciona este modo</span>
-              </div>
-              <ChevronDown className={`w-5 h-5 text-[#B0B0B0] transition-transform duration-300 ${showMethodology ? "rotate-180" : ""}`} />
-            </button>
-
-            {showMethodology && (
-              <div className="mt-2 p-6 bg-white/[0.02] border border-white/[0.06] rounded-xl space-y-6">
-                <p className="text-[#B0B0B0] text-sm leading-relaxed">
-                  Este modo aplica internamente las <span className="text-[#D4A843] font-bold">6 técnicas oficiales de ingeniería de prompts de Anthropic</span>,
-                  combinadas con la filosofía de <span className="text-[#00E5FF] font-bold">Dario Amodei</span> sobre el uso responsable y efectivo de la IA.
-                  Tú solo rellenas 4 campos simples — la IA hace el trabajo pesado.
-                </p>
-
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {[
-                    { num: "1", title: "Especificidad", color: "#00E5FF", text: "Instrucciones claras y directas. Sin ambigüedades. La IA convierte tu input en instrucciones quirúrgicas." },
-                    { num: "2", title: "Few-Shot Learning", color: "#D4A843", text: "Si das un ejemplo, la IA lo usa como patrón. Es la técnica más poderosa para obtener exactamente lo que quieres." },
-                    { num: "3", title: "Chain of Thought", color: "#00C853", text: "La IA estructura el razonamiento paso a paso. Descompone tareas complejas en pasos manejables." },
-                    { num: "4", title: "Formato Estructurado", color: "#9C27B0", text: "Organiza la salida con secciones, marcadores y estructura clara. El resultado es ordenado y profesional." },
-                    { num: "5", title: "Asignación de Rol", color: "#FF5252", text: "Le da a la IA una expertise específica basada en tu contexto. Un experto en marketing responde diferente que un ingeniero." },
-                    { num: "6", title: "Restricciones", color: "#00BCD4", text: "Establece límites inteligentes: longitud, formato de salida, qué incluir y qué no. Evita respuestas genéricas." },
-                  ].map((step) => (
-                    <div key={step.num} className="p-4 rounded-lg" style={{ backgroundColor: `${step.color}08`, border: `1px solid ${step.color}20` }}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="w-7 h-7 rounded-full flex items-center justify-center font-bold text-sm" style={{ backgroundColor: `${step.color}20`, color: step.color }}>{step.num}</span>
-                        <h4 className="font-['Space_Grotesk'] font-bold text-white text-sm">{step.title}</h4>
-                      </div>
-                      <p className="text-[#B0B0B0] text-xs">{step.text}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="p-4 bg-[#D4A843]/5 border border-[#D4A843]/20 rounded-lg">
-                  <p className="text-[#D4A843] text-xs font-bold mb-1 flex items-center gap-1.5"><Zap className="w-3.5 h-3.5" /> Filosofía Dario Amodei (CEO Anthropic)</p>
-                  <p className="text-[#B0B0B0] text-xs leading-relaxed">
-                    "Estamos en la adolescencia tecnológica. El 50% de los empleos white-collar de nivel de entrada serán disrumpidos en 1-5 años.
-                    Saber crear prompts efectivos no es un lujo — es supervivencia profesional. Intervenir quirúrgicamente, ser pragmático y basado en evidencia."
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Footer CTA */}
-          <div className="mt-8 text-center">
-            <div className="inline-flex gap-4">
-              <a href="/prompt-studio" className="inline-flex items-center gap-2 px-6 py-3 bg-[#00E5FF]/10 border border-[#00E5FF]/30 text-[#00E5FF] rounded-xl font-['Space_Grotesk'] font-bold text-sm hover:bg-[#00E5FF]/20 transition-colors">
-                <Sparkles className="w-4 h-4" /> IMAGELIN
-              </a>
-              <a href="/arsenal-ia" className="inline-flex items-center gap-2 px-6 py-3 bg-[#D4A843]/10 border border-[#D4A843]/30 text-[#D4A843] rounded-xl font-['Space_Grotesk'] font-bold text-sm hover:bg-[#D4A843]/20 transition-colors">
-                <Zap className="w-4 h-4" /> Arsenal IA
-              </a>
-            </div>
-          </div>
+          <p className="text-center text-[#B0B0B0] text-sm">Usa la versión embebida en el ChatDashboard para la experiencia completa.</p>
         </div>
       </main>
     </div>

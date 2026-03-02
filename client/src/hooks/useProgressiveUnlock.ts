@@ -14,11 +14,11 @@
  * Admins bypass all locks.
  * 
  * Unlock rules:
- * - After registration: Jugar (Level 1) + LINCELIN + Personajes
- * - After Level 1 complete: Arsenal IA + IMAGELIN
+ * - After registration: Jugar (Level 1) + Mi Avatar + Especialistas
+ * - After Level 1 complete: Herramientas IA + Crear Imagen
  * - After Level 2 complete: Mundo LINCE
- * - After Level 3 complete: Raids
- * - After 500 XP: Academia
+ * - After Level 3 complete: Batallas
+ * - After 500 XP: Cursos
  */
 import { useMemo, useEffect, useRef, useState, useCallback } from "react";
 import { useGame } from "@/contexts/GameContext";
@@ -86,8 +86,8 @@ const NEXT_ACTIONS: Record<string, { key: string; label: Record<string, string> 
   level1: {
     key: "level1",
     label: {
-      es: "¡Completa el Nivel 1 para desbloquear Arsenal IA y IMAGELIN!",
-      en: "Complete Level 1 to unlock AI Arsenal and IMAGELIN!",
+      es: "¡Completa el Nivel 1 para desbloquear Herramientas IA y Crear Imagen!",
+      en: "Complete Level 1 to unlock AI Tools and Create Image!",
       zh: "完成第1关解锁AI武器库和山猫图像！",
     },
   },
@@ -102,15 +102,15 @@ const NEXT_ACTIONS: Record<string, { key: string; label: Record<string, string> 
   level3: {
     key: "level3",
     label: {
-      es: "¡Completa el Nivel 3 para desbloquear las Raids!",
-      en: "Complete Level 3 to unlock Raids!",
+      es: "¡Completa el Nivel 3 para desbloquear las Batallas!",
+      en: "Complete Level 3 to unlock Battles!",
       zh: "完成第3关解锁突袭！",
     },
   },
   xp500: {
     key: "xp500",
     label: {
-      es: "¡Consigue 500 XP para desbloquear la Academia!",
+      es: "¡Consigue 500 XP para desbloquear los Cursos!",
       en: "Reach 500 XP to unlock the Academy!",
       zh: "获得500经验值解锁学院！",
     },
@@ -151,7 +151,7 @@ function computeLocalUnlocks(levels: Array<{ id: number; completed: boolean }>, 
     personajes: true,
     perfil: true,
     recompensas: true,
-    // Arsenal IA, IMAGELIN, and Promptear are ALWAYS unlocked for all users
+    // Herramientas IA, Crear Imagen, and Aprender Prompts are ALWAYS unlocked for all users
     arsenalIA: true,
     promptStudio: true,
     promptear: true,
@@ -348,16 +348,16 @@ export function useProgressiveUnlock(): UnlockInfo {
 /** Translations for unlock names */
 export const UNLOCK_LABELS: Record<keyof UnlockState, Record<string, string>> = {
   jugar: { es: "Jugar", en: "Play", zh: "游戏" },
-  creaTuLincelin: { es: "LINCELIN", en: "LINCELIN", zh: "LINCELIN" },
+  creaTuLincelin: { es: "Mi Avatar", en: "My Avatar", zh: "我的角色" },
   personajes: { es: "Personajes", en: "Characters", zh: "角色" },
   perfil: { es: "Mi Perfil", en: "My Profile", zh: "我的资料" },
   recompensas: { es: "Recompensas", en: "Rewards", zh: "奖励" },
-  arsenalIA: { es: "Arsenal IA", en: "AI Arsenal", zh: "AI武器库" },
-  promptStudio: { es: "IMAGELIN", en: "IMAGELIN", zh: "山猫图像" },
-  promptear: { es: "PROMPTLIN", en: "PROMPTLIN", zh: "PROMPTLIN" },
+  arsenalIA: { es: "Herramientas IA", en: "AI Tools", zh: "AI工具" },
+  promptStudio: { es: "Crear Imagen", en: "Create Image", zh: "创建图像" },
+  promptear: { es: "Aprender Prompts", en: "Learn Prompts", zh: "学习提示词" },
   mundo: { es: "Mundo LINCE", en: "World LINCE", zh: "LINCE世界" },
-  raids: { es: "Raids", en: "Raids", zh: "突袭" },
-  academia: { es: "Academia", en: "Academy", zh: "学院" },
+  raids: { es: "Batallas", en: "Battles", zh: "对战" },
+  academia: { es: "Cursos", en: "Courses", zh: "课程" },
 };
 
 /** Unlock requirement descriptions */

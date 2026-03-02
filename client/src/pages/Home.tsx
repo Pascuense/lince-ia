@@ -9,6 +9,7 @@ import { Footer } from "@/components/HomeFooter";
 import { AvatarStoryModal } from "@/components/AvatarStoryModal";
 import { SocialShareBar } from "@/components/SocialShareBar";
 import { WelcomeMissions } from "@/components/WelcomeMissions";
+import { FirstUseTutorial } from "@/components/FirstUseTutorial";
 // GlobalSearch, PRDLanguageSelector, UserNavBadge now only used in HomeNavigation
 
 const WelcomeModal = lazy(() => import("@/components/WelcomeModal"));
@@ -27,92 +28,125 @@ const AVATARS = AVATAR_FRONTAL;
 function HeroSection() {
   const { t, lang } = usePRDLanguage();
   return (
-    <section id="hero" className="relative min-h-[85vh] sm:min-h-screen flex items-center overflow-hidden">
+    <section id="hero" className="relative min-h-[70vh] sm:min-h-[85vh] flex items-center overflow-hidden">
       <div className="absolute inset-0">
         <img src={HERO_IMG} alt="LINCE - Aprende IA jugando" className="w-full h-full object-cover opacity-30 object-center sm:object-[center_30%]" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/80 via-[#0A0A0A]/60 to-[#0A0A0A]" />
       </div>
-      <div className="container relative z-10 pt-20 sm:pt-24 pb-12 sm:pb-16">
+      <div className="container relative z-10 pt-32 sm:pt-36 pb-12 sm:pb-16">
         <FadeIn delay={100}>
-          <h1 className="font-['Space_Grotesk'] font-bold text-4xl sm:text-6xl lg:text-8xl text-white leading-[0.95] mb-4 sm:mb-6">
+          <h1 className="font-['Space_Grotesk'] font-bold text-5xl sm:text-7xl lg:text-8xl text-white leading-[0.95] mb-5 sm:mb-7">
             <span className="text-[#00E5FF]">LINCE</span>
           </h1>
         </FadeIn>
         <FadeIn delay={200}>
-          <h2 className="font-['Space_Grotesk'] text-lg sm:text-2xl lg:text-3xl text-[#D4A843] font-medium mb-4 sm:mb-6">
+          <h2 className="font-['Space_Grotesk'] text-xl sm:text-3xl lg:text-4xl text-[#D4A843] font-semibold mb-5 sm:mb-7">
             {t('hero.subtitle')}
           </h2>
         </FadeIn>
         <FadeIn delay={300}>
-          <p className="text-[#B0B0B0] text-base sm:text-lg max-w-2xl leading-relaxed mb-8 sm:mb-10">
+          <p className="text-white/80 text-lg sm:text-xl lg:text-2xl max-w-3xl leading-relaxed mb-10 sm:mb-12">
             {t('hero.description') || 'Una app donde aprendes a usar inteligencia artificial de forma fácil y divertida. Paso a paso, con personajes que te guían, juegos y retos. Da igual si tienes 13 o 80 años: aquí cualquiera puede aprender. Tú eliges tu ritmo, tu personaje y tu idioma.'}
           </p>
         </FadeIn>
 
-        {/* Quick access buttons — simplificados */}
+        {/* Quick access buttons — GRANDES y claros */}
         <FadeIn delay={350}>
-          <div className="flex flex-wrap gap-2 sm:gap-3 mb-8">
-            <a href="/tutorial" data-tour="play" className="group flex items-center gap-2 px-4 sm:px-6 py-3 bg-[oklch(0.82_0.15_195)]/20 border border-[oklch(0.82_0.15_195)]/40 rounded-xl hover:bg-[oklch(0.82_0.15_195)]/30 hover:scale-105 transition-all duration-300">
-              <span className="text-xl">🕹️</span>
-              <span className="text-[oklch(0.82_0.15_195)] font-['Space_Grotesk'] font-bold text-sm sm:text-base">{tl(lang, { es: '¡JUGAR AHORA!', en: 'PLAY NOW', zh: '立即开始', 'pt-BR': 'JOGAR AGORA!', 'pt-PT': 'JOGAR AGORA!' })}</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mb-10 max-w-4xl">
+            {/* FAMILIA — PRIMERA y más prominente */}
+            <a href="/chat" data-tour="avatars" className="group relative sm:col-span-2 lg:col-span-3 flex items-center gap-4 px-6 py-5 bg-amber-500/20 border-3 border-amber-400/60 rounded-2xl hover:bg-amber-500/30 hover:border-amber-400/80 transition-all duration-300 min-h-[80px] shadow-[0_0_20px_rgba(217,170,67,0.15)]">
+              <span className="text-4xl">🐱</span>
+              <div className="flex flex-col">
+                <div className="flex items-center gap-2">
+                  <span className="text-amber-300 font-['Space_Grotesk'] font-black text-xl sm:text-2xl">{tl(lang, { es: 'Familia LINCE IA', en: 'LINCE IA Family', zh: 'LINCE IA家族', 'pt-BR': 'Família LINCE IA', 'pt-PT': 'Família LINCE IA' })}</span>
+                  <span className="px-2.5 py-0.5 bg-amber-400/30 text-amber-200 text-xs sm:text-sm font-bold rounded-full">{tl(lang, { es: '¡EMPIEZA AQUÍ!', en: 'START HERE!', zh: '从这里开始!', 'pt-BR': 'COMECE AQUI!', 'pt-PT': 'COMECE AQUI!' })}</span>
+                </div>
+                <span className="text-amber-200/70 text-sm sm:text-base mt-0.5">{tl(lang, { es: '10 especialistas en IA te enseñan paso a paso. Elige uno y pregúntale lo que quieras.', en: '10 AI specialists teach you step by step. Pick one and ask anything.', zh: '10位AI专家一步步教你。选一个，问任何问题。', 'pt-BR': '10 especialistas em IA te ensinam passo a passo. Escolha um e pergunte o que quiser.', 'pt-PT': '10 especialistas em IA ensinam-te passo a passo. Escolhe um e pergunta o que quiseres.' })}</span>
+              </div>
+              <span className="ml-auto text-amber-400 text-2xl">→</span>
             </a>
-            <a href="/prompt-studio" data-tour="prompt-studio" className="group flex items-center gap-2 px-4 py-3 bg-purple-500/10 border border-purple-500/30 rounded-xl hover:bg-purple-500/20 hover:scale-105 transition-all duration-300">
-              <span className="text-xl">🖼️</span>
-              <span className="text-purple-400 font-['Space_Grotesk'] font-bold text-sm">IMAGELIN</span>
+
+            {/* Crear Imagen */}
+            <a href="/prompt-studio" data-tour="prompt-studio" className="group flex items-center gap-3 px-5 py-4 bg-purple-500/15 border-2 border-purple-500/40 rounded-2xl hover:bg-purple-500/25 transition-all duration-300 min-h-[70px]">
+              <span className="text-2xl">🖼️</span>
+              <div className="flex flex-col">
+                <span className="text-purple-300 font-['Space_Grotesk'] font-bold text-base sm:text-lg">{tl(lang, { es: 'Crear Imagen', en: 'Create Image', zh: '创建图像', 'pt-BR': 'Criar Imagem', 'pt-PT': 'Criar Imagem' })}</span>
+                <span className="text-purple-300/60 text-xs sm:text-sm">{tl(lang, { es: 'Genera imágenes con IA', en: 'Generate images with AI', zh: '用AI生成图像', 'pt-BR': 'Gere imagens com IA', 'pt-PT': 'Gera imagens com IA' })}</span>
+              </div>
             </a>
-            <a href="/lincelin" className="group flex items-center gap-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-pink-500/15 to-[#D4A843]/15 border border-pink-500/40 rounded-xl hover:from-pink-500/25 hover:to-[#D4A843]/25 hover:scale-105 transition-all duration-300 shadow-[0_0_15px_rgba(236,72,153,0.15)]">
-              <span className="text-xl">🎨</span>
-              <span className="bg-gradient-to-r from-pink-400 to-[#D4A843] bg-clip-text text-transparent font-['Space_Grotesk'] font-black text-sm sm:text-base">LINCELIN</span>
+
+            {/* Mi Avatar */}
+            <a href="/lincelin" className="group flex items-center gap-3 px-5 py-4 bg-pink-500/15 border-2 border-pink-500/40 rounded-2xl hover:bg-pink-500/25 transition-all duration-300 min-h-[70px]">
+              <span className="text-2xl">🎨</span>
+              <div className="flex flex-col">
+                <span className="text-pink-300 font-['Space_Grotesk'] font-bold text-base sm:text-lg">{tl(lang, { es: 'Mi Avatar', en: 'My Avatar', zh: '我的头像', 'pt-BR': 'Meu Avatar', 'pt-PT': 'Meu Avatar' })}</span>
+                <span className="text-pink-300/60 text-xs sm:text-sm">{tl(lang, { es: 'Crea tu personaje LINCE', en: 'Create your LINCE character', zh: '创建你的LINCE角色', 'pt-BR': 'Crie seu personagem LINCE', 'pt-PT': 'Cria o teu personagem LINCE' })}</span>
+              </div>
             </a>
-            <a href="/personajes" data-tour="avatars" className="group flex items-center gap-2 px-4 py-3 bg-amber-500/10 border border-amber-500/30 rounded-xl hover:bg-amber-500/20 hover:scale-105 transition-all duration-300">
-              <span className="text-xl">🐱</span>
-              <span className="text-amber-400 font-['Space_Grotesk'] font-bold text-sm">{tl(lang, { es: 'Avatares', en: 'Avatars', zh: '角色', 'pt-BR': 'Avatares', 'pt-PT': 'Avatares' })}</span>
+
+            {/* Herramientas IA */}
+            <a href="/arsenal-ia" className="group flex items-center gap-3 px-5 py-4 bg-[#00E5FF]/15 border-2 border-[#00E5FF]/40 rounded-2xl hover:bg-[#00E5FF]/25 transition-all duration-300 min-h-[70px]">
+              <span className="text-2xl">⚡</span>
+              <div className="flex flex-col">
+                <span className="text-[#00E5FF] font-['Space_Grotesk'] font-bold text-base sm:text-lg">{tl(lang, { es: 'Herramientas IA', en: 'AI Tools', zh: 'AI工具', 'pt-BR': 'Ferramentas IA', 'pt-PT': 'Ferramentas IA' })}</span>
+                <span className="text-[#00E5FF]/60 text-xs sm:text-sm">{tl(lang, { es: 'Descubre las mejores apps de IA', en: 'Discover the best AI apps', zh: '发现最好的AI应用', 'pt-BR': 'Descubra os melhores apps de IA', 'pt-PT': 'Descobre as melhores apps de IA' })}</span>
+              </div>
             </a>
-            <a href="/arsenal-ia" className="group flex items-center gap-2 px-4 py-3 bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-xl hover:bg-[#00E5FF]/20 hover:scale-105 transition-all duration-300">
-              <span className="text-xl">⚡</span>
-              <span className="text-[#00E5FF] font-['Space_Grotesk'] font-bold text-sm">Arsenal IA</span>
+
+            {/* Aprender Prompts */}
+            <a href="/promptear" className="group flex items-center gap-3 px-5 py-4 bg-violet-500/15 border-2 border-violet-500/40 rounded-2xl hover:bg-violet-500/25 transition-all duration-300 min-h-[70px]">
+              <span className="text-2xl">🧠</span>
+              <div className="flex flex-col">
+                <span className="text-violet-300 font-['Space_Grotesk'] font-bold text-base sm:text-lg">{tl(lang, { es: 'Aprender Prompts', en: 'Learn Prompts', zh: '学习提示', 'pt-BR': 'Aprender Prompts', 'pt-PT': 'Aprender Prompts' })}</span>
+                <span className="text-violet-300/60 text-xs sm:text-sm">{tl(lang, { es: 'Aprende a hablar con la IA', en: 'Learn to talk to AI', zh: '学习与AI对话', 'pt-BR': 'Aprenda a falar com a IA', 'pt-PT': 'Aprende a falar com a IA' })}</span>
+              </div>
             </a>
-            <a href="/promptear" className="group flex items-center gap-2 px-4 py-3 bg-pink-500/10 border border-pink-500/30 rounded-xl hover:bg-pink-500/20 hover:scale-105 transition-all duration-300">
-              <span className="text-xl">🧠</span>
-              <span className="text-pink-400 font-['Space_Grotesk'] font-bold text-sm">PROMPTLIN</span>
+
+            {/* JUGAR — al final */}
+            <a href="/tutorial" data-tour="play" className="group flex items-center gap-3 px-5 py-4 bg-[oklch(0.82_0.15_195)]/20 border-2 border-[oklch(0.82_0.15_195)]/50 rounded-2xl hover:bg-[oklch(0.82_0.15_195)]/30 transition-all duration-300 min-h-[70px]">
+              <span className="text-2xl">🕹️</span>
+              <div className="flex flex-col">
+                <span className="text-[oklch(0.82_0.15_195)] font-['Space_Grotesk'] font-bold text-base sm:text-lg">{tl(lang, { es: '¡JUGAR!', en: 'PLAY!', zh: '开始玩!', 'pt-BR': 'JOGAR!', 'pt-PT': 'JOGAR!' })}</span>
+                <span className="text-[oklch(0.82_0.15_195)]/60 text-xs sm:text-sm">{tl(lang, { es: 'Juega y sube de nivel', en: 'Play and level up', zh: '玩游戏升级', 'pt-BR': 'Jogue e suba de nível', 'pt-PT': 'Joga e sobe de nível' })}</span>
+              </div>
             </a>
             {isAdminUser() && (
               <>
-                <a href="/mundo" className="group flex items-center gap-2 px-4 py-3 bg-amber-500/10 border border-amber-500/30 rounded-xl hover:bg-amber-500/20 hover:scale-105 transition-all duration-300 opacity-70">
-                  <span className="text-xl">🌍</span>
-                  <span className="text-amber-400 font-['Space_Grotesk'] font-bold text-sm">{tl(lang, { es: 'Mundo', en: 'World', zh: '世界', 'pt-BR': 'Mundo', 'pt-PT': 'Mundo' })}</span>
+                <a href="/mundo" className="group flex items-center gap-3 px-5 py-4 bg-amber-500/10 border-2 border-amber-500/30 rounded-2xl hover:bg-amber-500/20 transition-all duration-300 opacity-70 min-h-[60px]">
+                  <span className="text-2xl">🌍</span>
+                  <span className="text-amber-400 font-['Space_Grotesk'] font-bold text-base">{tl(lang, { es: 'Mundo', en: 'World', zh: '世界', 'pt-BR': 'Mundo', 'pt-PT': 'Mundo' })}</span>
                 </a>
-                <a href="/raids" className="group flex items-center gap-2 px-4 py-3 bg-red-500/10 border border-red-500/30 rounded-xl hover:bg-red-500/20 hover:scale-105 transition-all duration-300 opacity-70">
-                  <span className="text-xl">⚔️</span>
-                  <span className="text-red-400 font-['Space_Grotesk'] font-bold text-sm">Raids</span>
+                <a href="/raids" className="group flex items-center gap-3 px-5 py-4 bg-red-500/10 border-2 border-red-500/30 rounded-2xl hover:bg-red-500/20 transition-all duration-300 opacity-70 min-h-[60px]">
+                  <span className="text-2xl">⚔️</span>
+                  <span className="text-red-400 font-['Space_Grotesk'] font-bold text-base">Batallas</span>
                 </a>
-                <a href="/academia" className="group flex items-center gap-2 px-4 py-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl hover:bg-emerald-500/20 hover:scale-105 transition-all duration-300 opacity-70">
-                  <span className="text-xl">🎓</span>
-                  <span className="text-emerald-400 font-['Space_Grotesk'] font-bold text-sm">{tl(lang, { es: 'Academia', en: 'Academy', zh: '学院', 'pt-BR': 'Academia', 'pt-PT': 'Academia' })}</span>
+                <a href="/academia" className="group flex items-center gap-3 px-5 py-4 bg-emerald-500/10 border-2 border-emerald-500/30 rounded-2xl hover:bg-emerald-500/20 transition-all duration-300 opacity-70 min-h-[60px]">
+                  <span className="text-2xl">🎓</span>
+                  <span className="text-emerald-400 font-['Space_Grotesk'] font-bold text-base">{tl(lang, { es: 'Academia', en: 'Academy', zh: '学院', 'pt-BR': 'Academia', 'pt-PT': 'Academia' })}</span>
                 </a>
               </>
             )}
           </div>
         </FadeIn>
 
-        {/* Stats */}
+        {/* Stats — bigger text */}
         <FadeIn delay={450}>
           <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-3 sm:gap-4 mb-8">
-            <div className="px-3 sm:px-5 py-2.5 sm:py-3 bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-lg">
-              <span className="text-[#00E5FF] font-['Space_Grotesk'] font-bold text-xl sm:text-2xl">85</span>
-              <span className="text-[#B0B0B0] text-xs sm:text-sm ml-2">{t('hero.stat1')}</span>
+            <div className="px-4 sm:px-6 py-3 sm:py-4 bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-xl">
+              <span className="text-[#00E5FF] font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl">85</span>
+              <span className="text-white/70 text-sm sm:text-base ml-2 font-medium">{t('hero.stat1')}</span>
             </div>
-            <div className="px-3 sm:px-5 py-2.5 sm:py-3 bg-[#D4A843]/10 border border-[#D4A843]/30 rounded-lg">
-              <span className="text-[#D4A843] font-['Space_Grotesk'] font-bold text-xl sm:text-2xl">6</span>
-              <span className="text-[#B0B0B0] text-xs sm:text-sm ml-2">{t('hero.stat2')}</span>
+            <div className="px-4 sm:px-6 py-3 sm:py-4 bg-[#D4A843]/10 border border-[#D4A843]/30 rounded-xl">
+              <span className="text-[#D4A843] font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl">6</span>
+              <span className="text-white/70 text-sm sm:text-base ml-2 font-medium">{t('hero.stat2')}</span>
             </div>
-            <div className="px-3 sm:px-5 py-2.5 sm:py-3 bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-lg">
-              <span className="text-[#00E5FF] font-['Space_Grotesk'] font-bold text-xl sm:text-2xl">3</span>
-              <span className="text-[#B0B0B0] text-xs sm:text-sm ml-2">{t('hero.stat3')}</span>
+            <div className="px-4 sm:px-6 py-3 sm:py-4 bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-xl">
+              <span className="text-[#00E5FF] font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl">3</span>
+              <span className="text-white/70 text-sm sm:text-base ml-2 font-medium">{t('hero.stat3')}</span>
             </div>
-            <div className="px-3 sm:px-5 py-2.5 sm:py-3 bg-[#D4A843]/10 border border-[#D4A843]/30 rounded-lg">
-              <span className="text-[#D4A843] font-['Space_Grotesk'] font-bold text-xl sm:text-2xl">5</span>
-              <span className="text-[#B0B0B0] text-xs sm:text-sm ml-2">{t('hero.stat4')}</span>
+            <div className="px-4 sm:px-6 py-3 sm:py-4 bg-[#D4A843]/10 border border-[#D4A843]/30 rounded-xl">
+              <span className="text-[#D4A843] font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl">5</span>
+              <span className="text-white/70 text-sm sm:text-base ml-2 font-medium">{t('hero.stat4')}</span>
             </div>
           </div>
         </FadeIn>
@@ -563,7 +597,7 @@ function AvatarSection() {
         <FadeIn>
           <SectionHeader
             number="03"
-            title={tl(lang, { es: 'Conoce a la Familia LINCE', en: 'Meet the LINCE Family', zh: '认识LINCE家族', 'pt-BR': 'Conheça a Família LINCE', 'pt-PT': 'Conheça a Família LINCE' })}
+            title={tl(lang, { es: 'Conoce a la Familia LINCE IA', en: 'Meet the LINCE IA Family', zh: '认识LINCE IA家族', 'pt-BR': 'Conheça a Família LINCE IA', 'pt-PT': 'Conheça a Família LINCE IA' })}
             subtitle={tl(lang, { es: `${allAvatarsList.length} personajes únicos — toca cualquiera para descubrir su historia`, en: `${allAvatarsList.length} unique characters — click any to discover their story`, zh: `${allAvatarsList.length}个独特角色 — 点击任何一个发现他们的故事`, 'pt-BR': `${allAvatarsList.length} personajes únicos — toca cualquiera para descubrir su historia`, 'pt-PT': `${allAvatarsList.length} personajes únicos — toca cualquiera para descubrir su historia` })}
           />
         </FadeIn>
@@ -618,7 +652,7 @@ function AvatarSection() {
         <FadeIn delay={200}>
           <div className="mt-8 flex flex-col items-center gap-4">
             <SocialShareBar
-              title="Conoce a la Familia LINCE — Aprende IA con avatares únicos"
+              title="Conoce a la Familia LINCE IA — Aprende IA con avatares únicos"
               imageUrl={Object.values(AVATAR_FRONTAL)[0]}
             />
             <a href="/personajes" className="inline-flex items-center gap-2 px-6 py-3 bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-xl text-[#00E5FF] font-['Space_Grotesk'] font-bold hover:bg-[#00E5FF]/20 transition-all">
@@ -673,7 +707,7 @@ function FamiliaSection() {
         <FadeIn>
           <SectionHeader
             number="04"
-            title={tl(lang, { es: 'La Familia LINCE en el Mundo', en: 'The LINCE Family Around the World', zh: 'LINCE家族遍布全球', 'pt-BR': 'La Familia LINCE en el Mundo', 'pt-PT': 'La Familia LINCE en el Mundo' })}
+            title={tl(lang, { es: 'La Familia LINCE IA en el Mundo', en: 'The LINCE IA Family Around the World', zh: 'LINCE IA家族遍布全球', 'pt-BR': 'A Família LINCE IA no Mundo', 'pt-PT': 'A Família LINCE IA no Mundo' })}
             subtitle={tl(lang, { es: 'Toca cualquier avatar para descubrir su historia de origen', en: 'Click any avatar to discover their origin story', zh: '点击任何角色发现他们的起源故事', 'pt-BR': 'Toca cualquier avatar para descubrir su historia de origen', 'pt-PT': 'Toca cualquier avatar para descubrir su historia de origen' })}
           />
         </FadeIn>
@@ -714,7 +748,7 @@ function FamiliaSection() {
                     {group.members.length} {tl(lang, { es: 'personajes', en: 'characters', zh: '个角色', 'pt-BR': 'personajes', 'pt-PT': 'personajes' })}
                   </span>
                   <SocialShareBar
-                    title={`Familia LINCE — ${group.title}`}
+                    title={`Familia LINCE IA — ${group.title}`}
                     imageUrl={group.members[0]?.img || ''}
                   />
                 </div>
@@ -749,7 +783,7 @@ function FamiliaSection() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// 7. SECCIONES DE JUEGO — Mundo, Raids, Academia, Arsenal, PROMPTLIN
+// 7. SECCIONES DE JUEGO — Mundo, Batallas, Cursos, Herramientas, Aprender Prompts
 // ═══════════════════════════════════════════════════════════════
 function GameSectionsPreview() {
   const { lang } = usePRDLanguage();
@@ -760,7 +794,7 @@ function GameSectionsPreview() {
   const userSections = [
     {
       icon: "⚡",
-      title: "Arsenal IA",
+      title: "Herramientas IA",
       desc: tl(lang, { es: '62+ herramientas de IA catalogadas con guías paso a paso. Desde ChatGPT hasta Midjourney, aprende a usar cada herramienta.', en: '62+ AI tools catalogued with step-by-step guides. From ChatGPT to Midjourney, learn to use every tool.', zh: '62+个AI工具，配有分步指南。从ChatGPT到Midjourney，学会使用每个工具。', 'pt-BR': '62+ herramientas de IA catalogadas con guías paso a paso. Desde ChatGPT hasta Midjourney, aprende a usar cada herramienta.', 'pt-PT': '62+ herramientas de IA catalogadas con guías paso a paso. Desde ChatGPT hasta Midjourney, aprende a usar cada herramienta.' }),
       href: "/arsenal-ia",
       color: "#00E5FF",
@@ -769,9 +803,9 @@ function GameSectionsPreview() {
     },
     {
       icon: "✨",
-      title: tl(lang, { es: 'IMAGELIN', en: 'IMAGELIN', zh: '山猫图像', 'pt-BR': 'IMAGELIN', 'pt-PT': 'IMAGELIN' }),
+      title: tl(lang, { es: 'Crear Imagen', en: 'Create Image', zh: '创建图像', 'pt-BR': 'Criar Imagem', 'pt-PT': 'Criar Imagem' }),
       subtitle: tl(lang, { es: 'Creador de Imágenes IA', en: 'AI Image Creator', zh: 'AI图像创作器', 'pt-BR': 'Creador de Imágenes IA', 'pt-PT': 'Creador de Imágenes IA' }),
-      desc: tl(lang, { es: 'Genera imágenes con IA usando 4 campos simples. Todas las imágenes incluyen marca de agua LINCELIN y descarga PNG.', en: 'Generate images with AI using 4 simple fields. All images include LINCELIN watermark and PNG download.', zh: '使用4个简单字段用AI生成图像。所有图像包含LINCELIN水印和PNG下载。', 'pt-BR': 'Genera imágenes con IA usando 4 campos simples. Todas las imágenes incluyen marca de agua LINCELIN y descarga PNG.', 'pt-PT': 'Genera imágenes con IA usando 4 campos simples. Todas las imágenes incluyen marca de agua LINCELIN y descarga PNG.' }),
+      desc: tl(lang, { es: 'Genera imágenes con IA usando 4 campos simples. Todas las imágenes incluyen marca de agua LINCE y descarga PNG.', en: 'Generate images with AI using 4 simple fields. All images include LINCE watermark and PNG download.', zh: '使用4个简单字段用AI生成图像。所有图像包含LINCE水印和PNG下载。', 'pt-BR': 'Genera imágenes con IA usando 4 campos simples. Todas las imágenes incluyen marca de agua LINCE y descarga PNG.', 'pt-PT': 'Genera imágenes con IA usando 4 campos simples. Todas las imágenes incluyen marca de agua LINCE y descarga PNG.' }),
       href: "/prompt-studio",
       color: "#9C27B0",
       gradient: "from-purple-500/10 to-purple-600/5",
@@ -779,7 +813,7 @@ function GameSectionsPreview() {
     },
     {
       icon: "🐱",
-      title: tl(lang, { es: 'Avatares', en: 'Avatars', zh: '角色', 'pt-BR': 'Avatares', 'pt-PT': 'Avatares' }),
+      title: tl(lang, { es: 'Especialistas', en: 'Specialists', zh: '专家', 'pt-BR': 'Especialistas', 'pt-PT': 'Especialistas' }),
       desc: tl(lang, { es: 'Conoce a los 85 personajes de LINCE. Chatea con ellos, aprende sus especialidades y descubre sus personalidades únicas.', en: 'Meet all 85 LINCE characters. Chat with them, learn their specialties, and discover their unique personalities.', zh: '认识85个LINCE角色。与他们聊天，了解他们的专长，发现他们独特的个性。', 'pt-BR': 'Conoce a los 85 personajes de LINCE. Chatea con ellos, aprende sus especialidades y descubre sus personalidades únicas.', 'pt-PT': 'Conoce a los 85 personajes de LINCE. Chatea con ellos, aprende sus especialidades y descubre sus personalidades únicas.' }),
       href: "/personajes",
       color: "#FFB300",
@@ -788,9 +822,9 @@ function GameSectionsPreview() {
     },
     {
       icon: "🎨",
-      title: "LINCELIN",
+      title: "Mi Avatar",
       subtitle: tl(lang, { es: 'Creador de Avatares IA', en: 'AI Avatar Creator', zh: 'AI角色创建器', 'pt-BR': 'Creador de Avatares IA', 'pt-PT': 'Creador de Avatares IA' }),
-      desc: tl(lang, { es: 'Diseña tu propio avatar lince único con IA. Elige estilo, colores, accesorios y dale vida a tu LINCELIN.', en: 'Design your own unique lynx avatar with AI. Choose style, colors, accessories and bring your LINCELIN to life.', zh: '用AI设计你自己的独特山猫角色。选择风格、颜色、配件，让你的LINCELIN活起来。', 'pt-BR': 'Diseña tu propio avatar lince único con IA. Elige estilo, colores, accesorios y dale vida a tu LINCELIN.', 'pt-PT': 'Diseña tu propio avatar lince único con IA. Elige estilo, colores, accesorios y dale vida a tu LINCELIN.' }),
+      desc: tl(lang, { es: 'Diseña tu propio avatar lince único con IA. Elige estilo, colores, accesorios y dale vida a tu avatar.', en: 'Design your own unique lynx avatar with AI. Choose style, colors, accessories and bring your avatar to life.', zh: '用AI设计你自己的独特山猫角色。选择风格、颜色、配件，让你的角色活起来。', 'pt-BR': 'Diseña tu propio avatar lince único con IA. Elige estilo, colores, accesorios y dale vida a tu avatar.', 'pt-PT': 'Diseña tu propio avatar lince único con IA. Elige estilo, colores, accesorios y dale vida a tu avatar.' }),
       href: "/lincelin",
       color: "#EC4899",
       gradient: "from-pink-500/10 to-pink-600/5",
@@ -798,7 +832,7 @@ function GameSectionsPreview() {
     },
     {
       icon: "🧠",
-      title: 'PROMPTLIN',
+      title: 'Aprender Prompts',
       subtitle: tl(lang, { es: 'Juego Competitivo', en: 'Competitive Game', zh: '竞技游戏', 'pt-BR': 'Juego Competitivo', 'pt-PT': 'Juego Competitivo' }),
       desc: tl(lang, { es: '6 modos de juego: Creativo, Técnico, Negocio, Ética, Speed Run, Battle. Escribe prompts y compite con evaluación IA.', en: '6 game modes: Creative, Technical, Business, Ethics, Speed Run, Battle. Write prompts and compete with AI evaluation.', zh: '6种游戏模式：创意、技术、商业、伦理、极速、对战。编写提示并通过AI评估竞争。', 'pt-BR': '6 modos de juego: Creativo, Técnico, Negocio, Ética, Speed Run, Battle. Escribe prompts y compite con evaluación IA.', 'pt-PT': '6 modos de juego: Creativo, Técnico, Negocio, Ética, Speed Run, Battle. Escribe prompts y compite con evaluación IA.' }),
       href: "/promptear",
@@ -808,7 +842,7 @@ function GameSectionsPreview() {
     },
     {
       icon: "🎪",
-      title: tl(lang, { es: 'Mercado', en: 'Rewards Market', zh: '奖励商店', 'pt-BR': 'Mercado', 'pt-PT': 'Mercado' }),
+      title: tl(lang, { es: 'Tienda', en: 'Rewards Shop', zh: '奖励商店', 'pt-BR': 'Tienda', 'pt-PT': 'Tienda' }),
       subtitle: tl(lang, { es: 'Gasta tus LinceCoins', en: 'Spend your LinceCoins', zh: '花费你的LinceCoins', 'pt-BR': 'Gasta tus LinceCoins', 'pt-PT': 'Gasta tus LinceCoins' }),
       desc: tl(lang, { es: 'Desbloquea avatares exclusivos, escudos de racha, fondos personalizados y tareas premium con tus LinceCoins.', en: 'Unlock exclusive avatars, streak shields, custom backgrounds and premium tasks with your earned LinceCoins.', zh: '用你获得的LinceCoins解锁独家角色、连续盾牌、自定义背景和高级任务。', 'pt-BR': 'Desbloquea avatares exclusivos, escudos de racha, fondos personalizados y tareas premium con tus LinceCoins.', 'pt-PT': 'Desbloquea avatares exclusivos, escudos de racha, fondos personalizados y tareas premium con tus LinceCoins.' }),
       href: "/mercado",
@@ -818,7 +852,7 @@ function GameSectionsPreview() {
     },
     {
       icon: "🏆",
-      title: tl(lang, { es: 'Reto Diario', en: 'Daily Challenge', zh: '每日挑战', 'pt-BR': 'Reto Diario', 'pt-PT': 'Reto Diario' }),
+      title: tl(lang, { es: 'Reto del Día', en: 'Daily Challenge', zh: '每日挑战', 'pt-BR': 'Reto del Día', 'pt-PT': 'Reto del Día' }),
       subtitle: tl(lang, { es: 'Compite cada d\u00EDa', en: 'Compete daily', zh: '每日竞争', 'pt-BR': 'Compite cada d\u00EDa', 'pt-PT': 'Compite cada d\u00EDa' }),
       desc: tl(lang, { es: 'Un nuevo reto de prompts cada d\u00EDa. Escribe el mejor prompt, recibe puntuaci\u00F3n IA y sube en el ranking diario.', en: 'A new prompt challenge every day. Write the best prompt, get scored by AI, and climb the daily ranking.', zh: '每天一个新的提示词挑战。写出最佳提示词，获得AI评分，攻克每日排名。', 'pt-BR': 'Un nuevo reto de prompts cada d\u00EDa. Escribe el mejor prompt, recibe puntuaci\u00F3n IA y sube en el ranking diario.', 'pt-PT': 'Un nuevo reto de prompts cada d\u00EDa. Escribe el mejor prompt, recibe puntuaci\u00F3n IA y sube en el ranking diario.' }),
       href: "/reto-diario",
@@ -851,7 +885,7 @@ function GameSectionsPreview() {
     },
     {
       icon: "⚔️",
-      title: "LINCE Raids",
+      title: "LINCE Batallas",
       desc: tl(lang, { es: 'Ataca y defiende con prompts de IA. Únete a ligas, gana recompensas exclusivas y sube en el ranking global.', en: 'Attack and defend with AI prompts. Join leagues, earn exclusive rewards, and climb the global ranking.', zh: '用AI提示进行攻击和防御。加入联赛，获得独家奖励，攀登全球排名。', 'pt-BR': 'Ataca y defiende con prompts de IA. Únete a ligas, gana recompensas exclusivas y sube en el ranking global.', 'pt-PT': 'Ataca y defiende con prompts de IA. Únete a ligas, gana recompensas exclusivas y sube en el ranking global.' }),
       href: "/raids",
       color: "#FF5252",
@@ -860,7 +894,7 @@ function GameSectionsPreview() {
     },
     {
       icon: "🎓",
-      title: tl(lang, { es: 'Academia IA', en: 'AI Academy', zh: 'AI学院', 'pt-BR': 'Academia IA', 'pt-PT': 'Academia IA' }),
+      title: tl(lang, { es: 'Cursos IA', en: 'AI Courses', zh: 'AI课程', 'pt-BR': 'Cursos IA', 'pt-PT': 'Cursos IA' }),
       desc: tl(lang, { es: '10 habitaciones temáticas, 50 cursos, 900+ lecciones. Aprende IA de cero a experto con tu avatar como guía.', en: '10 thematic rooms, 50 courses, 900+ lessons. Learn AI from zero to expert with your avatar as guide.', zh: '10个主题教室，50门课程，900+节课。从零到专家，你的角色作为向导学习AI。', 'pt-BR': '10 habitaciones temáticas, 50 cursos, 900+ lecciones. Aprende IA de cero a experto con tu avatar como guía.', 'pt-PT': '10 habitaciones temáticas, 50 cursos, 900+ lecciones. Aprende IA de cero a experto con tu avatar como guía.' }),
       href: "/academia",
       color: "#00C853",
@@ -885,14 +919,14 @@ function GameSectionsPreview() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
           {sections.map((s, i) => (
             <FadeIn key={i} delay={i * 80}>
-              <a href={s.href} className={`block p-6 bg-gradient-to-br ${s.gradient} border ${s.border} rounded-2xl transition-all duration-300 hover:scale-[1.02] group`}>
-                <div className="text-4xl mb-4">{s.icon}</div>
-                <h3 className="font-['Space_Grotesk'] font-bold text-xl text-white group-hover:brightness-125" style={{ color: s.color }}>{s.title}</h3>
-                {('subtitle' in s && (s as any).subtitle) ? <span className="block text-xs font-medium text-white/50 mb-3 font-['Space_Grotesk'] uppercase tracking-wider">{(s as any).subtitle}</span> : <div className="mb-3" />}
-                <p className="text-[#B0B0B0] text-sm leading-relaxed mb-4">{s.desc}</p>
-                <div className="flex items-center gap-2 text-sm font-medium" style={{ color: s.color }}>
+              <a href={s.href} className={`block p-6 sm:p-8 bg-gradient-to-br ${s.gradient} border-2 ${s.border} rounded-2xl transition-all duration-300 hover:scale-[1.02] group min-h-[200px]`}>
+                <div className="text-5xl mb-5">{s.icon}</div>
+                <h3 className="font-['Space_Grotesk'] font-bold text-2xl text-white group-hover:brightness-125 mb-2" style={{ color: s.color }}>{s.title}</h3>
+                {('subtitle' in s && (s as any).subtitle) ? <span className="block text-sm font-medium text-white/60 mb-4 font-['Space_Grotesk'] uppercase tracking-wider">{(s as any).subtitle}</span> : <div className="mb-4" />}
+                <p className="text-white/70 text-base leading-relaxed mb-5">{s.desc}</p>
+                <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-base font-bold transition-all" style={{ color: s.color, backgroundColor: s.color + '15' }}>
                   <span>{tl(lang, { es: 'Entrar', en: 'Enter', zh: '进入', 'pt-BR': 'Entrar', 'pt-PT': 'Entrar' })}</span>
-                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg>
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg>
                 </div>
               </a>
             </FadeIn>
@@ -965,6 +999,7 @@ export default function Home() {
       )}
 
       <Navigation activeSection={activeSection} />
+      <FirstUseTutorial page="home" />
       <div className="pt-16">
       </div>
       <HeroSection />
@@ -980,14 +1015,14 @@ export default function Home() {
       {/* LINCE URBAN: Oculto por solicitud del usuario */}
 
       {/* ─── SECCIONES INFORMATIVAS DESPLEGABLES ─── */}
-      <div className="mt-8 mb-4">
+      <div className="mt-12 mb-6">
         <div className="container">
           <FadeIn>
-            <h2 className="font-['Space_Grotesk'] font-bold text-xl sm:text-2xl text-white/60 mb-2">
+            <h2 className="font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl text-white/70 mb-3">
               {tl(lang, { es: 'Conoce Más Sobre LINCE', en: 'Learn More About LINCE', zh: '了解更多关于LINCE', 'pt-BR': 'Conoce Más Sobre LINCE', 'pt-PT': 'Conoce Más Sobre LINCE' })}
             </h2>
-            <p className="text-[#B0B0B0]/60 text-sm">
-              {tl(lang, { es: 'Toca cualquier sección para expandir', en: 'Tap any section to expand', zh: '点击展开任何部分', 'pt-BR': 'Toca cualquier sección para expandir', 'pt-PT': 'Toca cualquier sección para expandir' })}
+            <p className="text-white/50 text-base sm:text-lg">
+              {tl(lang, { es: 'Toca cualquier sección para ver más información', en: 'Tap any section to see more', zh: '点击展开任何部分', 'pt-BR': 'Toca cualquier sección para expandir', 'pt-PT': 'Toca cualquier sección para expandir' })}
             </p>
           </FadeIn>
         </div>
@@ -995,7 +1030,7 @@ export default function Home() {
 
       <CollapsibleSection
         id="avatares"
-        title={tl(lang, { es: 'Conoce a la Familia LINCE', en: 'Meet the LINCE Family', zh: '认识LINCE家族', 'pt-BR': 'Conheça a Família LINCE', 'pt-PT': 'Conheça a Família LINCE' })}
+        title={tl(lang, { es: 'Conoce a la Familia LINCE IA', en: 'Meet the LINCE IA Family', zh: '认识LINCE IA家族', 'pt-BR': 'Conheça a Família LINCE IA', 'pt-PT': 'Conheça a Família LINCE IA' })}
         icon="🐱"
       >
         <AvatarSection />
@@ -1005,7 +1040,7 @@ export default function Home() {
 
       <CollapsibleSection
         id="familia"
-        title={tl(lang, { es: 'La Familia LINCE en el Mundo', en: 'The LINCE Family Around the World', zh: 'LINCE家族遍布全球', 'pt-BR': 'La Familia LINCE en el Mundo', 'pt-PT': 'La Familia LINCE en el Mundo' })}
+        title={tl(lang, { es: 'La Familia LINCE IA en el Mundo', en: 'The LINCE IA Family Around the World', zh: 'LINCE IA家族遍布全球', 'pt-BR': 'A Família LINCE IA no Mundo', 'pt-PT': 'A Família LINCE IA no Mundo' })}
         icon="🌍"
       >
         <FamiliaSection />

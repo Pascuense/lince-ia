@@ -19,9 +19,9 @@ export const USER_ROUTES: string[] = [
   // Core tools
   "/arsenal-ia",
   "/arsenal-ia/:toolId",
-  "/prompt-studio",       // IMAGELIN
-  "/promptear",           // PROMPTLIN
-  "/lincelin",            // LINCELIN (nombre oficial: LINCELIN)
+  "/prompt-studio",       // Crear Imagen
+  "/promptear",           // Aprender Prompts
+  "/lincelin",            // Mi Avatar
   "/personajes",          // Avatares
   // Tutorial
   "/tutorial",
@@ -76,13 +76,13 @@ export interface NavItem {
 }
 
 export const USER_NAV_ITEMS: NavItem[] = [
-  { id: "arsenal", label: "Arsenal IA", path: "/arsenal-ia", icon: "🛡️" },
-  { id: "imagelin", label: "IMAGELIN", path: "/prompt-studio", icon: "🖼️" },
-  { id: "promptlin", label: "PROMPTLIN", path: "/promptear", icon: "🧠" },
-  { id: "lincelin", label: "LINCELIN", path: "/lincelin", icon: "🎨" },
+  { id: "arsenal", label: "Herramientas IA", path: "/arsenal-ia", icon: "🛡️" },
+  { id: "imagelin", label: "Crear Imagen", path: "/prompt-studio", icon: "🖼️" },
+  { id: "promptlin", label: "Aprender Prompts", path: "/promptear", icon: "🧠" },
+  { id: "lincelin", label: "Mi Avatar", path: "/lincelin", icon: "🎨" },
   { id: "avatares", label: "Avatares", path: "/personajes", icon: "🐱" },
   { id: "jugar", label: "¡JUGAR!", path: "/jugar", icon: "🕹️" },
-  { id: "mercado", label: "Mercado", path: "/mercado", icon: "🎪" },
+  { id: "mercado", label: "Tienda", path: "/mercado", icon: "🎪" },
   { id: "reto", label: "Reto Diario", path: "/reto-diario", icon: "🏆" },
   { id: "progresion", label: "Progresi\u00F3n", path: "/progresion", icon: "🗺\uFE0F" },
 ];

@@ -42,10 +42,10 @@ const RAID_STYLES = [
 const T: Record<string, Record<string, string>> = {
   es: {
     title: "NIVEL 3 — Tu Primer Raid",
-    subtitle: "LINCE Raids · Combate PvP",
+    subtitle: "LINCE Batallas · Combate PvP",
     locked: "Nivel bloqueado. Completa el Nivel 2 primero.",
     guideWelcome: "¡Alerta! Soy ATOLONDRALIN, el tío aventurero. Un rival está atacando tu habitación. ¡Tienes que defenderla con tus prompts!",
-    guideExplain: "En los Raids, gana quien escriba el mejor prompt. Tu prompt se compara con el del rival: si tu puntuación es mayor, ganas la ronda. ¡Escribe con todo el detalle y creatividad que puedas!",
+    guideExplain: "En las Batallas, gana quien escriba el mejor prompt. Tu prompt se compara con el del rival: si tu puntuación es mayor, ganas la ronda. ¡Escribe con todo el detalle y creatividad que puedas!",
     mission1Title: "Ronda 1: ¡Protege la puerta!",
     mission1Desc: "El rival intenta entrar por la puerta principal. Escribe un prompt de defensa: una barrera, un muro, un escudo... ¡lo que sea para bloquear la entrada!",
     mission1Hint: "Tip: Describe materiales, tamaño, poderes especiales. Ejemplo: \"Creo un escudo de energía cyan de 3 metros que electrocuta a quien lo toque\"",
@@ -86,10 +86,10 @@ const T: Record<string, Record<string, string>> = {
   },
   en: {
     title: "LEVEL 3 — Your First Raid",
-    subtitle: "LINCE Raids · PvP Combat",
+    subtitle: "LINCE Batallas · PvP Combat",
     locked: "Level locked. Complete Level 2 first.",
     guideWelcome: "Alert! I'm ATOLONDRALIN, the adventurous uncle. A rival is attacking your room. You must defend it with your prompts!",
-    guideExplain: "In Raids, whoever writes the best prompt wins. Your prompt is compared to the rival's: if your score is higher, you win the round. Write with all the detail and creativity you can!",
+    guideExplain: "In Battles, whoever writes the best prompt wins. Your prompt is compared to the rival's: if your score is higher, you win the round. Write with all the detail and creativity you can!",
     mission1Title: "Round 1: Protect the door!",
     mission1Desc: "The rival is trying to enter through the main door. Write a defense prompt: a barrier, a wall, a shield... anything to block the entrance!",
     mission1Hint: "Tip: Describe materials, size, special powers. Example: \"I create a 3-meter cyan energy shield that electrocutes anyone who touches it\"",
@@ -249,13 +249,13 @@ function Nivel3Content() {
 
   if (!unlocked) {
     return (
-      <div className="pt-14 min-h-screen bg-[oklch(0.10_0.01_240)] text-white flex items-center justify-center">
+      <div className="min-h-screen bg-[oklch(0.10_0.01_240)] text-white flex items-center justify-center">
       <BackButton variant="inline" fallbackPath="/jugar" />
       <GlobalNavBar />
-        <div className="text-center px-4">
-          <div className="text-6xl mb-4">🔒</div>
-          <p className="text-gray-400 text-lg mb-6">{t.locked}</p>
-          <Link href="/jugar" className="px-6 py-3 bg-[oklch(0.82_0.15_195)] text-black font-bold rounded-xl">{t.backToHub}</Link>
+        <div className="text-center px-6">
+          <div className="text-8xl mb-6">🔒</div>
+          <p className="text-gray-400 text-xl sm:text-2xl mb-8 leading-relaxed">{t.locked}</p>
+          <Link href="/jugar" className="px-8 py-4 bg-[oklch(0.82_0.15_195)] text-black font-black rounded-2xl text-xl min-h-[56px] inline-flex items-center">{t.backToHub}</Link>
         </div>
       </div>
     );
@@ -265,34 +265,34 @@ function Nivel3Content() {
   if (phase === "intro") {
     return (
       <div className="min-h-screen bg-[oklch(0.10_0.01_240)] text-white">
-        <div className="max-w-2xl mx-auto px-4 pt-8 pb-16">
-          <div className="flex items-center justify-between mb-6">
-            <Link href="/jugar" className="text-[oklch(0.82_0.15_195)] text-sm hover:underline">{t.backToHub}</Link>
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-32 sm:pt-36 pb-20">
+          <div className="flex items-center justify-between mb-8">
+            <Link href="/jugar" className="text-[oklch(0.82_0.15_195)] text-base sm:text-lg font-bold hover:underline min-h-[44px] flex items-center">{t.backToHub}</Link>
             <UserNavBadge variant="compact" />
           </div>
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <span className="inline-block px-4 py-1 rounded-full bg-red-500/10 text-red-400 text-xs font-bold tracking-wider">⚔️ {t.subtitle}</span>
+          <div className="text-center mb-10">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <span className="inline-block px-5 py-2 rounded-full bg-red-500/10 text-red-400 text-sm sm:text-base font-bold tracking-wider">⚔️ {t.subtitle}</span>
               <DifficultyBadge difficulty="hard" lang={lang} size="sm" />
             </div>
-            <h1 className="text-3xl md:text-4xl font-black">{t.title}</h1>
+            <h1 className="text-4xl md:text-5xl font-black">{t.title}</h1>
           </div>
-          <div className="flex flex-col items-center gap-6">
-            <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-red-500 shadow-[0_0_30px_rgba(239,68,68,0.3)]">
+          <div className="flex flex-col items-center gap-8">
+            <div className="w-48 h-48 sm:w-56 sm:h-56 rounded-full overflow-hidden border-4 border-red-500 shadow-[0_0_40px_rgba(239,68,68,0.3)]">
               <img src={AVATAR_FRONTAL.ATOLONDRALIN} alt="ATOLONDRALIN" className="w-full h-full object-cover" />
             </div>
-            <div className="bg-[oklch(0.14_0.015_240)] border border-red-500/30 rounded-2xl p-6 max-w-lg relative">
+            <div className="bg-[oklch(0.14_0.015_240)] border border-red-500/30 rounded-2xl p-6 sm:p-8 max-w-lg relative">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-[oklch(0.14_0.015_240)] border-l border-t border-red-500/30 rotate-45" />
-              <p className="text-lg leading-relaxed text-gray-200">{introTexts[introStep]}</p>
+              <p className="text-xl sm:text-2xl leading-relaxed text-gray-200">{introTexts[introStep]}</p>
             </div>
             <button
               onClick={() => {
                 if (introStep < 1) setIntroStep(prev => prev + 1);
                 else setPhase("theory");
               }}
-              className="px-8 py-3 bg-red-500 text-white font-bold rounded-xl hover:brightness-110 transition-all text-lg"
+              className="px-10 py-4 sm:py-5 bg-red-500 text-white font-black rounded-2xl hover:brightness-110 transition-all text-xl sm:text-2xl min-h-[56px] min-w-[200px]"
             >
-              {introStep < 1 ? "→" : "¡A luchar! ⚔️"}
+              {introStep < 1 ? "Siguiente →" : "¡A luchar! ⚔️"}
             </button>
           </div>
         </div>
@@ -331,37 +331,37 @@ function Nivel3Content() {
     return (
       <div className="min-h-screen bg-[oklch(0.10_0.01_240)] text-white flex items-center justify-center">
         <div className="max-w-lg mx-auto px-4 text-center">
-          <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-[oklch(0.72_0.12_75)] shadow-[0_0_40px_oklch(0.72_0.12_75/0.4)] mb-6">
+          <div className="w-40 h-40 sm:w-48 sm:h-48 mx-auto rounded-full overflow-hidden border-4 border-[oklch(0.72_0.12_75)] shadow-[0_0_50px_oklch(0.72_0.12_75/0.4)] mb-8">
             <img src={AVATAR_EXPRESSIONS.ATOLONDRALIN?.celebrando || AVATAR_FRONTAL.ATOLONDRALIN} alt="ATOLONDRALIN" className="w-full h-full object-cover" />
           </div>
-          <h1 className="text-4xl font-black text-[oklch(0.72_0.12_75)] mb-2">⚔️ {t.levelComplete}</h1>
-          <p className="text-2xl font-bold mb-2">{won ? t.victory : t.defeat}</p>
-          <p className="text-gray-300 mb-2">{t.roundsWon}: {roundsWon}/3</p>
-          <p className="text-gray-400 text-lg mb-8">{t.levelCompleteDesc}</p>
+          <h1 className="text-4xl sm:text-5xl font-black text-[oklch(0.72_0.12_75)] mb-3">⚔️ {t.levelComplete}</h1>
+          <p className="text-3xl sm:text-4xl font-black mb-3">{won ? t.victory : t.defeat}</p>
+          <p className="text-gray-300 text-xl mb-3">{t.roundsWon}: {roundsWon}/3</p>
+          <p className="text-gray-400 text-xl sm:text-2xl mb-10 leading-relaxed">{t.levelCompleteDesc}</p>
 
-          <div className="bg-[oklch(0.14_0.015_240)] border border-[oklch(0.72_0.12_75)]/30 rounded-2xl p-6 mb-6">
-            <h3 className="text-sm text-gray-400 uppercase tracking-wider mb-4">{t.totalRewards}</h3>
-            <div className="flex justify-center gap-8">
+          <div className="bg-[oklch(0.14_0.015_240)] border border-[oklch(0.72_0.12_75)]/30 rounded-2xl p-6 sm:p-8 mb-8">
+            <h3 className="text-base text-gray-400 uppercase tracking-wider mb-6 font-bold">{t.totalRewards}</h3>
+            <div className="flex justify-center gap-8 sm:gap-12">
               <div>
-                <div className="text-3xl font-black text-[oklch(0.72_0.12_75)]">🪙 {totalCoins}</div>
-                <div className="text-xs text-gray-400 mt-1">LinceCoins</div>
+                <div className="text-4xl sm:text-5xl font-black text-[oklch(0.72_0.12_75)]">🪙 {totalCoins}</div>
+                <div className="text-sm text-gray-400 mt-2">LinceCoins</div>
               </div>
               <div>
-                <div className="text-3xl font-black text-[oklch(0.82_0.15_195)]">⚡ {totalXP}</div>
-                <div className="text-xs text-gray-400 mt-1">XP</div>
+                <div className="text-4xl sm:text-5xl font-black text-[oklch(0.82_0.15_195)]">⚡ {totalXP}</div>
+                <div className="text-sm text-gray-400 mt-2">XP</div>
               </div>
             </div>
           </div>
 
-          <div className="bg-[oklch(0.82_0.15_195)]/10 border border-[oklch(0.82_0.15_195)]/30 rounded-2xl p-6 mb-8">
-            <p className="text-[oklch(0.82_0.15_195)] font-bold text-lg">🎉 {t.allLevelsComplete}</p>
+          <div className="bg-[oklch(0.82_0.15_195)]/10 border border-[oklch(0.82_0.15_195)]/30 rounded-2xl p-6 sm:p-8 mb-10">
+            <p className="text-[oklch(0.82_0.15_195)] font-black text-xl sm:text-2xl">🎉 {t.allLevelsComplete}</p>
           </div>
 
-          <div className="flex flex-col gap-3">
-            <Link href="/jugar" className="block px-8 py-4 bg-[oklch(0.82_0.15_195)] text-black font-bold rounded-xl hover:brightness-110 transition-all text-lg text-center">
+          <div className="flex flex-col gap-4">
+            <Link href="/jugar" className="block px-8 py-5 bg-[oklch(0.82_0.15_195)] text-black font-black rounded-2xl hover:brightness-110 transition-all text-xl sm:text-2xl text-center min-h-[60px]">
               {t.backToHub}
             </Link>
-            <Link href="/" className="block px-6 py-3 border border-gray-600 text-gray-300 rounded-xl hover:bg-white/5 transition-all text-center">
+            <Link href="/" className="block px-6 py-4 border-2 border-gray-600 text-gray-300 rounded-2xl hover:bg-white/5 transition-all text-center text-lg font-bold min-h-[56px]">
               {t.backToHome}
             </Link>
           </div>
@@ -376,48 +376,49 @@ function Nivel3Content() {
 
   return (
     <div className="min-h-screen bg-[oklch(0.10_0.01_240)] text-white">
-      <div className="max-w-3xl mx-auto px-4 pt-6 pb-16">
+      <GlobalNavBar />
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-32 sm:pt-36 pb-20">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
-          <Link href="/jugar" className="text-[oklch(0.82_0.15_195)] text-sm hover:underline">{t.backToHub}</Link>
-          <div className="flex items-center gap-4 text-sm">
+          <Link href="/jugar" className="text-[oklch(0.82_0.15_195)] text-base sm:text-lg font-bold hover:underline min-h-[44px] flex items-center">{t.backToHub}</Link>
+          <div className="flex items-center gap-3 sm:gap-4">
             <DifficultyBadge difficulty="hard" lang={lang} />
             <GameLanguageSelector variant="pill" />
-            <span className="text-[oklch(0.72_0.12_75)]">🪙 {totalCoins}</span>
-            <span className="text-[oklch(0.82_0.15_195)]">⚡ {totalXP}</span>
-            <span className="text-green-400">🏆 {roundsWon}/3</span>
+            <span className="text-base font-bold text-[oklch(0.72_0.12_75)]">🪙 {totalCoins}</span>
+            <span className="text-base font-bold text-[oklch(0.82_0.15_195)]">⚡ {totalXP}</span>
+            <span className="text-base font-bold text-green-400">🏆 {roundsWon}/3</span>
           </div>
         </div>
 
         {/* Progress */}
-        <div className="mb-6">
-          <div className="flex justify-between text-xs text-gray-400 mb-2">
-            <span>{t.missionOf.replace("{current}", String(currentRound)).replace("{total}", "3")}</span>
+        <div className="mb-8">
+          <div className="flex justify-between text-sm sm:text-base text-gray-400 mb-3">
+            <span className="font-bold">{t.missionOf.replace("{current}", String(currentRound)).replace("{total}", "3")}</span>
           </div>
-          <div className="h-2 bg-[oklch(0.18_0.01_240)] rounded-full overflow-hidden">
+          <div className="h-3 bg-[oklch(0.18_0.01_240)] rounded-full overflow-hidden">
             <div className="h-full bg-gradient-to-r from-red-500 to-orange-500 rounded-full transition-all duration-700"
               style={{ width: `${((currentRound - (showResult ? 0 : 1)) / 3) * 100}%` }} />
           </div>
         </div>
 
         {/* Rival's attack display */}
-        <div className="mb-6 bg-red-500/5 border border-red-500/20 rounded-2xl p-4">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-red-500/50">
+        <div className="mb-6 bg-red-500/5 border border-red-500/20 rounded-2xl p-5 sm:p-6">
+          <div className="flex items-center gap-4 mb-3">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-red-500/50 shrink-0">
               <img src={AVATAR_FRONTAL.ATOLONDRALIN} alt="Rival" className="w-full h-full object-cover" />
             </div>
             <div>
-              <p className="text-xs text-red-400 font-bold">{t.rivalAttacks}</p>
-              <p className="text-gray-300 text-sm italic">"{rivalPrompt?.text}"</p>
+              <p className="text-sm sm:text-base text-red-400 font-bold mb-1">{t.rivalAttacks}</p>
+              <p className="text-gray-300 text-base sm:text-lg italic leading-relaxed">"{rivalPrompt?.text}"</p>
             </div>
           </div>
-          <div className="text-right text-xs text-gray-500">{t.rivalScore}: {rivalPrompt?.score}/100</div>
+          <div className="text-right text-sm text-gray-500 font-medium">{t.rivalScore}: {rivalPrompt?.score}/100</div>
         </div>
 
         {/* Guide + Mission */}
-        <div className="bg-[oklch(0.14_0.015_240)] border border-red-500/20 rounded-2xl p-4 mb-4">
-          <h3 className="font-bold text-red-400 mb-1">{mission.title}</h3>
-          <p className="text-gray-300 text-sm leading-relaxed">{mission.desc}</p>
+        <div className="bg-[oklch(0.14_0.015_240)] border border-red-500/20 rounded-2xl p-5 sm:p-6 mb-5">
+          <h3 className="font-bold text-lg sm:text-xl text-red-400 mb-2">{mission.title}</h3>
+          <p className="text-gray-300 text-base sm:text-lg leading-relaxed">{mission.desc}</p>
         </div>
 
         {/* Raid style selector (round 2 only) */}
@@ -439,8 +440,8 @@ function Nivel3Content() {
         )}
 
         {/* Hint */}
-        <div className="bg-orange-500/5 border border-orange-500/20 rounded-xl p-3 mb-6">
-          <p className="text-xs text-orange-400 font-mono">{mission.hint}</p>
+        <div className="bg-orange-500/5 border border-orange-500/20 rounded-xl p-4 sm:p-5 mb-6">
+          <p className="text-sm sm:text-base text-orange-400 font-mono leading-relaxed">{mission.hint}</p>
         </div>
 
         {/* Input */}
@@ -451,13 +452,13 @@ function Nivel3Content() {
               value={promptText}
               onChange={e => setPromptText(e.target.value)}
               placeholder={t.placeholder}
-              rows={4}
-              className="w-full bg-[oklch(0.14_0.015_240)] border-2 border-red-500/30 rounded-xl p-4 text-white placeholder-gray-500 focus:border-red-500 focus:outline-none focus:shadow-[0_0_20px_rgba(239,68,68,0.2)] transition-all resize-none text-lg"
+              rows={5}
+              className="w-full bg-[oklch(0.14_0.015_240)] border-2 border-red-500/30 rounded-2xl p-5 sm:p-6 text-white placeholder-gray-500 focus:border-red-500 focus:outline-none focus:shadow-[0_0_20px_rgba(239,68,68,0.2)] transition-all resize-none text-lg sm:text-xl"
             />
-            <div className="flex justify-between items-center mt-3">
-              <span className="text-xs text-gray-500">{promptText.trim().split(/\s+/).filter(Boolean).length} palabras</span>
+            <div className="flex justify-between items-center mt-4">
+              <span className="text-sm text-gray-500 font-medium">{promptText.trim().split(/\s+/).filter(Boolean).length} palabras</span>
               <button onClick={handleSubmitPrompt} disabled={!promptText.trim()}
-                className="px-6 py-3 bg-red-500 text-white font-bold rounded-xl hover:brightness-110 transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+                className="px-8 py-4 bg-red-500 text-white font-black rounded-2xl hover:brightness-110 transition-all disabled:opacity-30 disabled:cursor-not-allowed text-lg sm:text-xl min-h-[56px]">
                 {t.send}
               </button>
             </div>
@@ -482,19 +483,19 @@ function Nivel3Content() {
           <div className="space-y-4">
             {/* VS comparison */}
             <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-center">
-              <div className="bg-[oklch(0.82_0.15_195)]/10 border border-[oklch(0.82_0.15_195)]/30 rounded-xl p-3 text-center">
-                <p className="text-xs text-gray-400 mb-1">Tú</p>
-                <p className="text-3xl font-black text-[oklch(0.82_0.15_195)]">{lastResult.score}</p>
+              <div className="bg-[oklch(0.82_0.15_195)]/10 border border-[oklch(0.82_0.15_195)]/30 rounded-xl p-4 sm:p-5 text-center">
+                <p className="text-sm text-gray-400 mb-2">Tú</p>
+                <p className="text-4xl sm:text-5xl font-black text-[oklch(0.82_0.15_195)]">{lastResult.score}</p>
               </div>
-              <div className="text-2xl font-black text-gray-500">{t.vsLabel}</div>
-              <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-3 text-center">
-                <p className="text-xs text-gray-400 mb-1">{t.rivalScore}</p>
-                <p className="text-3xl font-black text-red-400">{rivalPrompt?.score}</p>
+              <div className="text-3xl font-black text-gray-500">{t.vsLabel}</div>
+              <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 sm:p-5 text-center">
+                <p className="text-sm text-gray-400 mb-2">{t.rivalScore}</p>
+                <p className="text-4xl sm:text-5xl font-black text-red-400">{rivalPrompt?.score}</p>
               </div>
             </div>
 
             {/* Win/lose banner */}
-            <div className={`text-center py-3 rounded-xl font-bold text-lg ${
+            <div className={`text-center py-4 rounded-xl font-black text-xl sm:text-2xl ${
               lastResult.score > (rivalPrompt?.score || 0)
                 ? "bg-green-500/10 text-green-400 border border-green-500/30"
                 : lastResult.score === (rivalPrompt?.score || 0)
@@ -511,15 +512,15 @@ function Nivel3Content() {
               lastResult.score >= 45 ? "border-[oklch(0.82_0.15_195)] bg-[oklch(0.82_0.15_195)]/10" :
               "border-gray-600 bg-gray-800/30"
             }`}>
-              <p className="font-bold mb-3">{t[lastResult.feedback as keyof typeof t]}</p>
-              <div className="grid grid-cols-2 gap-3 text-center">
-                <div className="bg-black/20 rounded-xl p-2">
-                  <div className="text-xl font-black text-[oklch(0.72_0.12_75)]">+{lastResult.coins}</div>
-                  <div className="text-xs text-gray-400">{t.coins}</div>
+              <p className="font-bold text-lg sm:text-xl mb-4">{t[lastResult.feedback as keyof typeof t]}</p>
+              <div className="grid grid-cols-2 gap-4 text-center">
+                <div className="bg-black/20 rounded-xl p-4">
+                  <div className="text-3xl sm:text-4xl font-black text-[oklch(0.72_0.12_75)]">+{lastResult.coins}</div>
+                  <div className="text-sm text-gray-400 mt-1">{t.coins}</div>
                 </div>
-                <div className="bg-black/20 rounded-xl p-2">
-                  <div className="text-xl font-black text-[oklch(0.82_0.15_195)]">+{lastResult.xp}</div>
-                  <div className="text-xs text-gray-400">{t.xp}</div>
+                <div className="bg-black/20 rounded-xl p-4">
+                  <div className="text-3xl sm:text-4xl font-black text-[oklch(0.82_0.15_195)]">+{lastResult.xp}</div>
+                  <div className="text-sm text-gray-400 mt-1">{t.xp}</div>
                 </div>
               </div>
             </div>
@@ -534,7 +535,7 @@ function Nivel3Content() {
               />
             )}
             <button onClick={handleNextRound}
-              className="w-full px-8 py-4 bg-red-500 text-white font-bold rounded-xl hover:brightness-110 transition-all text-lg">
+              className="w-full px-8 py-5 bg-red-500 text-white font-black rounded-2xl hover:brightness-110 transition-all text-xl sm:text-2xl min-h-[60px]">
               {currentRound < 3 ? t.next : "⚔️ " + t.levelComplete}
             </button>
           </div>

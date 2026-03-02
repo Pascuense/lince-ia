@@ -33,13 +33,13 @@ export type FamilyRole = typeof FAMILY_ROLES[number];
 
 // ─── PROGRESSIVE UNLOCK THRESHOLDS ───
 export const UNLOCK_THRESHOLDS = {
-  /** Level required to unlock Arsenal IA + IMAGELIN + PROMPTLIN */
+  /** Level required to unlock Herramientas IA + Crear Imagen + Aprender Prompts */
   LEVEL_1_COMPLETE: 1,
   /** Level required to unlock Mundo LINCE */
   LEVEL_2_COMPLETE: 2,
-  /** Level required to unlock Raids */
+  /** Level required to unlock Batallas */
   LEVEL_3_COMPLETE: 3,
-  /** XP required to unlock Academia */
+  /** XP required to unlock Cursos */
   ACADEMIA_XP: 500,
 } as const;
 

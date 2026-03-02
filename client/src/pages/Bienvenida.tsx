@@ -78,10 +78,10 @@ const STEPS: Record<string, WelcomeStep[]> = {
       description:
         "LINCE te da acceso a herramientas reales de inteligencia artificial. Crea imágenes, diseña tu avatar, aprende a escribir prompts profesionales y explora más de 100 herramientas IA.",
       features: [
-        { icon: <Image className="w-4 h-4" />, label: "IMAGELIN — Crea imágenes con IA", color: "#9C27B0" },
-        { icon: <Palette className="w-4 h-4" />, label: "LINCELIN — Diseña tu avatar único", color: "#EC4899" },
-        { icon: <Target className="w-4 h-4" />, label: "PROMPTLIN — Domina los prompts", color: "#7C3AED" },
-        { icon: <Shield className="w-4 h-4" />, label: "Arsenal IA — 100+ herramientas reales", color: "#00E5FF" },
+        { icon: <Image className="w-4 h-4" />, label: "Crear Imagen — Crea imágenes con IA", color: "#9C27B0" },
+        { icon: <Palette className="w-4 h-4" />, label: "Mi Avatar — Diseña tu avatar único", color: "#EC4899" },
+        { icon: <Target className="w-4 h-4" />, label: "Aprender Prompts — Domina los prompts", color: "#7C3AED" },
+        { icon: <Shield className="w-4 h-4" />, label: "Herramientas IA — 100+ herramientas reales", color: "#00E5FF" },
       ],
       avatarKeys: ["PEQUELINA", "ATOLONDRALIN", "SABELIN"],
       accentColor: "#9C27B0",
@@ -92,10 +92,10 @@ const STEPS: Record<string, WelcomeStep[]> = {
       title: "Juega y Progresa",
       subtitle: "Gamificación de verdad",
       description:
-        "Todo lo que haces en LINCE te da recompensas. Gana XP para subir de nivel, acumula LinceCoins para el Mercado, mantén tu racha diaria y compite en el ranking global.",
+        "Todo lo que haces en LINCE te da recompensas. Gana XP para subir de nivel, acumula LinceCoins para la Tienda, mantén tu racha diaria y compite en el ranking global.",
       features: [
         { icon: <Zap className="w-4 h-4" />, label: "XP y niveles de progresión", color: "#00FF88" },
-        { icon: <Coins className="w-4 h-4" />, label: "LinceCoins para el Mercado", color: "#FFD700" },
+        { icon: <Coins className="w-4 h-4" />, label: "LinceCoins para la Tienda", color: "#FFD700" },
         { icon: <Flame className="w-4 h-4" />, label: "Rachas diarias con bonus", color: "#FF6B35" },
         { icon: <Trophy className="w-4 h-4" />, label: "Ranking y ligas competitivas", color: "#D4A843" },
       ],
@@ -108,11 +108,11 @@ const STEPS: Record<string, WelcomeStep[]> = {
       title: "Niveles y Aventuras",
       subtitle: "Aprende IA paso a paso",
       description:
-        "3 niveles de dificultad creciente, cada uno con misiones únicas. Desde tu primer prompt hasta batallas PvP. Además: Raids épicas, Academia con cursos completos y un Mundo interactivo por explorar.",
+        "3 niveles de dificultad creciente, cada uno con misiones únicas. Desde tu primer prompt hasta batallas PvP. Además: Batallas épicas, Cursos completos completos y un Mundo interactivo por explorar.",
       features: [
         { icon: <Gamepad2 className="w-4 h-4" />, label: "3 niveles con misiones únicas", color: "#00E5FF" },
-        { icon: <Swords className="w-4 h-4" />, label: "Raids — Batallas PvP de conocimiento", color: "#FF4444" },
-        { icon: <GraduationCap className="w-4 h-4" />, label: "Academia — Cursos completos de IA", color: "#4CAF50" },
+        { icon: <Swords className="w-4 h-4" />, label: "Batallas — PvP de conocimiento", color: "#FF4444" },
+        { icon: <GraduationCap className="w-4 h-4" />, label: "Cursos — Cursos completos de IA", color: "#4CAF50" },
         { icon: <Wand2 className="w-4 h-4" />, label: "Mundo LINCE — Explora y descubre", color: "#FFB300" },
       ],
       avatarKeys: ["SABELIN", "CHAVALINA", "PEQUELIN"],
@@ -163,9 +163,9 @@ const STEPS: Record<string, WelcomeStep[]> = {
       description:
         "LINCE gives you access to real AI tools. Create images, design your avatar, learn to write professional prompts and explore 100+ AI tools.",
       features: [
-        { icon: <Image className="w-4 h-4" />, label: "IMAGELIN — Create images with AI", color: "#9C27B0" },
-        { icon: <Palette className="w-4 h-4" />, label: "LINCELIN — Design your unique avatar", color: "#EC4899" },
-        { icon: <Target className="w-4 h-4" />, label: "PROMPTLIN — Master prompts", color: "#7C3AED" },
+        { icon: <Image className="w-4 h-4" />, label: "Create Image — Create images with AI", color: "#9C27B0" },
+        { icon: <Palette className="w-4 h-4" />, label: "My Avatar — Design your unique avatar", color: "#EC4899" },
+        { icon: <Target className="w-4 h-4" />, label: "Learn Prompts — Master prompts", color: "#7C3AED" },
         { icon: <Shield className="w-4 h-4" />, label: "AI Arsenal — 100+ real tools", color: "#00E5FF" },
       ],
       avatarKeys: ["PEQUELINA", "ATOLONDRALIN", "SABELIN"],
@@ -177,10 +177,10 @@ const STEPS: Record<string, WelcomeStep[]> = {
       title: "Play and Progress",
       subtitle: "Real gamification",
       description:
-        "Everything you do in LINCE earns rewards. Gain XP to level up, collect LinceCoins for the Market, maintain your daily streak and compete in the global ranking.",
+        "Everything you do in LINCE earns rewards. Gain XP to level up, collect LinceCoins for the Shop, maintain your daily streak and compete in the global ranking.",
       features: [
         { icon: <Zap className="w-4 h-4" />, label: "XP and progression levels", color: "#00FF88" },
-        { icon: <Coins className="w-4 h-4" />, label: "LinceCoins for the Market", color: "#FFD700" },
+        { icon: <Coins className="w-4 h-4" />, label: "LinceCoins for the Shop", color: "#FFD700" },
         { icon: <Flame className="w-4 h-4" />, label: "Daily streaks with bonuses", color: "#FF6B35" },
         { icon: <Trophy className="w-4 h-4" />, label: "Ranking and competitive leagues", color: "#D4A843" },
       ],
@@ -193,10 +193,10 @@ const STEPS: Record<string, WelcomeStep[]> = {
       title: "Levels and Adventures",
       subtitle: "Learn AI step by step",
       description:
-        "3 difficulty levels, each with unique missions. From your first prompt to PvP battles. Plus: epic Raids, Academy with full courses and an interactive World to explore.",
+        "3 difficulty levels, each with unique missions. From your first prompt to PvP battles. Plus: epic Battles, full Courses and an interactive World to explore.",
       features: [
         { icon: <Gamepad2 className="w-4 h-4" />, label: "3 levels with unique missions", color: "#00E5FF" },
-        { icon: <Swords className="w-4 h-4" />, label: "Raids — PvP knowledge battles", color: "#FF4444" },
+        { icon: <Swords className="w-4 h-4" />, label: "Battles — PvP knowledge battles", color: "#FF4444" },
         { icon: <GraduationCap className="w-4 h-4" />, label: "Academy — Full AI courses", color: "#4CAF50" },
         { icon: <Wand2 className="w-4 h-4" />, label: "LINCE World — Explore and discover", color: "#FFB300" },
       ],
@@ -245,9 +245,9 @@ const STEPS: Record<string, WelcomeStep[]> = {
       subtitle: "现在就可以使用的工具",
       description: "LINCE让你使用真正的AI工具。创建图像、设计你的角色、学习写专业提示词，探索100+AI工具。",
       features: [
-        { icon: <Image className="w-4 h-4" />, label: "IMAGELIN — 用AI创建图像", color: "#9C27B0" },
-        { icon: <Palette className="w-4 h-4" />, label: "LINCELIN — 设计你的独特角色", color: "#EC4899" },
-        { icon: <Target className="w-4 h-4" />, label: "PROMPTLIN — 掌握提示词", color: "#7C3AED" },
+        { icon: <Image className="w-4 h-4" />, label: "创建图像 — 用AI创建图像", color: "#9C27B0" },
+        { icon: <Palette className="w-4 h-4" />, label: "我的角色 — 设计你的独特角色", color: "#EC4899" },
+        { icon: <Target className="w-4 h-4" />, label: "学习提示词 — 掌握提示词", color: "#7C3AED" },
         { icon: <Shield className="w-4 h-4" />, label: "AI武器库 — 100+真实工具", color: "#00E5FF" },
       ],
       avatarKeys: ["PEQUELINA", "ATOLONDRALIN", "SABELIN"],
@@ -273,10 +273,10 @@ const STEPS: Record<string, WelcomeStep[]> = {
       id: "play",
       title: "关卡与冒险",
       subtitle: "一步步学习AI",
-      description: "3个难度递增的关卡，每个都有独特任务。从你的第一个提示词到PvP战斗。还有：史诗Raids、完整课程学院和互动世界。",
+      description: "3个难度递增的关卡，每个都有独特任务。从你的第一个提示词到PvP战斗。还有：史诗对战、完整课程和互动世界。",
       features: [
         { icon: <Gamepad2 className="w-4 h-4" />, label: "3个独特任务关卡", color: "#00E5FF" },
-        { icon: <Swords className="w-4 h-4" />, label: "Raids — PvP知识对战", color: "#FF4444" },
+        { icon: <Swords className="w-4 h-4" />, label: "对战 — PvP知识对战", color: "#FF4444" },
         { icon: <GraduationCap className="w-4 h-4" />, label: "学院 — 完整AI课程", color: "#4CAF50" },
         { icon: <Wand2 className="w-4 h-4" />, label: "LINCE世界 — 探索发现", color: "#FFB300" },
       ],

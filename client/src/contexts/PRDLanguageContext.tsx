@@ -480,7 +480,7 @@ const _basePrdTranslations: Partial<Record<PRDLanguage, any>> = {
   es: {
     langName: "Español",
     langFlag: "🇪🇸",
-    nav: { vision: "Visión", gracias: "Gracias", avatares: "Avatares", personalizar: "Personalizar", familia: "Familia", gamificacion: "Gamificación", contenido: "Contenido", arquitectura: "Arquitectura", flujos: "Flujos", monetizacion: "Monetización", accesibilidad: "Accesibilidad", roadmap: "Roadmap", entregables: "Entregables", registro: "Registro", mundo: "Mundo", raids: "Raids", academia: "Academia", comoJugar: "Cómo Jugar", arsenalIA: "Arsenal IA", cursos: "Cursos", jugar: "¡JUGAR!", login: "Iniciar Sesión", promptProfesional: "Prompt Profesional", catalogoFormativo: "Catálogo Formativo", courseBuilder: "Course Builder", historialPrompts: "Historial Prompts", miPanel: "Mi Panel" },
+    nav: { vision: "Visión", gracias: "Gracias", avatares: "Especialistas", personalizar: "Personalizar", familia: "Familia", gamificacion: "Gamificación", contenido: "Contenido", arquitectura: "Arquitectura", flujos: "Flujos", monetizacion: "Monetización", accesibilidad: "Accesibilidad", roadmap: "Roadmap", entregables: "Entregables", registro: "Registro", mundo: "Mundo", raids: "Batallas", academia: "Cursos", comoJugar: "Cómo Jugar", arsenalIA: "Herramientas IA", cursos: "Cursos", jugar: "¡JUGAR!", login: "Iniciar Sesión", promptProfesional: "Prompt Profesional", catalogoFormativo: "Todos los Cursos", courseBuilder: "Crea tu Curso", historialPrompts: "Historial Prompts", miPanel: "Mi Progreso" },
     nda: {
       title: "ACUERDO DE CONFIDENCIALIDAD",
       subtitle: "DOCUMENTO CONFIDENCIAL — ACCESO RESTRINGIDO",
@@ -629,7 +629,7 @@ const _basePrdTranslations: Partial<Record<PRDLanguage, any>> = {
   en: {
     langName: "English",
     langFlag: "🇬🇧",
-    nav: { vision: "Vision", gracias: "Thanks", avatares: "Avatars", personalizar: "Customize", familia: "Family", gamificacion: "Gamification", contenido: "Content", arquitectura: "Architecture", flujos: "Flows", monetizacion: "Monetization", accesibilidad: "Accessibility", roadmap: "Roadmap", entregables: "Deliverables", registro: "Register", mundo: "World", raids: "Raids", academia: "Academy", comoJugar: "How to Play", arsenalIA: "AI Arsenal", cursos: "Courses", jugar: "PLAY!", login: "Sign In", promptProfesional: "Pro Prompt", catalogoFormativo: "Course Catalog", courseBuilder: "Course Builder", historialPrompts: "Prompt History", miPanel: "My Dashboard" },
+    nav: { vision: "Vision", gracias: "Thanks", avatares: "Avatars", personalizar: "Customize", familia: "Family", gamificacion: "Gamification", contenido: "Content", arquitectura: "Architecture", flujos: "Flows", monetizacion: "Monetization", accesibilidad: "Accessibility", roadmap: "Roadmap", entregables: "Deliverables", registro: "Register", mundo: "World", raids: "Batallas", academia: "Academy", comoJugar: "How to Play", arsenalIA: "AI Tools", cursos: "Courses", jugar: "PLAY!", login: "Sign In", promptProfesional: "Pro Prompt", catalogoFormativo: "All Courses", courseBuilder: "Crea tu Curso", historialPrompts: "Prompt History", miPanel: "My Progress" },
     nda: {
       title: "CONFIDENTIALITY AGREEMENT",
       subtitle: "CONFIDENTIAL DOCUMENT — RESTRICTED ACCESS",
@@ -930,7 +930,7 @@ const _basePrdTranslations: Partial<Record<PRDLanguage, any>> = {
   "pt-BR": {
     langName: "Português (BR)",
     langFlag: "🇧🇷",
-    nav: { vision: "Visão", gracias: "Obrigado", avatares: "Avatares", personalizar: "Personalizar", familia: "Família", gamificacion: "Gamificação", contenido: "Conteúdo", arquitectura: "Arquitetura", flujos: "Fluxos", monetizacion: "Monetização", accesibilidad: "Acessibilidade", roadmap: "Roadmap", entregables: "Entregáveis", registro: "Cadastro", mundo: "Mundo", raids: "Raids", academia: "Academia", comoJugar: "Como Jogar", arsenalIA: "Arsenal IA", cursos: "Cursos", jugar: "JOGAR!", login: "Entrar", promptProfesional: "Prompt Profissional", catalogoFormativo: "Catálogo de Cursos", courseBuilder: "Criador de Cursos", historialPrompts: "Histórico de Prompts", miPanel: "Meu Painel" },
+    nav: { vision: "Visão", gracias: "Obrigado", avatares: "Especialistas", personalizar: "Personalizar", familia: "Família", gamificacion: "Gamificação", contenido: "Conteúdo", arquitectura: "Arquitetura", flujos: "Fluxos", monetizacion: "Monetização", accesibilidad: "Acessibilidade", roadmap: "Roadmap", entregables: "Entregáveis", registro: "Cadastro", mundo: "Mundo", raids: "Batallas", academia: "Cursos", comoJugar: "Como Jogar", arsenalIA: "Herramientas IA", cursos: "Cursos", jugar: "JOGAR!", login: "Entrar", promptProfesional: "Prompt Profissional", catalogoFormativo: "Todos os Cursos", courseBuilder: "Cria o teu Curso", historialPrompts: "Histórico de Prompts", miPanel: "Meu Progresso" },
     nda: {
       title: "ACORDO DE CONFIDENCIALIDADE",
       subtitle: "DOCUMENTO CONFIDENCIAL — ACESSO RESTRITO",
@@ -1058,7 +1058,7 @@ const _basePrdTranslations: Partial<Record<PRDLanguage, any>> = {
   "pt-PT": {
     langName: "Português (PT)",
     langFlag: "🇵🇹",
-    nav: { vision: "Visão", gracias: "Obrigado", avatares: "Avatares", personalizar: "Personalizar", familia: "Família", gamificacion: "Gamificação", contenido: "Conteúdo", arquitectura: "Arquitetura", flujos: "Fluxos", monetizacion: "Monetização", accesibilidad: "Acessibilidade", roadmap: "Roadmap", entregables: "Entregáveis", registro: "Registo", mundo: "Mundo", raids: "Raids", academia: "Academia", comoJugar: "Como Jogar", arsenalIA: "Arsenal IA", cursos: "Cursos", jugar: "JOGAR!", login: "Iniciar Sessão", promptProfesional: "Prompt Profissional", catalogoFormativo: "Catálogo Formativo", courseBuilder: "Criador de Cursos", historialPrompts: "Histórico de Prompts", miPanel: "O Meu Painel" },
+    nav: { vision: "Visão", gracias: "Obrigado", avatares: "Especialistas", personalizar: "Personalizar", familia: "Família", gamificacion: "Gamificação", contenido: "Conteúdo", arquitectura: "Arquitetura", flujos: "Fluxos", monetizacion: "Monetização", accesibilidad: "Acessibilidade", roadmap: "Roadmap", entregables: "Entregáveis", registro: "Registo", mundo: "Mundo", raids: "Batallas", academia: "Cursos", comoJugar: "Como Jogar", arsenalIA: "Herramientas IA", cursos: "Cursos", jugar: "JOGAR!", login: "Iniciar Sessão", promptProfesional: "Prompt Profissional", catalogoFormativo: "Todos los Cursos", courseBuilder: "Cria o teu Curso", historialPrompts: "Histórico de Prompts", miPanel: "O Meu Progresso" },
     nda: {
       title: "ACORDO DE CONFIDENCIALIDADE",
       subtitle: "DOCUMENTO CONFIDENCIAL — ACESSO RESTRITO",

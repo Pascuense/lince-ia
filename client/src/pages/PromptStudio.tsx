@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import {
   Wand2,
   Sparkles,
@@ -36,8 +37,7 @@ import {
 import { AVATAR_FRONTAL, AVATAR_EXPRESSIONS } from "@/lib/avatarConstants";
 import { UserNavBadge } from "@/components/UserNavBadge";
 import { PromptLevelProgress, PromptLevelBadge, calculatePromptLevel, PROMPT_LEVELS } from "@/components/PromptStudioLevels";
-import { GlobalNavBar } from "@/components/GlobalNavBar";
-import { BackButton } from "@/components/BackButton";
+// GlobalNavBar and BackButton removed - not needed in PromptStudio
 
 // ─── Avatar Guide Data ───
 const AVATAR_GUIDES = [
@@ -82,16 +82,16 @@ const STYLE_OPTIONS = [
 ];
 
 const ENVIRONMENT_OPTIONS = [
-  { value: "estudio", label: "Estudio Profesional", icon: "📸" },
-  { value: "naturaleza", label: "Naturaleza", icon: "🌿" },
-  { value: "ciudad", label: "Ciudad Urbana", icon: "🏙️" },
-  { value: "espacio", label: "Espacio Exterior", icon: "🚀" },
-  { value: "submarino", label: "Submarino", icon: "🐠" },
-  { value: "fantasia", label: "Mundo de Fantasía", icon: "🏰" },
-  { value: "interior", label: "Interior Moderno", icon: "🏠" },
-  { value: "desierto", label: "Desierto", icon: "🏜️" },
-  { value: "noche", label: "Escena Nocturna", icon: "🌙" },
-  { value: "abstracto", label: "Fondo Abstracto", icon: "🎭" },
+  { value: "estudio", label: "Estudio Profesional", icon: "📸", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/BeRfFKiJADZGBlVC.jpg", desc: "Ideal para retratos, fotos de producto y fondos controlados con iluminación profesional" },
+  { value: "naturaleza", label: "Naturaleza", icon: "🌿", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/NDtaPNNUuCjxmzxR.jpg", desc: "Bosques, montañas, ríos y paisajes al aire libre con luz natural" },
+  { value: "ciudad", label: "Ciudad Urbana", icon: "🏙️", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/hGpVLMgftxVdCKls.jpg", desc: "Calles, edificios, graffiti y ambientes metropolitanos con energía urbana" },
+  { value: "espacio", label: "Espacio Exterior", icon: "🚀", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/AIBohNxmLHdDhNEw.jpg", desc: "Galaxias, nebulosas, planetas y escenas cósmicas con estrellas" },
+  { value: "marino", label: "Marino", icon: "🐠", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/FZPHTyPrUmwkiaEN.jpg", desc: "Océanos, arrecifes de coral, vida marina y escenas subacuáticas" },
+  { value: "fantasia", label: "Mundo de Fantasía", icon: "🏰", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/FCEHRWDwHVzhCBHm.jpg", desc: "Castillos mágicos, criaturas fantásticas y mundos de ensueño" },
+  { value: "interior", label: "Interior Moderno", icon: "🏠", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/FZLRaIVSjAoqclFg.jpg", desc: "Habitaciones, oficinas y espacios interiores con diseño contemporáneo" },
+  { value: "desierto", label: "Desierto", icon: "🏜️", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/AjEcMsrxQAKKzWea.jpg", desc: "Dunas, arena dorada, atardeceres cálidos y paisajes áridos" },
+  { value: "noche", label: "Escena Nocturna", icon: "🌙", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KgdzzzbBUXSLUOFd.jpg", desc: "Luces de neón, cielos estrellados y ambientes nocturnos con contraste" },
+  { value: "abstracto", label: "Fondo Abstracto", icon: "🎭", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/kaKioVtFHqgiJdGA.jpg", desc: "Formas geométricas, gradientes de color y texturas artísticas" },
 ];
 
 // ─── Avatar-driven Examples ───
@@ -236,9 +236,7 @@ function evaluateLocally(input: { subject: string; style: string; environment: s
 function ScoreBar({ score, max, color, label }: { score: number; max: number; color: string; label: string }) {
   const pct = max > 0 ? Math.round((score / max) * 100) : 0;
   return (
-    <div className="pt-14 space-y-1">
-      <BackButton variant="inline" />
-      <GlobalNavBar />
+    <div className="space-y-1">
       <div className="flex items-center justify-between text-xs">
         <span className="text-[#B0B0B0]">{label}</span>
         <span className="font-['JetBrains_Mono'] font-bold" style={{ color }}>{score}/{max}</span>
@@ -271,7 +269,8 @@ function LevelBadge({ level }: { level: "low" | "medium" | "high" }) {
 }
 
 // ─── Main Component ───
-export default function PromptStudio() {
+export default function PromptStudio(props?: any) {
+  const embedded = props?.embedded ?? false;
   const [subject, setSubject] = useState("");
   const [style, setStyle] = useState("");
   const [environment, setEnvironment] = useState("");
@@ -376,6 +375,265 @@ export default function PromptStudio() {
   // Pick a random guide avatar for the hero
   const heroAvatar = AVATAR_GUIDES[0]; // SABELIN — the creative genius
 
+  if (embedded) {
+    return (
+      <div className="bg-[#0d1219] overflow-y-auto h-full">
+        <div className="max-w-4xl mx-auto px-4 sm:px-8 pt-6 pb-20">
+          {/* Hero - Grande y claro */}
+          <div className="text-center mb-10">
+            <div className="flex justify-center mb-4">
+              <div className="relative">
+                <img src={heroAvatar.img} alt={heroAvatar.name} className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-3" style={{ borderColor: heroAvatar.color }} />
+                <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-[#00E5FF] flex items-center justify-center">
+                  <Wand2 className="w-4 h-4 text-[#0A0A0A]" />
+                </div>
+              </div>
+            </div>
+            <h2 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl text-white mb-2">
+              Crear <span className="text-[#00E5FF]">Imagen</span> con IA
+            </h2>
+            <p className="text-white/60 text-base sm:text-lg max-w-lg mx-auto leading-relaxed">
+              Rellena los <span className="text-[#00E5FF] font-bold">4 pasos</span> y genera tu imagen.
+            </p>
+          </div>
+
+          {/* Puntuación simplificada - Grande y visual */}
+          <div className="mb-10 p-5 sm:p-6 bg-gradient-to-r from-[#00E5FF]/[0.05] to-[#D4A843]/[0.05] border border-white/[0.1] rounded-2xl">
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="font-['Space_Grotesk'] font-bold text-white text-lg sm:text-xl flex items-center gap-2">
+                <BarChart3 className="w-5 h-5 text-[#00E5FF]" />
+                Tu puntuación
+              </h3>
+              <div className="flex items-center gap-3">
+                <span className="font-['Space_Grotesk'] font-black text-3xl sm:text-4xl" style={{ color: scoreColor }}>{liveEval.percentage}%</span>
+                <div className="w-16 h-16 relative">
+                  <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="3.5" />
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke={scoreColor} strokeWidth="3.5" strokeDasharray={`${liveEval.percentage}, 100`} className="transition-all duration-500" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {(["subject", "style", "environment", "details"] as const).map((key) => {
+                const crit = EVALUATION_CRITERIA[key];
+                const score = liveEval.fieldScores[key];
+                const pct = score ? Math.round((score.score / crit.maxScore) * 100) : 0;
+                return (
+                  <div key={key} className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xl">{crit.icon}</span>
+                      <span className="text-sm font-bold text-white">{crit.name}</span>
+                    </div>
+                    <div className="h-3 rounded-full bg-white/[0.08] overflow-hidden mb-1">
+                      <div className="h-full rounded-full transition-all duration-500" style={{ width: `${pct}%`, backgroundColor: crit.color }} />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold" style={{ color: crit.color }}>{score?.score || 0}/{crit.maxScore}</span>
+                      {score && (
+                        <span className="text-xs font-bold" style={{ color: score.level === 'high' ? '#00C853' : score.level === 'medium' ? '#D4A843' : '#FF5252' }}>
+                          {score.level === 'high' ? '\u2705' : score.level === 'medium' ? '\u{1F7E1}' : '\u{1F534}'}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Formulario - Dos columnas en desktop */}
+          <div className="grid lg:grid-cols-[1fr_400px] gap-8">
+            <div className="space-y-8">
+              {/* PASO 1: Sujeto */}
+              <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border-2 border-[#00E5FF]/20">
+                <label className="flex items-center gap-3 text-white font-['Space_Grotesk'] font-bold text-lg sm:text-xl mb-4">
+                  <span className="w-10 h-10 rounded-full bg-[#00E5FF]/20 flex items-center justify-center text-[#00E5FF] font-black text-lg">1</span>
+                  ¿Qué quieres crear?
+                  <span className="text-[#FF5252] text-sm">*</span>
+                </label>
+                <Input value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Ej: Un lince ibérico enseñando IA" 
+                  className="bg-white/[0.05] border-2 border-white/[0.15] text-white text-base sm:text-lg placeholder:text-white/30 focus:border-[#00E5FF]/60 h-14 sm:h-16 rounded-xl px-5" maxLength={500} />
+                <p className="text-white/40 text-sm mt-2">{subject.length}/500 caracteres</p>
+              </div>
+
+              {/* PASO 2: Estilo Visual */}
+              <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border-2 border-[#D4A843]/20">
+                <label className="flex items-center gap-3 text-white font-['Space_Grotesk'] font-bold text-lg sm:text-xl mb-4">
+                  <span className="w-10 h-10 rounded-full bg-[#D4A843]/20 flex items-center justify-center text-[#D4A843] font-black text-lg">2</span>
+                  Elige un estilo
+                  <span className="text-[#FF5252] text-sm">*</span>
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                  {STYLE_OPTIONS.map((opt) => (
+                    <button key={opt.value} onClick={() => setStyle(opt.value)}
+                      className={`p-4 rounded-xl text-center transition-all border-2 font-semibold ${
+                        style === opt.value 
+                          ? "bg-[#D4A843]/15 border-[#D4A843] text-[#D4A843] shadow-[0_0_15px_rgba(212,168,67,0.2)]" 
+                          : "bg-white/[0.03] border-white/[0.08] text-white/70 hover:border-white/[0.2] hover:bg-white/[0.05]"
+                      }`}>
+                      <span className="text-2xl sm:text-3xl block mb-2">{opt.icon}</span>
+                      <span className="text-xs sm:text-sm block leading-tight">{opt.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* PASO 3: Entorno */}
+              <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border-2 border-[#00C853]/20">
+                <label className="flex items-center gap-3 text-white font-['Space_Grotesk'] font-bold text-lg sm:text-xl mb-4">
+                  <span className="w-10 h-10 rounded-full bg-[#00C853]/20 flex items-center justify-center text-[#00C853] font-black text-lg">3</span>
+                  Elige un entorno
+                  <span className="text-[#FF5252] text-sm">*</span>
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                  {ENVIRONMENT_OPTIONS.map((opt) => (
+                    <Tooltip key={opt.value}>
+                      <TooltipTrigger asChild>
+                        <button onClick={() => setEnvironment(opt.value)}
+                          aria-label={`${opt.label}: ${opt.desc}`}
+                          className={`group relative rounded-xl text-center transition-all duration-300 border-2 font-semibold overflow-hidden ${
+                            environment === opt.value 
+                              ? "border-[#00C853] shadow-[0_0_15px_rgba(0,200,83,0.2)] env-card-selected" 
+                              : "border-white/[0.08] hover:border-white/[0.2] hover:scale-[1.03]"
+                          }`}>
+                          <div className="relative w-full aspect-square">
+                            <img src={opt.thumb} alt={opt.label} className={`w-full h-full object-cover transition-transform duration-300 ${
+                              environment === opt.value ? "scale-105" : "group-hover:scale-110"
+                            }`} loading="lazy" />
+                            <div className={`absolute inset-0 transition-all duration-300 ${
+                              environment === opt.value 
+                                ? "bg-[#00C853]/20" 
+                                : "bg-black/10 group-hover:bg-black/5"
+                            }`} />
+                            {environment === opt.value && (
+                              <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-[#00C853] flex items-center justify-center shadow-lg env-check-pop">
+                                <CheckCircle2 className="w-4 h-4 text-white" />
+                              </div>
+                            )}
+                          </div>
+                          <div className={`px-2 py-2.5 transition-all duration-300 ${
+                            environment === opt.value ? "bg-[#00C853]/15 text-[#00C853]" : "bg-white/[0.03] text-white/70"
+                          }`}>
+                            <span className="text-xs sm:text-sm block leading-tight font-semibold">{opt.icon} {opt.label}</span>
+                          </div>
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom" className="max-w-[200px] bg-[#1a1a2e] text-white border border-[#00E5FF]/20 shadow-[0_0_12px_rgba(0,229,255,0.1)] px-3 py-2">
+                        <p className="text-xs leading-relaxed">{opt.desc}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  ))}
+                </div>
+              </div>
+
+              {/* PASO 4: Detalles */}
+              <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border-2 border-[#9C27B0]/20">
+                <label className="flex items-center gap-3 text-white font-['Space_Grotesk'] font-bold text-lg sm:text-xl mb-4">
+                  <span className="w-10 h-10 rounded-full bg-[#9C27B0]/20 flex items-center justify-center text-[#9C27B0] font-black text-lg">4</span>
+                  Detalles extra
+                  <span className="text-white/40 text-sm ml-1">(opcional)</span>
+                </label>
+                <Textarea value={details} onChange={(e) => setDetails(e.target.value)} placeholder="Colores, iluminación, estado de ánimo..." 
+                  className="bg-white/[0.05] border-2 border-white/[0.15] text-white text-base sm:text-lg placeholder:text-white/30 focus:border-[#9C27B0]/60 min-h-[100px] resize-none rounded-xl px-5 py-4" maxLength={1000} />
+              </div>
+
+              {/* Botones de acción - GRANDES */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button onClick={handleGenerate} disabled={!isFormValid || isGenerating}
+                  className="flex-1 h-16 sm:h-18 text-lg sm:text-xl bg-[#00E5FF] text-[#0A0A0A] font-['Space_Grotesk'] font-black hover:bg-[#00E5FF]/90 shadow-[0_0_30px_rgba(0,229,255,0.3)] disabled:opacity-40 rounded-2xl">
+                  {isGenerating ? (<><Loader2 className="w-6 h-6 mr-3 animate-spin" />Generando...</>) : (<><ImageIcon className="w-6 h-6 mr-3" />GENERAR IMAGEN</>)}
+                </Button>
+                <Button onClick={handlePreview} disabled={!isFormValid || isPreviewing} variant="outline"
+                  className="h-16 sm:h-18 text-base sm:text-lg border-2 border-[#D4A843]/40 text-[#D4A843] hover:bg-[#D4A843]/10 font-bold rounded-2xl px-8">
+                  {isPreviewing ? (<><Loader2 className="w-5 h-5 mr-2 animate-spin" />Mejorando...</>) : (<><Eye className="w-5 h-5 mr-2" />Ver Prompt</>)}
+                </Button>
+                <Button onClick={handleReset} variant="outline" className="h-16 sm:h-18 text-base border-2 border-white/15 text-white/50 hover:bg-white/5 rounded-2xl px-6">
+                  <RefreshCw className="w-5 h-5 mr-2" /> Limpiar
+                </Button>
+              </div>
+            </div>
+
+            {/* Columna derecha: Resultado */}
+            <div className="space-y-4">
+              {enhancedPrompt && (
+                <div className="p-5 bg-[#D4A843]/5 border border-[#D4A843]/20 rounded-2xl">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-['Space_Grotesk'] font-bold text-[#D4A843] text-base flex items-center gap-2"><Wand2 className="w-4 h-4" /> Prompt Mejorado</h4>
+                    <button onClick={copyPrompt} className="text-[#B0B0B0] hover:text-white transition-colors p-2"><Copy className="w-5 h-5" /></button>
+                  </div>
+                  <p className="text-[#B0B0B0] text-sm leading-relaxed">{enhancedPrompt}</p>
+                </div>
+              )}
+              <div ref={resultRef}>
+                {isGenerating && (
+                  <div className="aspect-square bg-white/[0.02] border-2 border-[#00E5FF]/20 rounded-2xl flex flex-col items-center justify-center gap-4">
+                    <div className="relative"><div className="w-16 h-16 rounded-full border-3 border-[#00E5FF]/30 border-t-[#00E5FF] animate-spin" /><Wand2 className="w-7 h-7 text-[#00E5FF] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" /></div>
+                    <p className="text-white font-bold text-lg">Generando tu imagen...</p>
+                    <p className="text-white/40 text-sm">Esto puede tardar unos segundos</p>
+                  </div>
+                )}
+                {generatedImage && !isGenerating && (
+                  <div className="space-y-4">
+                    <div className="relative group rounded-2xl overflow-hidden border-2 border-[#00E5FF]/30">
+                      <img src={generatedImage} alt="Imagen generada" className="w-full object-contain" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <button onClick={async () => { try { const resp = await fetch(generatedImage); const blob = await resp.blob(); const u = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = u; a.download = `lince-ia-${Date.now()}.png`; a.click(); URL.revokeObjectURL(u); } catch { window.open(generatedImage, '_blank'); } }}
+                          className="flex items-center gap-2 px-5 py-3 bg-[#00E5FF] text-[#0A0A0A] rounded-xl font-bold text-sm">
+                          <Download className="w-5 h-5" /> Descargar imagen
+                        </button>
+                      </div>
+                    </div>
+                    <ShareDownloadBar
+                      content={{
+                        type: "image",
+                        url: generatedImage,
+                        text: enhancedPrompt || [subject, style, environment, details].filter(Boolean).join(" | "),
+                        filename: `lince-ia-${Date.now()}.png`,
+                      }}
+                      compact
+                      className="mt-2"
+                    />
+                    <div className="flex items-center gap-3 p-4 bg-[#00C853]/5 border border-[#00C853]/20 rounded-xl">
+                      <CheckCircle2 className="w-5 h-5 text-[#00C853]" />
+                      <p className="text-[#00C853] text-sm font-bold">Imagen generada con sello LINCE IA</p>
+                    </div>
+                  </div>
+                )}
+                {!generatedImage && !isGenerating && (
+                  <div className="aspect-square bg-white/[0.02] border-2 border-white/[0.08] rounded-2xl flex flex-col items-center justify-center gap-4 border-dashed relative overflow-hidden">
+                    {environment ? (
+                      <>
+                        <img key={environment} src={ENVIRONMENT_OPTIONS.find(e => e.value === environment)?.thumb} alt={ENVIRONMENT_OPTIONS.find(e => e.value === environment)?.label}
+                          className="absolute inset-0 w-full h-full object-cover opacity-20 env-thumb-fade" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/90 via-[#0A0A0A]/50 to-transparent" />
+                        <div className="relative z-10 flex flex-col items-center gap-3">
+                          <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-[#00C853]/30 shadow-[0_0_15px_rgba(0,200,83,0.15)] env-thumb-fade">
+                            <img key={`thumb-${environment}`} src={ENVIRONMENT_OPTIONS.find(e => e.value === environment)?.thumb} alt="" className="w-full h-full object-cover" />
+                          </div>
+                          <p className="text-[#00C853] text-base font-bold text-center">
+                            {ENVIRONMENT_OPTIONS.find(e => e.value === environment)?.icon} {ENVIRONMENT_OPTIONS.find(e => e.value === environment)?.label}
+                          </p>
+                          <p className="text-white/40 text-sm text-center px-6">Completa los campos y pulsa "Generar Imagen"</p>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <img src={heroAvatar.expressionThinking || heroAvatar.img} alt="" className="w-20 h-20 rounded-full object-cover opacity-30" />
+                        <p className="text-white/40 text-base text-center px-6">Tu imagen aparecerá aquí</p>
+                        <p className="text-white/25 text-sm text-center px-6">Rellena los 4 pasos y pulsa "Generar Imagen"</p>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-[#0A0A0A] min-h-screen">
       {/* Header */}
@@ -389,7 +647,7 @@ export default function PromptStudio() {
           <div className="flex items-center gap-3">
             <div className="flex rounded-full border border-white/10 overflow-hidden">
               <span className="px-3 py-1.5 text-xs font-bold text-[#0A0A0A] bg-[#00E5FF]">
-                IMAGELIN
+                Crear Imagen
               </span>
               <a href="/prompt-profesional"
                 className="px-3 py-1.5 text-xs font-medium text-[#B0B0B0] hover:text-white hover:bg-white/5 transition-all">
@@ -431,11 +689,11 @@ export default function PromptStudio() {
             <div className="max-w-md mx-auto mb-4">
               <PromptLevelProgress stats={promptStats} lang="es" compact={false} />
             </div>
-            <h1 className="font-['Space_Grotesk'] font-bold text-4xl sm:text-5xl text-white mb-1">
+            <h1 className="font-['Space_Grotesk'] font-bold text-4xl sm:text-6xl text-white mb-2">
               IMA<span className="text-[#00E5FF]">GELIN</span>
             </h1>
-            <p className="text-sm font-medium text-white/40 font-['Space_Grotesk'] uppercase tracking-widest mb-4">Crea imágenes con IA en 4 pasos</p>
-            <p className="text-[#B0B0B0] text-lg max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg font-semibold text-white/50 font-['Space_Grotesk'] uppercase tracking-widest mb-5">Crea imágenes con IA en 4 pasos</p>
+            <p className="text-white/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
               Crea imágenes con IA rellenando <span className="text-[#00E5FF] font-bold">4 campos simples</span>.
               Evaluación en tiempo real + mejora automática del prompt + generación instantánea.
               <span className="text-[#D4A843] font-medium"> Todo queda guardado en base de datos de forma segura.</span>
@@ -637,21 +895,21 @@ export default function PromptStudio() {
             <div className="space-y-6">
               {/* Field 1: Subject */}
               <div>
-                <label className="flex items-center gap-2 text-white font-['Space_Grotesk'] font-bold text-sm mb-2">
-                  <FileText className="w-4 h-4 text-[#00E5FF]" />
-                  <span className="text-[#00E5FF]">1.</span> ¿Qué quieres crear?
-                  <span className="text-[#FF5252] text-xs">*</span>
+                <label className="flex items-center gap-2 text-white font-['Space_Grotesk'] font-bold text-base sm:text-lg mb-3">
+                  <FileText className="w-5 h-5 text-[#00E5FF]" />
+                  <span className="text-[#00E5FF] text-xl font-black">1.</span> ¿Qué quieres crear?
+                  <span className="text-[#FF5252] text-sm">*</span>
                   {liveEval.fieldScores.subject && <LevelBadge level={liveEval.fieldScores.subject.level} />}
                 </label>
                 <Input
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
                   placeholder="Ej: Un lince ibérico enseñando inteligencia artificial a estudiantes universitarios"
-                  className="bg-white/[0.03] border-white/[0.08] text-white placeholder:text-[#B0B0B0]/40 focus:border-[#00E5FF]/50 h-12"
+                  className="bg-white/[0.04] border-2 border-white/[0.1] text-white text-base placeholder:text-white/30 focus:border-[#00E5FF]/50 h-14 rounded-xl"
                   maxLength={500}
                 />
-                <div className="flex items-center justify-between mt-1">
-                  <p className="text-[#B0B0B0]/40 text-[10px]">{subject.length}/500 — Sé específico para mejores resultados</p>
+                <div className="flex items-center justify-between mt-2">
+                  <p className="text-white/30 text-xs">{subject.length}/500 — Sé específico para mejores resultados</p>
                   {liveEval.fieldScores.subject?.feedback && subject.length > 0 && (
                     <p className="text-[#B0B0B0]/60 text-[10px] max-w-[60%] text-right">{liveEval.fieldScores.subject.feedback}</p>
                   )}
@@ -660,16 +918,16 @@ export default function PromptStudio() {
 
               {/* Field 2: Style */}
               <div>
-                <label className="flex items-center gap-2 text-white font-['Space_Grotesk'] font-bold text-sm mb-2">
-                  <Palette className="w-4 h-4 text-[#D4A843]" />
-                  <span className="text-[#D4A843]">2.</span> Estilo Visual
-                  <span className="text-[#FF5252] text-xs">*</span>
+                <label className="flex items-center gap-2 text-white font-['Space_Grotesk'] font-bold text-base sm:text-lg mb-3">
+                  <Palette className="w-5 h-5 text-[#D4A843]" />
+                  <span className="text-[#D4A843] text-xl font-black">2.</span> Estilo Visual
+                  <span className="text-[#FF5252] text-sm">*</span>
                   {liveEval.fieldScores.style && style && <LevelBadge level={liveEval.fieldScores.style.level} />}
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
                   {STYLE_OPTIONS.map((opt) => (
                     <button key={opt.value} onClick={() => setStyle(opt.value)}
-                      className={`p-2.5 rounded-lg text-center transition-all border text-xs font-medium ${
+                      className={`p-3 sm:p-3.5 rounded-xl text-center transition-all border-2 text-sm font-semibold ${
                         style === opt.value
                           ? "bg-[#D4A843]/15 border-[#D4A843]/50 text-[#D4A843]"
                           : "bg-white/[0.02] border-white/[0.06] text-[#B0B0B0] hover:border-white/[0.15] hover:text-white"
@@ -683,44 +941,70 @@ export default function PromptStudio() {
 
               {/* Field 3: Environment */}
               <div>
-                <label className="flex items-center gap-2 text-white font-['Space_Grotesk'] font-bold text-sm mb-2">
-                  <MapPin className="w-4 h-4 text-[#00C853]" />
-                  <span className="text-[#00C853]">3.</span> Entorno / Escenario
-                  <span className="text-[#FF5252] text-xs">*</span>
+                <label className="flex items-center gap-2 text-white font-['Space_Grotesk'] font-bold text-base sm:text-lg mb-3">
+                  <MapPin className="w-5 h-5 text-[#00C853]" />
+                  <span className="text-[#00C853] text-xl font-black">3.</span> Entorno / Escenario
+                  <span className="text-[#FF5252] text-sm">*</span>
                   {liveEval.fieldScores.environment && environment && <LevelBadge level={liveEval.fieldScores.environment.level} />}
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
                   {ENVIRONMENT_OPTIONS.map((opt) => (
-                    <button key={opt.value} onClick={() => setEnvironment(opt.value)}
-                      className={`p-2.5 rounded-lg text-center transition-all border text-xs font-medium ${
-                        environment === opt.value
-                          ? "bg-[#00C853]/15 border-[#00C853]/50 text-[#00C853]"
-                          : "bg-white/[0.02] border-white/[0.06] text-[#B0B0B0] hover:border-white/[0.15] hover:text-white"
-                      }`}>
-                      <span className="text-lg block mb-1">{opt.icon}</span>
-                      {opt.label}
-                    </button>
+                    <Tooltip key={opt.value}>
+                      <TooltipTrigger asChild>
+                        <button onClick={() => setEnvironment(opt.value)}
+                          aria-label={`${opt.label}: ${opt.desc}`}
+                          className={`group relative rounded-xl text-center transition-all duration-300 border-2 font-semibold overflow-hidden ${
+                            environment === opt.value
+                              ? "border-[#00C853]/50 shadow-[0_0_12px_rgba(0,200,83,0.15)] env-card-selected"
+                              : "border-white/[0.06] hover:border-white/[0.15] hover:scale-[1.03]"
+                          }`}>
+                          <div className="relative w-full aspect-[4/3]">
+                            <img src={opt.thumb} alt={opt.label} className={`w-full h-full object-cover transition-transform duration-300 ${
+                              environment === opt.value ? "scale-105" : "group-hover:scale-110"
+                            }`} loading="lazy" />
+                            <div className={`absolute inset-0 transition-all duration-300 ${
+                              environment === opt.value
+                                ? "bg-[#00C853]/20"
+                                : "bg-black/10 group-hover:bg-black/5"
+                            }`} />
+                            {environment === opt.value && (
+                              <div className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-[#00C853] flex items-center justify-center env-check-pop">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-white" />
+                              </div>
+                            )}
+                          </div>
+                          <div className={`px-2 py-2 text-sm transition-all duration-300 ${
+                            environment === opt.value ? "bg-[#00C853]/15 text-[#00C853]" : "bg-white/[0.02] text-[#B0B0B0]"
+                          }`}>
+                            <span className="text-xs block leading-tight font-semibold">{opt.icon} {opt.label}</span>
+                          </div>
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom" className="max-w-[200px] bg-[#1a1a2e] text-white border border-[#00E5FF]/20 shadow-[0_0_12px_rgba(0,229,255,0.1)] px-3 py-2">
+                        <p className="text-xs leading-relaxed">{opt.desc}</p>
+                      </TooltipContent>
+                    </Tooltip>
                   ))}
                 </div>
               </div>
 
               {/* Field 4: Details */}
               <div>
-                <label className="flex items-center gap-2 text-white font-['Space_Grotesk'] font-bold text-sm mb-2">
-                  <Sparkles className="w-4 h-4 text-[#9C27B0]" />
-                  <span className="text-[#9C27B0]">4.</span> Detalles Adicionales
-                  <span className="text-[#B0B0B0] text-xs font-normal">(opcional)</span>
+                <label className="flex items-center gap-2 text-white font-['Space_Grotesk'] font-bold text-base sm:text-lg mb-3">
+                  <Sparkles className="w-5 h-5 text-[#9C27B0]" />
+                  <span className="text-[#9C27B0] text-xl font-black">4.</span> Detalles Adicionales
+                  <span className="text-white/40 text-sm font-normal">(opcional)</span>
                   {liveEval.fieldScores.details && details && <LevelBadge level={liveEval.fieldScores.details.level} />}
                 </label>
                 <Textarea
                   value={details}
                   onChange={(e) => setDetails(e.target.value)}
                   placeholder="Ej: Colores neón cyan y dorado, hologramas flotantes, iluminación volumétrica dramática, composición centrada..."
-                  className="bg-white/[0.03] border-white/[0.08] text-white placeholder:text-[#B0B0B0]/40 focus:border-[#9C27B0]/50 min-h-[80px] resize-none"
+                  className="bg-white/[0.04] border-2 border-white/[0.1] text-white text-base placeholder:text-white/30 focus:border-[#9C27B0]/50 min-h-[100px] resize-none rounded-xl"
                   maxLength={1000}
                 />
-                <div className="flex items-center justify-between mt-1">
-                  <p className="text-[#B0B0B0]/40 text-[10px]">{details.length}/1000</p>
+                <div className="flex items-center justify-between mt-2">
+                  <p className="text-white/30 text-xs">{details.length}/1000</p>
                   {liveEval.fieldScores.details?.feedback && details.length > 0 && (
                     <p className="text-[#B0B0B0]/60 text-[10px] max-w-[60%] text-right">{liveEval.fieldScores.details.feedback}</p>
                   )}
@@ -730,15 +1014,15 @@ export default function PromptStudio() {
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-3">
                 <Button onClick={handleGenerate} disabled={!isFormValid || isGenerating}
-                  className="flex-1 h-12 bg-[#00E5FF] text-[#0A0A0A] font-['Space_Grotesk'] font-bold hover:bg-[#00E5FF]/90 shadow-[0_0_20px_rgba(0,229,255,0.3)] disabled:opacity-40">
+                  className="flex-1 h-14 text-base bg-[#00E5FF] text-[#0A0A0A] font-['Space_Grotesk'] font-black hover:bg-[#00E5FF]/90 shadow-[0_0_20px_rgba(0,229,255,0.3)] disabled:opacity-40 rounded-xl">
                   {isGenerating ? (<><Loader2 className="w-5 h-5 mr-2 animate-spin" />Generando imagen...</>) : (<><ImageIcon className="w-5 h-5 mr-2" />Generar Imagen con IA</>)}
                 </Button>
                 <Button onClick={handlePreview} disabled={!isFormValid || isPreviewing} variant="outline"
-                  className="h-12 border-[#D4A843]/30 text-[#D4A843] hover:bg-[#D4A843]/10 font-['Space_Grotesk'] font-bold">
-                  {isPreviewing ? (<><Loader2 className="w-4 h-4 mr-2 animate-spin" />Mejorando...</>) : (<><Eye className="w-4 h-4 mr-2" />Ver Prompt Mejorado</>)}
+                  className="h-14 text-base border-2 border-[#D4A843]/30 text-[#D4A843] hover:bg-[#D4A843]/10 font-['Space_Grotesk'] font-bold rounded-xl">
+                  {isPreviewing ? (<><Loader2 className="w-5 h-5 mr-2 animate-spin" />Mejorando...</>) : (<><Eye className="w-5 h-5 mr-2" />Ver Prompt Mejorado</>)}
                 </Button>
-                <Button onClick={handleReset} variant="outline" className="h-12 border-white/10 text-[#B0B0B0] hover:bg-white/5">
-                  <RefreshCw className="w-4 h-4 mr-2" />Limpiar
+                <Button onClick={handleReset} variant="outline" className="h-14 text-base border-2 border-white/10 text-white/50 hover:bg-white/5 rounded-xl">
+                  <RefreshCw className="w-5 h-5 mr-2" />Limpiar
                 </Button>
               </div>
             </div>
@@ -824,9 +1108,9 @@ export default function PromptStudio() {
                                 const fs = Math.max(14, Math.min(24, img.width * 0.028));
                                 cx.font = `bold ${fs}px 'Space Grotesk', sans-serif`; cx.textBaseline = 'middle';
                                 const ym = img.height - sh / 2;
-                                cx.fillStyle = '#00E5FF'; cx.textAlign = 'left'; cx.fillText('LINCELIN', 12, ym);
-                                cx.fillStyle = 'rgba(255,255,255,0.6)'; cx.textAlign = 'right'; cx.font = `${fs*0.8}px 'Space Grotesk', sans-serif`; cx.fillText('lince.com', img.width - 12, ym);
-                                c.toBlob((b) => { if (!b) return; const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href = u; a.download = `imagelin-${Date.now()}.png`; a.click(); URL.revokeObjectURL(u); }, 'image/png');
+                                cx.fillStyle = '#00E5FF'; cx.textAlign = 'left'; cx.fillText('LINCE IA', 12, ym);
+                                cx.fillStyle = 'rgba(255,255,255,0.6)'; cx.textAlign = 'right'; cx.font = `${fs*0.8}px 'Space Grotesk', sans-serif`; cx.fillText('lince.app', img.width - 12, ym);
+                                c.toBlob((b) => { if (!b) return; const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href = u; a.download = `lince-ia-${Date.now()}.png`; a.click(); URL.revokeObjectURL(u); }, 'image/png');
                               };
                               img.src = URL.createObjectURL(blob);
                             } catch { /* fallback */ window.open(generatedImage, '_blank'); }
@@ -842,7 +1126,7 @@ export default function PromptStudio() {
                         type: "image",
                         url: generatedImage,
                         text: enhancedPrompt || [subject, style, environment, details].filter(Boolean).join(" | "),
-                        filename: `duoimagelin-${Date.now()}.png`,
+                        filename: `lince-ia-${Date.now()}.png`,
                         recommendedTool: { id: "midjourney", name: "Midjourney", why: "Lleva tu imagen al siguiente nivel" },
                       }}
                       className="mt-3"
@@ -859,10 +1143,29 @@ export default function PromptStudio() {
                 )}
 
                 {!generatedImage && !isGenerating && (
-                  <div className="aspect-square bg-white/[0.02] border border-white/[0.06] rounded-xl flex flex-col items-center justify-center gap-3 border-dashed">
-                    <img src={heroAvatar.expressionThinking || heroAvatar.img} alt="" className="w-16 h-16 rounded-full object-cover opacity-30" />
-                    <p className="text-[#B0B0B0]/40 text-sm text-center px-4">Tu imagen generada aparecerá aquí</p>
-                    <p className="text-[#B0B0B0]/30 text-[10px] text-center px-4">Rellena los campos y haz clic en "Generar Imagen con IA"</p>
+                  <div className="aspect-square bg-white/[0.02] border border-white/[0.06] rounded-xl flex flex-col items-center justify-center gap-3 border-dashed relative overflow-hidden">
+                    {environment ? (
+                      <>
+                        <img key={environment} src={ENVIRONMENT_OPTIONS.find(e => e.value === environment)?.thumb} alt={ENVIRONMENT_OPTIONS.find(e => e.value === environment)?.label}
+                          className="absolute inset-0 w-full h-full object-cover opacity-15 env-thumb-fade" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/90 via-[#0A0A0A]/50 to-transparent" />
+                        <div className="relative z-10 flex flex-col items-center gap-2">
+                          <div className="w-14 h-14 rounded-xl overflow-hidden border-2 border-[#00C853]/30 shadow-[0_0_12px_rgba(0,200,83,0.1)] env-thumb-fade">
+                            <img key={`thumb-${environment}`} src={ENVIRONMENT_OPTIONS.find(e => e.value === environment)?.thumb} alt="" className="w-full h-full object-cover" />
+                          </div>
+                          <p className="text-[#00C853] text-sm font-bold text-center">
+                            {ENVIRONMENT_OPTIONS.find(e => e.value === environment)?.icon} {ENVIRONMENT_OPTIONS.find(e => e.value === environment)?.label}
+                          </p>
+                          <p className="text-white/35 text-[10px] text-center px-4">Completa los campos y pulsa "Generar Imagen con IA"</p>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <img src={heroAvatar.expressionThinking || heroAvatar.img} alt="" className="w-16 h-16 rounded-full object-cover opacity-30" />
+                        <p className="text-[#B0B0B0]/40 text-sm text-center px-4">Tu imagen generada aparecerá aquí</p>
+                        <p className="text-[#B0B0B0]/30 text-[10px] text-center px-4">Rellena los campos y haz clic en "Generar Imagen con IA"</p>
+                      </>
+                    )}
                   </div>
                 )}
               </div>

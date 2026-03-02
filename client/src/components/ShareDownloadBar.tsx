@@ -81,12 +81,12 @@ function buildShareText(content: GeneratedContent, platform: SocialPlatform): st
     },
     lincelin: {
       whatsapp:  "Mira mi personaje lince de LINCE! Crea el tuyo gratis:",
-      telegram:  "Mi LINCELIN personal de LINCE! Crea el tuyo:",
-      x:         "Mi LINCELIN de @LINCE_app! Cada uno es unico. Crea el tuyo gratis #LINCE",
+      telegram:  "Mi avatar personal de LINCE! Crea el tuyo:",
+      x:         "Mi avatar de @LINCE_app! Cada uno es unico. Crea el tuyo gratis #LINCE",
       facebook:  "Mira mi avatar personalizado de LINCE! Crea el tuyo gratis en la plataforma de IA mas divertida.",
       linkedin:  "Este es mi avatar personal en LINCE, la plataforma de alfabetizacion en IA!",
-      instagram: "Mi LINCELIN personalizado de @lince.app!",
-      email:     "Mira mi LINCELIN personalizado de LINCE!",
+      instagram: "Mi avatar personalizado de @lince.app!",
+      email:     "Mira mi avatar personalizado de LINCE!",
     },
     text: {
       whatsapp:  "Mira lo que aprendi con LINCE! Plataforma de IA educativa:",
@@ -161,7 +161,7 @@ function triggerShare(platform: SocialPlatform, content: GeneratedContent, onDow
 }
 
 // ─── Watermark helper ───
-function addLINCELINWatermark(imgBlob: Blob): Promise<Blob> {
+function addLinceIAWatermark(imgBlob: Blob): Promise<Blob> {
   return new Promise((resolve) => {
     const img = new Image();
     img.crossOrigin = "anonymous";
@@ -185,7 +185,7 @@ function addLINCELINWatermark(imgBlob: Blob): Promise<Blob> {
 
       ctx.fillStyle = "#00E5FF";
       ctx.textAlign = "left";
-      ctx.fillText("LINCE", 12, y);
+      ctx.fillText("LINCE IA", 12, y);
 
       ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
       ctx.textAlign = "right";
@@ -205,7 +205,7 @@ function handleDownload(content: GeneratedContent): Promise<void> {
     if ((content.type === "image" || content.type === "lincelin") && content.url) {
       fetch(content.url)
         .then((r) => r.blob())
-        .then((blob) => addLINCELINWatermark(blob))
+        .then((blob) => addLinceIAWatermark(blob))
         .then((watermarkedBlob) => {
           const url = URL.createObjectURL(watermarkedBlob);
           const a = document.createElement("a");

@@ -218,7 +218,7 @@ function RoomExplorer({ lang, onClose }: { lang: string; onClose: () => void }) 
 /* ─── Translations ─── */
 const mundoTranslations: Record<string, Record<string, any>> = {
   es: {
-    nav: { back: '← Inicio', raids: '⚔️ LINCE Raids', comoJugar: '🎮 Cómo Jugar', register: 'Registro' },
+    nav: { back: '← Inicio', raids: '⚔️ LINCE Batallas', comoJugar: '🎮 Cómo Jugar', register: 'Registro' },
     hero: {
       badge: '🌍 Nuevo Mundo Virtual',
       title: 'MUNDO',
@@ -340,11 +340,11 @@ const mundoTranslations: Record<string, Record<string, any>> = {
       title: '¿Listo para construir tu mundo?',
       subtitle: 'Explora las habitaciones y descubre lo que te espera',
       button: '🚀 Comenzar Ahora',
-      secondary: '⚔️ Ver LINCE Raids',
+      secondary: '⚔️ Ver LINCE Batallas',
     },
   },
   en: {
-    nav: { back: '← Home', raids: '⚔️ LINCE Raids', comoJugar: '🎮 How to Play', register: 'Register' },
+    nav: { back: '← Home', raids: '⚔️ LINCE Batallas', comoJugar: '🎮 How to Play', register: 'Register' },
     hero: {
       badge: '🌍 New Virtual World',
       title: 'MUNDO',
@@ -466,7 +466,7 @@ const mundoTranslations: Record<string, Record<string, any>> = {
       title: 'Ready to build your world?',
       subtitle: 'Explore the rooms and discover what awaits you',
       button: '🚀 Start Now',
-      secondary: '⚔️ See LINCE Raids',
+      secondary: '⚔️ See LINCE Battles',
     },
   },
   zh: {

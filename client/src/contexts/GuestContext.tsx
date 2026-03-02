@@ -5,15 +5,15 @@ import { createContext, useContext, useState, useCallback, useEffect, type React
 // ═══════════════════════════════════════════════════════════════
 // Acciones que CONSUMEN 1 prueba:
 //   - Abrir chat con un avatar (1 por conversación nueva)
-//   - Usar IMAGELIN (1 por prompt generado)
+//   - Usar Crear Imagen (1 por prompt generado)
 //   - Crear un Lincelin (1 por generación)
 //   - Usar Prompt Profesional (1 por uso)
 //
 // Acceso LIBRE (no consume):
 //   - Ver galería de Personajes (navegar, filtrar)
-//   - Ver Arsenal IA (catálogo de herramientas)
+//   - Ver Herramientas IA (catálogo de herramientas)
 //   - Ver Cómo Jugar (tutorial)
-//   - Ver Aviso Legal
+//   - Ver Legal
 //   - Ver Home/Landing
 //
 // BLOQUEADO siempre sin registro:

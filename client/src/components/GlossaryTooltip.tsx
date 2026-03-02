@@ -14,7 +14,7 @@ const GLOSSARY: Record<string, Record<string, { title: string; desc: string; ico
     zh: { title: "突袭", desc: "对其他玩家房屋的攻击。你写攻击提示词来偷取LinceCoins和资源。最好的提示词获胜！", icon: "⚔️" },
   },
   lincecoins: {
-    es: { title: "LinceCoins", desc: "La moneda virtual del juego. Las ganas escribiendo prompts, completando misiones, ganando raids y estudiando en la Academia.", icon: "💰" },
+    es: { title: "LinceCoins", desc: "La moneda virtual del juego. Las ganas escribiendo prompts, completando misiones, ganando batallas y estudiando en la Academia.", icon: "💰" },
     en: { title: "LinceCoins", desc: "The in-game virtual currency. You earn them by writing prompts, completing missions, winning raids, and studying at the Academy.", icon: "💰" },
     zh: { title: "LinceCoins", desc: "游戏中的虚拟货币。通过写提示词、完成任务、赢得突袭和在学院学习来获得。", icon: "💰" },
   },
@@ -29,7 +29,7 @@ const GLOSSARY: Record<string, Record<string, { title: string; desc: string; ico
     zh: { title: "LINCE世界", desc: "你的类似模拟人生的虚拟家园。建造房间，用提示词装饰，和家人朋友一起生活。", icon: "🌍" },
   },
   academia: {
-    es: { title: "Academia LINCE", desc: "10 habitaciones de aprendizaje, cada una con un personaje guía que te enseña un área diferente de la IA.", icon: "🎓" },
+    es: { title: "Cursos LINCE", desc: "10 habitaciones de aprendizaje, cada una con un personaje guía que te enseña un área diferente de la IA.", icon: "🎓" },
     en: { title: "Academy LINCE", desc: "10 learning rooms, each with a guide character that teaches you a different area of AI.", icon: "🎓" },
     zh: { title: "LINCE学院", desc: "10个学习房间，每个都有一个引导角色教你AI的不同领域。", icon: "🎓" },
   },
@@ -54,8 +54,8 @@ const GLOSSARY: Record<string, Record<string, { title: string; desc: string; ico
     zh: { title: "AI（人工智能）", desc: "让机器学习和创造的技术。在LINCE中，你通过写提示词学会与它交流。", icon: "🤖" },
   },
   pvp: {
-    es: { title: "PvP (Jugador vs Jugador)", desc: "Modo de juego donde compites directamente contra otro jugador. En Raids, tus prompts luchan contra los suyos.", icon: "🎯" },
-    en: { title: "PvP (Player vs Player)", desc: "Game mode where you compete directly against another player. In Raids, your prompts fight against theirs.", icon: "🎯" },
+    es: { title: "PvP (Jugador vs Jugador)", desc: "Modo de juego donde compites directamente contra otro jugador. En las Batallas, tus prompts luchan contra los suyos.", icon: "🎯" },
+    en: { title: "PvP (Player vs Player)", desc: "Game mode where you compete directly against another player. In Battles, your prompts fight against theirs.", icon: "🎯" },
     zh: { title: "PvP（玩家对玩家）", desc: "直接与另一个玩家竞争的游戏模式。在突袭中，你的提示词与他们的对抗。", icon: "🎯" },
   },
   familialince: {

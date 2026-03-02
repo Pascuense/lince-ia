@@ -1,0 +1,19 @@
+CREATE INDEX `idx_courses_playerid` ON `custom_courses` (`gamePlayerId`);--> statement-breakpoint
+CREATE INDEX `idx_courses_status` ON `custom_courses` (`status`);--> statement-breakpoint
+CREATE INDEX `idx_courses_updated` ON `custom_courses` (`updatedAt`);--> statement-breakpoint
+CREATE INDEX `idx_courses_player_updated` ON `custom_courses` (`gamePlayerId`,`updatedAt`);--> statement-breakpoint
+CREATE INDEX `idx_gameplayers_country` ON `game_players` (`country`);--> statement-breakpoint
+CREATE INDEX `idx_gameplayers_xp` ON `game_players` (`xp`);--> statement-breakpoint
+CREATE INDEX `idx_gameplayers_created` ON `game_players` (`createdAt`);--> statement-breakpoint
+CREATE INDEX `idx_gameplayers_level` ON `game_players` (`currentLevel`);--> statement-breakpoint
+CREATE INDEX `idx_legal_fingerprint` ON `legal_acceptances` (`fingerprint`);--> statement-breakpoint
+CREATE INDEX `idx_legal_accepted` ON `legal_acceptances` (`acceptedAt`);--> statement-breakpoint
+CREATE INDEX `idx_legal_playerid` ON `legal_acceptances` (`gamePlayerId`);--> statement-breakpoint
+CREATE INDEX `idx_prompts_userid` ON `prompt_creations` (`userId`);--> statement-breakpoint
+CREATE INDEX `idx_prompts_status` ON `prompt_creations` (`status`);--> statement-breakpoint
+CREATE INDEX `idx_prompts_created` ON `prompt_creations` (`createdAt`);--> statement-breakpoint
+CREATE INDEX `idx_prompts_userid_created` ON `prompt_creations` (`userId`,`createdAt`);--> statement-breakpoint
+CREATE INDEX `idx_toolviews_playerid` ON `tool_views` (`gamePlayerId`);--> statement-breakpoint
+CREATE INDEX `idx_toolviews_toolid` ON `tool_views` (`toolId`);--> statement-breakpoint
+CREATE INDEX `idx_toolviews_viewed` ON `tool_views` (`viewedAt`);--> statement-breakpoint
+CREATE INDEX `idx_toolviews_player_viewed` ON `tool_views` (`gamePlayerId`,`viewedAt`);

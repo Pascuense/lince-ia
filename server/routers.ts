@@ -1,14 +1,14 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { COOKIE_NAME } from "@shared/const";
-import { getSessionCookieOptions } from "./cookies";
-import { systemRouter } from "./systemRouter";
-import { publicProcedure, protectedProcedure, router } from "./trpc";
-import { invokeLLM } from "./llm";
-import { generateImage } from "./imageGeneration";
+import { getSessionCookieOptions } from "./_core/cookies";
+import { systemRouter } from "./_core/systemRouter";
+import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
+import { invokeLLM } from "./_core/llm";
+import { generateImage } from "./_core/imageGeneration";
 import { storagePut } from "./storage";
 import { SignJWT, jwtVerify } from "jose";
-import { ENV } from "./env";
+import { ENV } from "./_core/env";
 import {
   createPromptCreation,
   updatePromptCreation,
@@ -42,7 +42,7 @@ import {
   listPlayerChatSessions,
   deleteChatSession,
 } from "./db";
-import { notifyOwner } from "./notification";
+import { notifyOwner } from "./_core/notification";
 import { getAvatarPrompt, buildFullPrompt, AVATAR_PROMPTS } from "@shared/avatarPrompts";
 import {
   savePushSubscription,
@@ -119,7 +119,7 @@ setInterval(() => {
 }, 30_000);
 
 // ─── Security: Game Session Token (JWT) ───
-const GAME_TOKEN_SECRET = new TextEncoder().encode(ENV.jwtSecret + "-game-session");
+const GAME_TOKEN_SECRET = new TextEncoder().encode(ENV.cookieSecret + "-game-session");
 const GAME_TOKEN_EXPIRY = "7d"; // 7 days
 
 /** Generate a signed game session token for a player */

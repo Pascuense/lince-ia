@@ -40,7 +40,7 @@ const STEPS: Record<string, TutorialStep[]> = {
     },
     {
       id: "imagelin",
-      title: "IMAGELIN — Crea imágenes con IA",
+      title: "Crear Imagen — Crea imágenes con IA",
       description: "Escribe lo que quieres ver y la IA lo dibuja al instante. Por ejemplo: \"un gato con gafas de sol en la playa\". Así de fácil. No necesitas saber dibujar.",
       icon: <Image className="w-8 h-8" />,
       accentColor: "#9C27B0",
@@ -49,7 +49,7 @@ const STEPS: Record<string, TutorialStep[]> = {
     },
     {
       id: "lincelin",
-      title: "LINCELIN — Diseña tu avatar",
+      title: "Mi Avatar — Diseña tu avatar",
       description: "Crea tu propio personaje lince personalizado. Elige un estilo (cyberpunk, fantasía, medieval...) y la IA genera un avatar único para ti. Es TU personaje en LINCE.",
       icon: <Palette className="w-8 h-8" />,
       accentColor: "#EC4899",
@@ -58,7 +58,7 @@ const STEPS: Record<string, TutorialStep[]> = {
     },
     {
       id: "promptlin",
-      title: "PROMPTLIN — Aprende a hablar con la IA",
+      title: "Aprender Prompts — Aprende a hablar con la IA",
       description: "Un \"prompt\" es una instrucción que le das a la IA. Aquí aprendes a escribir prompts como un profesional. Hay 6 modos: Creativo, Técnico, Negocio, Ética, Speed Run y Batalla.",
       icon: <Brain className="w-8 h-8" />,
       accentColor: "#7C3AED",
@@ -67,7 +67,7 @@ const STEPS: Record<string, TutorialStep[]> = {
     },
     {
       id: "arsenal",
-      title: "Arsenal IA — Herramientas reales",
+      title: "Herramientas IA — Herramientas reales",
       description: "Un catálogo con más de 62 herramientas de IA reales: ChatGPT, Midjourney, DALL-E, Suno y muchas más. Cada una tiene una guía paso a paso para que aprendas a usarla.",
       icon: <Shield className="w-8 h-8" />,
       accentColor: "#00E5FF",
@@ -86,7 +86,7 @@ const STEPS: Record<string, TutorialStep[]> = {
     {
       id: "rewards",
       title: "Recompensas y progresión",
-      description: "Todo lo que haces en LINCE te da recompensas. Ganas XP para subir de nivel, LinceCoins para comprar cosas en el Mercado, y puedes mantener tu racha diaria para ganar bonificaciones extra.",
+      description: "Todo lo que haces en LINCE te da recompensas. Ganas XP para subir de nivel, LinceCoins para comprar cosas en la Tienda, y puedes mantener tu racha diaria para ganar bonificaciones extra.",
       icon: <Trophy className="w-8 h-8" />,
       accentColor: "#FFB300",
       avatarKey: "MAMALINA",
@@ -122,7 +122,7 @@ const STEPS: Record<string, TutorialStep[]> = {
     },
     {
       id: "imagelin",
-      title: "IMAGELIN — Create images with AI",
+      title: "Create Image — Create images with AI",
       description: "Write what you want to see and AI draws it instantly. For example: \"a cat with sunglasses on the beach\". That easy. No drawing skills needed.",
       icon: <Image className="w-8 h-8" />,
       accentColor: "#9C27B0",
@@ -131,7 +131,7 @@ const STEPS: Record<string, TutorialStep[]> = {
     },
     {
       id: "lincelin",
-      title: "LINCELIN — Design your avatar",
+      title: "My Avatar — Design your avatar",
       description: "Create your own custom lynx character. Choose a style (cyberpunk, fantasy, medieval...) and AI generates a unique avatar for you. It's YOUR character in LINCE.",
       icon: <Palette className="w-8 h-8" />,
       accentColor: "#EC4899",
@@ -140,7 +140,7 @@ const STEPS: Record<string, TutorialStep[]> = {
     },
     {
       id: "promptlin",
-      title: "PROMPTLIN — Learn to talk to AI",
+      title: "Learn Prompts — Learn to talk to AI",
       description: "A \"prompt\" is an instruction you give to AI. Here you learn to write prompts like a pro. There are 6 modes: Creative, Technical, Business, Ethics, Speed Run and Battle.",
       icon: <Brain className="w-8 h-8" />,
       accentColor: "#7C3AED",
@@ -149,7 +149,7 @@ const STEPS: Record<string, TutorialStep[]> = {
     },
     {
       id: "arsenal",
-      title: "AI Arsenal — Real tools",
+      title: "AI Tools — Real tools",
       description: "A catalog of 62+ real AI tools: ChatGPT, Midjourney, DALL-E, Suno and many more. Each has a step-by-step guide so you learn to use it.",
       icon: <Shield className="w-8 h-8" />,
       accentColor: "#00E5FF",
@@ -204,7 +204,7 @@ const STEPS: Record<string, TutorialStep[]> = {
     },
     {
       id: "imagelin",
-      title: "IMAGELIN — 用AI创作图像",
+      title: "创建图像 — 用AI创作图像",
       description: "写下你想看到的，AI立即绘制。例如：\"戴太阳镜的猫在海滩上\"。就这么简单。不需要绘画技能。",
       icon: <Image className="w-8 h-8" />,
       accentColor: "#9C27B0",
@@ -213,7 +213,7 @@ const STEPS: Record<string, TutorialStep[]> = {
     },
     {
       id: "lincelin",
-      title: "LINCELIN — 设计你的角色",
+      title: "我的角色 — 设计你的角色",
       description: "创建你自己的定制猞猁角色。选择风格（赛博朋克、奇幻、中世纪...），AI为你生成独特的角色。",
       icon: <Palette className="w-8 h-8" />,
       accentColor: "#EC4899",
@@ -222,7 +222,7 @@ const STEPS: Record<string, TutorialStep[]> = {
     },
     {
       id: "promptlin",
-      title: "PROMPTLIN — 学会与AI对话",
+      title: "学习提示词 — 学会与AI对话",
       description: "\"提示词\"是你给AI的指令。这里你学习像专业人士一样写提示词。有6种模式：创意、技术、商业、伦理、速度赛和对战。",
       icon: <Brain className="w-8 h-8" />,
       accentColor: "#7C3AED",

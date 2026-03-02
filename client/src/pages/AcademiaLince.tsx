@@ -38,7 +38,7 @@ interface KarmaDimension {
 /* ─── Translations ─── */
 const academiaTranslations: Record<string, Record<string, any>> = {
   es: {
-    nav: { back: '← Inicio', mundo: '🌍 Mundo', raids: '⚔️ Raids', comoJugar: '🎮 Cómo Jugar', register: 'Registro' },
+    nav: { back: '← Inicio', mundo: '🌍 Mundo', raids: '⚔️ Batallas', comoJugar: '🎮 Cómo Jugar', register: 'Registro' },
     hero: {
       badge: '🎓 Marco de Aprendizaje LINCE',
       title: 'ACADEMIA',
@@ -347,7 +347,7 @@ const academiaTranslations: Record<string, Record<string, any>> = {
     },
   },
   en: {
-    nav: { back: '← Home', mundo: '🌍 World', raids: '⚔️ Raids', comoJugar: '🎮 How to Play', register: 'Register' },
+    nav: { back: '← Home', mundo: '🌍 World', raids: '⚔️ Batallas', comoJugar: '🎮 How to Play', register: 'Register' },
     hero: {
       badge: '🎓 LINCE Learning Framework',
       title: 'ACADEMY',

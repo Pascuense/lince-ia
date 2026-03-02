@@ -1,119 +1,102 @@
-/**
- * LINCE — File Storage via Azure Blob Storage
- * Reemplaza completamente la integración con AWS S3 de Manus.
- */
-import {
-  BlobServiceClient,
-  StorageSharedKeyCredential,
-  generateBlobSASQueryParameters,
-  BlobSASPermissions,
-  SASProtocol,
-} from "@azure/storage-blob";
-import { ENV } from "./env";
+// Preconfigured storage helpers for Manus WebDev templates
+// Uses the Biz-provided storage proxy (Authorization: Bearer <token>)
 
-let blobServiceClient: BlobServiceClient | null = null;
+import { ENV } from './_core/env';
 
-function getClient(): BlobServiceClient {
-  if (!blobServiceClient) {
-    if (!ENV.azureStorageConnectionString) {
-      throw new Error("Azure Blob Storage no está configurado. Verifica AZURE_STORAGE_CONNECTION_STRING.");
-    }
-    blobServiceClient = BlobServiceClient.fromConnectionString(ENV.azureStorageConnectionString);
+type StorageConfig = { baseUrl: string; apiKey: string };
+
+function getStorageConfig(): StorageConfig {
+  const baseUrl = ENV.forgeApiUrl;
+  const apiKey = ENV.forgeApiKey;
+
+  if (!baseUrl || !apiKey) {
+    throw new Error(
+      "Storage proxy credentials missing: set BUILT_IN_FORGE_API_URL and BUILT_IN_FORGE_API_KEY"
+    );
   }
-  return blobServiceClient;
+
+  return { baseUrl: baseUrl.replace(/\/+$/, ""), apiKey };
 }
 
-function getContainerClient() {
-  return getClient().getContainerClient(ENV.azureStorageContainer);
+function buildUploadUrl(baseUrl: string, relKey: string): URL {
+  const url = new URL("v1/storage/upload", ensureTrailingSlash(baseUrl));
+  url.searchParams.set("path", normalizeKey(relKey));
+  return url;
 }
 
-/**
- * Ensure the storage container exists (call once at startup).
- */
-export async function ensureContainer(): Promise<void> {
-  try {
-    const containerClient = getContainerClient();
-    await containerClient.createIfNotExists({ access: "blob" });
-  } catch (error) {
-    console.warn("[Storage] Could not ensure container:", error);
-  }
+async function buildDownloadUrl(
+  baseUrl: string,
+  relKey: string,
+  apiKey: string
+): Promise<string> {
+  const downloadApiUrl = new URL(
+    "v1/storage/downloadUrl",
+    ensureTrailingSlash(baseUrl)
+  );
+  downloadApiUrl.searchParams.set("path", normalizeKey(relKey));
+  const response = await fetch(downloadApiUrl, {
+    method: "GET",
+    headers: buildAuthHeaders(apiKey),
+  });
+  return (await response.json()).url;
 }
 
-// ─── Upload Validation ───
-const ALLOWED_MIME_TYPES = new Set([
-  "image/png",
-  "image/jpeg",
-  "image/jpg",
-  "image/webp",
-  "image/gif",
-  "image/svg+xml",
-]);
-const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB
+function ensureTrailingSlash(value: string): string {
+  return value.endsWith("/") ? value : `${value}/`;
+}
 
-/**
- * Upload a file to Azure Blob Storage.
- * @param key - The blob name/path (e.g., "avatars/image.png")
- * @param data - File content as Buffer, Uint8Array, or string
- * @param contentType - MIME type (e.g., "image/png")
- * @returns Object with key and public URL
- */
-export async function storagePut(
-  key: string,
+function normalizeKey(relKey: string): string {
+  return relKey.replace(/^\/+/, "");
+}
+
+function toFormData(
   data: Buffer | Uint8Array | string,
-  contentType?: string
+  contentType: string,
+  fileName: string
+): FormData {
+  const blob =
+    typeof data === "string"
+      ? new Blob([data], { type: contentType })
+      : new Blob([data as any], { type: contentType });
+  const form = new FormData();
+  form.append("file", blob, fileName || "file");
+  return form;
+}
+
+function buildAuthHeaders(apiKey: string): HeadersInit {
+  return { Authorization: `Bearer ${apiKey}` };
+}
+
+export async function storagePut(
+  relKey: string,
+  data: Buffer | Uint8Array | string,
+  contentType = "application/octet-stream"
 ): Promise<{ key: string; url: string }> {
-  const buffer = typeof data === "string" ? Buffer.from(data) : Buffer.from(data);
-
-  // Validate file size
-  if (buffer.byteLength > MAX_FILE_SIZE_BYTES) {
-    throw new Error(`El archivo supera el tamaño máximo permitido de ${MAX_FILE_SIZE_BYTES / 1024 / 1024} MB.`);
-  }
-
-  // Validate MIME type
-  const resolvedType = contentType || "application/octet-stream";
-  if (!ALLOWED_MIME_TYPES.has(resolvedType)) {
-    throw new Error(`Tipo de archivo no permitido: ${resolvedType}. Solo se aceptan imágenes.`);
-  }
-
-  const containerClient = getContainerClient();
-  const blockBlobClient = containerClient.getBlockBlobClient(key);
-
-  await blockBlobClient.uploadData(buffer, {
-    blobHTTPHeaders: {
-      blobContentType: resolvedType,
-    },
+  const { baseUrl, apiKey } = getStorageConfig();
+  const key = normalizeKey(relKey);
+  const uploadUrl = buildUploadUrl(baseUrl, key);
+  const formData = toFormData(data, contentType, key.split("/").pop() ?? key);
+  const response = await fetch(uploadUrl, {
+    method: "POST",
+    headers: buildAuthHeaders(apiKey),
+    body: formData,
   });
 
-  return {
-    key,
-    url: blockBlobClient.url,
-  };
+  if (!response.ok) {
+    const message = await response.text().catch(() => response.statusText);
+    throw new Error(
+      `Storage upload failed (${response.status} ${response.statusText}): ${message}`
+    );
+  }
+  const url = (await response.json()).url;
+  return { key, url };
 }
 
-/**
- * Get a URL for a blob. Since the container has public blob access,
- * we can return the direct URL.
- * @param key - The blob name/path
- * @returns Object with key and URL
- */
-export async function storageGet(
-  key: string
-): Promise<{ key: string; url: string }> {
-  const containerClient = getContainerClient();
-  const blockBlobClient = containerClient.getBlockBlobClient(key);
-
+export async function storageGet(relKey: string): Promise<{ key: string; url: string; }> {
+  const { baseUrl, apiKey } = getStorageConfig();
+  const key = normalizeKey(relKey);
   return {
     key,
-    url: blockBlobClient.url,
+    url: await buildDownloadUrl(baseUrl, key, apiKey),
   };
-}
-
-/**
- * Delete a blob from storage.
- * @param key - The blob name/path
- */
-export async function storageDelete(key: string): Promise<void> {
-  const containerClient = getContainerClient();
-  const blockBlobClient = containerClient.getBlockBlobClient(key);
-  await blockBlobClient.deleteIfExists();
 }

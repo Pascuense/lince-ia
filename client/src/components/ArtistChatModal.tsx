@@ -27,7 +27,7 @@ const ARTIST_SUGGESTIONS: Record<string, SuggestedQ[]> = {
     "¿Qué es la estrategia IA?",
     "¿Cómo la IA puede ayudar a un artista?",
     "¿Qué nivel necesito para empezar?",
-    "¿Qué son los Raids Battle?",
+    "¿Qué son las Batallas?",
   ],
   RIMALIN: [
     "¿Qué es prompt engineering?",
@@ -777,15 +777,17 @@ interface ArtistChatModalProps {
   lang: "es" | "en" | "zh" | "pt-BR" | "pt-PT";
   onClose: () => void;
   onSwitchAvatar?: (avatarKey: string) => void;
+  embedded?: boolean;
 }
 
-export function ArtistChatModal({ artist, lang, onClose, onSwitchAvatar }: ArtistChatModalProps) {
+export function ArtistChatModal({ artist, lang, onClose, onSwitchAvatar, embedded = false }: ArtistChatModalProps) {
   const [messages, setMessages] = useState<ChatMsg[]>([]);
   const [customInput, setCustomInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [showImagePrompt, setShowImagePrompt] = useState(false);
   const [imagePromptText, setImagePromptText] = useState("");
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
+  const [showHistoryPanel, setShowHistoryPanel] = useState(true);
 
   // tRPC mutation for image generation
   const generateImageMutation = trpc.avatarChat.generateChatImage.useMutation();
@@ -841,7 +843,7 @@ export function ArtistChatModal({ artist, lang, onClose, onSwitchAvatar }: Artis
     }
   };
 
-  // Download image as PNG with LINCELIN watermark
+  // Download image as PNG with LINCE IA watermark
   const handleDownloadImage = async (imageUrl: string, prompt: string) => {
     try {
       const canvas = document.createElement("canvas");
@@ -855,7 +857,7 @@ export function ArtistChatModal({ artist, lang, onClose, onSwitchAvatar }: Artis
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0);
 
-        // Add LINCELIN watermark
+        // Add LINCE IA watermark
         const fontSize = Math.max(14, Math.floor(img.width / 30));
         ctx.font = `bold ${fontSize}px 'Space Grotesk', sans-serif`;
         ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
@@ -868,7 +870,7 @@ export function ArtistChatModal({ artist, lang, onClose, onSwitchAvatar }: Artis
         ctx.shadowOffsetX = 1;
         ctx.shadowOffsetY = 1;
 
-        ctx.fillText("LINCELIN", img.width - 15, img.height - 15);
+        ctx.fillText("LINCE IA", img.width - 15, img.height - 15);
 
         // Reset shadow
         ctx.shadowColor = "transparent";
@@ -878,11 +880,11 @@ export function ArtistChatModal({ artist, lang, onClose, onSwitchAvatar }: Artis
         const subSize = Math.max(10, Math.floor(fontSize * 0.6));
         ctx.font = `${subSize}px 'Space Grotesk', sans-serif`;
         ctx.fillStyle = "rgba(0, 229, 255, 0.4)";
-        ctx.fillText("lince.com", img.width - 15, img.height - 15 - fontSize - 2);
+        ctx.fillText("lince.app", img.width - 15, img.height - 15 - fontSize - 2);
 
         // Download
         const link = document.createElement("a");
-        link.download = `lincelin-${Date.now()}.png`;
+        link.download = `lince-ia-${Date.now()}.png`;
         link.href = canvas.toDataURL("image/png");
         link.click();
       };
@@ -1163,11 +1165,23 @@ export function ArtistChatModal({ artist, lang, onClose, onSwitchAvatar }: Artis
   const relConfig = RELATIONSHIP_CONFIG[relationshipLevel] || RELATIONSHIP_CONFIG.new;
   const userMessageCount = messages.filter(m => m.from === "user").length;
 
+  // ─── CHAT SESSIONS LIST (for history dropdown) ───
+  const { loggedUser: gameUser } = useGame();
+  const sessionsInput = useMemo(() => ({ gamePlayerId: gameUser?.id ?? 0 }), [gameUser?.id]);
+  const { data: allSessions } = trpc.avatarChat.listSessions.useQuery(
+    sessionsInput,
+    { enabled: !!gameUser?.id && gameUser.id > 0, staleTime: 10000 }
+  );
+  const thisSessions = useMemo(() => {
+    if (!allSessions) return [];
+    return allSessions.filter(s => s.avatarKey === artist.key && s.messageCount > 0);
+  }, [allSessions, artist.key]);
+
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={onClose}>
+    <div className={embedded ? "flex flex-col h-full w-full" : "fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"} onClick={embedded ? undefined : onClose}>
       <div
-        className="relative w-full max-w-lg max-h-[90vh] bg-[#0A0A12] border border-white/10 rounded-2xl overflow-hidden flex flex-col"
-        onClick={(e) => e.stopPropagation()}
+        className={embedded ? "relative flex-1 flex flex-col bg-[#0A0A12] overflow-hidden" : "relative w-full max-w-lg max-h-[90vh] bg-[#0A0A12] border border-white/10 rounded-2xl overflow-hidden flex flex-col"}
+        onClick={embedded ? undefined : (e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center gap-3 p-4 border-b border-white/5" style={{ background: `linear-gradient(135deg, ${artist.color}15, transparent)` }}>
@@ -1194,9 +1208,32 @@ export function ArtistChatModal({ artist, lang, onClose, onSwitchAvatar }: Artis
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               IA
             </span>
-            <button onClick={onClose} aria-label="Cerrar chat" className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/50 hover:text-white transition-all">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12" /></svg>
-            </button>
+            {/* History toggle button - always visible */}
+              <button
+                onClick={() => setShowHistoryPanel(!showHistoryPanel)}
+                className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold transition-all border ${
+                  showHistoryPanel
+                    ? 'bg-[#00E5FF]/15 border-[#00E5FF]/30 text-[#00E5FF]'
+                    : 'bg-white/5 border-white/10 text-white/40 hover:text-white/70 hover:border-white/20'
+                }`}
+                title={tl(lang, { es: 'Historial de conversaciones', en: 'Conversation history', zh: '对话历史', 'pt-BR': 'Historial de conversaciones', 'pt-PT': 'Historial de conversaciones' })}
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+                <span className="hidden sm:inline">{tl(lang, { es: 'Historial', en: 'History', zh: '历史', 'pt-BR': 'Historial', 'pt-PT': 'Historial' })}</span>
+              </button>
+            {embedded ? (
+              <button onClick={onClose} aria-label="Volver a la Familia" className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#D4A843]/15 hover:bg-[#D4A843]/25 border border-[#D4A843]/30 text-[#D4A843] hover:text-[#D4A843] transition-all text-sm font-bold min-h-[40px]">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+                <span className="hidden sm:inline">Familia</span>
+              </button>
+            ) : (
+              <button onClick={onClose} aria-label="Cerrar chat" className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/50 hover:text-white transition-all">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12" /></svg>
+              </button>
+            )}
           </div>
         </div>
 
@@ -1212,6 +1249,103 @@ export function ArtistChatModal({ artist, lang, onClose, onSwitchAvatar }: Artis
             artistColor={artist.color}
             onDismiss={() => setLevelUpInfo(null)}
           />
+        )}
+
+        {/* ─── HISTORY DROPDOWN PANEL ─── */}
+        {showHistoryPanel && (
+          <div className="border-b border-white/5 bg-gradient-to-b from-[#0a0e18] to-[#08080f] max-h-[220px] overflow-y-auto">
+            <div className="px-4 py-3 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#00E5FF]/60">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+                <span className="text-xs font-bold text-white/50 uppercase tracking-wider">
+                  {tl(lang, { es: `Conversaciones con ${artist.name}`, en: `Conversations with ${artist.name}`, zh: `与${artist.name}的对话`, 'pt-BR': `Conversaciones con ${artist.name}`, 'pt-PT': `Conversaciones con ${artist.name}` })}
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => {
+                    handleClearChat();
+                    setShowHistoryPanel(false);
+                  }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all border bg-emerald-500/10 border-emerald-500/25 text-emerald-400 hover:bg-emerald-500/20 hover:border-emerald-500/40"
+                  title={tl(lang, { es: 'Iniciar nueva conversación', en: 'Start new conversation', zh: '开始新对话', 'pt-BR': 'Iniciar nueva conversación', 'pt-PT': 'Iniciar nueva conversación' })}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                  </svg>
+                  <span>{tl(lang, { es: 'Nueva', en: 'New', zh: '新建', 'pt-BR': 'Nueva', 'pt-PT': 'Nueva' })}</span>
+                </button>
+                <button
+                  onClick={() => setShowHistoryPanel(false)}
+                  className="p-1 rounded-lg text-white/30 hover:text-white/60 hover:bg-white/5 transition-all"
+                  title={tl(lang, { es: 'Ocultar historial', en: 'Hide history', zh: '隐藏历史', 'pt-BR': 'Ocultar historial', 'pt-PT': 'Ocultar historial' })}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 15l-6-6-6 6" /></svg>
+                </button>
+              </div>
+            </div>
+            {(!gamePlayerId || gamePlayerId <= 0) ? (
+              <div className="px-4 pb-4 text-center">
+                <p className="text-white/30 text-xs">
+                  {tl(lang, { es: 'Regístrate en el juego para guardar tus conversaciones.', en: 'Register in the game to save your conversations.', zh: '注册游戏以保存你的对话。', 'pt-BR': 'Regístrate en el juego para guardar tus conversaciones.', 'pt-PT': 'Regístrate en el juego para guardar tus conversaciones.' })}
+                </p>
+                <a href="/registro" className="inline-flex items-center gap-1.5 mt-2 px-4 py-2 rounded-xl bg-[#00E5FF]/10 border border-[#00E5FF]/20 text-[#00E5FF] text-xs font-bold hover:bg-[#00E5FF]/20 transition-all">
+                  {tl(lang, { es: 'Registrarse', en: 'Register', zh: '注册', 'pt-BR': 'Registrarse', 'pt-PT': 'Registrarse' })}
+                </a>
+              </div>
+            ) : thisSessions.length === 0 ? (
+              <div className="px-4 pb-4 text-center">
+                <div className="w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mx-auto mb-2">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white/15">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                  </svg>
+                </div>
+                <p className="text-white/30 text-xs">
+                  {tl(lang, { es: 'Esta es tu primera conversación. ¡Se guardará automáticamente!', en: 'This is your first conversation. It will be saved automatically!', zh: '这是你的第一次对话。它会自动保存！', 'pt-BR': 'Esta es tu primera conversación. ¡Se guardará automáticamente!', 'pt-PT': 'Esta es tu primera conversación. ¡Se guardará automáticamente!' })}
+                </p>
+              </div>
+            ) : (
+              <div className="px-3 pb-3 space-y-2">
+                {thisSessions.map((session) => {
+                  const relCfg = RELATIONSHIP_CONFIG[session.relationshipLevel] || RELATIONSHIP_CONFIG.new;
+                  const dateStr = session.updatedAt ? new Date(session.updatedAt).toLocaleDateString(lang === 'en' ? 'en-US' : lang === 'zh' ? 'zh-CN' : 'es-ES', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
+                  return (
+                    <div
+                      key={session.id}
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.06] hover:border-[#00E5FF]/20 transition-all cursor-pointer group"
+                    >
+                      {/* Session icon */}
+                      <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: `${relCfg.color}15`, border: `1.5px solid ${relCfg.color}30` }}>
+                        <span className="text-sm">{relCfg.emoji}</span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <span className="text-xs font-bold" style={{ color: relCfg.color }}>
+                            {relCfg.label[lang] || relCfg.label.es}
+                          </span>
+                          <span className="text-[10px] text-white/25">· {session.messageCount} {tl(lang, { es: 'mensajes', en: 'messages', zh: '条消息', 'pt-BR': 'mensajes', 'pt-PT': 'mensajes' })}</span>
+                        </div>
+                        {session.lastMessagePreview && (
+                          <p className="text-xs text-white/35 truncate leading-tight group-hover:text-white/50 transition-colors">
+                            {session.lastMessagePreview}
+                          </p>
+                        )}
+                        <p className="text-[10px] text-white/20 mt-1">{dateStr}</p>
+                      </div>
+                      {/* Arrow indicator */}
+                      <div className="flex-shrink-0 text-white/10 group-hover:text-[#00E5FF]/40 transition-colors">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6" /></svg>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         )}
 
         {/* Loading history indicator */}
@@ -1263,7 +1397,7 @@ export function ArtistChatModal({ artist, lang, onClose, onSwitchAvatar }: Artis
                           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
                           PNG
                         </button>
-                        <span className="absolute bottom-2 left-2 text-[8px] text-white/30 font-bold">LINCELIN</span>
+                        <span className="absolute bottom-2 left-2 text-[8px] text-white/30 font-bold">LINCE IA</span>
                       </div>
                     )}
                     {msg.from === "artist" && !msg.imageUrl && (

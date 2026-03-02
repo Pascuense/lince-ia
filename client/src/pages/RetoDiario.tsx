@@ -219,7 +219,7 @@ const DIFFICULTY_COLORS: Record<string, { bg: string; text: string; label: Recor
 
 const TT: Record<string, Record<string, string>> = {
   es: {
-    title: "Reto Diario",
+    title: "Reto del Día",
     subtitle: "Compite cada día con el mejor prompt",
     todayChallenge: "Reto de Hoy",
     timeLeft: "Tiempo restante",

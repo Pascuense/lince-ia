@@ -222,13 +222,13 @@ function Nivel2Content() {
 
   if (!unlocked) {
     return (
-      <div className="pt-14 min-h-screen bg-[oklch(0.10_0.01_240)] text-white flex items-center justify-center">
+      <div className="min-h-screen bg-[oklch(0.10_0.01_240)] text-white flex items-center justify-center">
       <BackButton variant="inline" fallbackPath="/jugar" />
       <GlobalNavBar />
-        <div className="text-center px-4">
-          <div className="text-6xl mb-4">🔒</div>
-          <p className="text-gray-400 text-lg mb-6">{t.locked}</p>
-          <Link href="/jugar" className="px-6 py-3 bg-[oklch(0.82_0.15_195)] text-black font-bold rounded-xl">{t.backToHub}</Link>
+        <div className="text-center px-6">
+          <div className="text-8xl mb-6">🔒</div>
+          <p className="text-gray-400 text-xl sm:text-2xl mb-8 leading-relaxed">{t.locked}</p>
+          <Link href="/jugar" className="px-8 py-4 bg-[oklch(0.82_0.15_195)] text-black font-black rounded-2xl text-xl min-h-[56px] inline-flex items-center">{t.backToHub}</Link>
         </div>
       </div>
     );
@@ -238,34 +238,34 @@ function Nivel2Content() {
   if (phase === "intro") {
     return (
       <div className="min-h-screen bg-[oklch(0.10_0.01_240)] text-white">
-        <div className="max-w-2xl mx-auto px-4 pt-8 pb-16">
-          <div className="flex items-center justify-between mb-6">
-            <Link href="/jugar" className="text-[oklch(0.82_0.15_195)] text-sm hover:underline">{t.backToHub}</Link>
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-32 sm:pt-36 pb-20">
+          <div className="flex items-center justify-between mb-8">
+            <Link href="/jugar" className="text-[oklch(0.82_0.15_195)] text-base sm:text-lg font-bold hover:underline min-h-[44px] flex items-center">{t.backToHub}</Link>
             <UserNavBadge variant="compact" />
           </div>
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <span className="inline-block px-4 py-1 rounded-full bg-[oklch(0.35_0.08_150)]/20 text-[oklch(0.82_0.15_195)] text-xs font-bold tracking-wider">🏠 {t.subtitle}</span>
+          <div className="text-center mb-10">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <span className="inline-block px-5 py-2 rounded-full bg-[oklch(0.35_0.08_150)]/20 text-[oklch(0.82_0.15_195)] text-sm sm:text-base font-bold tracking-wider">🏠 {t.subtitle}</span>
               <DifficultyBadge difficulty="medium" lang={lang} size="sm" />
             </div>
-            <h1 className="text-3xl md:text-4xl font-black">{t.title}</h1>
+            <h1 className="text-4xl md:text-5xl font-black">{t.title}</h1>
           </div>
-          <div className="flex flex-col items-center gap-6">
-            <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-[oklch(0.72_0.12_75)] shadow-[0_0_30px_oklch(0.72_0.12_75/0.3)]">
+          <div className="flex flex-col items-center gap-8">
+            <div className="w-48 h-48 sm:w-56 sm:h-56 rounded-full overflow-hidden border-4 border-[oklch(0.72_0.12_75)] shadow-[0_0_40px_oklch(0.72_0.12_75/0.3)]">
               <img src={AVATAR_FRONTAL.MAMALINA} alt="MAMALINA" className="w-full h-full object-cover" />
             </div>
-            <div className="bg-[oklch(0.14_0.015_240)] border border-[oklch(0.72_0.12_75)]/30 rounded-2xl p-6 max-w-lg relative">
+            <div className="bg-[oklch(0.14_0.015_240)] border border-[oklch(0.72_0.12_75)]/30 rounded-2xl p-6 sm:p-8 max-w-lg relative">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-[oklch(0.14_0.015_240)] border-l border-t border-[oklch(0.72_0.12_75)]/30 rotate-45" />
-              <p className="text-lg leading-relaxed text-gray-200">{introTexts[introStep]}</p>
+              <p className="text-xl sm:text-2xl leading-relaxed text-gray-200">{introTexts[introStep]}</p>
             </div>
             <button
               onClick={() => {
                 if (introStep < 1) setIntroStep(prev => prev + 1);
                 else setPhase("theory");
               }}
-              className="px-8 py-3 bg-[oklch(0.72_0.12_75)] text-black font-bold rounded-xl hover:brightness-110 transition-all text-lg"
+              className="px-10 py-4 sm:py-5 bg-[oklch(0.72_0.12_75)] text-black font-black rounded-2xl hover:brightness-110 transition-all text-xl sm:text-2xl min-h-[56px] min-w-[200px]"
             >
-              {introStep < 1 ? "→" : "¡Construir! 🏠"}
+              {introStep < 1 ? "Siguiente →" : "¡Construir! 🏠"}
             </button>
           </div>
         </div>
@@ -304,29 +304,29 @@ function Nivel2Content() {
     return (
       <div className="min-h-screen bg-[oklch(0.10_0.01_240)] text-white flex items-center justify-center">
         <div className="max-w-lg mx-auto px-4 text-center">
-          <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-[oklch(0.72_0.12_75)] shadow-[0_0_40px_oklch(0.72_0.12_75/0.4)] mb-6">
+          <div className="w-40 h-40 sm:w-48 sm:h-48 mx-auto rounded-full overflow-hidden border-4 border-[oklch(0.72_0.12_75)] shadow-[0_0_50px_oklch(0.72_0.12_75/0.4)] mb-8">
             <img src={AVATAR_EXPRESSIONS.MAMALINA?.celebrando || AVATAR_FRONTAL.MAMALINA} alt="MAMALINA" className="w-full h-full object-cover" />
           </div>
-          <h1 className="text-4xl font-black text-[oklch(0.72_0.12_75)] mb-3">🏠 {t.levelComplete}</h1>
-          <p className="text-gray-300 text-lg mb-8">{t.levelCompleteDesc}</p>
-          <div className="bg-[oklch(0.14_0.015_240)] border border-[oklch(0.72_0.12_75)]/30 rounded-2xl p-6 mb-8">
-            <h3 className="text-sm text-gray-400 uppercase tracking-wider mb-4">{t.totalRewards}</h3>
-            <div className="flex justify-center gap-8">
+          <h1 className="text-4xl sm:text-5xl font-black text-[oklch(0.72_0.12_75)] mb-4">🏠 {t.levelComplete}</h1>
+          <p className="text-gray-300 text-xl sm:text-2xl mb-10 leading-relaxed">{t.levelCompleteDesc}</p>
+          <div className="bg-[oklch(0.14_0.015_240)] border border-[oklch(0.72_0.12_75)]/30 rounded-2xl p-6 sm:p-8 mb-10">
+            <h3 className="text-base text-gray-400 uppercase tracking-wider mb-6 font-bold">{t.totalRewards}</h3>
+            <div className="flex justify-center gap-8 sm:gap-12">
               <div>
-                <div className="text-3xl font-black text-[oklch(0.72_0.12_75)]">🪙 {totalCoins}</div>
-                <div className="text-xs text-gray-400 mt-1">LinceCoins</div>
+                <div className="text-4xl sm:text-5xl font-black text-[oklch(0.72_0.12_75)]">🪙 {totalCoins}</div>
+                <div className="text-sm text-gray-400 mt-2">LinceCoins</div>
               </div>
               <div>
-                <div className="text-3xl font-black text-[oklch(0.82_0.15_195)]">⚡ {totalXP}</div>
-                <div className="text-xs text-gray-400 mt-1">XP</div>
+                <div className="text-4xl sm:text-5xl font-black text-[oklch(0.82_0.15_195)]">⚡ {totalXP}</div>
+                <div className="text-sm text-gray-400 mt-2">XP</div>
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-3">
-            <Link href="/jugar/nivel-3" className="block px-8 py-4 bg-[oklch(0.82_0.15_195)] text-black font-bold rounded-xl hover:brightness-110 transition-all text-lg text-center">
+          <div className="flex flex-col gap-4">
+            <Link href="/jugar/nivel-3" className="block px-8 py-5 bg-[oklch(0.82_0.15_195)] text-black font-black rounded-2xl hover:brightness-110 transition-all text-xl sm:text-2xl text-center min-h-[60px]">
               {t.continueToLevel3}
             </Link>
-            <Link href="/jugar" className="block px-6 py-3 border border-gray-600 text-gray-300 rounded-xl hover:bg-white/5 transition-all text-center">
+            <Link href="/jugar" className="block px-6 py-4 border-2 border-gray-600 text-gray-300 rounded-2xl hover:bg-white/5 transition-all text-center text-lg font-bold min-h-[56px]">
               {t.backToHub}
             </Link>
           </div>
@@ -341,24 +341,25 @@ function Nivel2Content() {
 
   return (
     <div className="min-h-screen bg-[oklch(0.10_0.01_240)] text-white">
-      <div className="max-w-3xl mx-auto px-4 pt-6 pb-16">
+      <GlobalNavBar />
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-32 sm:pt-36 pb-20">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
-          <Link href="/jugar" className="text-[oklch(0.82_0.15_195)] text-sm hover:underline">{t.backToHub}</Link>
-          <div className="flex items-center gap-4 text-sm">
+          <Link href="/jugar" className="text-[oklch(0.82_0.15_195)] text-base sm:text-lg font-bold hover:underline min-h-[44px] flex items-center">{t.backToHub}</Link>
+          <div className="flex items-center gap-3 sm:gap-4">
             <DifficultyBadge difficulty="medium" lang={lang} />
             <GameLanguageSelector variant="pill" />
-            <span className="text-[oklch(0.72_0.12_75)]">🪙 {totalCoins}</span>
-            <span className="text-[oklch(0.82_0.15_195)]">⚡ {totalXP}</span>
+            <span className="text-base font-bold text-[oklch(0.72_0.12_75)]">🪙 {totalCoins}</span>
+            <span className="text-base font-bold text-[oklch(0.82_0.15_195)]">⚡ {totalXP}</span>
           </div>
         </div>
 
         {/* Progress */}
-        <div className="mb-6">
-          <div className="flex justify-between text-xs text-gray-400 mb-2">
-            <span>{t.missionOf.replace("{current}", String(currentMission)).replace("{total}", "3")}</span>
+        <div className="mb-8">
+          <div className="flex justify-between text-sm sm:text-base text-gray-400 mb-3">
+            <span className="font-bold">{t.missionOf.replace("{current}", String(currentMission)).replace("{total}", "3")}</span>
           </div>
-          <div className="h-2 bg-[oklch(0.18_0.01_240)] rounded-full overflow-hidden">
+          <div className="h-3 bg-[oklch(0.18_0.01_240)] rounded-full overflow-hidden">
             <div className="h-full bg-gradient-to-r from-[oklch(0.35_0.08_150)] to-[oklch(0.72_0.12_75)] rounded-full transition-all duration-700"
               style={{ width: `${((currentMission - (showResult ? 0 : 1)) / 3) * 100}%` }} />
           </div>
@@ -388,19 +389,19 @@ function Nivel2Content() {
         </div>
 
         {/* Guide + Mission */}
-        <div className="flex gap-4 mb-6">
-          <div className="shrink-0 w-16 h-16 rounded-full overflow-hidden border-2 border-[oklch(0.72_0.12_75)]/50">
+        <div className="flex gap-4 sm:gap-5 mb-6">
+          <div className="shrink-0 w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-3 border-[oklch(0.72_0.12_75)]/50">
             <img src={AVATAR_FRONTAL.MAMALINA} alt="MAMALINA" className="w-full h-full object-cover" />
           </div>
-          <div className="bg-[oklch(0.14_0.015_240)] border border-[oklch(0.72_0.12_75)]/20 rounded-2xl p-4 flex-1">
-            <h3 className="font-bold text-[oklch(0.72_0.12_75)] mb-1">{mission.title}</h3>
-            <p className="text-gray-300 text-sm leading-relaxed">{mission.desc}</p>
+          <div className="bg-[oklch(0.14_0.015_240)] border border-[oklch(0.72_0.12_75)]/20 rounded-2xl p-5 sm:p-6 flex-1">
+            <h3 className="font-bold text-lg sm:text-xl text-[oklch(0.72_0.12_75)] mb-2">{mission.title}</h3>
+            <p className="text-gray-300 text-base sm:text-lg leading-relaxed">{mission.desc}</p>
           </div>
         </div>
 
         {/* Hint */}
-        <div className="bg-[oklch(0.72_0.12_75)]/5 border border-[oklch(0.72_0.12_75)]/20 rounded-xl p-3 mb-6">
-          <p className="text-xs text-[oklch(0.72_0.12_75)] font-mono">{mission.hint}</p>
+        <div className="bg-[oklch(0.72_0.12_75)]/5 border border-[oklch(0.72_0.12_75)]/20 rounded-xl p-4 sm:p-5 mb-6">
+          <p className="text-sm sm:text-base text-[oklch(0.72_0.12_75)] font-mono leading-relaxed">{mission.hint}</p>
         </div>
 
         {/* Input */}
@@ -411,13 +412,13 @@ function Nivel2Content() {
               value={promptText}
               onChange={e => setPromptText(e.target.value)}
               placeholder={t.placeholder}
-              rows={4}
-              className="w-full bg-[oklch(0.14_0.015_240)] border-2 border-[oklch(0.72_0.12_75)]/30 rounded-xl p-4 text-white placeholder-gray-500 focus:border-[oklch(0.72_0.12_75)] focus:outline-none focus:shadow-[0_0_20px_oklch(0.72_0.12_75/0.2)] transition-all resize-none text-lg"
+              rows={5}
+              className="w-full bg-[oklch(0.14_0.015_240)] border-2 border-[oklch(0.72_0.12_75)]/30 rounded-2xl p-5 sm:p-6 text-white placeholder-gray-500 focus:border-[oklch(0.72_0.12_75)] focus:outline-none focus:shadow-[0_0_20px_oklch(0.72_0.12_75/0.2)] transition-all resize-none text-lg sm:text-xl"
             />
-            <div className="flex justify-between items-center mt-3">
-              <span className="text-xs text-gray-500">{promptText.trim().split(/\s+/).filter(Boolean).length} palabras</span>
+            <div className="flex justify-between items-center mt-4">
+              <span className="text-sm text-gray-500 font-medium">{promptText.trim().split(/\s+/).filter(Boolean).length} palabras</span>
               <button onClick={handleSubmitPrompt} disabled={!promptText.trim()}
-                className="px-6 py-3 bg-[oklch(0.72_0.12_75)] text-black font-bold rounded-xl hover:brightness-110 transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+                className="px-8 py-4 bg-[oklch(0.72_0.12_75)] text-black font-black rounded-2xl hover:brightness-110 transition-all disabled:opacity-30 disabled:cursor-not-allowed text-lg sm:text-xl min-h-[56px]">
                 {t.send}
               </button>
             </div>
@@ -449,19 +450,19 @@ function Nivel2Content() {
               lastResult.score >= 45 ? "border-[oklch(0.82_0.15_195)] bg-[oklch(0.82_0.15_195)]/10" :
               "border-gray-600 bg-gray-800/30"
             }`}>
-              <p className="font-bold text-lg mb-4">{t[lastResult.feedback as keyof typeof t]}</p>
-              <div className="grid grid-cols-3 gap-4 text-center">
-                <div className="bg-black/20 rounded-xl p-3">
-                  <div className="text-2xl font-black">{lastResult.score}</div>
-                  <div className="text-xs text-gray-400">{t.score}</div>
+              <p className="font-bold text-lg sm:text-xl mb-5">{t[lastResult.feedback as keyof typeof t]}</p>
+              <div className="grid grid-cols-3 gap-3 sm:gap-4 text-center">
+                <div className="bg-black/20 rounded-xl p-4">
+                  <div className="text-3xl sm:text-4xl font-black">{lastResult.score}</div>
+                  <div className="text-sm text-gray-400 mt-1">{t.score}</div>
                 </div>
-                <div className="bg-black/20 rounded-xl p-3">
-                  <div className="text-2xl font-black text-[oklch(0.72_0.12_75)]">+{lastResult.coins}</div>
-                  <div className="text-xs text-gray-400">{t.coins}</div>
+                <div className="bg-black/20 rounded-xl p-4">
+                  <div className="text-3xl sm:text-4xl font-black text-[oklch(0.72_0.12_75)]">+{lastResult.coins}</div>
+                  <div className="text-sm text-gray-400 mt-1">{t.coins}</div>
                 </div>
-                <div className="bg-black/20 rounded-xl p-3">
-                  <div className="text-2xl font-black text-[oklch(0.82_0.15_195)]">+{lastResult.xp}</div>
-                  <div className="text-xs text-gray-400">{t.xp}</div>
+                <div className="bg-black/20 rounded-xl p-4">
+                  <div className="text-3xl sm:text-4xl font-black text-[oklch(0.82_0.15_195)]">+{lastResult.xp}</div>
+                  <div className="text-sm text-gray-400 mt-1">{t.xp}</div>
                 </div>
               </div>
             </div>
@@ -475,7 +476,7 @@ function Nivel2Content() {
               />
             )}
             <button onClick={handleNextMission}
-              className="w-full px-8 py-4 bg-[oklch(0.72_0.12_75)] text-black font-bold rounded-xl hover:brightness-110 transition-all text-lg">
+              className="w-full px-8 py-5 bg-[oklch(0.72_0.12_75)] text-black font-black rounded-2xl hover:brightness-110 transition-all text-xl sm:text-2xl min-h-[60px]">
               {currentMission < 3 ? t.next : "🏠 " + t.levelComplete}
             </button>
           </div>

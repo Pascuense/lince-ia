@@ -51,7 +51,7 @@ const STEPS: Record<string, TourStep[]> = {
     {
       id: "prompt-studio",
       title: "Crea imágenes con IA",
-      description: "IMAGELIN es tu laboratorio creativo. Escribe una idea, elige un estilo y genera imágenes increíbles en segundos.",
+      description: "Crear Imagen es tu laboratorio creativo. Escribe una idea, elige un estilo y genera imágenes increíbles en segundos.",
       icon: <Palette className="w-8 h-8" />,
       targetSelector: '[data-tour="prompt-studio"]',
       position: "bottom",
@@ -96,7 +96,7 @@ const STEPS: Record<string, TourStep[]> = {
     {
       id: "prompt-studio",
       title: "Create images with AI",
-      description: "IMAGELIN is your creative lab. Write an idea, choose a style and generate amazing images in seconds.",
+      description: "Create Image is your creative lab. Write an idea, choose a style and generate amazing images in seconds.",
       icon: <Palette className="w-8 h-8" />,
       targetSelector: '[data-tour="prompt-studio"]',
       position: "bottom",
@@ -141,7 +141,7 @@ const STEPS: Record<string, TourStep[]> = {
     {
       id: "prompt-studio",
       title: "用AI创作图像",
-      description: "IMAGELIN是你的创意实验室。写下想法，选择风格，几秒钟内生成惊人图像。",
+      description: "创建图像是你的创意实验室。写下想法，选择风格，几秒钟内生成惊人图像。",
       icon: <Palette className="w-8 h-8" />,
       targetSelector: '[data-tour="prompt-studio"]',
       position: "bottom",

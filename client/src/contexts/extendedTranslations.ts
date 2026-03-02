@@ -17,7 +17,7 @@ export const extendedTranslations: Record<string, Record<string, any>> = {
       solutionTitle: "La Solución",
       solutionText: "LINCE es una app donde aprendes inteligencia artificial jugando. Cada persona tiene un personaje-guía de su generación que le enseña en su idioma, a su ritmo, con ejemplos de su vida cotidiana. No es el ejército. Es tu familia que te enseña con cariño.",
       metricsTitle: "Métricas de Éxito",
-      metric1: "1.000 usuarios beta en Q1",
+      metric1: "1.000 usuarios en Q1",
       metric2: "Retención D7 > 60%",
       metric3: "NPS > 50",
       metric4: "10 cursos completos",
@@ -191,7 +191,7 @@ export const extendedTranslations: Record<string, Record<string, any>> = {
             goalLabel: "Objetivo",
       quarters: [
         {
-          q: "Q1", period: "Ene - Mar 2026", goal: "1.000 usuarios beta",
+          q: "Q1", period: "Ene - Mar 2026", goal: "1.000 usuarios",
           sprints: [
             "Sprint 1-2: Setup, auth, modelo de datos, onboarding + avatar",
             "Sprint 3-4: XP, niveles (1-20), 20 cursos iniciales",
@@ -467,7 +467,7 @@ export const extendedTranslations: Record<string, Record<string, any>> = {
       solutionTitle: "The Solution",
       solutionText: "LINCE is a gamified platform where each user receives a generation-matched avatar-tutor that teaches AI in their language, at their pace, with examples from their daily life. It's not the army. It's your family teaching you with love.",
       metricsTitle: "Success Metrics",
-      metric1: "1,000 beta users in Q1",
+      metric1: "1,000 users in Q1",
       metric2: "D7 Retention > 60%",
       metric3: "NPS > 50",
       metric4: "10 complete courses",
@@ -641,7 +641,7 @@ export const extendedTranslations: Record<string, Record<string, any>> = {
             goalLabel: "Goal",
       quarters: [
         {
-          q: "Q1", period: "Jan - Mar 2026", goal: "1,000 beta users",
+          q: "Q1", period: "Jan - Mar 2026", goal: "1,000 users",
           sprints: [
             "Sprint 1-2: Setup, auth, data model, onboarding + avatar",
             "Sprint 3-4: XP, levels (1-20), 20 initial courses",
