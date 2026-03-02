@@ -81,6 +81,12 @@
   ],
   "icons": [
     {
+      "src": "/icons/duolince-favicon-32.svg",
+      "sizes": "32x32",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
       "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/iNmYckrMjqZFTgzV.png",
       "sizes": "48x48",
       "type": "image/png",
@@ -96,6 +102,12 @@
       "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/UsERtMXxhQzTehHN.png",
       "sizes": "128x128",
       "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/duolince-icon-180-ios.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml",
       "purpose": "any"
     },
     {
@@ -123,16 +135,28 @@
       "purpose": "any"
     },
     {
+      "src": "/icons/duolince-icon-512-android.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/duolince-icon-512-android.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
       "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/kAPnAUydSIrXJKwM.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/kAPnAUydSIrXJKwM.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "src": "/icons/duolince-icon-1024.svg",
+      "sizes": "1024x1024",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ],
   "screenshots": [
