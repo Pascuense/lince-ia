@@ -53,7 +53,7 @@ export async function generateImage(
       response_format: "b64_json",
     });
 
-    const imageData = response.data[0];
+    const imageData = response.data?.[0];
     if (!imageData?.b64_json) {
       throw new Error("No se recibió imagen del servicio.");
     }
