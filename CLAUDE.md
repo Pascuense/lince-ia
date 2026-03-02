@@ -29,11 +29,11 @@ lince-ia/
 │   ├── public/                # Static assets (manifest, icons, service worker)
 │   └── src/
 │       ├── _core/             # Core client utilities
-│       ├── components/        # 60+ reusable UI components
-│       ├── contexts/          # React contexts (GameContext, ThemeContext, PRDLanguageContext, GuestContext)
-│       ├── hooks/             # Custom React hooks
-│       ├── lib/               # Constants, utilities, accessControl
-│       ├── pages/             # 40+ page components
+│       ├── components/        # 60+ reusable UI components + ui/ (Radix-based)
+│       ├── contexts/          # React contexts (see React Contexts section)
+│       ├── hooks/             # Custom React hooks (see Hooks section)
+│       ├── lib/               # Constants, utilities, accessControl (see lib section)
+│       ├── pages/             # 40+ page components (see Frontend Routing)
 │       ├── App.tsx            # Route definitions (wouter Switch/Route)
 │       ├── main.tsx           # React entry point
 │       └── index.css          # Global CSS theme (dark mode, LINCE brand colors)
@@ -48,15 +48,21 @@ lince-ia/
 │   ├── notification.ts        # Push notification content helpers
 │   ├── pushScheduler.ts       # Scheduled push notification jobs
 │   ├── pushService.ts         # Web Push API (VAPID) send logic
-│   ├── routers.ts             # Main tRPC router (~2300+ lines, all procedures)
+│   ├── routers.ts             # Main tRPC router (all procedures)
 │   ├── storage.ts             # Azure Blob Storage upload/download
 │   ├── systemRouter.ts        # Health check + admin tRPC router
 │   ├── trpc.ts                # tRPC init, context, middleware (publicProcedure, protectedProcedure, adminProcedure)
 │   └── vite.ts                # Vite dev server integration (development only)
 ├── shared/                    # Isomorphic code (used by both client and server)
 │   ├── _core/                 # Core error types
-│   ├── avatarPrompts.ts       # Avatar chat system prompts
-│   ├── avatarPrompts_*.ts     # Brand-specific avatar prompt variants (aragonesa, especialistas, evento, family, musicalin_intl, ogcrew, zaragoza)
+│   ├── avatarPrompts.ts       # Avatar chat system prompts (default/global)
+│   ├── avatarPrompts_aragonesa.ts    # Brand-specific avatar prompts
+│   ├── avatarPrompts_especialistas.ts
+│   ├── avatarPrompts_evento.ts
+│   ├── avatarPrompts_family.ts
+│   ├── avatarPrompts_musicalin_intl.ts
+│   ├── avatarPrompts_ogcrew.ts
+│   ├── avatarPrompts_zaragoza.ts
 │   ├── avatarExpertise.ts     # Avatar expertise definitions
 │   ├── avatarTasks.ts         # Avatar task definitions
 │   ├── const.ts               # Shared constants
@@ -87,7 +93,7 @@ lince-ia/
 
 ```bash
 npm run dev          # Start dev server (tsx watch on server/index.ts + Vite HMR)
-npm run build        # Build frontend (Vite → dist/public/) + backend (esbuild → dist/index.js)
+npm run build        # Build frontend (Vite → dist/public/) + backend (esbuild CJS → dist/index.js)
 npm run build:web    # Build frontend only
 npm start            # Run production server (NODE_ENV=production node dist/index.js)
 npm run check        # TypeScript type check (tsc --noEmit)
@@ -100,6 +106,7 @@ npm run mobile:build # Build web + sync Capacitor
 npm run mobile:android  # Build and open Android Studio
 npm run mobile:ios      # Build and open Xcode
 npm run mobile:sync  # Sync Capacitor only (no web build)
+npm run mobile:copy  # Copy web assets to Capacitor without full sync
 ```
 
 ---
@@ -136,6 +143,14 @@ All tables are defined in `drizzle/schema.ts` and types are re-exported from `sh
 
 **Important**: `users` (admins) and `game_players` (game users) are completely separate tables with separate auth flows. Do not mix them.
 
+### Notable Schema Details
+
+- `game_players.username` ends in `-LIN` (male) or `-LINA` (female). Locked after registration.
+- `game_players.levelsData` and `dailyRewardsData` are JSON columns with typed inference.
+- `push_subscriptions.preferences` stores per-device notification settings (quiet hours, etc.).
+- `chat_sessions` enforces one session per (player, avatar) pair — reopening continues the same conversation.
+- `legal_acceptances` records device fingerprinting data for legal proof of terms acceptance.
+
 ---
 
 ## Authentication
@@ -149,7 +164,7 @@ Two separate auth systems coexist:
 
 Defined in `server/trpc.ts`:
 - `publicProcedure` — No auth required
-- `protectedProcedure` — Requires valid admin JWT cookie
+- `protectedProcedure` — Requires valid admin JWT cookie (`role: "user"` or `"admin"`)
 - `adminProcedure` — Requires `role: "admin"` in JWT payload
 
 ### REST Auth Routes
@@ -165,14 +180,14 @@ GET  /api/auth/me         → Return current user from cookie
 
 ## API Architecture (tRPC)
 
-All business logic is in `server/routers.ts` exposed at `/api/trpc/*`. The client uses `@trpc/react-query` hooks.
+All business logic is in `server/routers.ts` exposed at `/api/trpc/*`. The client uses `@trpc/react-query` hooks (configured in `client/src/lib/trpc.ts`).
 
 The tRPC router uses `superjson` as transformer (handles Dates, etc. automatically).
 
 When adding new procedures:
 1. Add to `server/routers.ts` (or create a sub-router and merge it)
 2. Use `publicProcedure`, `protectedProcedure`, or `adminProcedure` as appropriate
-3. Define input with `zod` schemas
+3. Define input with `zod` schemas (project uses **Zod v4**)
 4. The client will automatically get TypeScript types via inference
 
 ---
@@ -181,22 +196,110 @@ When adding new procedures:
 
 Client-side routing uses `wouter`. Routes are defined in `client/src/App.tsx`.
 
-- **Public routes**: Accessible without registration (home, game, tools, profile)
-- **Admin-only routes**: `/mundo`, `/raids`, `/raids-batalla`, `/academia`, `/catalogo-formativo`, `/course-builder`, `/avatar-customizer`, `/mi-panel`, `/changelog`, `/admin`, `/guia-base44`, `/prompt-profesional`, `/historial-prompts`, `/galeria`
-- **Lazy loading**: Most pages use `React.lazy()` for code splitting. Only `Register`, `Login`, and `NotFound` are eagerly loaded.
+### Public Routes (no registration required)
+| Path | Page | Description |
+|---|---|---|
+| `/` | Home | Landing page |
+| `/tutorial` | Tutorial | Onboarding tutorial |
+| `/bienvenida` | Bienvenida | Welcome screen |
+| `/arsenal-ia` | ArsenalIA | AI tools directory |
+| `/arsenal-ia/:toolId` | ArsenalIADetail | Tool detail view |
+| `/prompt-studio` | PromptStudio | IMAGELIN — image generation |
+| `/promptear` | PromptGame | PROMPTLIN — prompt competition game |
+| `/lincelin` | CreaTuLincelin | LINCELIN — avatar creator |
+| `/personajes` | Personajes | Avatar gallery |
+| `/jugar` | GameHub | Game levels hub |
+| `/jugar/nivel-1` | Nivel1 | Level 1 |
+| `/jugar/nivel-2` | Nivel2 | Level 2 |
+| `/jugar/nivel-3` | Nivel3 | Level 3 |
+| `/perfil` | MiPerfil | Player profile |
+| `/perfil-publico` | PublicProfile | Public player profile |
+| `/recompensas` | DailyRewards | Daily rewards |
+| `/mercado` | Mercado | Marketplace/store |
+| `/reto-diario` | RetoDiario | Daily challenge |
+| `/progresion` | MapaProgresion | Progression map |
+| `/aviso-legal` | AvisoLegal | Legal notice |
+| `/como-jugar` | ComoJugar | How to play |
+| `/artista/:code` | MundoArtista | Artist world (referral) |
+| `/login` | Login | Admin login |
+| `/registro` | Register | Admin registration |
+
+### Admin-Only Routes
+| Path | Page |
+|---|---|
+| `/mundo` | MundoLince |
+| `/raids` | LinceRaids |
+| `/raids-batalla` | RaidsBattle |
+| `/academia` | AcademiaLince |
+| `/catalogo-formativo` | CatalogoFormativo |
+| `/course-builder` | CourseBuilder |
+| `/avatar-customizer` | AvatarCustomizer |
+| `/mi-panel` | UserDashboard |
+| `/changelog` | Changelog |
+| `/admin` | AdminPanel |
+| `/guia-base44` | GuiaBase44 |
+| `/prompt-profesional` | PromptProfesional |
+| `/historial-prompts` | PromptHistory |
+| `/galeria` | Galeria |
+
+**Lazy loading**: All pages use `React.lazy()` for code splitting except `Register`, `Login`, and `NotFound` (eagerly loaded).
 
 ---
 
 ## React Contexts
 
-| Context | Provider | Purpose |
-|---|---|---|
-| `GameContext` | `GameProvider` | Game state (player, XP, coins, levels, streaks, daily rewards, sync) |
-| `ThemeContext` | `ThemeProvider` | Dark/light theme (default: dark) |
-| `PRDLanguageContext` | `PRDLanguageProvider` | UI language (es/en/zh) |
-| `GuestContext` | `GuestProvider` | Guest/trial mode state |
+| Context file | Provider | Hook | Purpose |
+|---|---|---|---|
+| `GameContext.tsx` | `GameProvider` | `useGame()` | Game state (player, XP, coins, levels, streaks, daily rewards, sync) |
+| `ThemeContext.tsx` | `ThemeProvider` | `useTheme()` | Dark/light theme (default: dark) |
+| `PRDLanguageContext.tsx` | `PRDLanguageProvider` | `usePRDLanguage()` | UI language + avatar country + username generation |
+| `GuestContext.tsx` | `GuestProvider` | `useGuest()` | Guest/trial mode state |
+| `LanguageContext.tsx` | — | — | Legacy/internal language helpers |
 
-Access with `useGame()`, `usePRDLanguage()`, `useTheme()`, `useGuest()`.
+### Language Support
+
+`PRDLanguageContext` supports **5 languages**: `es | en | zh | pt-BR | pt-PT`
+
+Helper function `tl(lang, { es, en, zh, 'pt-BR', 'pt-PT' })` for inline translations.
+
+Translation data lives in:
+- `client/src/contexts/extendedTranslations.ts` — main translations (es/en/zh)
+- `client/src/contexts/extendedTranslationsPtBR.ts` — Brazilian Portuguese
+- `client/src/contexts/extendedTranslationsPtPT.ts` — European Portuguese
+
+---
+
+## Client-Side Libraries (`client/src/lib/`)
+
+| File | Purpose |
+|---|---|
+| `accessControl.ts` | `isAdminUser()` helper for admin route guarding |
+| `avatarConstants.ts` | Avatar key/name/image mappings |
+| `gameConfig.ts` | Game configuration constants (XP thresholds, level definitions) |
+| `gameConstants.ts` | Shared game constants (coin rewards, streak rules, etc.) |
+| `offlineStore.ts` | Local offline progress storage helpers |
+| `searchIndex.ts` | Global search index for `GlobalSearch` component |
+| `trpc.ts` | tRPC client + React Query setup for the frontend |
+| `usernameGenerator.ts` | Username generation logic (-LIN/-LINA suffixes) |
+| `utils.ts` | General utilities (`cn()` for class merging, etc.) |
+
+---
+
+## Custom Hooks (`client/src/hooks/`)
+
+| Hook | Purpose |
+|---|---|
+| `useComposition.ts` | IME composition state (for CJK input fields) |
+| `useContentProtection.ts` | Disables right-click/copy on protected content |
+| `useGameLang.ts` | Game-specific language resolution |
+| `useMobile.tsx` | Mobile viewport detection |
+| `useNotifications.ts` | Push notification subscription management |
+| `useOfflineProgress.ts` | Offline-first progress sync logic |
+| `usePWA.ts` | PWA install prompt + update detection |
+| `usePersistFn.ts` | Stable function reference across renders |
+| `useProgressiveUnlock.ts` | Feature unlock progression logic |
+| `useServerPush.ts` | Server-Sent Events / polling for real-time updates |
+| `useSwipeBack.ts` | iOS-style swipe-back gesture handler |
 
 ---
 
@@ -237,6 +340,8 @@ Copy `.env.example` to `.env` and fill in real values. Validate with `npm run ch
 | `NODE_ENV` | `production` or `development` |
 | `PORT` | Server port (default: 8080) |
 
+All env vars are accessed via the typed `ENV` object in `server/env.ts`, not directly from `process.env`.
+
 ### Build-time (injected into frontend bundle):
 | Variable | Description |
 |---|---|
@@ -244,6 +349,28 @@ Copy `.env.example` to `.env` and fill in real values. Validate with `npm run ch
 | `VITE_VAPID_PUBLIC_KEY` | VAPID public key for client-side push subscription |
 
 **Never commit real secrets.** Generate new VAPID keys with: `npx web-push generate-vapid-keys`
+
+---
+
+## Security
+
+The server uses **Helmet.js** with a strict Content Security Policy defined in `server/index.ts`.
+
+Current CSP directives:
+- `scriptSrc`: self + Google Fonts
+- `styleSrc`: self + inline + Google Fonts
+- `imgSrc`: self + data: + blob: + `*.blob.core.windows.net`
+- `fontSrc`: self + Google Fonts CDN
+- `connectSrc`: self + Azure OpenAI + Azure Blob Storage
+- `frameSrc`, `objectSrc`: none
+
+**If adding new external resources** (scripts, images, fonts, external APIs), update the CSP in `server/index.ts`.
+
+Additional security measures:
+- Account lockout after repeated failed login attempts (implemented in `server/auth.ts`)
+- File type/size validation in the storage layer
+- Request body size limit: 10MB
+- HSTS enabled in production (max-age: 1 year, includeSubDomains, preload)
 
 ---
 
@@ -265,16 +392,18 @@ There are currently no frontend tests — Vitest is configured for server-side t
 
 ```
 dist/
-├── index.js       # Bundled Express server (esbuild, ESM format)
+├── index.js       # Bundled Express server (esbuild, CJS format)
 └── public/        # Static frontend assets (Vite output)
     ├── index.html
     ├── assets/    # JS/CSS chunks
     └── ...
 ```
 
+**Build command**: `esbuild server/index.ts --platform=node --bundle --format=cjs --outdir=dist --external:./vite --external:*.node`
+
 The server in production serves `dist/public/` as static files and falls back to `index.html` for all non-API routes (SPA mode).
 
-Build note: The server bundle excludes `./vite` and `*.node` externals to avoid bundling the Vite dev toolchain. Azure App Service must have `SCM_DO_BUILD_DURING_DEPLOYMENT=false` and `ENABLE_ORYX_BUILD=false` set — it deploys pre-built artifacts.
+Build note: The server bundle uses CJS format and excludes `./vite` and `*.node` externals to avoid bundling the Vite dev toolchain. Azure App Service must have `SCM_DO_BUILD_DURING_DEPLOYMENT=false` and `ENABLE_ORYX_BUILD=false` set — it deploys pre-built artifacts.
 
 ---
 
@@ -292,9 +421,22 @@ Mobile build workflow:
 npm run mobile:build    # Build web + cap sync
 npm run mobile:android  # Open Android Studio
 npm run mobile:ios      # Open Xcode
+npm run mobile:copy     # Copy web assets only (faster than full sync)
 ```
 
 The GitHub Actions workflow `.github/workflows/android-release.yml` handles signed AAB builds for the Play Store (triggered manually via `workflow_dispatch`).
+
+---
+
+## PWA & Offline Support
+
+The app is a Progressive Web App (PWA):
+- Service worker in `client/public/` handles offline caching
+- `usePWA.ts` hook manages install prompts and update detection
+- `useOfflineProgress.ts` + `offlineStore.ts` sync game progress when offline
+- `OfflineSyncIndicator` component shows sync status to the user
+- Push notifications via `useNotifications.ts` and VAPID (see `server/pushService.ts`)
+- `NotificationScheduler` component triggers timed local notifications
 
 ---
 
@@ -345,7 +487,7 @@ az webapp restart --name lince-app --resource-group rg-lince
 
 4. **tRPC for all new API endpoints**: Add procedures to `server/routers.ts`. Only use plain REST routes for auth (`server/auth.ts`).
 
-5. **Zod for validation**: All tRPC input must be validated with Zod schemas (imported from `zod`).
+5. **Zod v4 for validation**: All tRPC input must be validated with Zod schemas (project uses `zod` v4). Import from `zod`.
 
 6. **ENV object for environment variables**: Access env vars through the typed `ENV` object from `server/env.ts`, not directly from `process.env`.
 
@@ -357,6 +499,10 @@ az webapp restart --name lince-app --resource-group rg-lince
 
 10. **Security**: The server uses Helmet.js with a strict CSP. If new external resources are needed (scripts, images, fonts, APIs), update the CSP directives in `server/index.ts`.
 
-11. **Language**: UI strings are in Spanish by default (es). Multilingual support (es/en/zh) is handled via `PRDLanguageContext`. Add new translatable strings to the language map in the relevant context or component.
+11. **Language**: UI strings are in Spanish (`es`) by default. Full multilingual support covers `es/en/zh/pt-BR/pt-PT` via `PRDLanguageContext`. Use the `tl()` helper for inline translations. Add new translatable strings to `extendedTranslations.ts`.
 
 12. **Dark theme**: The app defaults to dark mode. Brand primary color is `#00E5FF` (cyan). Background is `#0A0A0A`.
+
+13. **Build format**: The server bundle is **CJS** (CommonJS), not ESM. The `--format=cjs` flag is used in the esbuild command. Do not change this — Azure App Service requires CJS for `node dist/index.js`.
+
+14. **Port discovery**: The server auto-detects an available port starting from `ENV.port` (default 8080), scanning up to 20 ports. This handles dev environments with busy ports.
