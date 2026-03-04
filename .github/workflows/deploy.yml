@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 env:
-  AZURE_WEBAPP_NAME: duolince-app  # Cambiar por tu nombre de App Service
+  AZURE_WEBAPP_NAME: lince-app
   NODE_VERSION: '22.x'
 
 jobs:
@@ -22,32 +22,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
-      - name: Get pnpm store directory
-        shell: bash
-        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - name: Cache pnpm dependencies
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          cache: 'npm'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm install --legacy-peer-deps
 
       - name: TypeScript type check
-        run: pnpm check
+        run: npm run check
 
       - name: Run tests
-        run: pnpm test
+        run: npm test
 
   # ─── JOB 2: Build y deploy (solo en push a main) ───
   build-and-deploy:
@@ -63,29 +47,28 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
+          cache: 'npm'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm install --legacy-peer-deps
 
       - name: Build for production
-        run: pnpm build
+        run: npm run build
         env:
-          VITE_APP_ID: ${{ vars.VITE_APP_ID }}
           VITE_APP_TITLE: ${{ vars.VITE_APP_TITLE }}
-          VITE_APP_LOGO: ${{ vars.VITE_APP_LOGO }}
-          VITE_FRONTEND_FORGE_API_URL: ${{ vars.VITE_FRONTEND_FORGE_API_URL }}
-          VITE_FRONTEND_FORGE_API_KEY: ${{ secrets.VITE_FRONTEND_FORGE_API_KEY }}
           VITE_VAPID_PUBLIC_KEY: ${{ vars.VITE_VAPID_PUBLIC_KEY }}
-          VITE_OAUTH_PORTAL_URL: ${{ vars.VITE_OAUTH_PORTAL_URL }}
+
+      - name: Prepare deploy package
+        run: |
+          cp package.json dist/
+          cp package-lock.json dist/
+          node scripts/prepare-deploy-package.mjs dist/package.json
+          cd dist && npm install --omit=dev --legacy-peer-deps
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: .
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C33591B88D5B4BB7B54DC0945C555A20 }}
+          package: dist/
