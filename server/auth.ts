@@ -66,7 +66,7 @@ function clearFailedLogins(email: string, ip: string): void {
 // Cleanup expired lockouts every 10 minutes
 setInterval(() => {
   const now = Date.now();
-  for (const [key, entry] of loginFailureMap.entries()) {
+  for (const [key, entry] of Array.from(loginFailureMap.entries())) {
     if (!entry.lockedUntil || now >= entry.lockedUntil) {
       loginFailureMap.delete(key);
     }
@@ -176,7 +176,7 @@ export function registerAuthRoutes(app: Express) {
       // Sign JWT and set cookie
       const token = signToken({ userId: user.id, email: user.email, role: user.role });
       res.cookie(COOKIE_NAME, token, getCookieOptions(req));
-      res.json({ success: true, user: { id: user.id, email: user.email, name: user.name, role: user.role } });
+      res.json({ success: true, user: { id: user.id, email: user.email, name: user.realName, role: user.role } });
     } catch (error) {
       console.error("[Auth] Register error:", error);
       res.status(500).json({ error: "Error interno del servidor." });
@@ -229,7 +229,7 @@ export function registerAuthRoutes(app: Express) {
       // Sign JWT and set cookie
       const token = signToken({ userId: user.id, email: user.email, role: user.role });
       res.cookie(COOKIE_NAME, token, getCookieOptions(req));
-      res.json({ success: true, user: { id: user.id, email: user.email, name: user.name, role: user.role } });
+      res.json({ success: true, user: { id: user.id, email: user.email, name: user.realName, role: user.role } });
     } catch (error) {
       console.error("[Auth] Login error:", error);
       res.status(500).json({ error: "Error interno del servidor." });
@@ -249,7 +249,7 @@ export function registerAuthRoutes(app: Express) {
       res.json({ user: null });
       return;
     }
-    res.json({ user: { id: user.id, email: user.email, name: user.name, role: user.role } });
+    res.json({ user: { id: user.id, email: user.email, name: user.realName, role: user.role } });
   });
 }
 

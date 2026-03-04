@@ -658,3 +658,55 @@ export async function deleteChatSession(sessionId: number, gamePlayerId: number)
 
   return true;
 }
+
+// ─── Email/Password Auth Helpers (used by server/auth.ts) ───
+// These delegate to gamePlayers, which has the email + passwordHash fields.
+
+export async function getUserById(id: number) {
+  const player = await getGamePlayerById(id);
+  if (!player) return null;
+  return { ...player, role: "user" as const };
+}
+
+export async function getUserByEmail(email: string) {
+  const player = await getGamePlayerByEmail(email);
+  if (!player) return null;
+  return { ...player, role: "user" as const };
+}
+
+export async function createUser(data: {
+  email: string;
+  passwordHash: string;
+  name: string | null;
+  role: string;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const base = data.email.split("@")[0].replace(/[^a-zA-Z0-9]/g, "").slice(0, 16).toUpperCase() || "USER";
+  const suffix = Math.floor(Math.random() * 9000) + 1000;
+  const username = `${base}${suffix}`;
+
+  await db.insert(gamePlayers).values({
+    email: data.email.toLowerCase().trim(),
+    username,
+    realName: data.name ?? "",
+    passwordHash: data.passwordHash,
+    avatarKey: "PEQUELIN",
+    language: "es",
+    country: "ES",
+  });
+
+  const rows = await db.select().from(gamePlayers)
+    .where(eq(gamePlayers.email, data.email.toLowerCase().trim()))
+    .limit(1);
+
+  const player = rows[0];
+  return { ...player, role: "user" as const };
+}
+
+export async function updateUserLastSignIn(id: number): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(gamePlayers).set({ lastLoginAt: new Date() }).where(eq(gamePlayers.id, id));
+}
