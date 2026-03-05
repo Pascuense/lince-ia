@@ -6,12 +6,31 @@ import net from "net";
 import helmet from "helmet";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 
-// shared/const.ts
-var COOKIE_NAME = "app_session_id";
-var ONE_YEAR_MS = 1e3 * 60 * 60 * 24 * 365;
-var AXIOS_TIMEOUT_MS = 3e4;
-var UNAUTHED_ERR_MSG = "Please login (10001)";
-var NOT_ADMIN_ERR_MSG = "You do not have required permission (10002)";
+// server/auth.ts
+import bcrypt2 from "bcryptjs";
+import jwt from "jsonwebtoken";
+
+// server/env.ts
+var ENV = {
+  // Database
+  databaseUrl: process.env.DATABASE_URL ?? "",
+  // JWT Auth
+  jwtSecret: process.env.JWT_SECRET ?? "",
+  // Azure OpenAI
+  azureOpenaiEndpoint: process.env.AZURE_OPENAI_ENDPOINT ?? "",
+  azureOpenaiKey: process.env.AZURE_OPENAI_KEY ?? "",
+  azureOpenaiDeployment: process.env.AZURE_OPENAI_DEPLOYMENT ?? "gpt-4o",
+  // Azure Blob Storage
+  azureStorageConnectionString: process.env.AZURE_STORAGE_CONNECTION_STRING ?? "",
+  azureStorageContainer: process.env.AZURE_STORAGE_CONTAINER ?? "lince-uploads",
+  // VAPID Push Notifications
+  vapidPublicKey: process.env.VAPID_PUBLIC_KEY ?? "",
+  vapidPrivateKey: process.env.VAPID_PRIVATE_KEY ?? "",
+  vapidContactEmail: process.env.VAPID_CONTACT_EMAIL ?? "cristobal@acnb.es",
+  // Server
+  isProduction: process.env.NODE_ENV === "production",
+  port: parseInt(process.env.PORT || "8080")
+};
 
 // server/db.ts
 import { desc, eq, sql, and } from "drizzle-orm";
@@ -250,7 +269,7 @@ var pushSubscriptions = mysqlTable("push_subscriptions", {
 ]);
 
 // server/_core/env.ts
-var ENV = {
+var ENV2 = {
   appId: process.env.VITE_APP_ID ?? "",
   cookieSecret: process.env.JWT_SECRET ?? "",
   databaseUrl: process.env.DATABASE_URL ?? "",
@@ -276,63 +295,6 @@ async function getDb() {
     }
   }
   return _db;
-}
-async function upsertUser(user) {
-  if (!user.openId) {
-    throw new Error("User openId is required for upsert");
-  }
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot upsert user: database not available");
-    return;
-  }
-  try {
-    const values = {
-      openId: user.openId
-    };
-    const updateSet = {};
-    const textFields = ["name", "email", "loginMethod"];
-    const assignNullable = (field) => {
-      const value = user[field];
-      if (value === void 0) return;
-      const normalized = value ?? null;
-      values[field] = normalized;
-      updateSet[field] = normalized;
-    };
-    textFields.forEach(assignNullable);
-    if (user.lastSignedIn !== void 0) {
-      values.lastSignedIn = user.lastSignedIn;
-      updateSet.lastSignedIn = user.lastSignedIn;
-    }
-    if (user.role !== void 0) {
-      values.role = user.role;
-      updateSet.role = user.role;
-    } else if (user.openId === ENV.ownerOpenId) {
-      values.role = "admin";
-      updateSet.role = "admin";
-    }
-    if (!values.lastSignedIn) {
-      values.lastSignedIn = /* @__PURE__ */ new Date();
-    }
-    if (Object.keys(updateSet).length === 0) {
-      updateSet.lastSignedIn = /* @__PURE__ */ new Date();
-    }
-    await db.insert(users).values(values).onDuplicateKeyUpdate({
-      set: updateSet
-    });
-  } catch (error) {
-    console.error("[Database] Failed to upsert user:", error);
-    throw error;
-  }
-}
-async function getUserByOpenId(openId) {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot get user: database not available");
-    return void 0;
-  }
-  const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
-  return result.length > 0 ? result[0] : void 0;
 }
 var BCRYPT_SALT_ROUNDS = 12;
 async function createGamePlayer(data) {
@@ -659,6 +621,220 @@ async function deleteChatSession(sessionId, gamePlayerId) {
   await db.delete(chatSessions).where(eq(chatSessions.id, sessionId));
   return true;
 }
+async function getUserById(id) {
+  const player = await getGamePlayerById(id);
+  if (!player) return null;
+  return { ...player, role: "user" };
+}
+async function getUserByEmail(email) {
+  const player = await getGamePlayerByEmail(email);
+  if (!player) return null;
+  return { ...player, role: "user" };
+}
+async function createUser(data) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const base = data.email.split("@")[0].replace(/[^a-zA-Z0-9]/g, "").slice(0, 16).toUpperCase() || "USER";
+  const suffix = Math.floor(Math.random() * 9e3) + 1e3;
+  const username = `${base}${suffix}`;
+  await db.insert(gamePlayers).values({
+    email: data.email.toLowerCase().trim(),
+    username,
+    realName: data.name ?? "",
+    passwordHash: data.passwordHash,
+    avatarKey: "PEQUELIN",
+    language: "es",
+    country: "ES"
+  });
+  const rows = await db.select().from(gamePlayers).where(eq(gamePlayers.email, data.email.toLowerCase().trim())).limit(1);
+  const player = rows[0];
+  return { ...player, role: "user" };
+}
+async function updateUserLastSignIn(id) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(gamePlayers).set({ lastLoginAt: /* @__PURE__ */ new Date() }).where(eq(gamePlayers.id, id));
+}
+
+// server/auth.ts
+var COOKIE_NAME = "lince_session";
+var SALT_ROUNDS = 12;
+var TOKEN_EXPIRY = "365d";
+var MAX_FAILED_ATTEMPTS = 5;
+var LOCKOUT_DURATION_MS = 15 * 60 * 1e3;
+var loginFailureMap = /* @__PURE__ */ new Map();
+function getLockoutKey(email, ip) {
+  return `${email.toLowerCase()}::${ip}`;
+}
+function checkAccountLockout(email, ip) {
+  const key = getLockoutKey(email, ip);
+  const entry = loginFailureMap.get(key);
+  if (!entry) return;
+  if (entry.lockedUntil && Date.now() < entry.lockedUntil) {
+    const remainingSeconds = Math.ceil((entry.lockedUntil - Date.now()) / 1e3);
+    throw Object.assign(new Error("Account locked"), {
+      statusCode: 429,
+      message: `Demasiados intentos fallidos. Cuenta bloqueada. Intenta de nuevo en ${remainingSeconds} segundos.`
+    });
+  }
+  if (entry.lockedUntil && Date.now() >= entry.lockedUntil) {
+    loginFailureMap.delete(key);
+  }
+}
+function recordFailedLogin(email, ip) {
+  const key = getLockoutKey(email, ip);
+  const entry = loginFailureMap.get(key) ?? { count: 0, lockedUntil: null };
+  entry.count++;
+  if (entry.count >= MAX_FAILED_ATTEMPTS) {
+    entry.lockedUntil = Date.now() + LOCKOUT_DURATION_MS;
+    console.warn(`[Auth] Account locked for ${email} from IP ${ip} after ${entry.count} failed attempts`);
+  }
+  loginFailureMap.set(key, entry);
+}
+function clearFailedLogins(email, ip) {
+  loginFailureMap.delete(getLockoutKey(email, ip));
+}
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, entry] of Array.from(loginFailureMap.entries())) {
+    if (!entry.lockedUntil || now >= entry.lockedUntil) {
+      loginFailureMap.delete(key);
+    }
+  }
+}, 10 * 60 * 1e3);
+function signToken(payload) {
+  return jwt.sign(payload, ENV.jwtSecret, { expiresIn: TOKEN_EXPIRY });
+}
+function verifyToken(token) {
+  try {
+    return jwt.verify(token, ENV.jwtSecret);
+  } catch {
+    return null;
+  }
+}
+async function hashPassword(password) {
+  return bcrypt2.hash(password, SALT_ROUNDS);
+}
+async function comparePassword(password, hash) {
+  return bcrypt2.compare(password, hash);
+}
+function getCookieOptions(req) {
+  const isSecure = req.protocol === "https" || req.headers["x-forwarded-proto"] === "https";
+  return {
+    httpOnly: true,
+    path: "/",
+    sameSite: "lax",
+    secure: isSecure,
+    maxAge: 365 * 24 * 60 * 60 * 1e3
+    // 1 año
+  };
+}
+async function authenticateRequest(req) {
+  const cookieHeader = req.headers.cookie || "";
+  const cookies = new Map(
+    cookieHeader.split(";").map((c) => {
+      const [key, ...rest] = c.trim().split("=");
+      return [key, rest.join("=")];
+    })
+  );
+  const token = cookies.get(COOKIE_NAME);
+  if (!token) return null;
+  const payload = verifyToken(token);
+  if (!payload) return null;
+  const user = await getUserById(payload.userId);
+  return user;
+}
+function registerAuthRoutes(app) {
+  app.post("/api/auth/register", async (req, res) => {
+    try {
+      const { email, password, name } = req.body;
+      if (!email || !password) {
+        res.status(400).json({ error: "Email y contrase\xF1a son obligatorios." });
+        return;
+      }
+      const existing = await getUserByEmail(email);
+      if (existing) {
+        res.status(409).json({ error: "Ya existe una cuenta con este email." });
+        return;
+      }
+      const passwordHash = await hashPassword(password);
+      const user = await createUser({
+        email,
+        passwordHash,
+        name: name || null,
+        role: "user"
+      });
+      if (!user) {
+        res.status(500).json({ error: "Error al crear la cuenta." });
+        return;
+      }
+      const token = signToken({ userId: user.id, email: user.email, role: user.role });
+      res.cookie(COOKIE_NAME, token, getCookieOptions(req));
+      res.json({ success: true, user: { id: user.id, email: user.email, name: user.realName, role: user.role } });
+    } catch (error) {
+      console.error("[Auth] Register error:", error);
+      res.status(500).json({ error: "Error interno del servidor." });
+    }
+  });
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      if (!email || !password) {
+        res.status(400).json({ error: "Email y contrase\xF1a son obligatorios." });
+        return;
+      }
+      const clientIP = req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || req.socket?.remoteAddress || "unknown";
+      try {
+        checkAccountLockout(email, clientIP);
+      } catch (lockErr) {
+        res.status(429).json({ error: lockErr.message });
+        return;
+      }
+      const user = await getUserByEmail(email);
+      if (!user || !user.passwordHash) {
+        recordFailedLogin(email, clientIP);
+        res.status(401).json({ error: "Credenciales incorrectas." });
+        return;
+      }
+      const valid = await comparePassword(password, user.passwordHash);
+      if (!valid) {
+        recordFailedLogin(email, clientIP);
+        res.status(401).json({ error: "Credenciales incorrectas." });
+        return;
+      }
+      clearFailedLogins(email, clientIP);
+      await updateUserLastSignIn(user.id);
+      const token = signToken({ userId: user.id, email: user.email, role: user.role });
+      res.cookie(COOKIE_NAME, token, getCookieOptions(req));
+      res.json({ success: true, user: { id: user.id, email: user.email, name: user.realName, role: user.role } });
+    } catch (error) {
+      console.error("[Auth] Login error:", error);
+      res.status(500).json({ error: "Error interno del servidor." });
+    }
+  });
+  app.post("/api/auth/logout", (_req, res) => {
+    res.clearCookie(COOKIE_NAME, { path: "/" });
+    res.json({ success: true });
+  });
+  app.get("/api/auth/me", async (req, res) => {
+    const user = await authenticateRequest(req);
+    if (!user) {
+      res.json({ user: null });
+      return;
+    }
+    res.json({ user: { id: user.id, email: user.email, name: user.realName, role: user.role } });
+  });
+}
+
+// server/routers.ts
+import { z as z2 } from "zod";
+import { TRPCError as TRPCError3 } from "@trpc/server";
+
+// shared/const.ts
+var COOKIE_NAME2 = "app_session_id";
+var ONE_YEAR_MS = 1e3 * 60 * 60 * 24 * 365;
+var UNAUTHED_ERR_MSG = "Please login (10001)";
+var NOT_ADMIN_ERR_MSG = "You do not have required permission (10002)";
 
 // server/_core/cookies.ts
 function isSecureRequest(req) {
@@ -677,278 +853,6 @@ function getSessionCookieOptions(req) {
   };
 }
 
-// shared/_core/errors.ts
-var HttpError = class extends Error {
-  constructor(statusCode, message) {
-    super(message);
-    this.statusCode = statusCode;
-    this.name = "HttpError";
-  }
-};
-var ForbiddenError = (msg) => new HttpError(403, msg);
-
-// server/_core/sdk.ts
-import axios from "axios";
-import { parse as parseCookieHeader } from "cookie";
-import { SignJWT, jwtVerify } from "jose";
-var isNonEmptyString = (value) => typeof value === "string" && value.length > 0;
-var EXCHANGE_TOKEN_PATH = `/webdev.v1.WebDevAuthPublicService/ExchangeToken`;
-var GET_USER_INFO_PATH = `/webdev.v1.WebDevAuthPublicService/GetUserInfo`;
-var GET_USER_INFO_WITH_JWT_PATH = `/webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt`;
-var OAuthService = class {
-  constructor(client) {
-    this.client = client;
-    console.log("[OAuth] Initialized with baseURL:", ENV.oAuthServerUrl);
-    if (!ENV.oAuthServerUrl) {
-      console.error(
-        "[OAuth] ERROR: OAUTH_SERVER_URL is not configured! Set OAUTH_SERVER_URL environment variable."
-      );
-    }
-  }
-  decodeState(state) {
-    const redirectUri = atob(state);
-    return redirectUri;
-  }
-  async getTokenByCode(code, state) {
-    const payload = {
-      clientId: ENV.appId,
-      grantType: "authorization_code",
-      code,
-      redirectUri: this.decodeState(state)
-    };
-    const { data } = await this.client.post(
-      EXCHANGE_TOKEN_PATH,
-      payload
-    );
-    return data;
-  }
-  async getUserInfoByToken(token) {
-    const { data } = await this.client.post(
-      GET_USER_INFO_PATH,
-      {
-        accessToken: token.accessToken
-      }
-    );
-    return data;
-  }
-};
-var createOAuthHttpClient = () => axios.create({
-  baseURL: ENV.oAuthServerUrl,
-  timeout: AXIOS_TIMEOUT_MS
-});
-var SDKServer = class {
-  client;
-  oauthService;
-  constructor(client = createOAuthHttpClient()) {
-    this.client = client;
-    this.oauthService = new OAuthService(this.client);
-  }
-  deriveLoginMethod(platforms, fallback) {
-    if (fallback && fallback.length > 0) return fallback;
-    if (!Array.isArray(platforms) || platforms.length === 0) return null;
-    const set = new Set(
-      platforms.filter((p) => typeof p === "string")
-    );
-    if (set.has("REGISTERED_PLATFORM_EMAIL")) return "email";
-    if (set.has("REGISTERED_PLATFORM_GOOGLE")) return "google";
-    if (set.has("REGISTERED_PLATFORM_APPLE")) return "apple";
-    if (set.has("REGISTERED_PLATFORM_MICROSOFT") || set.has("REGISTERED_PLATFORM_AZURE"))
-      return "microsoft";
-    if (set.has("REGISTERED_PLATFORM_GITHUB")) return "github";
-    const first = Array.from(set)[0];
-    return first ? first.toLowerCase() : null;
-  }
-  /**
-   * Exchange OAuth authorization code for access token
-   * @example
-   * const tokenResponse = await sdk.exchangeCodeForToken(code, state);
-   */
-  async exchangeCodeForToken(code, state) {
-    return this.oauthService.getTokenByCode(code, state);
-  }
-  /**
-   * Get user information using access token
-   * @example
-   * const userInfo = await sdk.getUserInfo(tokenResponse.accessToken);
-   */
-  async getUserInfo(accessToken) {
-    const data = await this.oauthService.getUserInfoByToken({
-      accessToken
-    });
-    const loginMethod = this.deriveLoginMethod(
-      data?.platforms,
-      data?.platform ?? data.platform ?? null
-    );
-    return {
-      ...data,
-      platform: loginMethod,
-      loginMethod
-    };
-  }
-  parseCookies(cookieHeader) {
-    if (!cookieHeader) {
-      return /* @__PURE__ */ new Map();
-    }
-    const parsed = parseCookieHeader(cookieHeader);
-    return new Map(Object.entries(parsed));
-  }
-  getSessionSecret() {
-    const secret = ENV.cookieSecret;
-    return new TextEncoder().encode(secret);
-  }
-  /**
-   * Create a session token for a Manus user openId
-   * @example
-   * const sessionToken = await sdk.createSessionToken(userInfo.openId);
-   */
-  async createSessionToken(openId, options = {}) {
-    return this.signSession(
-      {
-        openId,
-        appId: ENV.appId,
-        name: options.name || ""
-      },
-      options
-    );
-  }
-  async signSession(payload, options = {}) {
-    const issuedAt = Date.now();
-    const expiresInMs = options.expiresInMs ?? ONE_YEAR_MS;
-    const expirationSeconds = Math.floor((issuedAt + expiresInMs) / 1e3);
-    const secretKey = this.getSessionSecret();
-    return new SignJWT({
-      openId: payload.openId,
-      appId: payload.appId,
-      name: payload.name
-    }).setProtectedHeader({ alg: "HS256", typ: "JWT" }).setExpirationTime(expirationSeconds).sign(secretKey);
-  }
-  async verifySession(cookieValue) {
-    if (!cookieValue) {
-      console.warn("[Auth] Missing session cookie");
-      return null;
-    }
-    try {
-      const secretKey = this.getSessionSecret();
-      const { payload } = await jwtVerify(cookieValue, secretKey, {
-        algorithms: ["HS256"]
-      });
-      const { openId, appId, name } = payload;
-      if (!isNonEmptyString(openId) || !isNonEmptyString(appId) || !isNonEmptyString(name)) {
-        console.warn("[Auth] Session payload missing required fields");
-        return null;
-      }
-      return {
-        openId,
-        appId,
-        name
-      };
-    } catch (error) {
-      console.warn("[Auth] Session verification failed", String(error));
-      return null;
-    }
-  }
-  async getUserInfoWithJwt(jwtToken) {
-    const payload = {
-      jwtToken,
-      projectId: ENV.appId
-    };
-    const { data } = await this.client.post(
-      GET_USER_INFO_WITH_JWT_PATH,
-      payload
-    );
-    const loginMethod = this.deriveLoginMethod(
-      data?.platforms,
-      data?.platform ?? data.platform ?? null
-    );
-    return {
-      ...data,
-      platform: loginMethod,
-      loginMethod
-    };
-  }
-  async authenticateRequest(req) {
-    const cookies = this.parseCookies(req.headers.cookie);
-    const sessionCookie = cookies.get(COOKIE_NAME);
-    const session = await this.verifySession(sessionCookie);
-    if (!session) {
-      throw ForbiddenError("Invalid session cookie");
-    }
-    const sessionUserId = session.openId;
-    const signedInAt = /* @__PURE__ */ new Date();
-    let user = await getUserByOpenId(sessionUserId);
-    if (!user) {
-      try {
-        const userInfo = await this.getUserInfoWithJwt(sessionCookie ?? "");
-        await upsertUser({
-          openId: userInfo.openId,
-          name: userInfo.name || null,
-          email: userInfo.email ?? null,
-          loginMethod: userInfo.loginMethod ?? userInfo.platform ?? null,
-          lastSignedIn: signedInAt
-        });
-        user = await getUserByOpenId(userInfo.openId);
-      } catch (error) {
-        console.error("[Auth] Failed to sync user from OAuth:", error);
-        throw ForbiddenError("Failed to sync user info");
-      }
-    }
-    if (!user) {
-      throw ForbiddenError("User not found");
-    }
-    await upsertUser({
-      openId: user.openId,
-      lastSignedIn: signedInAt
-    });
-    return user;
-  }
-};
-var sdk = new SDKServer();
-
-// server/_core/oauth.ts
-function getQueryParam(req, key) {
-  const value = req.query[key];
-  return typeof value === "string" ? value : void 0;
-}
-function registerOAuthRoutes(app) {
-  app.get("/api/oauth/callback", async (req, res) => {
-    const code = getQueryParam(req, "code");
-    const state = getQueryParam(req, "state");
-    if (!code || !state) {
-      res.status(400).json({ error: "code and state are required" });
-      return;
-    }
-    try {
-      const tokenResponse = await sdk.exchangeCodeForToken(code, state);
-      const userInfo = await sdk.getUserInfo(tokenResponse.accessToken);
-      if (!userInfo.openId) {
-        res.status(400).json({ error: "openId missing from user info" });
-        return;
-      }
-      await upsertUser({
-        openId: userInfo.openId,
-        name: userInfo.name || null,
-        email: userInfo.email ?? null,
-        loginMethod: userInfo.loginMethod ?? userInfo.platform ?? null,
-        lastSignedIn: /* @__PURE__ */ new Date()
-      });
-      const sessionToken = await sdk.createSessionToken(userInfo.openId, {
-        name: userInfo.name || "",
-        expiresInMs: ONE_YEAR_MS
-      });
-      const cookieOptions = getSessionCookieOptions(req);
-      res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: ONE_YEAR_MS });
-      res.redirect(302, "/");
-    } catch (error) {
-      console.error("[OAuth] Callback failed", error);
-      res.status(500).json({ error: "OAuth callback failed" });
-    }
-  });
-}
-
-// server/routers.ts
-import { z as z2 } from "zod";
-import { TRPCError as TRPCError3 } from "@trpc/server";
-
 // server/_core/systemRouter.ts
 import { z } from "zod";
 
@@ -957,7 +861,7 @@ import { TRPCError } from "@trpc/server";
 var TITLE_MAX_LENGTH = 1200;
 var CONTENT_MAX_LENGTH = 2e4;
 var trimValue = (value) => value.trim();
-var isNonEmptyString2 = (value) => typeof value === "string" && value.trim().length > 0;
+var isNonEmptyString = (value) => typeof value === "string" && value.trim().length > 0;
 var buildEndpointUrl = (baseUrl) => {
   const normalizedBase = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
   return new URL(
@@ -966,13 +870,13 @@ var buildEndpointUrl = (baseUrl) => {
   ).toString();
 };
 var validatePayload = (input) => {
-  if (!isNonEmptyString2(input.title)) {
+  if (!isNonEmptyString(input.title)) {
     throw new TRPCError({
       code: "BAD_REQUEST",
       message: "Notification title is required."
     });
   }
-  if (!isNonEmptyString2(input.content)) {
+  if (!isNonEmptyString(input.content)) {
     throw new TRPCError({
       code: "BAD_REQUEST",
       message: "Notification content is required."
@@ -996,25 +900,25 @@ var validatePayload = (input) => {
 };
 async function notifyOwner(payload) {
   const { title, content } = validatePayload(payload);
-  if (!ENV.forgeApiUrl) {
+  if (!ENV2.forgeApiUrl) {
     throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
       message: "Notification service URL is not configured."
     });
   }
-  if (!ENV.forgeApiKey) {
+  if (!ENV2.forgeApiKey) {
     throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
       message: "Notification service API key is not configured."
     });
   }
-  const endpoint = buildEndpointUrl(ENV.forgeApiUrl);
+  const endpoint = buildEndpointUrl(ENV2.forgeApiUrl);
   try {
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
         accept: "application/json",
-        authorization: `Bearer ${ENV.forgeApiKey}`,
+        authorization: `Bearer ${ENV2.forgeApiKey}`,
         "content-type": "application/json",
         "connect-protocol-version": "1"
       },
@@ -1163,9 +1067,9 @@ var normalizeToolChoice = (toolChoice, tools) => {
   }
   return toolChoice;
 };
-var resolveApiUrl = () => ENV.forgeApiUrl && ENV.forgeApiUrl.trim().length > 0 ? `${ENV.forgeApiUrl.replace(/\/$/, "")}/v1/chat/completions` : "https://forge.manus.im/v1/chat/completions";
+var resolveApiUrl = () => ENV2.forgeApiUrl && ENV2.forgeApiUrl.trim().length > 0 ? `${ENV2.forgeApiUrl.replace(/\/$/, "")}/v1/chat/completions` : "https://forge.manus.im/v1/chat/completions";
 var assertApiKey = () => {
-  if (!ENV.forgeApiKey) {
+  if (!ENV2.forgeApiKey) {
     throw new Error("OPENAI_API_KEY is not configured");
   }
 };
@@ -1241,7 +1145,7 @@ async function invokeLLM(params) {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      authorization: `Bearer ${ENV.forgeApiKey}`
+      authorization: `Bearer ${ENV2.forgeApiKey}`
     },
     body: JSON.stringify(payload)
   });
@@ -1256,8 +1160,8 @@ async function invokeLLM(params) {
 
 // server/storage.ts
 function getStorageConfig() {
-  const baseUrl = ENV.forgeApiUrl;
-  const apiKey = ENV.forgeApiKey;
+  const baseUrl = ENV2.forgeApiUrl;
+  const apiKey = ENV2.forgeApiKey;
   if (!baseUrl || !apiKey) {
     throw new Error(
       "Storage proxy credentials missing: set BUILT_IN_FORGE_API_URL and BUILT_IN_FORGE_API_KEY"
@@ -1386,13 +1290,13 @@ async function addWatermark(imageBuffer) {
 
 // server/_core/imageGeneration.ts
 async function generateImage(options) {
-  if (!ENV.forgeApiUrl) {
+  if (!ENV2.forgeApiUrl) {
     throw new Error("BUILT_IN_FORGE_API_URL is not configured");
   }
-  if (!ENV.forgeApiKey) {
+  if (!ENV2.forgeApiKey) {
     throw new Error("BUILT_IN_FORGE_API_KEY is not configured");
   }
-  const baseUrl = ENV.forgeApiUrl.endsWith("/") ? ENV.forgeApiUrl : `${ENV.forgeApiUrl}/`;
+  const baseUrl = ENV2.forgeApiUrl.endsWith("/") ? ENV2.forgeApiUrl : `${ENV2.forgeApiUrl}/`;
   const fullUrl = new URL(
     "images.v1.ImageService/GenerateImage",
     baseUrl
@@ -1403,7 +1307,7 @@ async function generateImage(options) {
       accept: "application/json",
       "content-type": "application/json",
       "connect-protocol-version": "1",
-      authorization: `Bearer ${ENV.forgeApiKey}`
+      authorization: `Bearer ${ENV2.forgeApiKey}`
     },
     body: JSON.stringify({
       prompt: options.prompt,
@@ -1437,7 +1341,7 @@ async function generateImage(options) {
 }
 
 // server/routers.ts
-import { SignJWT as SignJWT2, jwtVerify as jwtVerify2 } from "jose";
+import { SignJWT, jwtVerify } from "jose";
 
 // shared/avatarExpertise.ts
 var AVATAR_EXPERTISE = {
@@ -7135,11 +7039,11 @@ function getAvatarPrompt(key) {
 // server/pushService.ts
 import webpush from "web-push";
 import { eq as eq2, and as and2, sql as sql2 } from "drizzle-orm";
-if (ENV.vapidPublicKey && ENV.vapidPrivateKey) {
+if (ENV2.vapidPublicKey && ENV2.vapidPrivateKey) {
   webpush.setVapidDetails(
     "mailto:cristobal@acnb.es",
-    ENV.vapidPublicKey,
-    ENV.vapidPrivateKey
+    ENV2.vapidPublicKey,
+    ENV2.vapidPrivateKey
   );
   console.log("[PushService] VAPID keys configured");
 } else {
@@ -7198,7 +7102,7 @@ async function updateSubscriptionPreferences(gamePlayerId, endpoint, preferences
   );
 }
 async function sendToSubscription(sub, payload) {
-  if (!ENV.vapidPublicKey || !ENV.vapidPrivateKey) return false;
+  if (!ENV2.vapidPublicKey || !ENV2.vapidPrivateKey) return false;
   const pushSubscription = {
     endpoint: sub.endpoint,
     keys: {
@@ -7465,14 +7369,14 @@ setInterval(() => {
     if (now > entry.resetAt) rateLimitMap.delete(key);
   });
 }, 3e4);
-var GAME_TOKEN_SECRET = new TextEncoder().encode(ENV.cookieSecret + "-game-session");
+var GAME_TOKEN_SECRET = new TextEncoder().encode(ENV2.cookieSecret + "-game-session");
 var GAME_TOKEN_EXPIRY = "7d";
 async function generateGameToken(playerId, username) {
-  return new SignJWT2({ playerId, username }).setProtectedHeader({ alg: "HS256" }).setIssuedAt().setExpirationTime(GAME_TOKEN_EXPIRY).sign(GAME_TOKEN_SECRET);
+  return new SignJWT({ playerId, username }).setProtectedHeader({ alg: "HS256" }).setIssuedAt().setExpirationTime(GAME_TOKEN_EXPIRY).sign(GAME_TOKEN_SECRET);
 }
 async function verifyGameToken(token) {
   try {
-    const { payload } = await jwtVerify2(token, GAME_TOKEN_SECRET);
+    const { payload } = await jwtVerify(token, GAME_TOKEN_SECRET);
     if (typeof payload.playerId !== "number" || typeof payload.username !== "string") {
       throw new Error("Invalid token payload");
     }
@@ -9443,7 +9347,7 @@ var appRouter = router({
     me: publicProcedure.query((opts) => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
-      ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
+      ctx.res.clearCookie(COOKIE_NAME2, { ...cookieOptions, maxAge: -1 });
       return {
         success: true
       };
@@ -9465,8 +9369,8 @@ var appRouter = router({
 async function createContext(opts) {
   let user = null;
   try {
-    user = await sdk.authenticateRequest(opts.req);
-  } catch (error) {
+    user = await authenticateRequest(opts.req);
+  } catch {
     user = null;
   }
   return {
@@ -9767,9 +9671,9 @@ async function startServer() {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://fonts.googleapis.com"],
           styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-          imgSrc: ["'self'", "data:", "blob:", "https://files.manuscdn.com", "https://*.manus.computer", "https://*.amazonaws.com"],
+          imgSrc: ["'self'", "data:", "blob:", "https://*.blob.core.windows.net"],
           fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
-          connectSrc: ["'self'", "https://api.manus.im", "https://*.manus.computer", "https://*.amazonaws.com"],
+          connectSrc: ["'self'", "https://*.blob.core.windows.net", "https://*.openai.azure.com"],
           frameSrc: ["'none'"],
           objectSrc: ["'none'"],
           baseUri: ["'self'"],
@@ -9788,7 +9692,7 @@ async function startServer() {
   );
   app.use(express2.json({ limit: "50mb" }));
   app.use(express2.urlencoded({ limit: "50mb", extended: true }));
-  registerOAuthRoutes(app);
+  registerAuthRoutes(app);
   app.use(
     "/api/trpc",
     createExpressMiddleware({

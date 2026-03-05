@@ -4,7 +4,7 @@ import { createServer } from "http";
 import net from "net";
 import helmet from "helmet";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { registerOAuthRoutes } from "./oauth";
+import { registerAuthRoutes } from "../auth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
@@ -41,9 +41,9 @@ async function startServer() {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://fonts.googleapis.com"],
           styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-          imgSrc: ["'self'", "data:", "blob:", "https://files.manuscdn.com", "https://*.manus.computer", "https://*.amazonaws.com"],
+          imgSrc: ["'self'", "data:", "blob:", "https://*.blob.core.windows.net"],
           fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
-          connectSrc: ["'self'", "https://api.manus.im", "https://*.manus.computer", "https://*.amazonaws.com"],
+          connectSrc: ["'self'", "https://*.blob.core.windows.net", "https://*.openai.azure.com"],
           frameSrc: ["'none'"],
           objectSrc: ["'none'"],
           baseUri: ["'self'"],
@@ -62,8 +62,8 @@ async function startServer() {
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
-  // OAuth callback under /api/oauth/callback
-  registerOAuthRoutes(app);
+  // JWT auth routes: /api/auth/register, /api/auth/login, /api/auth/logout, /api/auth/me
+  registerAuthRoutes(app);
   // tRPC API
   app.use(
     "/api/trpc",
