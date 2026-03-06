@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" fill="none">
+  <!-- LINCE Logo Dark — Versión para fondos oscuros (#0A0A0A a #2A2A2A) -->
+  <!-- Placeholder: Replace with final brand asset from design team -->
+  <!-- Idéntico a lince-logo-full.svg, confirmado para uso en dark backgrounds -->
+
+  <!-- Isotipo -->
+  <g transform="translate(0, 5)">
+    <circle cx="20" cy="20" r="16" fill="#00E5FF" opacity="0.1"/>
+    <polygon points="10,8 14,16 6,16" fill="#00E5FF"/>
+    <polygon points="30,8 34,16 26,16" fill="#00E5FF"/>
+    <circle cx="20" cy="22" r="12" fill="#0A0A0A" stroke="#00E5FF" stroke-width="1.5"/>
+    <ellipse cx="16" cy="21" rx="3" ry="2" fill="#00E5FF"/>
+    <ellipse cx="24" cy="21" rx="3" ry="2" fill="#00E5FF"/>
+    <ellipse cx="16" cy="21" rx="1.5" ry="1.8" fill="#0A0A0A"/>
+    <ellipse cx="24" cy="21" rx="1.5" ry="1.8" fill="#0A0A0A"/>
+    <circle cx="17" cy="20" r="0.6" fill="#FFFFFF"/>
+    <circle cx="25" cy="20" r="0.6" fill="#FFFFFF"/>
+    <line x1="8" y1="25" x2="14" y2="24" stroke="#00E5FF" stroke-width="0.8" opacity="0.7"/>
+    <line x1="8" y1="27" x2="14" y2="26" stroke="#00E5FF" stroke-width="0.8" opacity="0.7"/>
+    <line x1="26" y1="24" x2="32" y2="25" stroke="#00E5FF" stroke-width="0.8" opacity="0.7"/>
+    <line x1="26" y1="26" x2="32" y2="27" stroke="#00E5FF" stroke-width="0.8" opacity="0.7"/>
+  </g>
+
+  <!-- Wordmark blanco para dark backgrounds -->
+  <text x="48" y="33" font-family="Inter, -apple-system, sans-serif"
+        font-weight="800" font-size="22" fill="#FFFFFF" letter-spacing="-0.5">
+    LINCE
+  </text>
+</svg>

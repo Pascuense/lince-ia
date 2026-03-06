@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!--
+    LINCE — Brand Textures (Texturas digitales para surfaces)
+    Versión 2.0.0 | ACNB IA SL
+
+    Texturas sutiles de ruido digital para superficies de tarjetas premium.
+    
+    Uso en CSS (como textura de fondo de tarjeta):
+      background-image: url('brand/patterns/brand-textures.svg');
+      background-size: 200px 200px;
+      background-repeat: repeat;
+      opacity: 0.05; (muy sutil)
+    
+    Uso combinado con color de superficie:
+      background: #1A1A1A url('brand/patterns/brand-textures.svg');
+  -->
+  <defs>
+    <!-- Textura de puntos finos (noise digital) -->
+    <pattern id="noiseDots" x="0" y="0" width="4" height="4"
+             patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.4" fill="#FFFFFF" opacity="0.4"/>
+    </pattern>
+
+    <!-- Textura de líneas diagonales finas (scanlines digital) -->
+    <pattern id="scanlines" x="0" y="0" width="2" height="2"
+             patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="2" y2="2" stroke="#FFFFFF"
+            stroke-width="0.3" opacity="0.15"/>
+    </pattern>
+
+    <!-- Textura de diamantes (patrón premium) -->
+    <pattern id="diamonds" x="0" y="0" width="20" height="20"
+             patternUnits="userSpaceOnUse">
+      <polygon points="10,2 18,10 10,18 2,10"
+               fill="none" stroke="#00E5FF" stroke-width="0.3" opacity="0.2"/>
+    </pattern>
+
+    <!-- Textura de circuito (tech pattern para tarjetas premium) -->
+    <pattern id="circuit" x="0" y="0" width="40" height="40"
+             patternUnits="userSpaceOnUse">
+      <!-- Líneas de circuito horizontales -->
+      <line x1="0" y1="10" x2="12" y2="10" stroke="#00E5FF" stroke-width="0.4" opacity="0.15"/>
+      <line x1="28" y1="10" x2="40" y2="10" stroke="#00E5FF" stroke-width="0.4" opacity="0.15"/>
+      <!-- Líneas de circuito verticales -->
+      <line x1="10" y1="0" x2="10" y2="8" stroke="#00E5FF" stroke-width="0.4" opacity="0.15"/>
+      <line x1="10" y1="12" x2="10" y2="40" stroke="#00E5FF" stroke-width="0.4" opacity="0.15"/>
+      <!-- Nodos del circuito -->
+      <circle cx="10" cy="10" r="1.5" fill="none" stroke="#00E5FF"
+              stroke-width="0.5" opacity="0.25"/>
+      <circle cx="30" cy="30" r="1.5" fill="none" stroke="#00E5FF"
+              stroke-width="0.5" opacity="0.25"/>
+      <!-- Punto activo -->
+      <circle cx="10" cy="10" r="0.6" fill="#00E5FF" opacity="0.3"/>
+      <circle cx="30" cy="30" r="0.6" fill="#00E5FF" opacity="0.3"/>
+    </pattern>
+  </defs>
+
+  <!-- Fondo base para previsualización -->
+  <rect width="200" height="200" fill="#1A1A1A"/>
+
+  <!-- TEXTURA 1: Noise dots (para uso en tarjetas estándar) -->
+  <rect x="0" y="0" width="100" height="100" fill="url(#noiseDots)" opacity="0.5"/>
+  <text x="50" y="110" text-anchor="middle" font-family="Inter,sans-serif"
+        font-size="7" fill="#707070">noise-dots</text>
+
+  <!-- TEXTURA 2: Scanlines (para efectos retro/digital) -->
+  <rect x="100" y="0" width="100" height="100" fill="#1A1A1A"/>
+  <rect x="100" y="0" width="100" height="100" fill="url(#scanlines)"/>
+  <text x="150" y="110" text-anchor="middle" font-family="Inter,sans-serif"
+        font-size="7" fill="#707070">scanlines</text>
+
+  <!-- TEXTURA 3: Diamonds (para tarjetas premium) -->
+  <rect x="0" y="115" width="100" height="85" fill="#1A1A1A"/>
+  <rect x="0" y="115" width="100" height="85" fill="url(#diamonds)"/>
+  <text x="50" y="200" text-anchor="middle" font-family="Inter,sans-serif"
+        font-size="7" fill="#707070">diamonds</text>
+
+  <!-- TEXTURA 4: Circuit (para tarjetas tech/IA) -->
+  <rect x="100" y="115" width="100" height="85" fill="#1A1A1A"/>
+  <rect x="100" y="115" width="100" height="85" fill="url(#circuit)"/>
+  <text x="150" y="200" text-anchor="middle" font-family="Inter,sans-serif"
+        font-size="7" fill="#707070">circuit</text>
+</svg>

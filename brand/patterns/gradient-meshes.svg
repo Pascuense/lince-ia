@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <!--
+    LINCE — Gradient Meshes (Gradientes de malla para fondos hero)
+    Versión 2.0.0 | ACNB IA SL
+
+    Gradientes de malla en cyan-a-transparente para secciones hero y cards destacadas.
+    
+    Uso en CSS:
+      background-image: url('brand/patterns/gradient-meshes.svg');
+      background-size: cover;
+      background-position: center top;
+  -->
+  <defs>
+    <!-- Gradiente hero principal: radial cyan desde arriba centro -->
+    <radialGradient id="heroGrad" cx="50%" cy="0%" r="70%" gradientUnits="userSpaceOnUse"
+                    fx="400" fy="0" r="500">
+      <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.20"/>
+      <stop offset="40%" stop-color="#00E5FF" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#00E5FF" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Gradiente esquina: radial orange desde esquina inferior derecha -->
+    <radialGradient id="cornerGrad" cx="100%" cy="100%" r="50%"
+                    gradientUnits="userSpaceOnUse" fx="800" fy="600" r="400">
+      <stop offset="0%" stop-color="#FF6B35" stop-opacity="0.12"/>
+      <stop offset="60%" stop-color="#FF6B35" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#FF6B35" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Gradiente lateral: radial cyan desde izquierda media -->
+    <radialGradient id="sideGrad" cx="0%" cy="50%" r="40%"
+                    gradientUnits="userSpaceOnUse" fx="0" fy="300" r="320">
+      <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#00E5FF" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Filtro blur para suavizado de malla -->
+    <filter id="meshBlur">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+  </defs>
+
+  <!-- Fondo base oscuro (para preview) -->
+  <rect width="800" height="600" fill="#0A0A0A"/>
+
+  <!-- Capa 1: Gradiente hero desde arriba -->
+  <rect width="800" height="600" fill="url(#heroGrad)"/>
+
+  <!-- Capa 2: Gradiente corner naranja -->
+  <rect width="800" height="600" fill="url(#cornerGrad)"/>
+
+  <!-- Capa 3: Gradiente lateral izquierdo -->
+  <rect width="800" height="600" fill="url(#sideGrad)"/>
+
+  <!-- Orbs de luz suaves (elementos de malla) -->
+  <!-- Orb cyan principal (hero center-top) -->
+  <circle cx="400" cy="-80" r="300" fill="#00E5FF" opacity="0.06" filter="url(#meshBlur)"/>
+
+  <!-- Orb cyan secundario (izquierda) -->
+  <circle cx="-100" cy="200" r="200" fill="#00E5FF" opacity="0.04" filter="url(#meshBlur)"/>
+
+  <!-- Orb naranja (derecha-abajo) -->
+  <circle cx="900" cy="500" r="250" fill="#FF6B35" opacity="0.05" filter="url(#meshBlur)"/>
+
+  <!-- Orb dorado (centro-abajo, muy sutil) -->
+  <circle cx="500" cy="700" r="200" fill="#FFD700" opacity="0.03" filter="url(#meshBlur)"/>
+</svg>

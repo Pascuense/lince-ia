@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" fill="none">
+  <!-- LINCE Logo Monochrome — Versión para impresión en un color -->
+  <!-- Placeholder: Replace with final brand asset from design team -->
+  <!-- Usar en negro (#0A0A0A) sobre blanco, o blanco sobre negro -->
+
+  <!-- Isotipo monocromático -->
+  <g transform="translate(0, 5)">
+    <polygon points="10,8 14,16 6,16" fill="currentColor"/>
+    <polygon points="30,8 34,16 26,16" fill="currentColor"/>
+    <circle cx="20" cy="22" r="12" stroke="currentColor" stroke-width="2" fill="none"/>
+    <!-- Ojos como formas sólidas -->
+    <ellipse cx="16" cy="21" rx="3" ry="2" fill="currentColor"/>
+    <ellipse cx="24" cy="21" rx="3" ry="2" fill="currentColor"/>
+    <!-- Bigotes -->
+    <line x1="8" y1="25" x2="14" y2="24" stroke="currentColor" stroke-width="1"/>
+    <line x1="8" y1="27" x2="14" y2="26" stroke="currentColor" stroke-width="1"/>
+    <line x1="26" y1="24" x2="32" y2="25" stroke="currentColor" stroke-width="1"/>
+    <line x1="26" y1="26" x2="32" y2="27" stroke="currentColor" stroke-width="1"/>
+  </g>
+
+  <!-- Wordmark monocromático -->
+  <text x="48" y="33" font-family="Inter, -apple-system, sans-serif"
+        font-weight="800" font-size="22" fill="currentColor" letter-spacing="-0.5">
+    LINCE
+  </text>
+</svg>
