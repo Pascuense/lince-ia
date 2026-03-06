@@ -1,6 +1,31 @@
 # CLAUDE.md — LINCE IA
 
-LINCE is a gamified EdTech platform for AI education (Spanish: _"Plataforma EdTech gamificada de formación en Inteligencia Artificial"_), owned by **ACNB IA SL**. Version 3.0.0. Deployed on Microsoft Azure.
+LINCE is a gamified EdTech platform for AI education (Spanish: _"Plataforma EdTech gamificada de formación en Inteligencia Artificial"_), owned by **ACNB IA SL**. **Version 2.0.0.** Deployed on Microsoft Azure.
+
+---
+
+## Table of Contents
+
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Development Commands](#development-commands)
+- [Path Aliases](#path-aliases)
+- [Database Schema (9 tables)](#database-schema-9-tables)
+- [Authentication](#authentication)
+- [API Architecture (tRPC)](#api-architecture-trpc)
+- [Frontend Routing](#frontend-routing)
+- [React Contexts](#react-contexts)
+- [Code Style & Formatting](#code-style--formatting)
+- [Environment Variables](#environment-variables)
+- [Testing](#testing)
+- [Security](#security)
+- [Performance Considerations](#performance-considerations)
+- [Build Output](#build-output)
+- [Mobile (Capacitor)](#mobile-capacitor)
+- [CI/CD](#cicd)
+- [Azure Infrastructure](#azure-infrastructure)
+- [Troubleshooting](#troubleshooting)
+- [Key Conventions for AI Assistants](#key-conventions-for-ai-assistants)
 
 ---
 
@@ -258,6 +283,105 @@ npm run test    # Run all tests once
 The test environment is `node`. Tests resolve the same path aliases as the main build.
 
 There are currently no frontend tests — Vitest is configured for server-side tests only.
+
+---
+
+## Security
+
+The server uses **Helmet.js** with a strict Content Security Policy (CSP).
+
+- **CSP**: Configured in the server entry point. If new external resources
+  (scripts, images, fonts, external APIs) are required, update the CSP
+  directives there before adding them to the frontend.
+- **HTTP-only cookies**: The `lince_session` JWT cookie is set with
+  `httpOnly: true`, `sameSite: "strict"`, and `secure: true` in production.
+- **Input validation**: All tRPC inputs are validated with `zod` before
+  reaching business logic.
+- **Password hashing**: bcrypt (cost factor 12) via `bcryptjs`.
+- **JWT**: Signed with `JWT_SECRET` (env). Use `jose` for verification; use
+  `jsonwebtoken` for generation where needed.
+- **VAPID keys**: Never commit real VAPID keys. Generate per-environment:
+  ```bash
+  npx web-push generate-vapid-keys
+  ```
+- **Secrets**: All secrets live in environment variables accessed through the
+  typed `ENV` object (`server/env.ts`). Never read `process.env` directly.
+- **No Manus references**: Do not add Manus OAuth, CDN, or Runtime
+  dependencies — this is the Azure-independent edition.
+
+---
+
+## Performance Considerations
+
+- **Code splitting**: All pages except `Register`, `Login`, and `NotFound` are
+  lazy-loaded with `React.lazy()`. Adding new pages must follow this pattern.
+- **React Query caching**: tRPC hooks use TanStack Query for automatic
+  caching, deduplication, and background refetching.
+- **Image generation**: DALL-E 3 calls can take several seconds. Display a
+  loading state and store results in `prompt_creations` to avoid regeneration.
+- **Avatar chat**: Stream completions from Azure OpenAI where possible to
+  improve perceived latency.
+- **Push scheduler**: `server/pushScheduler.ts` runs timed jobs inside the
+  server process. Be mindful of memory and I/O when adding new scheduled tasks.
+- **Blob Storage**: Upload images server-side via `server/storage.ts` to avoid
+  exposing storage credentials to the client.
+- **MySQL**: Use Drizzle query builders (not raw SQL) to benefit from
+  parameterized queries and connection pooling configured in `server/db.ts`.
+- **Build sizes**: The server bundle excludes `./vite` and `*.node` externals
+  to keep the production artifact small and avoid bundling the Vite dev
+  toolchain.
+
+---
+
+## Troubleshooting
+
+### Dev server won't start
+
+- Ensure `DATABASE_URL` and all required env vars are set (run `npm run
+  check:env`).
+- Check that MySQL is reachable from your machine.
+- Verify Node.js 22+ is active (`node -v`).
+
+### TypeScript errors after pulling changes
+
+```bash
+npm run check   # See all type errors at once
+```
+
+Common cause: new fields added to `drizzle/schema.ts` without updating
+callers. Re-run `npm run db:push` if you also need to migrate the database.
+
+### Tests failing locally
+
+```bash
+npm run test -- --reporter=verbose
+```
+
+- Tests mock external services — ensure mock setup in individual test files is
+  correct.
+- Check that path aliases resolve correctly (`@shared/*`, `@/` etc.) by
+  verifying `vitest.config.ts`.
+
+### Azure deployment issues
+
+See the dedicated section in [README-AZURE-DEPLOYMENT.md](README-AZURE-DEPLOYMENT.md)
+and the quick checklist in [DEPLOYMENT.md](DEPLOYMENT.md).
+
+One-command recovery for a stuck App Service:
+
+```bash
+./scripts/azure-recover.sh lince-app rg-lince
+```
+
+### `ERR_MODULE_NOT_FOUND` in production
+
+The build must be deployed as pre-built artifacts with Azure auto-build
+disabled:
+
+```bash
+az webapp config appsettings set --name lince-app --resource-group rg-lince \
+  --settings SCM_DO_BUILD_DURING_DEPLOYMENT=false ENABLE_ORYX_BUILD=false
+```
 
 ---
 
