@@ -36,17 +36,27 @@ function HeroSection() {
       <div className="container relative z-10 pt-32 sm:pt-36 pb-12 sm:pb-16">
         <FadeIn delay={100}>
           <h1 className="font-['Space_Grotesk'] font-bold text-5xl sm:text-7xl lg:text-8xl text-white leading-[0.95] mb-5 sm:mb-7">
-            <span className="text-[#00E5FF]">LINCE</span>
+            DUO<span className="text-[#00E5FF]">LINCE</span>
           </h1>
         </FadeIn>
         <FadeIn delay={200}>
           <h2 className="font-['Space_Grotesk'] text-xl sm:text-3xl lg:text-4xl text-[#D4A843] font-semibold mb-5 sm:mb-7">
-            {t('hero.subtitle')}
+            {lang === 'es' ? (
+              <>Aprende a usar la IA <span className="text-[#00E5FF]">jugando</span></>
+            ) : lang === 'en' ? (
+              <>Learn to use AI <span className="text-[#00E5FF]">by playing</span></>
+            ) : lang === 'zh' ? (
+              <>学习如何使用AI <span className="text-[#00E5FF]">边玩边学</span></>
+            ) : lang === 'pt-BR' ? (
+              <>Aprenda a usar a IA <span className="text-[#00E5FF]">jogando</span></>
+            ) : (
+              <>Aprenda a usar a IA <span className="text-[#00E5FF]">a jogar</span></>
+            )}
           </h2>
         </FadeIn>
         <FadeIn delay={300}>
           <p className="text-white/80 text-lg sm:text-xl lg:text-2xl max-w-3xl leading-relaxed mb-10 sm:mb-12">
-            {t('hero.description') || 'Una app donde aprendes a usar inteligencia artificial de forma fácil y divertida. Paso a paso, con personajes que te guían, juegos y retos. Da igual si tienes 13 o 80 años: aquí cualquiera puede aprender. Tú eliges tu ritmo, tu personaje y tu idioma.'}
+            {t('hero.description')}
           </p>
         </FadeIn>
 
@@ -106,7 +116,7 @@ function HeroSection() {
             <a href="/tutorial" data-tour="play" className="group flex items-center gap-3 px-5 py-4 bg-[oklch(0.82_0.15_195)]/20 border-2 border-[oklch(0.82_0.15_195)]/50 rounded-2xl hover:bg-[oklch(0.82_0.15_195)]/30 transition-all duration-300 min-h-[70px]">
               <span className="text-2xl">🕹️</span>
               <div className="flex flex-col">
-                <span className="text-[oklch(0.82_0.15_195)] font-['Space_Grotesk'] font-bold text-base sm:text-lg">{tl(lang, { es: '¡JUGAR!', en: 'PLAY!', zh: '开始玩!', 'pt-BR': 'JOGAR!', 'pt-PT': 'JOGAR!' })}</span>
+                <span className="text-[oklch(0.82_0.15_195)] font-['Space_Grotesk'] font-bold text-base sm:text-lg">{tl(lang, { es: 'EMPIEZA GRATIS >', en: 'START FREE >', zh: '免费开始 >', 'pt-BR': 'COMECE GRÁTIS >', 'pt-PT': 'COMECE GRÁTIS >' })}</span>
                 <span className="text-[oklch(0.82_0.15_195)]/60 text-xs sm:text-sm">{tl(lang, { es: 'Juega y sube de nivel', en: 'Play and level up', zh: '玩游戏升级', 'pt-BR': 'Jogue e suba de nível', 'pt-PT': 'Joga e sobe de nível' })}</span>
               </div>
             </a>
@@ -133,19 +143,19 @@ function HeroSection() {
         <FadeIn delay={450}>
           <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-3 sm:gap-4 mb-8">
             <div className="px-4 sm:px-6 py-3 sm:py-4 bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-xl">
-              <span className="text-[#00E5FF] font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl">85</span>
+              <span className="text-[#00E5FF] font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl">80</span>
               <span className="text-white/70 text-sm sm:text-base ml-2 font-medium">{t('hero.stat1')}</span>
             </div>
             <div className="px-4 sm:px-6 py-3 sm:py-4 bg-[#D4A843]/10 border border-[#D4A843]/30 rounded-xl">
-              <span className="text-[#D4A843] font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl">6</span>
+              <span className="text-[#D4A843] font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl">60+</span>
               <span className="text-white/70 text-sm sm:text-base ml-2 font-medium">{t('hero.stat2')}</span>
             </div>
             <div className="px-4 sm:px-6 py-3 sm:py-4 bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-xl">
-              <span className="text-[#00E5FF] font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl">3</span>
+              <span className="text-[#00E5FF] font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl">4</span>
               <span className="text-white/70 text-sm sm:text-base ml-2 font-medium">{t('hero.stat3')}</span>
             </div>
             <div className="px-4 sm:px-6 py-3 sm:py-4 bg-[#D4A843]/10 border border-[#D4A843]/30 rounded-xl">
-              <span className="text-[#D4A843] font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl">5</span>
+              <span className="text-[#D4A843] font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl">✓</span>
               <span className="text-white/70 text-sm sm:text-base ml-2 font-medium">{t('hero.stat4')}</span>
             </div>
           </div>
