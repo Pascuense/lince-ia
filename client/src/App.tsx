@@ -75,6 +75,9 @@ const ChatDashboard = lazy(() => import("./pages/ChatDashboard"));
 // Public Profile
 const PublicProfile = lazy(() => import("./pages/PublicProfile"));
 
+// Pricing
+const Planes = lazy(() => import("./pages/Planes"));
+
 // Retention systems
 const Mercado = lazy(() => import("./pages/Mercado"));
 const RetoDiario = lazy(() => import("./pages/RetoDiario"));
@@ -154,6 +157,9 @@ function AllRoutes() {
         <Route path={"/perfil"} component={MiPerfil} />
         <Route path={"/perfil-publico"} component={PublicProfile} />
         <Route path={"/recompensas"} component={DailyRewards} />
+
+        {/* Planes y Precios */}
+        <Route path={"/planes"} component={Planes} />
 
         {/* Retention systems */}
         <Route path={"/mercado"} component={Mercado} />

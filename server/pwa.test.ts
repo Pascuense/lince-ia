@@ -12,8 +12,8 @@ describe('PWA Configuration', () => {
     const content = fs.readFileSync(manifestPath, 'utf-8');
     const manifest = JSON.parse(content);
     
-    expect(manifest.name).toBe('LINCE — Aprende IA Jugando');
-    expect(manifest.short_name).toBe('LINCE');
+    expect(manifest.name).toBe('LINCE IA — Aprende IA Jugando');
+    expect(manifest.short_name).toBe('LINCE IA');
     expect(manifest.display).toBe('standalone');
     expect(manifest.start_url).toBe('/');
     expect(manifest.background_color).toBe('#030a04');
@@ -66,7 +66,7 @@ describe('PWA Configuration', () => {
     for (const icon of manifest.icons) {
       // Icons should be CDN URLs or local /icons/ paths
       expect(icon.src).toMatch(/^(https:\/\/files\.manuscdn\.com\/|\/icons\/)/);
-      expect(icon.type).toBe('image/png');
+      expect(['image/png', 'image/svg+xml']).toContain(icon.type);
       expect(icon.sizes).toMatch(/^\d+x\d+$/);
     }
   });

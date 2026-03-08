@@ -1,7 +1,7 @@
 {
   "id": "/",
-  "name": "LINCE — Aprende IA Jugando",
-  "short_name": "LINCE",
+  "name": "LINCE IA — Aprende IA Jugando",
+  "short_name": "LINCE IA",
   "description": "Aprende IA Jugando — Plataforma gamificada de formación en inteligencia artificial para todas las edades. Avatares adaptativos, gamificación avanzada y lecciones personalizadas.",
   "start_url": "/",
   "scope": "/",
@@ -60,7 +60,7 @@
   },
   "widgets": [
     {
-      "name": "Desafío Diario LINCE",
+      "name": "Desafío Diario LINCE IA",
       "description": "Tu reto diario de IA",
       "tag": "daily-challenge",
       "ms_ac_template": "widget/daily-challenge",
@@ -73,7 +73,7 @@
       ],
       "icons": [
         {
-          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WxkxBHTXnNFkLacG.png",
+          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KFhkdThKcTKeYtcE.png",
           "sizes": "192x192"
         }
       ]
@@ -81,58 +81,82 @@
   ],
   "icons": [
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/xHYZDFLMoTyrqwZM.png",
+      "src": "/icons/duolince-favicon-32.svg",
+      "sizes": "32x32",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/iNmYckrMjqZFTgzV.png",
       "sizes": "48x48",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/AYbDVcpClYbIbYpx.png",
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/tpbXkTYGLdHxJkDH.png",
       "sizes": "64x64",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/TGhpXjNAvQVlicbR.png",
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/UsERtMXxhQzTehHN.png",
       "sizes": "128x128",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WxkxBHTXnNFkLacG.png",
+      "src": "/icons/duolince-icon-180-ios.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KFhkdThKcTKeYtcE.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WxkxBHTXnNFkLacG.png",
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KFhkdThKcTKeYtcE.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/PXyLXFqVrwNVjBCF.png",
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/joKaovHvXrfjDPNU.png",
       "sizes": "256x256",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/gOAvsagmSClgXxFC.png",
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/eosbFAPLTjeRluFk.png",
       "sizes": "384x384",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/hSpdbeEDnddhslBd.png",
+      "src": "/icons/duolince-icon-512-android.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/duolince-icon-512-android.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/kAPnAUydSIrXJKwM.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/hSpdbeEDnddhslBd.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "src": "/icons/duolince-icon-1024.svg",
+      "sizes": "1024x1024",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ],
   "screenshots": [
@@ -141,7 +165,7 @@
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "LINCE — Pantalla principal: Aprende IA Jugando con avatares adaptativos"
+      "label": "LINCE IA — Pantalla principal: Aprende IA Jugando con avatares adaptativos"
     },
     {
       "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KHudbeOqrCxosptY.png",
@@ -155,7 +179,7 @@
       "sizes": "540x960",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "LINCE en móvil — Interfaz adaptativa para aprender IA"
+      "label": "LINCE IA en móvil — Interfaz adaptativa para aprender IA"
     }
   ],
   "shortcuts": [
@@ -166,20 +190,20 @@
       "url": "/jugar",
       "icons": [
         {
-          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WxkxBHTXnNFkLacG.png",
+          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KFhkdThKcTKeYtcE.png",
           "sizes": "192x192",
           "type": "image/png"
         }
       ]
     },
     {
-      "name": "Mundo LINCE",
+      "name": "Mundo LINCE IA",
       "short_name": "Mundo",
-      "description": "Explora el mundo interactivo de LINCE",
+      "description": "Explora el mundo interactivo de LINCE IA",
       "url": "/mundo",
       "icons": [
         {
-          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WxkxBHTXnNFkLacG.png",
+          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KFhkdThKcTKeYtcE.png",
           "sizes": "192x192",
           "type": "image/png"
         }
@@ -192,7 +216,7 @@
       "url": "/raids",
       "icons": [
         {
-          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WxkxBHTXnNFkLacG.png",
+          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KFhkdThKcTKeYtcE.png",
           "sizes": "192x192",
           "type": "image/png"
         }
@@ -205,7 +229,7 @@
       "url": "/academia",
       "icons": [
         {
-          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WxkxBHTXnNFkLacG.png",
+          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KFhkdThKcTKeYtcE.png",
           "sizes": "192x192",
           "type": "image/png"
         }

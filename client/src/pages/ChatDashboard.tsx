@@ -4,12 +4,11 @@ import { usePRDLanguage, COUNTRY_FLAGS, type AvatarCountry } from "@/contexts/PR
 import { ArtistChatModal } from "@/components/ArtistChatModal";
 import { PRDLanguageSelector } from "@/components/PRDLanguageSelector";
 import { FirstUseTutorial } from "@/components/FirstUseTutorial";
-import { Search, ChevronLeft, Menu, X, Sparkles, Wrench, MessageCircle, Image as ImageIcon, Loader2, FileText } from "lucide-react";
-import { useLocation } from "wouter";
-import { resolveChatDashboardReferralAction } from "@/lib/avatarRouting";
+import { Search, ChevronLeft, Menu, X, Sparkles, Wrench, MessageCircle, Image as ImageIcon, Loader2, FileText, Crown } from "lucide-react";
 
 const PromptStudio = lazy(() => import("@/pages/PromptStudio"));
 const PromptProfesional = lazy(() => import("@/pages/PromptProfesional"));
+const PricingPlans = lazy(() => import("@/components/PricingPlans"));
 
 // ─── SPECIALTY BADGE ───
 function getSpecialtyBadge(speciality: string): string {
@@ -277,10 +276,9 @@ export default function ChatDashboard() {
   const [selectedProfessor, setSelectedProfessor] = useState<Professor | null>(null);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [expandedInfo, setExpandedInfo] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'familia' | 'imagelin' | 'prompts'>('familia');
+  const [activeTab, setActiveTab] = useState<'familia' | 'imagelin' | 'prompts' | 'planes'>('familia');
 
   const searchRef = useRef<HTMLInputElement>(null);
-  const [, navigate] = useLocation();
 
   const professors = useMemo(() => buildProfessorList(), []);
 
@@ -315,26 +313,12 @@ export default function ChatDashboard() {
   }, []);
 
   const handleSwitchAvatar = useCallback((avatarKey: string) => {
-    const action = resolveChatDashboardReferralAction(
-      professors.map((p) => p.key),
-      avatarKey
-    );
-
-    if (!action) return;
-
-    if (action.kind === "switch") {
-      const target = professors.find((p) => p.key === action.avatarKey);
-      if (!target) return;
+    const target = professors.find(p => p.key === avatarKey || p.key === avatarKey.toUpperCase());
+    if (target) {
       setChatProfessor(null);
       setTimeout(() => setChatProfessor(target), 50);
-      return;
     }
-
-    setChatProfessor(null);
-    setSelectedProfessor(null);
-    setMobileSidebarOpen(false);
-    navigate(action.path);
-  }, [professors, navigate]);
+  }, [professors]);
 
   const profToCharacterData = useCallback((p: Professor): CharacterData => ({
     key: p.key,
@@ -429,6 +413,17 @@ export default function ChatDashboard() {
           >
             <FileText size={16} />
             <span className="hidden sm:inline">Generar Prompts</span>
+          </button>
+          <button
+            onClick={() => { setActiveTab('planes'); setChatProfessor(null); setSelectedProfessor(null); }}
+            className={`flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-lg transition-all ${
+              activeTab === 'planes'
+                ? 'bg-[#D4A843]/20 text-[#D4A843] border border-[#D4A843]/30'
+                : 'text-white/50 hover:text-white/80 hover:bg-white/5'
+            }`}
+          >
+            <Crown size={16} />
+            <span className="hidden sm:inline">Planes</span>
           </button>
         </nav>
 
@@ -597,7 +592,19 @@ export default function ChatDashboard() {
 
         {/* ─── MAIN AREA ─── */}
         <main className="flex-1 flex flex-col overflow-hidden bg-[#0d1219]">
-          {activeTab === 'prompts' ? (
+          {activeTab === 'planes' ? (
+            /* ─── PRICING PLANS EMBEDDED VIEW ─── */
+            <Suspense fallback={
+              <div className="flex-1 flex items-center justify-center">
+                <div className="text-center">
+                  <Loader2 className="w-8 h-8 text-[#D4A843] animate-spin mx-auto mb-3" />
+                  <p className="text-white/50 text-sm">Cargando Planes...</p>
+                </div>
+              </div>
+            }>
+              <PricingPlans embedded={true} />
+            </Suspense>
+          ) : activeTab === 'prompts' ? (
             /* ─── PROMPT PROFESIONAL EMBEDDED VIEW ─── */
             <Suspense fallback={
               <div className="flex-1 flex items-center justify-center">

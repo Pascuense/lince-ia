@@ -1,6 +1,5 @@
 import { desc, eq, sql, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import mysql from "mysql2/promise";
 import { InsertUser, users, promptCreations, InsertPromptCreation, gamePlayers, InsertGamePlayer, GamePlayer, legalAcceptances, InsertLegalAcceptance, LegalAcceptance, customCourses, InsertCustomCourse, CustomCourse, toolViews, InsertToolView, ToolView, chatSessions, InsertChatSession, ChatSession, chatMessages, InsertChatMessage, ChatMessage } from "../drizzle/schema";
 import { ENV } from './_core/env';
 import bcrypt from "bcryptjs";
@@ -11,17 +10,7 @@ let _db: ReturnType<typeof drizzle> | null = null;
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      // Strip SSL params from URL and pass ssl config separately (mysql2 v3 compatibility)
-      const rawUrl = process.env.DATABASE_URL;
-      const urlWithoutSsl = rawUrl.replace(/[?&]ssl=[^&]*/g, "").replace(/\?$/, "");
-      const needsSsl = rawUrl.includes("ssl=");
-      const pool = mysql.createPool({
-        uri: urlWithoutSsl,
-        ssl: needsSsl ? { rejectUnauthorized: true } : undefined,
-        waitForConnections: true,
-        connectionLimit: 10,
-      });
-      _db = drizzle(pool) as unknown as ReturnType<typeof drizzle>;
+      _db = drizzle(process.env.DATABASE_URL);
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
@@ -670,97 +659,54 @@ export async function deleteChatSession(sessionId: number, gamePlayerId: number)
   return true;
 }
 
-export type LegacyAuthUser = {
-  id: number;
-  email: string;
-  name: string | null;
-  role: string;
-  passwordHash: string | null;
-};
+// ─── Email/Password Auth Helpers (used by server/auth.ts) ───
+// These delegate to gamePlayers, which has the email + passwordHash fields.
 
-function mapGamePlayerToLegacyAuthUser(player: GamePlayer): LegacyAuthUser {
-  return {
-    id: player.id,
-    email: player.email,
-    name: player.realName ?? null,
-    role: "user",
-    passwordHash: player.passwordHash ?? null,
-  };
-}
-
-export async function getUserById(id: number): Promise<LegacyAuthUser | null> {
+export async function getUserById(id: number) {
   const player = await getGamePlayerById(id);
   if (!player) return null;
-  return mapGamePlayerToLegacyAuthUser(player);
+  return { ...player, role: "user" as const };
 }
 
-export async function getUserByEmail(email: string): Promise<LegacyAuthUser | null> {
+export async function getUserByEmail(email: string) {
   const player = await getGamePlayerByEmail(email);
   if (!player) return null;
-  return mapGamePlayerToLegacyAuthUser(player);
+  return { ...player, role: "user" as const };
 }
 
 export async function createUser(data: {
   email: string;
   passwordHash: string;
-  name?: string | null;
-  role?: string;
-}): Promise<LegacyAuthUser | null> {
+  name: string | null;
+  role: string;
+}) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
-  const localPart = data.email.split("@")[0] || "user";
-  const sanitizedBase = localPart.replace(/[^a-zA-Z0-9]/g, "").toUpperCase().slice(0, 20) || "USER";
-
-  let username = "";
-  for (let attempt = 0; attempt < 5; attempt++) {
-    const suffix = Math.floor(1000 + Math.random() * 9000).toString();
-    const candidate = (sanitizedBase + "-LIN-" + suffix).slice(0, 64);
-    const existing = await getGamePlayerByUsername(candidate);
-    if (!existing) {
-      username = candidate;
-      break;
-    }
-  }
-
-  if (!username) {
-    throw new Error("No se pudo generar un username unico para el usuario.");
-  }
-
-  const defaultLevels = [
-    { id: 1, completed: false, stars: 0, promptsCompleted: 0, bestScore: 0 },
-    { id: 2, completed: false, stars: 0, promptsCompleted: 0, bestScore: 0 },
-    { id: 3, completed: false, stars: 0, promptsCompleted: 0, bestScore: 0 },
-  ];
-
-  const defaultDailyRewards = {
-    lastClaimDate: "",
-    consecutiveDays: 0,
-    totalDaysClaimed: 0,
-    weekProgress: [false, false, false, false, false, false, false],
-  };
+  const base = data.email.split("@")[0].replace(/[^a-zA-Z0-9]/g, "").slice(0, 16).toUpperCase() || "USER";
+  const suffix = Math.floor(Math.random() * 9000) + 1000;
+  const username = `${base}${suffix}`;
 
   await db.insert(gamePlayers).values({
     email: data.email.toLowerCase().trim(),
     username,
-    realName: (data.name || localPart).trim(),
+    realName: data.name ?? "",
     passwordHash: data.passwordHash,
     avatarKey: "PEQUELIN",
     language: "es",
     country: "ES",
-    levelsData: defaultLevels,
-    dailyRewardsData: defaultDailyRewards,
   });
 
-  const created = await getGamePlayerByEmail(data.email);
-  return created ? mapGamePlayerToLegacyAuthUser(created) : null;
+  const rows = await db.select().from(gamePlayers)
+    .where(eq(gamePlayers.email, data.email.toLowerCase().trim()))
+    .limit(1);
+
+  const player = rows[0];
+  return { ...player, role: "user" as const };
 }
 
 export async function updateUserLastSignIn(id: number): Promise<void> {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-
-  await db.update(gamePlayers)
-    .set({ lastLoginAt: new Date() })
-    .where(eq(gamePlayers.id, id));
+  await db.update(gamePlayers).set({ lastLoginAt: new Date() }).where(eq(gamePlayers.id, id));
 }
