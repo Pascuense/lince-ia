@@ -1,0 +1,91 @@
+{
+  "version": "2.0.0",
+  "name": "LINCE — ACNB IA SL",
+  "description": "Complete color palette for LINCE EdTech platform",
+  "brand": {
+    "primary": "#00E5FF",
+    "primaryDark": "#0099CC",
+    "primaryLight": "#33ECFF",
+    "secondary": "#FF6B35",
+    "secondaryDark": "#CC5229",
+    "secondaryLight": "#FF8555",
+    "accent": "#FFD700",
+    "accentDark": "#CC9900",
+    "accentLight": "#FFE033"
+  },
+  "semantic": {
+    "success": "#00D084",
+    "successDark": "#009960",
+    "successLight": "#33DA9D",
+    "successBg": "rgba(0, 208, 132, 0.15)",
+    "warning": "#FFD700",
+    "warningDark": "#CC9900",
+    "warningLight": "#FFE033",
+    "warningBg": "rgba(255, 215, 0, 0.15)",
+    "error": "#FF3B3B",
+    "errorDark": "#CC2F2F",
+    "errorLight": "#FF6060",
+    "errorBg": "rgba(255, 59, 59, 0.15)",
+    "info": "#00E5FF",
+    "infoDark": "#0099CC",
+    "infoLight": "#33ECFF",
+    "infoBg": "rgba(0, 229, 255, 0.15)"
+  },
+  "neutral": {
+    "black": "#0A0A0A",
+    "white": "#FFFFFF",
+    "gray50": "#FAFAFA",
+    "gray100": "#F3F4F6",
+    "gray200": "#E5E7EB",
+    "gray300": "#D1D5DB",
+    "gray400": "#9CA3AF",
+    "gray500": "#6B7280",
+    "gray600": "#4B5563",
+    "gray700": "#374151",
+    "gray800": "#1F2937",
+    "gray900": "#111827",
+    "gray950": "#0A0A0A"
+  },
+  "dark": {
+    "bg": "#0A0A0A",
+    "surface": "#1A1A1A",
+    "surfaceElevated": "#242424",
+    "surfaceHover": "#2A2A2A",
+    "border": "#333333",
+    "borderSubtle": "#1E1E1E",
+    "textPrimary": "#FFFFFF",
+    "textSecondary": "#B0B0B0",
+    "textTertiary": "#707070",
+    "textInverse": "#0A0A0A"
+  },
+  "game": {
+    "xp": "#00E5FF",
+    "coins": "#FFD700",
+    "streak": "#FF6B35",
+    "health": "#FF3B3B",
+    "bronze": "#CD7F32",
+    "silver": "#C0C0C0",
+    "gold": "#FFD700",
+    "platinum": "#E5E4E2",
+    "diamond": "#B9F2FF",
+    "elite": "#9C27B0"
+  },
+  "avatar": {
+    "sabelin": "#00E5FF",
+    "especialistas": "#1565C0",
+    "musicalin": "#9C27B0",
+    "zaragoza": "#CE1126",
+    "aragonesa": "#4CAF50",
+    "ogcrew": "#FF6B35",
+    "evento": "#FF6B35",
+    "family": "#4CAF50",
+    "musicalinIntl": "#1565C0"
+  },
+  "gradients": {
+    "cyanToCyanDark": "linear-gradient(135deg, #00E5FF 0%, #0099CC 100%)",
+    "goldToOrange": "linear-gradient(135deg, #FFD700 0%, #FF8C00 100%)",
+    "darkSurface": "linear-gradient(135deg, #1A1A1A 0%, #111111 100%)",
+    "heroBg": "radial-gradient(ellipse at 50% 0%, rgba(0,229,255,0.15) 0%, transparent 70%)",
+    "achievementCard": "linear-gradient(135deg, #1A1200 0%, #1A1A1A 100%)"
+  }
+}

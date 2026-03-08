@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!--
+    LINCE — Grid Pattern (Fondo tecnológico)
+    Versión 2.0.0 | ACNB IA SL
+
+    Patrón de cuadrícula sutil para fondos de secciones.
+    Color: #1A1A1A sobre fondo #0A0A0A
+    
+    Uso en CSS:
+      background-image: url('brand/patterns/grid-pattern.svg');
+      background-size: 40px 40px;
+      
+    Uso como React component:
+      import GridPattern from '@/assets/patterns/grid-pattern.svg';
+  -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <!-- Líneas de cuadrícula sutiles -->
+      <path d="M 40 0 L 0 0 0 40" fill="none"
+            stroke="#1A1A1A" stroke-width="0.8" opacity="0.8"/>
+      <!-- Puntos en intersecciones (variante opcional) -->
+      <circle cx="0" cy="0" r="1" fill="#2A2A2A" opacity="0.6"/>
+    </pattern>
+
+    <!-- Variante: cuadrícula con puntos de acento cyan en intersecciones clave -->
+    <pattern id="grid-accent" width="120" height="120" patternUnits="userSpaceOnUse">
+      <rect width="120" height="120" fill="url(#grid)"/>
+      <!-- Punto de acento cada 3 celdas (120px) -->
+      <circle cx="0" cy="0" r="2" fill="#00E5FF" opacity="0.3"/>
+    </pattern>
+  </defs>
+
+  <!-- Fondo oscuro de referencia -->
+  <rect width="400" height="400" fill="#0A0A0A"/>
+
+  <!-- Patrón base -->
+  <rect width="400" height="400" fill="url(#grid)"/>
+
+  <!-- Puntos de acento (cada 3 intersecciones) -->
+  <rect width="400" height="400" fill="url(#grid-accent)" opacity="0.5"/>
+</svg>

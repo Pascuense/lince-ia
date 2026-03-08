@@ -1,0 +1,45 @@
+/**
+ * LINCE — Paleta de Colores CSS
+ * Versión 2.0.0 | ACNB IA SL
+ *
+ * Referencia visual de todos los colores de la paleta oficial.
+ * Para uso en producción, usar CSS_VARIABLES.css que incluye
+ * todos los design tokens del sistema.
+ */
+
+/* ─── Marca Principal ─── */
+.color-brand-cyan       { color: #00E5FF; }
+.color-brand-cyan-dark  { color: #0099CC; }
+.color-brand-cyan-light { color: #33ECFF; }
+.color-brand-orange     { color: #FF6B35; }
+.color-brand-gold       { color: #FFD700; }
+
+/* ─── Semánticos ─── */
+.color-success  { color: #00D084; }
+.color-warning  { color: #FFD700; }
+.color-error    { color: #FF3B3B; }
+.color-info     { color: #00E5FF; }
+
+/* ─── Superficies Dark ─── */
+.color-bg-primary  { background-color: #0A0A0A; }
+.color-bg-surface  { background-color: #1A1A1A; }
+.color-bg-elevated { background-color: #242424; }
+.color-bg-hover    { background-color: #2A2A2A; }
+.color-border      { border-color: #333333; }
+
+/* ─── Texto ─── */
+.color-text-primary   { color: #FFFFFF; }
+.color-text-secondary { color: #B0B0B0; }
+.color-text-tertiary  { color: #707070; }
+
+/* ─── Juego ─── */
+.color-game-xp       { color: #00E5FF; }
+.color-game-coins    { color: #FFD700; }
+.color-game-streak   { color: #FF6B35; }
+.color-game-health   { color: #FF3B3B; }
+.color-game-bronze   { color: #CD7F32; }
+.color-game-silver   { color: #C0C0C0; }
+.color-game-gold     { color: #FFD700; }
+.color-game-platinum { color: #E5E4E2; }
+.color-game-diamond  { color: #B9F2FF; }
+.color-game-elite    { color: #9C27B0; }

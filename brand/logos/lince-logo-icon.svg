@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- LINCE Logo Icon (isotipo solo) — Para favicon y app icon -->
+  <!-- Placeholder: Replace with final brand asset from design team -->
+  <!-- See brand/guidelines/LOGO_ASSETS.md for specifications -->
+
+  <!-- Fondo -->
+  <rect width="64" height="64" rx="14" fill="#0A0A0A"/>
+
+  <!-- Glow sutil de fondo -->
+  <circle cx="32" cy="32" r="28" fill="url(#glowGrad)" opacity="0.2"/>
+
+  <!-- Cabeza del lince -->
+  <g transform="translate(32, 34)">
+    <!-- Orejas puntiagudas -->
+    <polygon points="-14,-20 -10,-10 -18,-10" fill="#00E5FF"/>
+    <polygon points="14,-20 18,-10 10,-10" fill="#00E5FF"/>
+    <!-- Cara circular -->
+    <circle cx="0" cy="0" r="16" fill="#0A0A0A" stroke="#00E5FF" stroke-width="1.5"/>
+    <!-- Ojos (forma de almendra) -->
+    <ellipse cx="-6" cy="-2" rx="4" ry="3" fill="#00E5FF"/>
+    <ellipse cx="6" cy="-2" rx="4" ry="3" fill="#00E5FF"/>
+    <!-- Pupilas verticales (rasgos de felino) -->
+    <ellipse cx="-6" cy="-2" rx="1.8" ry="2.8" fill="#0A0A0A"/>
+    <ellipse cx="6" cy="-2" rx="1.8" ry="2.8" fill="#0A0A0A"/>
+    <!-- Brillo en ojos -->
+    <circle cx="-5" cy="-3" r="0.8" fill="#FFFFFF"/>
+    <circle cx="7" cy="-3" r="0.8" fill="#FFFFFF"/>
+    <!-- Nariz triangular -->
+    <polygon points="0,3 -2,6 2,6" fill="#00E5FF" opacity="0.8"/>
+    <!-- Bigotes -->
+    <line x1="-16" y1="5" x2="-8" y2="4" stroke="#00E5FF" stroke-width="1" opacity="0.6"/>
+    <line x1="-16" y1="8" x2="-8" y2="7" stroke="#00E5FF" stroke-width="1" opacity="0.6"/>
+    <line x1="8" y1="4" x2="16" y2="5" stroke="#00E5FF" stroke-width="1" opacity="0.6"/>
+    <line x1="8" y1="7" x2="16" y2="8" stroke="#00E5FF" stroke-width="1" opacity="0.6"/>
+  </g>
+
+  <defs>
+    <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#00E5FF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

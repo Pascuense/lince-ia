@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" fill="none">
+  <!--
+    LINCE — Game Icons Set
+    Versión 2.0.0 | ACNB IA SL
+
+    Iconos del sistema de juego: XP, Monedas, Racha, Vida, Niveles, Logros.
+    Usar como referencia visual. Exportar iconos individuales según necesidad.
+
+    Uso en React:
+      import { ReactComponent as XPIcon } from '@/assets/icons/xp.svg';
+    O extraer el SVG individual del path correspondiente.
+  -->
+
+  <!-- XP Lightning (Puntos de Experiencia) — #00E5FF -->
+  <g transform="translate(20, 20)" id="icon-xp">
+    <title>XP — Puntos de Experiencia</title>
+    <circle cx="40" cy="40" r="36" fill="rgba(0,229,255,0.15)" stroke="#00E5FF" stroke-width="1.5"/>
+    <!-- Rayo -->
+    <path d="M44 12 L28 44 L40 44 L36 68 L52 36 L40 36 Z"
+          fill="#00E5FF" stroke="none"/>
+    <text x="40" y="90" text-anchor="middle" font-family="Inter,sans-serif"
+          font-size="11" font-weight="600" fill="#00E5FF">XP</text>
+  </g>
+
+  <!-- Coin (Monedas) — #FFD700 -->
+  <g transform="translate(110, 20)" id="icon-coin">
+    <title>Moneda LINCE</title>
+    <circle cx="40" cy="40" r="36" fill="rgba(255,215,0,0.15)" stroke="#FFD700" stroke-width="1.5"/>
+    <!-- Símbolo de moneda -->
+    <circle cx="40" cy="40" r="24" fill="#FFD700" opacity="0.9"/>
+    <text x="40" y="47" text-anchor="middle" font-family="Inter,sans-serif"
+          font-size="22" font-weight="800" fill="#0A0A0A">L</text>
+    <text x="40" y="90" text-anchor="middle" font-family="Inter,sans-serif"
+          font-size="11" font-weight="600" fill="#FFD700">COIN</text>
+  </g>
+
+  <!-- Streak Fire (Racha) — #FF6B35 -->
+  <g transform="translate(200, 20)" id="icon-streak">
+    <title>Racha de días</title>
+    <circle cx="40" cy="40" r="36" fill="rgba(255,107,53,0.15)" stroke="#FF6B35" stroke-width="1.5"/>
+    <!-- Llama -->
+    <path d="M40 18 C40 18 52 28 52 40 C52 52 46 60 40 62
+             C34 60 28 52 28 40 C28 28 40 18 40 18 Z"
+          fill="#FF6B35"/>
+    <path d="M40 30 C40 30 48 38 46 46 C44 52 40 54 40 54
+             C36 52 34 46 34 40 C34 34 40 30 40 30 Z"
+          fill="#FFD700" opacity="0.8"/>
+    <text x="40" y="90" text-anchor="middle" font-family="Inter,sans-serif"
+          font-size="11" font-weight="600" fill="#FF6B35">RACHA</text>
+  </g>
+
+  <!-- Heart / Life (Vida) — #FF3B3B -->
+  <g transform="translate(290, 20)" id="icon-heart">
+    <title>Vidas / Corazón</title>
+    <circle cx="40" cy="40" r="36" fill="rgba(255,59,59,0.15)" stroke="#FF3B3B" stroke-width="1.5"/>
+    <!-- Corazón -->
+    <path d="M40 56 C40 56 20 44 20 32 C20 24 27 18 34 20
+             C37 21 40 24 40 24 C40 24 43 21 46 20
+             C53 18 60 24 60 32 C60 44 40 56 40 56 Z"
+          fill="#FF3B3B"/>
+    <text x="40" y="90" text-anchor="middle" font-family="Inter,sans-serif"
+          font-size="11" font-weight="600" fill="#FF3B3B">VIDA</text>
+  </g>
+
+  <!-- Trophy (Logro) — #FFD700 -->
+  <g transform="translate(20, 105)" id="icon-trophy">
+    <title>Trofeo / Logro</title>
+    <circle cx="40" cy="40" r="36" fill="rgba(255,215,0,0.15)" stroke="#FFD700" stroke-width="1.5"/>
+    <!-- Copa -->
+    <path d="M28 20 L52 20 L50 36 C50 44 44 50 40 52
+             C36 50 30 44 30 36 Z" fill="#FFD700"/>
+    <!-- Asas -->
+    <path d="M28 20 C22 20 18 26 18 32 C18 38 22 40 28 38"
+          stroke="#FFD700" stroke-width="3" fill="none"/>
+    <path d="M52 20 C58 20 62 26 62 32 C62 38 58 40 52 38"
+          stroke="#FFD700" stroke-width="3" fill="none"/>
+    <!-- Base -->
+    <rect x="34" y="52" width="12" height="4" fill="#FFD700"/>
+    <rect x="30" y="56" width="20" height="3" fill="#FFD700"/>
+    <text x="40" y="90" text-anchor="middle" font-family="Inter,sans-serif"
+          font-size="11" font-weight="600" fill="#FFD700">LOGRO</text>
+  </g>
+
+  <!-- Star Rating — #FFD700 -->
+  <g transform="translate(110, 105)" id="icon-star">
+    <title>Estrella / Valoración</title>
+    <circle cx="40" cy="40" r="36" fill="rgba(255,215,0,0.15)" stroke="#FFD700" stroke-width="1.5"/>
+    <!-- Estrella de 5 puntas -->
+    <polygon points="40,18 44,32 58,32 47,41 51,55 40,46 29,55 33,41 22,32 36,32"
+             fill="#FFD700"/>
+    <text x="40" y="90" text-anchor="middle" font-family="Inter,sans-serif"
+          font-size="11" font-weight="600" fill="#FFD700">STAR</text>
+  </g>
+
+  <!-- Diamond (Premium) — #B9F2FF -->
+  <g transform="translate(200, 105)" id="icon-diamond">
+    <title>Diamante / Premium</title>
+    <circle cx="40" cy="40" r="36" fill="rgba(185,242,255,0.15)" stroke="#B9F2FF" stroke-width="1.5"/>
+    <!-- Diamante -->
+    <polygon points="40,18 56,34 40,58 24,34" fill="#B9F2FF" opacity="0.9"/>
+    <polygon points="40,18 56,34 40,34" fill="#FFFFFF" opacity="0.4"/>
+    <text x="40" y="90" text-anchor="middle" font-family="Inter,sans-serif"
+          font-size="11" font-weight="600" fill="#B9F2FF">ELITE</text>
+  </g>
+
+  <!-- Shield / Level Badge — #00D084 -->
+  <g transform="translate(290, 105)" id="icon-shield">
+    <title>Escudo de Nivel</title>
+    <circle cx="40" cy="40" r="36" fill="rgba(0,208,132,0.15)" stroke="#00D084" stroke-width="1.5"/>
+    <!-- Escudo -->
+    <path d="M40 20 L56 28 L56 40 C56 50 48 56 40 60
+             C32 56 24 50 24 40 L24 28 Z"
+          fill="#00D084"/>
+    <text x="40" y="47" text-anchor="middle" font-family="Inter,sans-serif"
+          font-size="14" font-weight="800" fill="#FFFFFF">LVL</text>
+    <text x="40" y="90" text-anchor="middle" font-family="Inter,sans-serif"
+          font-size="11" font-weight="600" fill="#00D084">NIVEL</text>
+  </g>
+</svg>
