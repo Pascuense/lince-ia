@@ -52,25 +52,25 @@ function RoomExplorer({ lang, onClose }: { lang: string; onClose: () => void }) 
       { icon: <HomeIcon className="w-6 h-6" />, name: "Sala de Estar", desc: "Donde toda la familia se reúne. Escribe prompts para decorar, añadir muebles inteligentes y crear un ambiente acogedor. Tu avatar te da la bienvenida.", avatar: AVATAR_FRONTAL.YAYALIN, avatarName: "YAYALIN", prompt: "Crea un sofá inteligente que cambie de color según el estado de ánimo de la familia", xp: "+100 XP", ready: false },
       { icon: <ChefHat className="w-6 h-6" />, name: "Cocina IA", desc: "La abuela y los nietos cocinan juntos con un robot asistente. Cada receta es un prompt que genera una comida virtual.", avatar: AVATAR_FRONTAL.YAYALINA, avatarName: "MAMALINA ABUELA", prompt: "Genera una receta de paella valenciana paso a paso con asistente de voz IA", xp: "+120 XP", ready: false },
       { icon: <Gamepad2 className="w-6 h-6" />, name: "Sala Gaming", desc: "El espacio del joven nativo digital. Setup con pantallas holográficas, retos de IA y competiciones con amigos.", avatar: AVATAR_FRONTAL.CHAVALIN, avatarName: "CHAVALÍN", prompt: "Diseña un torneo de prompts donde 4 jugadores compiten por crear el mejor chatbot", xp: "+150 XP", ready: false },
-      { icon: <BookOpen className="w-6 h-6" />, name: "Biblioteca Mágica", desc: "Libros que cobran vida con IA. Cada libro es un curso, cada página es una lección interactiva.", avatar: AVATAR_FRONTAL.MAMALINA, avatarName: "MAMALINA", prompt: "Abre el libro de Machine Learning y crea una simulación visual de redes neuronales", xp: "+130 XP", ready: false },
-      { icon: <Leaf className="w-6 h-6" />, name: "Jardín del Saber", desc: "Planta semillas de conocimiento que crecen con cada prompt completado. Un árbol = un tema dominado.", avatar: AVATAR_FRONTAL.PEQUELINA, avatarName: "PEQUELINA", prompt: "Planta una semilla de Python y riégala con 3 ejercicios de código para que crezca", xp: "+80 XP", ready: false },
-      { icon: <FlaskConical className="w-6 h-6" />, name: "Laboratorio", desc: "Experimenta con IA. Crea robots, entrena modelos, prueba algoritmos. Todo con prompts.", avatar: AVATAR_FRONTAL.SABELIN, avatarName: "SABELIN", prompt: "Construye un robot mascota que aprenda trucos nuevos cada día usando reinforcement learning", xp: "+200 XP", ready: false },
+      { icon: <BookOpen className="w-6 h-6" />, name: "Biblioteca Mágica", desc: "Libros que cobran vida con IA. Cada libro es un curso, cada página es una lección interactiva.", avatar: AVATAR_FRONTAL.MAMALINA, avatarName: "MAMÁ", prompt: "Abre el libro de Machine Learning y crea una simulación visual de redes neuronales", xp: "+130 XP", ready: false },
+      { icon: <Leaf className="w-6 h-6" />, name: "Jardín del Saber", desc: "Planta semillas de conocimiento que crecen con cada prompt completado. Un árbol = un tema dominado.", avatar: AVATAR_FRONTAL.PEQUELINA, avatarName: "NIÑA", prompt: "Planta una semilla de Python y riégala con 3 ejercicios de código para que crezca", xp: "+80 XP", ready: false },
+      { icon: <FlaskConical className="w-6 h-6" />, name: "Laboratorio", desc: "Experimenta con IA. Crea robots, entrena modelos, prueba algoritmos. Todo con prompts.", avatar: AVATAR_FRONTAL.SABELIN, avatarName: "PRIMO", prompt: "Construye un robot mascota que aprenda trucos nuevos cada día usando reinforcement learning", xp: "+200 XP", ready: false },
     ],
     en: [
       { icon: <HomeIcon className="w-6 h-6" />, name: "Living Room", desc: "Where the whole family gathers. Write prompts to decorate, add smart furniture and create a cozy atmosphere.", avatar: AVATAR_FRONTAL.YAYALIN, avatarName: "YAYALIN", prompt: "Create a smart sofa that changes color based on the family's mood", xp: "+100 XP", ready: false },
       { icon: <ChefHat className="w-6 h-6" />, name: "AI Kitchen", desc: "Grandma and grandkids cook together with a robot assistant. Each recipe is a prompt that generates a virtual meal.", avatar: AVATAR_FRONTAL.YAYALINA, avatarName: "GRANDMA MAMALINA", prompt: "Generate a step-by-step paella recipe with AI voice assistant", xp: "+120 XP", ready: false },
       { icon: <Gamepad2 className="w-6 h-6" />, name: "Gaming Room", desc: "The young digital native's space. Holographic screens, AI challenges and friend competitions.", avatar: AVATAR_FRONTAL.CHAVALIN, avatarName: "CHAVALÍN", prompt: "Design a prompt tournament where 4 players compete to create the best chatbot", xp: "+150 XP", ready: false },
-      { icon: <BookOpen className="w-6 h-6" />, name: "Magic Library", desc: "Books that come alive with AI. Each book is a course, each page an interactive lesson.", avatar: AVATAR_FRONTAL.MAMALINA, avatarName: "MAMALINA", prompt: "Open the Machine Learning book and create a visual neural network simulation", xp: "+130 XP", ready: false },
-      { icon: <Leaf className="w-6 h-6" />, name: "Knowledge Garden", desc: "Plant seeds of knowledge that grow with each completed prompt. One tree = one mastered topic.", avatar: AVATAR_FRONTAL.PEQUELINA, avatarName: "PEQUELINA", prompt: "Plant a Python seed and water it with 3 code exercises to make it grow", xp: "+80 XP", ready: false },
-      { icon: <FlaskConical className="w-6 h-6" />, name: "Laboratory", desc: "Experiment with AI. Create robots, train models, test algorithms. All with prompts.", avatar: AVATAR_FRONTAL.SABELIN, avatarName: "SABELIN", prompt: "Build a pet robot that learns new tricks daily using reinforcement learning", xp: "+200 XP", ready: false },
+      { icon: <BookOpen className="w-6 h-6" />, name: "Magic Library", desc: "Books that come alive with AI. Each book is a course, each page an interactive lesson.", avatar: AVATAR_FRONTAL.MAMALINA, avatarName: "MAMÁ", prompt: "Open the Machine Learning book and create a visual neural network simulation", xp: "+130 XP", ready: false },
+      { icon: <Leaf className="w-6 h-6" />, name: "Knowledge Garden", desc: "Plant seeds of knowledge that grow with each completed prompt. One tree = one mastered topic.", avatar: AVATAR_FRONTAL.PEQUELINA, avatarName: "NIÑA", prompt: "Plant a Python seed and water it with 3 code exercises to make it grow", xp: "+80 XP", ready: false },
+      { icon: <FlaskConical className="w-6 h-6" />, name: "Laboratory", desc: "Experiment with AI. Create robots, train models, test algorithms. All with prompts.", avatar: AVATAR_FRONTAL.SABELIN, avatarName: "PRIMO", prompt: "Build a pet robot that learns new tricks daily using reinforcement learning", xp: "+200 XP", ready: false },
     ],
     zh: [
       { icon: <HomeIcon className="w-6 h-6" />, name: "客厅", desc: "全家聚会的地方。写提示词来装饰、添加智能家具和创造温馨氛围。", avatar: AVATAR_FRONTAL.YAYALIN, avatarName: "YAYALIN", prompt: "创建一个根据家庭心情变色的智能沙发", xp: "+100 XP", ready: false },
       { icon: <ChefHat className="w-6 h-6" />, name: "AI厨房", desc: "奶奶和孙辈与机器人助手一起烹饪。每个食谱都是生成虚拟美食的提示词。", avatar: AVATAR_FRONTAL.YAYALINA, avatarName: "奶奶MAMALINA", prompt: "生成带AI语音助手的西班牙海鲜饭逐步食谱", xp: "+120 XP", ready: false },
       { icon: <Gamepad2 className="w-6 h-6" />, name: "游戏室", desc: "年轻数字原住民的空间。全息屏幕、AI挑战和朋友竞赛。", avatar: AVATAR_FRONTAL.CHAVALIN, avatarName: "CHAVALÍN", prompt: "设计一个4人竞争创建最佳聊天机器人的提示词锦标赛", xp: "+150 XP", ready: false },
-      { icon: <BookOpen className="w-6 h-6" />, name: "魔法图书馆", desc: "用AI让书籍活起来。每本书是一门课程，每页是一节互动课。", avatar: AVATAR_FRONTAL.MAMALINA, avatarName: "MAMALINA", prompt: "打开机器学习书籍，创建神经网络可视化模拟", xp: "+130 XP", ready: false },
-      { icon: <Leaf className="w-6 h-6" />, name: "知识花园", desc: "种下知识种子，每完成一个提示词就会生长。一棵树=一个掌握的主题。", avatar: AVATAR_FRONTAL.PEQUELINA, avatarName: "PEQUELINA", prompt: "种下Python种子，用3个代码练习浇灌使其生长", xp: "+80 XP", ready: false },
-      { icon: <FlaskConical className="w-6 h-6" />, name: "实验室", desc: "用AI实验。创建机器人、训练模型、测试算法。全部用提示词。", avatar: AVATAR_FRONTAL.SABELIN, avatarName: "SABELIN", prompt: "建造一个每天用强化学习学新技巧的宠物机器人", xp: "+200 XP", ready: false },
+      { icon: <BookOpen className="w-6 h-6" />, name: "魔法图书馆", desc: "用AI让书籍活起来。每本书是一门课程，每页是一节互动课。", avatar: AVATAR_FRONTAL.MAMALINA, avatarName: "MAMÁ", prompt: "打开机器学习书籍，创建神经网络可视化模拟", xp: "+130 XP", ready: false },
+      { icon: <Leaf className="w-6 h-6" />, name: "知识花园", desc: "种下知识种子，每完成一个提示词就会生长。一棵树=一个掌握的主题。", avatar: AVATAR_FRONTAL.PEQUELINA, avatarName: "NIÑA", prompt: "种下Python种子，用3个代码练习浇灌使其生长", xp: "+80 XP", ready: false },
+      { icon: <FlaskConical className="w-6 h-6" />, name: "实验室", desc: "用AI实验。创建机器人、训练模型、测试算法。全部用提示词。", avatar: AVATAR_FRONTAL.SABELIN, avatarName: "PRIMO", prompt: "建造一个每天用强化学习学新技巧的宠物机器人", xp: "+200 XP", ready: false },
     ],
   };
 
@@ -218,7 +218,7 @@ function RoomExplorer({ lang, onClose }: { lang: string; onClose: () => void }) 
 /* ─── Translations ─── */
 const mundoTranslations: Record<string, Record<string, any>> = {
   es: {
-    nav: { back: '← Inicio', raids: '⚔️ LINCE Raids', comoJugar: '🎮 Cómo Jugar', register: 'Registro' },
+    nav: { back: '← Inicio', raids: '⚔️ LINCE Batallas', comoJugar: '🎮 Cómo Jugar', register: 'Registro' },
     hero: {
       badge: '🌍 Nuevo Mundo Virtual',
       title: 'MUNDO',
@@ -340,11 +340,11 @@ const mundoTranslations: Record<string, Record<string, any>> = {
       title: '¿Listo para construir tu mundo?',
       subtitle: 'Explora las habitaciones y descubre lo que te espera',
       button: '🚀 Comenzar Ahora',
-      secondary: '⚔️ Ver LINCE Raids',
+      secondary: '⚔️ Ver LINCE Batallas',
     },
   },
   en: {
-    nav: { back: '← Home', raids: '⚔️ LINCE Raids', comoJugar: '🎮 How to Play', register: 'Register' },
+    nav: { back: '← Home', raids: '⚔️ LINCE Batallas', comoJugar: '🎮 How to Play', register: 'Register' },
     hero: {
       badge: '🌍 New Virtual World',
       title: 'MUNDO',
@@ -466,7 +466,7 @@ const mundoTranslations: Record<string, Record<string, any>> = {
       title: 'Ready to build your world?',
       subtitle: 'Explore the rooms and discover what awaits you',
       button: '🚀 Start Now',
-      secondary: '⚔️ See LINCE Raids',
+      secondary: '⚔️ See LINCE Battles',
     },
   },
   zh: {

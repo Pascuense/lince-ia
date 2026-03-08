@@ -1,0 +1,1 @@
+ALTER TABLE `game_players` MODIFY COLUMN `avatarKey` varchar(32) NOT NULL DEFAULT 'PEQUELIN';

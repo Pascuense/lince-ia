@@ -199,6 +199,39 @@ git remote add azure <URL_DEL_PASO_ANTERIOR>
 git push azure main
 ```
 
+---
+
+## Recursos adicionales y utilidades
+
+### Descargar imágenes de avatares localmente
+
+Para evitar problemas con la carga desde el CDN en `localhost` (por ejemplo si no hay acceso
+a internet o los CORS/CSP impiden la carga), puedes precargar todas las imágenes de avatares
+en tu proyecto. Ejecuta el siguiente script una vez:
+
+```bash
+npm run download:avatars
+```
+
+El script descargará cada URL definida en `client/src/lib/avatarConstants.ts` dentro de
+`client/public/avatars/`. Durante el desarrollo (`npm run dev`) la aplicación preferirá estas
+copias locales gracias a la función `maybeLocal` que envuelve los enlaces.
+
+### Subida masiva de archivos
+
+Hydra realiza la subida de cualquier imagen de una carpeta local a tu contenedor de Azure Blob
+Storage. Usa el comando:
+
+```bash
+npm run upload:folder -- C:\ruta\a\carpeta\con\imagenes
+```
+
+Se generará un JSON `upload-results.json` en el directorio de trabajo con los pares local/URL.
+
+*Nota:* ambos scripts usan la configuración de `AZURE_STORAGE_CONNECTION_STRING` y deben
+correrse con el servidor en marcha para que la variable esté disponible.
+
+
 ### Opción C: GitHub Actions (CI/CD)
 
 Crear `.github/workflows/deploy.yml`:

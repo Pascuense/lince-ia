@@ -934,7 +934,7 @@ export default function GuiaBase44() {
                     {[
                       { n: "8", l: "Prompts", c: "#00E5FF" },
                       { n: "10", l: "Mundos", c: "#D4A843" },
-                      { n: "10", l: "Avatares", c: "#00C853" },
+                      { n: "10", l: "Especialistas", c: "#00C853" },
                       { n: "4", l: "Integraciones IA", c: "#FF6D00" },
                     ].map((s) => (
                       <div key={s.l} className="px-4 py-3 rounded-lg" style={{ backgroundColor: s.c + "10", border: `1px solid ${s.c}30` }}>

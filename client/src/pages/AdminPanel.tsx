@@ -60,16 +60,16 @@ export default function AdminPanel() {
       <div className="container px-4 py-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {[
-            { name: "IMAGELIN Visual", desc: "Generador de imágenes con IA", icon: "🎨", href: "/prompt-studio" },
+            { name: "Crear Imagen", desc: "Generador de imágenes con IA", icon: "🎨", href: "/prompt-studio" },
             { name: "Prompt Profesional", desc: "Técnicas Anthropic", icon: "📝", href: "/prompt-profesional" },
-            { name: "Arsenal IA", desc: "62 herramientas de IA", icon: "🛡️", href: "/arsenal-ia" },
-            { name: "Catálogo Formativo", desc: "120 cursos de IA", icon: "📚", href: "/catalogo-formativo" },
-            { name: "Course Builder", desc: "Diseñar cursos propios", icon: "🏗️", href: "/course-builder" },
+            { name: "Herramientas IA", desc: "62 herramientas de IA", icon: "🛡️", href: "/arsenal-ia" },
+            { name: "Todos los Cursos", desc: "120 cursos de IA", icon: "📚", href: "/catalogo-formativo" },
+            { name: "Crea tu Curso", desc: "Diseñar cursos propios", icon: "🏗️", href: "/course-builder" },
             { name: "Historial Prompts", desc: "Creaciones guardadas", icon: "📋", href: "/historial-prompts" },
             { name: "Galería", desc: "Imágenes generadas", icon: "🖼️", href: "/galeria" },
             { name: "Guía Base44", desc: "Prompts de desarrollo", icon: "📖", href: "/guia-base44" },
             { name: "Changelog", desc: "Historial de cambios", icon: "📰", href: "/changelog" },
-            { name: "Aviso Legal", desc: "Información legal", icon: "⚖️", href: "/aviso-legal" },
+            { name: "Legal", desc: "Información legal", icon: "⚖️", href: "/aviso-legal" },
           ].map((item) => (
             <a
               key={item.name}

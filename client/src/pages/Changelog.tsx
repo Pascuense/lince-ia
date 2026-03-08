@@ -4,14 +4,14 @@ import { UserNavBadge } from "@/components/UserNavBadge";
 import {
   Sparkles, Gamepad2, Image, BookOpen, Wrench, Shield, Globe,
   Zap, GraduationCap, Palette, Trophy, Clock, CheckCircle2, Circle,
-  ArrowLeft, Rocket
+  ArrowLeft, Rocket, MessageSquare, Plus, MousePointer, Play, Layers, Tag
 } from "lucide-react";
 import { GlobalNavBar } from "@/components/GlobalNavBar";
 import { BackButton } from "@/components/BackButton";
 
 const YAYALIN_IMG = AVATAR_FRONTAL.YAYALIN;
 
-type ChangeStatus = "live" | "beta" | "coming";
+type ChangeStatus = "live" | "preview" | "coming";
 
 interface ChangeEntry {
   date: string;
@@ -25,7 +25,7 @@ interface ChangeEntry {
 const CHANGELOG: ChangeEntry[] = [
   {
     date: "Feb 2026",
-    title: "IMAGELIN Visual",
+    title: "Crear Imagen",
     description: "Crea prompts para imágenes con IA usando 4 campos simples: Sujeto, Estilo, Entorno y Detalles. La IA mejora tu prompt automáticamente.",
     status: "live",
     icon: <Image size={18} />,
@@ -41,7 +41,7 @@ const CHANGELOG: ChangeEntry[] = [
   },
   {
     date: "Feb 2026",
-    title: "Arsenal IA — 59 Herramientas",
+    title: "Herramientas IA — 59 Herramientas",
     description: "Directorio completo de herramientas de inteligencia artificial organizadas en 9 categorías. Filtros, búsqueda y badges Gratis/Premium.",
     status: "live",
     icon: <Wrench size={18} />,
@@ -49,7 +49,7 @@ const CHANGELOG: ChangeEntry[] = [
   },
   {
     date: "Feb 2026",
-    title: "Catálogo Formativo — 120 Cursos",
+    title: "Todos los Cursos — 120 Cursos",
     description: "Cursos presenciales de 7 horas en 8 categorías, con 3 objetivos medibles por curso. Alineados con DigComp 2.2.",
     status: "live",
     icon: <GraduationCap size={18} />,
@@ -74,7 +74,7 @@ const CHANGELOG: ChangeEntry[] = [
   {
     date: "Feb 2026",
     title: "Galería de Creaciones",
-    description: "Galería comunitaria donde se muestran las mejores imágenes generadas con IMAGELIN.",
+    description: "Galería comunitaria donde se muestran las mejores imágenes generadas con Crear Imagen.",
     status: "live",
     icon: <Image size={18} />,
     version: "v1.0",
@@ -96,8 +96,64 @@ const CHANGELOG: ChangeEntry[] = [
     version: "v1.0",
   },
   {
+    date: "Feb 2026",
+    title: "Miniaturas de Entornos",
+    description: "10 imágenes generadas con IA para cada entorno de Crear Imagen (Estudio, Naturaleza, Ciudad, Espacio, Marino, Fantasía, Interior, Desierto, Noche, Abstracto). Selección visual con tarjetas.",
+    status: "live",
+    icon: <Layers size={18} />,
+    version: "v1.1",
+  },
+  {
+    date: "Feb 2026",
+    title: "Animaciones de Transición",
+    description: "Animaciones suaves al cambiar de entorno: bounce de selección, glow verde, pop del check y fade de miniatura. Respeta prefers-reduced-motion.",
+    status: "live",
+    icon: <Play size={18} />,
+    version: "v1.1",
+  },
+  {
+    date: "Feb 2026",
+    title: "Tooltips en Entornos",
+    description: "Descripciones breves al pasar el cursor sobre cada entorno de Crear Imagen. Guían al usuario en su elección con texto accesible.",
+    status: "live",
+    icon: <MousePointer size={18} />,
+    version: "v1.1",
+  },
+  {
+    date: "Feb 2026",
+    title: "Historial de Conversaciones",
+    description: "Desplegable siempre visible debajo del especialista con el historial de conversaciones anteriores. Permite recuperar chats pasados.",
+    status: "live",
+    icon: <MessageSquare size={18} />,
+    version: "v1.1",
+  },
+  {
+    date: "Feb 2026",
+    title: "Botón Nueva Conversación",
+    description: "Botón \"+ Nueva\" dentro del historial para iniciar un chat limpio sin perder conversaciones anteriores guardadas.",
+    status: "live",
+    icon: <Plus size={18} />,
+    version: "v1.1",
+  },
+  {
+    date: "Feb 2026",
+    title: "Prompt Profesional Simplificado",
+    description: "Rediseño completo del Generador de Prompts con el mismo estilo visual que Crear Imagen: pasos numerados, tarjetas de selección y layout de 2 columnas.",
+    status: "live",
+    icon: <Sparkles size={18} />,
+    version: "v1.1",
+  },
+  {
+    date: "Feb 2026",
+    title: "Eliminación de Etiqueta Beta",
+    description: "Todas las referencias a \"versión beta\" eliminadas de la aplicación. La plataforma ahora se presenta como versión estable en los 4 idiomas.",
+    status: "live",
+    icon: <Tag size={18} />,
+    version: "v1.1",
+  },
+  {
     date: "Próximamente",
-    title: "Course Builder Interactivo",
+    title: "Crea tu Curso Interactivo",
     description: "Diseña tus propios cursos personalizados eligiendo módulos, duración y herramientas. Tu formación a medida.",
     status: "coming",
     icon: <BookOpen size={18} />,
@@ -120,7 +176,7 @@ const CHANGELOG: ChangeEntry[] = [
 
 const STATUS_CONFIG: Record<ChangeStatus, { label: string; color: string; bg: string; border: string }> = {
   live: { label: "Activo", color: "text-emerald-400", bg: "bg-emerald-400/10", border: "border-emerald-400/40" },
-  beta: { label: "Beta", color: "text-[#D4A843]", bg: "bg-[#D4A843]/10", border: "border-[#D4A843]/40" },
+  preview: { label: "Vista Previa", color: "text-[#D4A843]", bg: "bg-[#D4A843]/10", border: "border-[#D4A843]/40" },
   coming: { label: "Próximamente", color: "text-[#B0B0B0]", bg: "bg-white/5", border: "border-white/10" },
 };
 
@@ -222,7 +278,7 @@ export default function Changelog() {
                   <div className="absolute left-3 top-2">
                     {entry.status === "live" ? (
                       <div className="w-4 h-4 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
-                    ) : entry.status === "beta" ? (
+                    ) : entry.status === "preview" ? (
                       <div className="w-4 h-4 rounded-full bg-[#D4A843] shadow-[0_0_8px_rgba(212,168,67,0.4)]" />
                     ) : (
                       <Circle size={16} className="text-[#B0B0B0]/50" />

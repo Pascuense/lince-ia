@@ -12,7 +12,7 @@ export const extendedTranslationsPtBR: Record<string, any> = {
       solutionTitle: "A Solução",
       solutionText: "LINCE é um app onde você aprende inteligência artificial jogando. Cada pessoa tem um personagem-guia da sua geração que ensina no seu idioma, no seu ritmo, com exemplos da sua vida cotidiana. Não é o exército. É sua família que te ensina com carinho.",
       metricsTitle: "Métricas de Sucesso",
-      metric1: "1.000 usuários beta no Q1",
+      metric1: "1.000 usuários no Q1",
       metric2: "Retenção D7 > 60%",
       metric3: "NPS > 50",
       metric4: "10 cursos completos",
@@ -186,7 +186,7 @@ export const extendedTranslationsPtBR: Record<string, any> = {
       goalLabel: "Objetivo",
       quarters: [
         {
-          q: "Q1", period: "Jan - Mar 2026", goal: "1.000 usuários beta",
+          q: "Q1", period: "Jan - Mar 2026", goal: "1.000 usuários",
           sprints: [
             "Sprint 1-2: Setup, auth, modelo de dados, onboarding + avatar",
             "Sprint 3-4: XP, níveis (1-20), 20 cursos iniciais",

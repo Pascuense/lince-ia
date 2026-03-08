@@ -367,7 +367,7 @@ export default function PromptGame() {
             <h1 className="font-['Space_Grotesk'] font-bold text-5xl sm:text-7xl text-white mb-4">
               {t("heroTitle")}<span className="text-[#00E5FF]">{t("heroTitleAccent")}</span>
             </h1>
-            <p className="text-[#B0B0B0] text-lg max-w-2xl mx-auto leading-relaxed mb-8">{t("heroDesc")}</p>
+            <p className="text-white/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-8">{t("heroDesc")}</p>
             <div className="inline-flex items-center gap-3 px-5 py-3 rounded-xl border border-white/10 bg-[#1A1A2E]">
               <div className="flex items-center gap-1">
                 {LEVELS.map((l) => (
@@ -382,75 +382,75 @@ export default function PromptGame() {
           </div>
 
           {totalGames > 0 && (
-            <div className="grid grid-cols-3 gap-4 mb-10">
-              <div className="bg-[#1A1A2E] border border-[#00E5FF]/20 rounded-xl p-4 text-center">
-                <Trophy className="w-5 h-5 text-[#D4A843] mx-auto mb-1" />
-                <div className="text-2xl font-bold text-[#D4A843]">{bestScore}</div>
-                <div className="text-xs text-[#B0B0B0]">{t("bestScore")}</div>
+            <div className="grid grid-cols-3 gap-4 sm:gap-6 mb-12">
+              <div className="bg-[#1A1A2E] border-2 border-[#D4A843]/20 rounded-2xl p-5 sm:p-6 text-center">
+                <Trophy className="w-7 h-7 text-[#D4A843] mx-auto mb-2" />
+                <div className="text-3xl sm:text-4xl font-black text-[#D4A843]">{bestScore}</div>
+                <div className="text-sm text-white/50 mt-1 font-medium">{t("bestScore")}</div>
               </div>
-              <div className="bg-[#1A1A2E] border border-[#00E5FF]/20 rounded-xl p-4 text-center">
-                <Target className="w-5 h-5 text-[#00E5FF] mx-auto mb-1" />
-                <div className="text-2xl font-bold text-[#00E5FF]">{avgScore}</div>
-                <div className="text-xs text-[#B0B0B0]">{t("avgScore")}</div>
+              <div className="bg-[#1A1A2E] border-2 border-[#00E5FF]/20 rounded-2xl p-5 sm:p-6 text-center">
+                <Target className="w-7 h-7 text-[#00E5FF] mx-auto mb-2" />
+                <div className="text-3xl sm:text-4xl font-black text-[#00E5FF]">{avgScore}</div>
+                <div className="text-sm text-white/50 mt-1 font-medium">{t("avgScore")}</div>
               </div>
-              <div className="bg-[#1A1A2E] border border-[#00E5FF]/20 rounded-xl p-4 text-center">
-                <Flame className="w-5 h-5 text-[#FF5252] mx-auto mb-1" />
-                <div className="text-2xl font-bold text-[#FF5252]">{totalGames}</div>
-                <div className="text-xs text-[#B0B0B0]">{t("totalGames")}</div>
+              <div className="bg-[#1A1A2E] border-2 border-[#FF5252]/20 rounded-2xl p-5 sm:p-6 text-center">
+                <Flame className="w-7 h-7 text-[#FF5252] mx-auto mb-2" />
+                <div className="text-3xl sm:text-4xl font-black text-[#FF5252]">{totalGames}</div>
+                <div className="text-sm text-white/50 mt-1 font-medium">{t("totalGames")}</div>
               </div>
             </div>
           )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 mb-12">
             <button onClick={() => { resetGame(); setMode("guided"); }}
-              className="group relative overflow-hidden rounded-xl border border-[#00E5FF]/30 bg-gradient-to-br from-[#00E5FF]/10 to-transparent p-6 text-left transition-all hover:border-[#00E5FF]/60 hover:shadow-[0_0_30px_rgba(0,229,255,0.1)]">
-              <div className="w-14 h-14 rounded-xl bg-[#00E5FF]/15 flex items-center justify-center mb-4">
-                <GraduationCap className="w-7 h-7 text-[#00E5FF]" />
+              className="group relative overflow-hidden rounded-2xl border-2 border-[#00E5FF]/30 bg-gradient-to-br from-[#00E5FF]/10 to-transparent p-7 sm:p-8 text-left transition-all hover:border-[#00E5FF]/60 hover:shadow-[0_0_30px_rgba(0,229,255,0.1)] min-h-[200px]">
+              <div className="w-16 h-16 rounded-2xl bg-[#00E5FF]/15 flex items-center justify-center mb-5">
+                <GraduationCap className="w-8 h-8 text-[#00E5FF]" />
               </div>
-              <h3 className="font-['Space_Grotesk'] font-bold text-xl text-white mb-2">{t("startGuided")}</h3>
-              <p className="text-sm text-[#B0B0B0] leading-relaxed">{t("startGuidedDesc")}</p>
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#00E5FF] opacity-0 group-hover:opacity-100 transition-opacity" />
-              <span className="absolute top-3 right-3 px-2 py-0.5 text-[10px] font-bold rounded-full bg-[#00E5FF]/20 text-[#00E5FF] border border-[#00E5FF]/30">
+              <h3 className="font-['Space_Grotesk'] font-black text-xl sm:text-2xl text-white mb-3">{t("startGuided")}</h3>
+              <p className="text-sm sm:text-base text-white/50 leading-relaxed">{t("startGuidedDesc")}</p>
+              <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-[#00E5FF] opacity-0 group-hover:opacity-100 transition-opacity" />
+              <span className="absolute top-4 right-4 px-3 py-1 text-xs font-bold rounded-full bg-[#00E5FF]/20 text-[#00E5FF] border border-[#00E5FF]/30">
                 {t("recommended")}
               </span>
             </button>
             <button onClick={() => { resetGame(); setMode("free"); }}
-              className="group relative overflow-hidden rounded-xl border border-[#D4A843]/30 bg-gradient-to-br from-[#D4A843]/10 to-transparent p-6 text-left transition-all hover:border-[#D4A843]/60">
-              <div className="w-14 h-14 rounded-xl bg-[#D4A843]/15 flex items-center justify-center mb-4">
-                <PenTool className="w-7 h-7 text-[#D4A843]" />
+              className="group relative overflow-hidden rounded-2xl border-2 border-[#D4A843]/30 bg-gradient-to-br from-[#D4A843]/10 to-transparent p-7 sm:p-8 text-left transition-all hover:border-[#D4A843]/60 min-h-[200px]">
+              <div className="w-16 h-16 rounded-2xl bg-[#D4A843]/15 flex items-center justify-center mb-5">
+                <PenTool className="w-8 h-8 text-[#D4A843]" />
               </div>
-              <h3 className="font-['Space_Grotesk'] font-bold text-xl text-white mb-2">{t("startFree")}</h3>
-              <p className="text-sm text-[#B0B0B0] leading-relaxed">{t("startFreeDesc")}</p>
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#D4A843] opacity-0 group-hover:opacity-100 transition-opacity" />
+              <h3 className="font-['Space_Grotesk'] font-black text-xl sm:text-2xl text-white mb-3">{t("startFree")}</h3>
+              <p className="text-sm sm:text-base text-white/50 leading-relaxed">{t("startFreeDesc")}</p>
+              <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-[#D4A843] opacity-0 group-hover:opacity-100 transition-opacity" />
             </button>
             <button onClick={startChallenge}
-              className="group relative overflow-hidden rounded-xl border border-[#FF5252]/30 bg-gradient-to-br from-[#FF5252]/10 to-transparent p-6 text-left transition-all hover:border-[#FF5252]/60">
-              <div className="w-14 h-14 rounded-xl bg-[#FF5252]/15 flex items-center justify-center mb-4">
-                <Swords className="w-7 h-7 text-[#FF5252]" />
+              className="group relative overflow-hidden rounded-2xl border-2 border-[#FF5252]/30 bg-gradient-to-br from-[#FF5252]/10 to-transparent p-7 sm:p-8 text-left transition-all hover:border-[#FF5252]/60 min-h-[200px]">
+              <div className="w-16 h-16 rounded-2xl bg-[#FF5252]/15 flex items-center justify-center mb-5">
+                <Swords className="w-8 h-8 text-[#FF5252]" />
               </div>
-              <h3 className="font-['Space_Grotesk'] font-bold text-xl text-white mb-2">{t("startChallenge")}</h3>
-              <p className="text-sm text-[#B0B0B0] leading-relaxed">{t("startChallengeDesc")}</p>
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#FF5252] opacity-0 group-hover:opacity-100 transition-opacity" />
+              <h3 className="font-['Space_Grotesk'] font-black text-xl sm:text-2xl text-white mb-3">{t("startChallenge")}</h3>
+              <p className="text-sm sm:text-base text-white/50 leading-relaxed">{t("startChallengeDesc")}</p>
+              <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-[#FF5252] opacity-0 group-hover:opacity-100 transition-opacity" />
             </button>
           </div>
 
-          <div className="bg-[#1A1A2E] rounded-xl border border-white/10 p-6 mb-10">
-            <h3 className="font-['Space_Grotesk'] font-bold text-lg text-white mb-4 flex items-center gap-2">
-              <Lightbulb className="w-5 h-5 text-[#D4A843]" /> {t("howItWorks")}
+          <div className="bg-[#1A1A2E] rounded-2xl border-2 border-white/10 p-7 sm:p-8 mb-12">
+            <h3 className="font-['Space_Grotesk'] font-bold text-xl text-white mb-6 flex items-center gap-3">
+              <Lightbulb className="w-6 h-6 text-[#D4A843]" /> {t("howItWorks")}
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {[
                 { icon: "1", title: t("build"), desc: t("buildDesc") },
                 { icon: "2", title: t("learn"), desc: t("learnDesc") },
                 { icon: "3", title: t("improve"), desc: t("improveDesc") },
               ].map((item, i) => (
-                <div key={i} className="flex gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#00E5FF]/10 flex items-center justify-center flex-shrink-0">
-                    <span className="text-sm font-bold text-[#00E5FF]">{item.icon}</span>
+                <div key={i} className="flex gap-4">
+                  <div className="w-10 h-10 rounded-full bg-[#00E5FF]/15 flex items-center justify-center flex-shrink-0">
+                    <span className="text-base font-black text-[#00E5FF]">{item.icon}</span>
                   </div>
                   <div>
-                    <h4 className="font-bold text-white text-sm mb-1">{item.title}</h4>
-                    <p className="text-xs text-[#B0B0B0] leading-relaxed">{item.desc}</p>
+                    <h4 className="font-bold text-white text-base mb-1.5">{item.title}</h4>
+                    <p className="text-sm text-white/50 leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
               ))}

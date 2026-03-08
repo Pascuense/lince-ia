@@ -347,7 +347,7 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
     prev: "Anterior",
     next: "Siguiente",
     toolNotFound: "Herramienta no encontrada",
-    goBack: "Volver al Arsenal IA",
+    goBack: "Volver a Herramientas IA",
     avatarSays: "dice:",
     screenshot: "Interfaz de la herramienta",
     screenshotCaption: "Captura real de la interfaz de",

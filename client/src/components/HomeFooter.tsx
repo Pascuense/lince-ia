@@ -21,7 +21,7 @@ export function Footer() {
             <div>
               <h4 className="font-['Space_Grotesk'] font-bold text-white text-sm mb-3">{tl(lang, { es: 'Legal', en: 'Legal', zh: '法律', 'pt-BR': 'Legal', 'pt-PT': 'Legal' })}</h4>
               <div className="space-y-2">
-                <a href="/aviso-legal" className="block text-[#00E5FF] text-xs hover:underline">{tl(lang, { es: 'Aviso Legal', en: 'Legal Notice', zh: '法律声明', 'pt-BR': 'Aviso Legal', 'pt-PT': 'Aviso Legal' })}</a>
+                <a href="/aviso-legal" className="block text-[#00E5FF] text-xs hover:underline">{tl(lang, { es: 'Legal', en: 'Legal', zh: '法律', 'pt-BR': 'Legal', 'pt-PT': 'Legal' })}</a>
                 <a href="/aviso-legal#privacidad" className="block text-[#00E5FF] text-xs hover:underline">{tl(lang, { es: 'Política de Privacidad', en: 'Privacy Policy', zh: '隐私政策', 'pt-BR': 'Política de Privacidad', 'pt-PT': 'Política de Privacidad' })}</a>
                 <a href="/aviso-legal#cookies" className="block text-[#00E5FF] text-xs hover:underline">{tl(lang, { es: 'Política de Cookies', en: 'Cookie Policy', zh: 'Cookie政策', 'pt-BR': 'Política de Cookies', 'pt-PT': 'Política de Cookies' })}</a>
                 <a href="/aviso-legal#terminos" className="block text-[#00E5FF] text-xs hover:underline">{tl(lang, { es: 'Términos y Condiciones', en: 'Terms & Conditions', zh: '条款和条件', 'pt-BR': 'Términos y Condiciones', 'pt-PT': 'Términos y Condiciones' })}</a>

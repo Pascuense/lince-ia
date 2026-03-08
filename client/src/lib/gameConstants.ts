@@ -42,22 +42,22 @@ export const CHANGELOG: ChangelogEntry[] = [
   {
     version: "1.3.0",
     date: "2026-02-12",
-    title: { es: "Generador LINCELIN y mejoras UX", en: "LINCELIN Generator and UX improvements", zh: "LINCELIN生成器和UX改进" },
+    title: { es: "Generador de Avatares y mejoras UX", en: "Avatar Generator and UX improvements", zh: "角色生成器和UX改进" },
     changes: {
       es: [
-        "Generador de avatares LINCELIN con IA",
+        "Generador de avatares con IA",
         "Colores LINCE (cyan/gold) en registro y login",
         "WelcomeModal mejorado",
         "Búsqueda global con Cmd+K",
       ],
       en: [
-        "LINCELIN avatar generator with AI",
+        "Avatar generator with AI",
         "LINCE colors (cyan/gold) in registration and login",
         "Improved WelcomeModal",
         "Global search with Cmd+K",
       ],
       zh: [
-        "使用AI的LINCELIN头像生成器",
+        "使用AI的角色生成器",
         "注册和登录中的LINCE颜色（青色/金色）",
         "改进的欢迎弹窗",
         "使用Cmd+K的全局搜索",

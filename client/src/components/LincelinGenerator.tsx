@@ -13,17 +13,17 @@ type Lang = "es" | "en" | "zh" | "pt-BR" | "pt-PT";
 
 const T: Record<string, Record<string, string>> = {
   es: {
-    lockedTitle: "CREA TU PROPIO LINCELIN",
+    lockedTitle: "CREA TU PROPIO AVATAR",
     lockedSub: "Explora la plataforma durante 5 minutos para desbloquear el generador de avatares",
     timeLeft: "Tiempo restante",
     tipExplore: "Toca a los artistas de la Crew para hablar con ellos y aprender sobre IA",
-    unlockedTitle: "GENERADOR LINCELIN",
+    unlockedTitle: "GENERADOR DE AVATAR",
     unlockedSub: "Sube tu foto y te convertimos en un lince ibérico con tu estilo",
     uploadBtn: "SUBIR MI FOTO",
     uploadHint: "Solo fotos de tu rostro. Sin contenido inapropiado.",
-    generating: "Creando tu LINCELIN...",
+    generating: "Creando tu avatar...",
     generatingHint: "Estamos extrayendo tus rasgos y transformándote en lince ibérico...",
-    ready: "TU LINCELIN ESTÁ LISTO",
+    ready: "TU AVATAR ESTÁ LISTO",
     shareWhatsapp: "Compartir por WhatsApp",
     shareInstagram: "Guardar para Instagram",
     download: "Descargar imagen",
@@ -43,17 +43,17 @@ const T: Record<string, Record<string, string>> = {
     seconds: "seg",
   },
   en: {
-    lockedTitle: "CREATE YOUR OWN LINCELIN",
+    lockedTitle: "CREATE YOUR OWN AVATAR",
     lockedSub: "Explore the platform for 5 minutes to unlock the avatar generator",
     timeLeft: "Time remaining",
     tipExplore: "Tap the Crew artists to chat with them and learn about AI",
-    unlockedTitle: "LINCELIN GENERATOR",
+    unlockedTitle: "AVATAR GENERATOR",
     unlockedSub: "Upload your photo and we'll turn you into an Iberian lynx with your style",
     uploadBtn: "UPLOAD MY PHOTO",
     uploadHint: "Face photos only. No inappropriate content.",
-    generating: "Creating your LINCELIN...",
+    generating: "Creating your avatar...",
     generatingHint: "We're extracting your traits and transforming you into an Iberian lynx...",
-    ready: "YOUR LINCELIN IS READY",
+    ready: "YOUR AVATAR IS READY",
     shareWhatsapp: "Share on WhatsApp",
     shareInstagram: "Save for Instagram",
     download: "Download image",
@@ -73,17 +73,17 @@ const T: Record<string, Record<string, string>> = {
     seconds: "sec",
   },
   zh: {
-    lockedTitle: "LINCELIN",
+    lockedTitle: "Mi Avatar",
     lockedSub: "探索平台5分钟以解锁头像生成器",
     timeLeft: "剩余时间",
     tipExplore: "点击Crew艺术家与他们聊天并了解AI",
-    unlockedTitle: "LINCELIN生成器",
+    unlockedTitle: "我的角色生成器",
     unlockedSub: "上传你的照片，我们将把你变成一只具有你风格的伊比利亚猞猁",
     uploadBtn: "上传我的照片",
     uploadHint: "仅限面部照片。禁止不当内容。",
-    generating: "正在LINCELIN...",
+    generating: "正在生成...",
     generatingHint: "我们正在提取你的特征并将你变成伊比利亚猞猁...",
-    ready: "你的LINCELIN已准备好",
+    ready: "你的角色已准备好",
     shareWhatsapp: "通过WhatsApp分享",
     shareInstagram: "保存到Instagram",
     download: "下载图片",
@@ -242,7 +242,7 @@ export function LincelinGenerator({ lang }: { lang: Lang }) {
   // Share functions
   const shareWhatsApp = () => {
     if (!generatedUrl) return;
-    const text = tl(lang, { es: "¡Mira mi avatar LINCELIN! Creado con LINCE 🐱", en: "Check out my LINCELIN avatar! Created with LINCE 🐱", zh: "看看我的LINCELIN头像！用LINCE创建 🐱", 'pt-BR': "¡Mira mi avatar LINCELIN! Creado con LINCE 🐱", 'pt-PT': "¡Mira mi avatar LINCELIN! Creado con LINCE 🐱" });
+    const text = tl(lang, { es: "¡Mira mi avatar LINCE! Creado con LINCE 🐱", en: "Check out my LINCE avatar! Created with LINCE 🐱", zh: "看看我的LINCE角色！用LINCE创建 🐱", 'pt-BR': "¡Mira mi avatar LINCE! Creado con LINCE 🐱", 'pt-PT': "¡Mira mi avatar LINCE! Creado con LINCE 🐱" });
     window.open(`https://wa.me/?text=${encodeURIComponent(text + " " + generatedUrl)}`, "_blank");
   };
 
@@ -402,7 +402,7 @@ export function LincelinGenerator({ lang }: { lang: Lang }) {
                   disabled={!uploadedPhotoUrl}
                   className="w-full max-w-xs mx-auto py-4 bg-gradient-to-r from-[#FF6B35] to-[#FF8F65] text-black font-black text-sm rounded-xl hover:brightness-110 transition-all shadow-[0_0_20px_rgba(255,107,53,0.3)] disabled:opacity-50"
                 >
-                  {tl(lang, { es: "GENERAR MI LINCELIN", en: "GENERATE MY LINCELIN", zh: "生成我的LINCELIN", 'pt-BR': "GENERAR MI LINCELIN", 'pt-PT': "GENERAR MI LINCELIN" })}
+                  {tl(lang, { es: "GENERAR MI AVATAR", en: "GENERATE MY AVATAR", zh: "生成我的角色", 'pt-BR': "GENERAR MI AVATAR", 'pt-PT': "GENERAR MI AVATAR" })}
                 </button>
                 <button
                   onClick={() => { setPhotoPreview(null); setUploadedPhotoUrl(null); fileInputRef.current?.click(); }}
@@ -485,7 +485,7 @@ export function LincelinGenerator({ lang }: { lang: Lang }) {
           {generatedUrl && (
             <div className="mb-8">
               <div className="w-48 h-48 sm:w-64 sm:h-64 mx-auto rounded-2xl overflow-hidden border-3 border-[#FF6B35]/40 shadow-[0_0_40px_rgba(255,107,53,0.3)]">
-                <img src={generatedUrl} alt="Tu LINCELIN" className="w-full h-full object-cover" />
+                <img src={generatedUrl} alt="Tu Avatar" className="w-full h-full object-cover" />
               </div>
             </div>
           )}

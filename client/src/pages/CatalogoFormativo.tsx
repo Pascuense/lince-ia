@@ -26,7 +26,7 @@ import { UserNavBadge } from "@/components/UserNavBadge";
 import { GlobalNavBar } from "@/components/GlobalNavBar";
 import { BackButton } from "@/components/BackButton";
 
-// ─── Avatar Guide for Catálogo Formativo ───
+// ─── Avatar Guide for Todos los Cursos ───
 const GUIDE_AVATAR = {
   name: "MAMALINA ABUELA",
   role: "La Abuela Sabia",
@@ -480,7 +480,7 @@ export default function CatalogoFormativo() {
                 <Brain className="w-4 h-4" /> Prompt Profesional
               </a>
               <a href="/arsenal-ia" className="inline-flex items-center gap-2 px-6 py-3 bg-[#00E5FF]/10 border border-[#00E5FF]/30 text-[#00E5FF] rounded-xl font-['Space_Grotesk'] font-bold text-sm hover:bg-[#00E5FF]/20 transition-colors">
-                <Zap className="w-4 h-4" /> Arsenal IA
+                <Zap className="w-4 h-4" /> Herramientas IA
               </a>
             </div>
           </div>

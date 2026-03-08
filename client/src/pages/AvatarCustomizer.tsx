@@ -21,16 +21,16 @@ interface AvatarInfo {
 }
 
 const AVATAR_LIST: AvatarInfo[] = [
-  { key: "YAYALIN", name: "YAYOLIN (YAYALIN)", role: "El Sabio Paciente", generation: "Abuelos (65+)", color: "#B0B0B0", icon: "👴" },
-  { key: "YAYALINA", name: "YAYALINA (MAMALINA Abuela)", role: "La Cariñosa", generation: "Abuelos (65+)", color: "#B0B0B0", icon: "👵" },
-  { key: "PAPALIN", name: "PAPALÍN", role: "El Práctico", generation: "Adultos (35-64)", color: "#00E5FF", icon: "💼" },
-  { key: "MAMALINA", name: "MAMALINA (MAMALINA)", role: "La Tutora Principal", generation: "Adultos (35-64)", color: "#00E5FF", icon: "👩\u200D💻" },
-  { key: "CHAVALIN", name: "CHAVALÍN", role: "El Nativo Digital", generation: "Jóvenes (16-34)", color: "#00C853", icon: "🎧" },
-  { key: "CHAVALINA", name: "CHAVALINA (MAMALINA JR)", role: "La Creativa", generation: "Jóvenes (16-34)", color: "#00C853", icon: "🎨" },
-  { key: "PEQUELIN", name: "PEQUELIN (PEQUELIN)", role: "El Explorador", generation: "Niños (6-15)", color: "#FFD700", icon: "🎒" },
-  { key: "PEQUELINA", name: "PEQUELINA (PEQUELINA)", role: "La Imaginativa", generation: "Niños (6-15)", color: "#FFD700", icon: "🎀" },
-  { key: "ATOLONDRALIN", name: "ATOLONDRALIN (ATOLONDRALIN)", role: "El Despistado", generation: "Especial", color: "#FF5252", icon: "🤪" },
-  { key: "SABELIN", name: "SABELIN (SABELIN)", role: "El Genio Mentor", generation: "Especial", color: "#9C27B0", icon: "🎓" },
+  { key: "YAYALIN", name: "ABUELO", role: "El Sabio Paciente", generation: "Abuelos (65+)", color: "#B0B0B0", icon: "👴" },
+  { key: "YAYALINA", name: "ABUELA", role: "La Cariñosa", generation: "Abuelos (65+)", color: "#B0B0B0", icon: "👵" },
+  { key: "PAPALIN", name: "PAPÁ", role: "El Práctico", generation: "Adultos (35-64)", color: "#00E5FF", icon: "💼" },
+  { key: "MAMALINA", name: "MAMÁ", role: "La Tutora Principal", generation: "Adultos (35-64)", color: "#00E5FF", icon: "👩\u200D💻" },
+  { key: "CHAVALIN", name: "HIJO", role: "El Nativo Digital", generation: "Jóvenes (16-34)", color: "#00C853", icon: "🎧" },
+  { key: "CHAVALINA", name: "HIJA", role: "La Creativa", generation: "Jóvenes (16-34)", color: "#00C853", icon: "🎨" },
+  { key: "PEQUELIN", name: "NIÑO", role: "El Explorador", generation: "Niños (6-15)", color: "#FFD700", icon: "🎒" },
+  { key: "PEQUELINA", name: "NIÑA", role: "La Imaginativa", generation: "Niños (6-15)", color: "#FFD700", icon: "🎀" },
+  { key: "ATOLONDRALIN", name: "TÍO", role: "El Despistado", generation: "Especial", color: "#FF5252", icon: "🤪" },
+  { key: "SABELIN", name: "PRIMO", role: "El Genio Mentor", generation: "Especial", color: "#9C27B0", icon: "🎓" },
 ];
 
 const FUR_COLORS = [

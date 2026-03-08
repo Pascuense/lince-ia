@@ -77,7 +77,7 @@ const SKILL_AREAS: SkillArea[] = [
     bgGradient: "from-purple-500/10 to-purple-600/5",
     unlockRequirement: { type: "xp", value: 200 },
     skills: [
-      { id: "imagelin_basico", name: { es: "IMAGELIN Básico", en: "IMAGELIN Basics", zh: "IMAGELIN基础" }, desc: { es: "Genera tu primera imagen con IA", en: "Generate your first AI image", zh: "生成你的第一张AI图像" }, xpRequired: 0, route: "/prompt-studio" },
+      { id: "imagelin_basico", name: { es: "Crear Imagen Básico", en: "Create Image Basics", zh: "创建图像基础" }, desc: { es: "Genera tu primera imagen con IA", en: "Generate your first AI image", zh: "生成你的第一张AI图像" }, xpRequired: 0, route: "/prompt-studio" },
       { id: "estilos_arte", name: { es: "Estilos Artísticos", en: "Art Styles", zh: "艺术风格" }, desc: { es: "Domina diferentes estilos visuales", en: "Master different visual styles", zh: "掌握不同的视觉风格" }, xpRequired: 150 },
       { id: "composicion", name: { es: "Composición Avanzada", en: "Advanced Composition", zh: "高级构图" }, desc: { es: "Iluminación, perspectiva, color", en: "Lighting, perspective, color", zh: "光线、透视、色彩" }, xpRequired: 300 },
       { id: "fotorrealismo", name: { es: "Fotorrealismo", en: "Photorealism", zh: "写实主义" }, desc: { es: "Imágenes que parecen fotos reales", en: "Images that look like real photos", zh: "看起来像真实照片的图像" }, xpRequired: 450 },
@@ -147,7 +147,7 @@ const SKILL_AREAS: SkillArea[] = [
 
 const TT: Record<string, Record<string, string>> = {
   es: {
-    title: "Mapa de Progresión",
+    title: "Mi Camino",
     subtitle: "Tu camino para dominar la IA",
     overall: "Progreso general",
     areas: "áreas",
@@ -164,7 +164,7 @@ const TT: Record<string, Record<string, string>> = {
     explore: "Explorar",
   },
   en: {
-    title: "Progression Map",
+    title: "My Path",
     subtitle: "Your path to mastering AI",
     overall: "Overall progress",
     areas: "areas",
@@ -181,7 +181,7 @@ const TT: Record<string, Record<string, string>> = {
     explore: "Explore",
   },
   zh: {
-    title: "进度地图",
+    title: "我的路程",
     subtitle: "你掌握AI的道路",
     overall: "总体进度",
     areas: "领域",

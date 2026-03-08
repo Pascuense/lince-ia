@@ -73,7 +73,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     id: "page-raids",
-    title: { es: "LINCE Raids", en: "LINCE Raids", zh: "LINCE突袭" },
+    title: { es: "LINCE Batallas", en: "LINCE Batallas", zh: "LINCE对战" },
     description: { es: "Desafíos cooperativos y batallas de conocimiento IA", en: "Cooperative challenges and AI knowledge battles", zh: "合作挑战和AI知识战斗" },
     category: "page",
     path: "/raids",
@@ -82,7 +82,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     id: "page-academia",
-    title: { es: "Academia LINCE", en: "LINCE Academy", zh: "LINCE学院" },
+    title: { es: "Cursos LINCE", en: "LINCE Courses", zh: "LINCE课程" },
     description: { es: "Centro de aprendizaje avanzado de inteligencia artificial", en: "Advanced AI learning center", zh: "高级AI学习中心" },
     category: "page",
     path: "/academia",
@@ -118,7 +118,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     id: "page-aviso-legal",
-    title: { es: "Aviso Legal", en: "Legal Notice", zh: "法律声明" },
+    title: { es: "Legal", en: "Legal Notice", zh: "法律声明" },
     description: { es: "Información legal, privacidad y cookies de ACNB IA SL", en: "Legal information, privacy and cookies", zh: "法律信息、隐私和Cookie" },
     category: "page",
     path: "/aviso-legal",
@@ -174,7 +174,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     id: "game-promptear",
-    title: { es: "PROMPTLIN", en: "PROMPTLIN", zh: "PROMPTLIN" },
+    title: { es: "Aprender Prompts", en: "Learn Prompts", zh: "学习提示词" },
     description: { es: "Juego interactivo de creación de prompts con puntuación", en: "Interactive prompt creation game with scoring", zh: "互动提示创建游戏" },
     category: "game",
     path: "/promptear",
@@ -185,7 +185,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   // ═══ FEATURES ═══
   {
     id: "feature-prompt-studio",
-    title: { es: "IMAGELIN Visual", en: "Visua IMAGELIN", zh: "视觉山猫图像" },
+    title: { es: "Crear Imagen", en: "Create Image", zh: "创建图像" },
     description: { es: "Crea prompts visuales con 4 campos inteligentes y genera imágenes con IA", en: "Create visual prompts with 4 smart fields and generate AI images", zh: "用4个智能字段创建视觉提示并生成AI图像" },
     category: "feature",
     path: "/prompt-studio",
@@ -479,7 +479,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     id: "avatar-duolingenio",
-    title: { es: "SABELIN — El Genio", en: "SABELIN — The Genius", zh: "SABELIN — 天才" },
+    title: { es: "PRIMO — El Genio", en: "PRIMO — The Genius", zh: "PRIMO — 天才" },
     description: { es: "El genio de la familia · Experto en tecnología avanzada", en: "Family genius · Advanced technology expert", zh: "家族天才 · 高级技术专家" },
     category: "avatar",
     path: "/personajes",
@@ -488,7 +488,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     id: "avatar-duolinpistado",
-    title: { es: "ATOLONDRALIN — El Despistado", en: "ATOLONDRALIN — The Absent-Minded", zh: "ATOLONDRALIN — 迷糊" },
+    title: { es: "TÍO — El Despistado", en: "TÍO — The Absent-Minded", zh: "TÍO — 迷糊" },
     description: { es: "El despistado simpático de la familia · Aprende a su ritmo", en: "The lovable absent-minded family member", zh: "可爱的迷糊家族成员" },
     category: "avatar",
     path: "/personajes",
@@ -499,7 +499,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   // ═══ ARSENAL IA PAGE ═══
   {
     id: "page-arsenal",
-    title: { es: "Arsenal IA", en: "AI Arsenal", zh: "AI武器库" },
+    title: { es: "Herramientas IA", en: "AI Tools", zh: "AI工具" },
     description: { es: "Directorio completo de 62+ herramientas de inteligencia artificial", en: "Complete directory of 62+ AI tools", zh: "62+AI工具完整目录" },
     category: "page",
     path: "/arsenal-ia",
@@ -508,7 +508,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     id: "page-catalogo",
-    title: { es: "Catálogo Formativo", en: "Training Catalog", zh: "培训目录" },
+    title: { es: "Todos los Cursos", en: "All Courses", zh: "所有课程" },
     description: { es: "120 cursos de IA organizados por categoría y nivel", en: "120 AI courses organized by category and level", zh: "按类别和级别组织的120个AI课程" },
     category: "page",
     path: "/catalogo-formativo",

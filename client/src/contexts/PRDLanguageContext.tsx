@@ -192,12 +192,19 @@ export function PRDLanguageProvider({ children }: { children: ReactNode }) {
   });
 
   // ═══ CHILE SIEMPRE POR DEFECTO (familia directa) ═══
-  // Si el usuario nunca eligió país, arranca con Chile.
+  // Si el usuario nunca eligió país, arranca con España.
   // Luego la geolocalización por IP puede actualizarlo automáticamente.
   const [country, setCountry] = useState<AvatarCountry>(() => {
     const saved = localStorage.getItem("lince-country");
+    const geoSource = localStorage.getItem("lince-geo-detected");
+    // Migración: si el país fue asignado automáticamente como Chile (antiguo default),
+    // reemplazar por España. Solo afecta a usuarios sin elección manual.
+    if (saved === "cl" && (geoSource === "FALLBACK_CL" || geoSource === null)) {
+      localStorage.setItem("lince-country", "es");
+      return "es";
+    }
     if (saved && ["default","es","cl","mx","ar","co","pe","en","zh","br","pt"].includes(saved)) return saved as AvatarCountry;
-    return "cl"; // Chile por defecto — familia directa
+    return "es"; // España por defecto
   });
 
   // Auto-detección de país por IP (solo la primera vez, si no hay selección guardada)
@@ -226,7 +233,7 @@ export function PRDLanguageProvider({ children }: { children: ReactNode }) {
         if (r1.ok) {
           const d1 = await r1.json();
           if (d1.countryCode) {
-            const mapped = ISO_TO_AVATAR[d1.countryCode] || "cl";
+            const mapped = ISO_TO_AVATAR[d1.countryCode] || "es";
             setCountry(mapped);
             localStorage.setItem("lince-country", mapped);
             localStorage.setItem("lince-geo-detected", d1.countryCode);
@@ -241,7 +248,7 @@ export function PRDLanguageProvider({ children }: { children: ReactNode }) {
         if (r2.ok) {
           const d2 = await r2.json();
           if (d2.country_code) {
-            const mapped = ISO_TO_AVATAR[d2.country_code] || "cl";
+            const mapped = ISO_TO_AVATAR[d2.country_code] || "es";
             setCountry(mapped);
             localStorage.setItem("lince-country", mapped);
             localStorage.setItem("lince-geo-detected", d2.country_code);
@@ -250,9 +257,9 @@ export function PRDLanguageProvider({ children }: { children: ReactNode }) {
         }
       } catch { /* silently fail */ }
 
-      // Si todo falla → Chile se mantiene (ya es el default)
-      localStorage.setItem("lince-country", "cl");
-      localStorage.setItem("lince-geo-detected", "FALLBACK_CL");
+      // Si todo falla → España por defecto
+      localStorage.setItem("lince-country", "es");
+      localStorage.setItem("lince-geo-detected", "FALLBACK_ES");
     };
 
     tryGeo();
@@ -326,138 +333,138 @@ export function PRDLanguageProvider({ children }: { children: ReactNode }) {
 export const AVATAR_NAMES_BY_COUNTRY: Record<string, Record<string, string>> = {
   // === ABUELOS (65+) ===
   YAYALIN: {
-    default: "TATALIN",   // Default = Chile (familia directa)
-    es: "YAYOLIN",       // España: Yayo → YAYOLIN
-    cl: "TATALIN",       // Chile: Tata → TATALIN
-    mx: "ABUELÍN",       // México: Abuelito → ABUELÍN
-    ar: "NONOLIN",       // Argentina: Nono → NONOLIN
-    co: "TATALIN",       // Colombia: Tata → TATALIN
-    pe: "PAPOLIN",       // Perú: Papá grande → PAPOLIN
-    en: "GRANDLIN",      // English: Grandpa → GRANDLIN
-    zh: "爷林 (YÉLÍN)",   // China: 爷爷 → 爷林
-    br: "VOVOLIN",       // Brasil: Vovô → VOVOLIN
-    pt: "AVOLIN",        // Portugal: Avô → AVOLIN
+    default: "ABUELO",
+    es: "ABUELO",
+    cl: "TATA",
+    mx: "ABUELO",
+    ar: "NONO",
+    co: "TATA",
+    pe: "ABUELO",
+    en: "GRANDPA",
+    zh: "爷爷",
+    br: "VOVÔ",
+    pt: "AVÔ",
   },
   YAYALINA: {
-    default: "NANALINA",  // Default = Chile (familia directa)
-    es: "YAYALINA",      // España: Yaya → YAYALINA
-    cl: "NANALINA",      // Chile: Nana → NANALINA
-    mx: "ABUELINA",      // México: Abuelita → ABUELINA
-    ar: "NONALINA",      // Argentina: Nona → NONALINA
-    co: "ABULINA",       // Colombia: Abu → ABULINA
-    pe: "MAMALINA",      // Perú: Mamá grande → MAMALINA
-    en: "GRANLINA",      // English: Granny → GRANLINA
-    zh: "奶丽娜 (NǍILÌNÀ)", // China: 奶奶 → 奶丽娜
-    br: "VOVOLINA",      // Brasil: Vovó → VOVOLINA
-    pt: "AVOLINA",       // Portugal: Avó → AVOLINA
+    default: "ABUELA",
+    es: "ABUELA",
+    cl: "NANA",
+    mx: "ABUELA",
+    ar: "NONA",
+    co: "ABU",
+    pe: "ABUELA",
+    en: "GRANNY",
+    zh: "奶奶",
+    br: "VOVÓ",
+    pt: "AVÓ",
   },
   // === ADULTOS (35-64) ===
   PAPALIN: {
-    default: "VIEJOLIN",  // Default = Chile (familia directa)
-    es: "PAPALIN",       // España: Papi → PAPALIN
-    cl: "VIEJOLIN",      // Chile: Viejo → VIEJOLIN
-    mx: "JEFELIN",       // México: Jefe → JEFELIN
-    ar: "VIEJOLIN",      // Argentina: Viejo → VIEJOLIN
-    co: "CUCHOLIN",      // Colombia: Cucho → CUCHOLIN
-    pe: "PAPILIN",       // Perú: Papi → PAPILIN
-    en: "POPLIN",        // English: Pop → POPLIN
-    zh: "爸林 (BÀLÍN)",   // China: 爸爸 → 爸林
-    br: "PAILIN",        // Brasil: Pai → PAILIN
-    pt: "PAILIN",        // Portugal: Pai → PAILIN
+    default: "PAPÁ",
+    es: "PAPÁ",
+    cl: "VIEJO",
+    mx: "JEFE",
+    ar: "VIEJO",
+    co: "CUCHO",
+    pe: "PAPI",
+    en: "POP",
+    zh: "爸爸",
+    br: "PAI",
+    pt: "PAI",
   },
   MAMALINA: {
-    default: "MAMILINA",  // Default = Chile (familia directa)
-    es: "MAMALINA",      // España: Mami → MAMALINA
-    cl: "MAMILINA",      // Chile: Mami → MAMILINA
-    mx: "JEFALINA",      // México: Jefa → JEFALINA
-    ar: "VIEJALINA",     // Argentina: Vieja → VIEJALINA
-    co: "CUCHALINA",     // Colombia: Cucha → CUCHALINA
-    pe: "MAMILINA",      // Perú: Mami → MAMILINA
-    en: "MUMLINA",       // English: Mum → MUMLINA
-    zh: "妈丽娜 (MĀLÌNÀ)", // China: 妈妈 → 妈丽娜
-    br: "MAELINA",       // Brasil: Mãe → MAELINA
-    pt: "MAELINA",       // Portugal: Mãe → MAELINA
+    default: "MAMÁ",
+    es: "MAMÁ",
+    cl: "MAMI",
+    mx: "JEFA",
+    ar: "VIEJA",
+    co: "CUCHA",
+    pe: "MAMI",
+    en: "MUM",
+    zh: "妈妈",
+    br: "MÃE",
+    pt: "MÃE",
   },
   // === JÓVENES (16-34) ===
   CHAVALIN: {
-    default: "CABROLIN",  // Default = Chile (familia directa)
-    es: "CHAVALIN",      // España: Chaval → CHAVALIN
-    cl: "CABROLIN",      // Chile: Cabro → CABROLIN
-    mx: "CHAVOLIN",      // México: Chavo → CHAVOLIN
-    ar: "PIBELIN",       // Argentina: Pibe → PIBELIN
-    co: "PARCELIN",      // Colombia: Parcero → PARCELIN
-    pe: "CAUSALIN",      // Perú: Causa → CAUSALIN
-    en: "BROLIN",        // English: Bro → BROLIN
-    zh: "哥林 (GĒLÍN)",   // China: 哥们 → 哥林
-    br: "MANOLIN",       // Brasil: Mano → MANOLIN
-    pt: "GAJOLIN",       // Portugal: Gajo → GAJOLIN
+    default: "HIJO",
+    es: "HIJO",
+    cl: "CABRO",
+    mx: "CHAVO",
+    ar: "PIBE",
+    co: "PARCE",
+    pe: "CAUSA",
+    en: "BRO",
+    zh: "哥们",
+    br: "MANO",
+    pt: "GAJO",
   },
   CHAVALINA: {
-    default: "CABRALINA", // Default = Chile (familia directa)
-    es: "CHAVALINA",     // España: Chavala → CHAVALINA
-    cl: "CABRALINA",     // Chile: Cabra → CABRALINA
-    mx: "CHAVALINA",     // México: Chava → CHAVALINA
-    ar: "PIBALINA",      // Argentina: Piba → PIBALINA
-    co: "PARCELINA",     // Colombia: Parcera → PARCELINA
-    pe: "CAUSALINA",     // Perú: Causa → CAUSALINA
-    en: "SISLINA",       // English: Sis → SISLINA
-    zh: "姐丽娜 (JIĚLÌNÀ)", // China: 姐妹 → 姐丽娜
-    br: "MANALINA",      // Brasil: Mana → MANALINA
-    pt: "GAJALINA",      // Portugal: Gaja → GAJALINA
+    default: "HIJA",
+    es: "HIJA",
+    cl: "CABRA",
+    mx: "CHAVA",
+    ar: "PIBA",
+    co: "PARCERA",
+    pe: "CAUSA",
+    en: "SIS",
+    zh: "姐妹",
+    br: "MANA",
+    pt: "GAJA",
   },
   // === NIÑOS (6-15) ===
   PEQUELIN: {
-    default: "CHICOLIN",  // Default = Chile (familia directa)
-    es: "PEQUELIN",      // España: Peque → PEQUELIN
-    cl: "CHICOLIN",      // Chile: Cabro chico → CHICOLIN
-    mx: "CHAMACOLIN",    // México: Chamaco → CHAMACOLIN
-    ar: "NENELIN",       // Argentina: Nene → NENELIN
-    co: "PELAOLIN",      // Colombia: Pelao → PELAOLIN
-    pe: "CHIBOLIN",      // Perú: Chibolo → CHIBOLIN
-    en: "KIDDOLIN",      // English: Kiddo → KIDDOLIN
-    zh: "小林 (XIǍOLÍN)", // China: 小朋友 → 小林
-    br: "MOLEQUELIN",    // Brasil: Moleque → MOLEQUELIN
-    pt: "MIUDOLIN",      // Portugal: Miúdo → MIUDOLIN
+    default: "NIÑO",
+    es: "NIÑO",
+    cl: "CHICO",
+    mx: "CHAMACO",
+    ar: "NENE",
+    co: "PELAO",
+    pe: "CHIBOLO",
+    en: "KIDDO",
+    zh: "小朋友",
+    br: "MOLEQUE",
+    pt: "MIÚDO",
   },
   PEQUELINA: {
-    default: "CHICALINA", // Default = Chile (familia directa)
-    es: "PEQUELINA",     // España: Peque → PEQUELINA
-    cl: "CHICALINA",     // Chile: Cabra chica → CHICALINA
-    mx: "CHAMACALINA",   // México: Chamaca → CHAMACALINA
-    ar: "NENELINA",      // Argentina: Nena → NENELINA
-    co: "PELALINA",      // Colombia: Pelaa → PELALINA
-    pe: "CHIBOLINA",     // Perú: Chibola → CHIBOLINA
-    en: "KIDDOLINA",     // English: Kiddo → KIDDOLINA
-    zh: "小丽娜 (XIǍOLÌNÀ)", // China: 小朋友 → 小丽娜
-    br: "MOLEQUELINA",   // Brasil: Moleca → MOLEQUELINA
-    pt: "MIUDALINA",     // Portugal: Miúda → MIUDALINA
+    default: "NIÑA",
+    es: "NIÑA",
+    cl: "CHICA",
+    mx: "CHAMACA",
+    ar: "NENA",
+    co: "PELADA",
+    pe: "CHIBOLA",
+    en: "KIDDO",
+    zh: "小朋友",
+    br: "MOLECA",
+    pt: "MIÚDA",
   },
   // === ESPECIALES ===
   ATOLONDRALIN: {
-    default: "DESPISTOLIN", // Default = Chile (familia directa)
-    es: "ATOLONDRALIN",  // España: Atolondrado
-    cl: "DESPISTOLIN",   // Chile: Despistado
-    mx: "ATARANTOLIN",   // México: Atarantado
-    ar: "DESPISTOLIN",   // Argentina
-    co: "DESPARCHOLIN",  // Colombia: Desparchado
-    pe: "DESPISTOLIN",   // Perú
-    en: "GOOFYLIN",      // English: Goofy
-    zh: "糊涂林 (HÚTULÍN)", // China: 糊涂
-    br: "ATRAPALHOLIN",  // Brasil: Atrapalhado → ATRAPALHOLIN
-    pt: "TRAPALHOLIN",   // Portugal: Trapalhão → TRAPALHOLIN
+    default: "TÍO",
+    es: "TÍO",
+    cl: "DESPISTADO",
+    mx: "ATARANTADO",
+    ar: "DESPISTADO",
+    co: "DESPARCHADO",
+    pe: "DESPISTADO",
+    en: "GOOFY",
+    zh: "糊涂",
+    br: "ATRAPALHADO",
+    pt: "TRAPALHÃO",
   },
   SABELIN: {
-    default: "CAPOLÍN",   // Default = Chile (familia directa)
-    es: "SABELIN",       // España: Sabelotodo
-    cl: "CAPOLÍN",       // Chile: Capo
-    mx: "CHIDOLIN",      // México: Chido
-    ar: "CRACKLIN",      // Argentina: Crack
-    co: "BERRACOLIN",    // Colombia: Berraco
-    pe: "MOSTROLÍN",     // Perú: Mostro
-    en: "BRAINYLIN",     // English: Brainy
-    zh: "天才林 (TIĀNCÁILÍN)", // China: 天才
-    br: "CRAQUEOLIN",    // Brasil: Craque → CRAQUEOLIN
-    pt: "CRAQUELIN",     // Portugal: Craque → CRAQUELIN
+    default: "PRIMO",
+    es: "PRIMO",
+    cl: "CAPO",
+    mx: "CHIDO",
+    ar: "CRACK",
+    co: "BERRACO",
+    pe: "MOSTRO",
+    en: "BRAINY",
+    zh: "天才",
+    br: "CRAQUE",
+    pt: "CRAQUE",
   },
 };
 
@@ -480,7 +487,7 @@ const _basePrdTranslations: Partial<Record<PRDLanguage, any>> = {
   es: {
     langName: "Español",
     langFlag: "🇪🇸",
-    nav: { vision: "Visión", gracias: "Gracias", avatares: "Avatares", personalizar: "Personalizar", familia: "Familia", gamificacion: "Gamificación", contenido: "Contenido", arquitectura: "Arquitectura", flujos: "Flujos", monetizacion: "Monetización", accesibilidad: "Accesibilidad", roadmap: "Roadmap", entregables: "Entregables", registro: "Registro", mundo: "Mundo", raids: "Raids", academia: "Academia", comoJugar: "Cómo Jugar", arsenalIA: "Arsenal IA", cursos: "Cursos", jugar: "¡JUGAR!", login: "Iniciar Sesión", promptProfesional: "Prompt Profesional", catalogoFormativo: "Catálogo Formativo", courseBuilder: "Course Builder", historialPrompts: "Historial Prompts", miPanel: "Mi Panel" },
+    nav: { vision: "Visión", gracias: "Gracias", avatares: "Especialistas", personalizar: "Personalizar", familia: "Familia", gamificacion: "Gamificación", contenido: "Contenido", arquitectura: "Arquitectura", flujos: "Flujos", monetizacion: "Monetización", accesibilidad: "Accesibilidad", roadmap: "Roadmap", entregables: "Entregables", registro: "Registro", mundo: "Mundo", raids: "Batallas", academia: "Cursos", comoJugar: "Cómo Jugar", arsenalIA: "Herramientas IA", cursos: "Cursos", jugar: "¡JUGAR!", login: "Iniciar Sesión", promptProfesional: "Prompt Profesional", catalogoFormativo: "Todos los Cursos", courseBuilder: "Crea tu Curso", historialPrompts: "Historial Prompts", miPanel: "Mi Progreso" },
     nda: {
       title: "ACUERDO DE CONFIDENCIALIDAD",
       subtitle: "DOCUMENTO CONFIDENCIAL — ACCESO RESTRINGIDO",
@@ -629,7 +636,7 @@ const _basePrdTranslations: Partial<Record<PRDLanguage, any>> = {
   en: {
     langName: "English",
     langFlag: "🇬🇧",
-    nav: { vision: "Vision", gracias: "Thanks", avatares: "Avatars", personalizar: "Customize", familia: "Family", gamificacion: "Gamification", contenido: "Content", arquitectura: "Architecture", flujos: "Flows", monetizacion: "Monetization", accesibilidad: "Accessibility", roadmap: "Roadmap", entregables: "Deliverables", registro: "Register", mundo: "World", raids: "Raids", academia: "Academy", comoJugar: "How to Play", arsenalIA: "AI Arsenal", cursos: "Courses", jugar: "PLAY!", login: "Sign In", promptProfesional: "Pro Prompt", catalogoFormativo: "Course Catalog", courseBuilder: "Course Builder", historialPrompts: "Prompt History", miPanel: "My Dashboard" },
+    nav: { vision: "Vision", gracias: "Thanks", avatares: "Avatars", personalizar: "Customize", familia: "Family", gamificacion: "Gamification", contenido: "Content", arquitectura: "Architecture", flujos: "Flows", monetizacion: "Monetization", accesibilidad: "Accessibility", roadmap: "Roadmap", entregables: "Deliverables", registro: "Register", mundo: "World", raids: "Batallas", academia: "Academy", comoJugar: "How to Play", arsenalIA: "AI Tools", cursos: "Courses", jugar: "PLAY!", login: "Sign In", promptProfesional: "Pro Prompt", catalogoFormativo: "All Courses", courseBuilder: "Crea tu Curso", historialPrompts: "Prompt History", miPanel: "My Progress" },
     nda: {
       title: "CONFIDENTIALITY AGREEMENT",
       subtitle: "CONFIDENTIAL DOCUMENT — RESTRICTED ACCESS",
@@ -930,7 +937,7 @@ const _basePrdTranslations: Partial<Record<PRDLanguage, any>> = {
   "pt-BR": {
     langName: "Português (BR)",
     langFlag: "🇧🇷",
-    nav: { vision: "Visão", gracias: "Obrigado", avatares: "Avatares", personalizar: "Personalizar", familia: "Família", gamificacion: "Gamificação", contenido: "Conteúdo", arquitectura: "Arquitetura", flujos: "Fluxos", monetizacion: "Monetização", accesibilidad: "Acessibilidade", roadmap: "Roadmap", entregables: "Entregáveis", registro: "Cadastro", mundo: "Mundo", raids: "Raids", academia: "Academia", comoJugar: "Como Jogar", arsenalIA: "Arsenal IA", cursos: "Cursos", jugar: "JOGAR!", login: "Entrar", promptProfesional: "Prompt Profissional", catalogoFormativo: "Catálogo de Cursos", courseBuilder: "Criador de Cursos", historialPrompts: "Histórico de Prompts", miPanel: "Meu Painel" },
+    nav: { vision: "Visão", gracias: "Obrigado", avatares: "Especialistas", personalizar: "Personalizar", familia: "Família", gamificacion: "Gamificação", contenido: "Conteúdo", arquitectura: "Arquitetura", flujos: "Fluxos", monetizacion: "Monetização", accesibilidad: "Acessibilidade", roadmap: "Roadmap", entregables: "Entregáveis", registro: "Cadastro", mundo: "Mundo", raids: "Batallas", academia: "Cursos", comoJugar: "Como Jogar", arsenalIA: "Herramientas IA", cursos: "Cursos", jugar: "JOGAR!", login: "Entrar", promptProfesional: "Prompt Profissional", catalogoFormativo: "Todos os Cursos", courseBuilder: "Cria o teu Curso", historialPrompts: "Histórico de Prompts", miPanel: "Meu Progresso" },
     nda: {
       title: "ACORDO DE CONFIDENCIALIDADE",
       subtitle: "DOCUMENTO CONFIDENCIAL — ACESSO RESTRITO",
@@ -1058,7 +1065,7 @@ const _basePrdTranslations: Partial<Record<PRDLanguage, any>> = {
   "pt-PT": {
     langName: "Português (PT)",
     langFlag: "🇵🇹",
-    nav: { vision: "Visão", gracias: "Obrigado", avatares: "Avatares", personalizar: "Personalizar", familia: "Família", gamificacion: "Gamificação", contenido: "Conteúdo", arquitectura: "Arquitetura", flujos: "Fluxos", monetizacion: "Monetização", accesibilidad: "Acessibilidade", roadmap: "Roadmap", entregables: "Entregáveis", registro: "Registo", mundo: "Mundo", raids: "Raids", academia: "Academia", comoJugar: "Como Jogar", arsenalIA: "Arsenal IA", cursos: "Cursos", jugar: "JOGAR!", login: "Iniciar Sessão", promptProfesional: "Prompt Profissional", catalogoFormativo: "Catálogo Formativo", courseBuilder: "Criador de Cursos", historialPrompts: "Histórico de Prompts", miPanel: "O Meu Painel" },
+    nav: { vision: "Visão", gracias: "Obrigado", avatares: "Especialistas", personalizar: "Personalizar", familia: "Família", gamificacion: "Gamificação", contenido: "Conteúdo", arquitectura: "Arquitetura", flujos: "Fluxos", monetizacion: "Monetização", accesibilidad: "Acessibilidade", roadmap: "Roadmap", entregables: "Entregáveis", registro: "Registo", mundo: "Mundo", raids: "Batallas", academia: "Cursos", comoJugar: "Como Jogar", arsenalIA: "Herramientas IA", cursos: "Cursos", jugar: "JOGAR!", login: "Iniciar Sessão", promptProfesional: "Prompt Profissional", catalogoFormativo: "Todos los Cursos", courseBuilder: "Cria o teu Curso", historialPrompts: "Histórico de Prompts", miPanel: "O Meu Progresso" },
     nda: {
       title: "ACORDO DE CONFIDENCIALIDADE",
       subtitle: "DOCUMENTO CONFIDENCIAL — ACESSO RESTRITO",

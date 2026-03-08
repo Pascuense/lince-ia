@@ -62,7 +62,7 @@ interface CourseData {
 // ─── Translations ───
 const TR: Record<string, Record<string, string>> = {
   es: {
-    pageTitle: "Course Builder",
+    pageTitle: "Crea tu Curso",
     pageSubtitle: "Diseña tu propio curso formativo de IA paso a paso",
     back: "Volver",
     courseTitle: "Título del curso",
@@ -121,7 +121,7 @@ const TR: Record<string, Record<string, string>> = {
     close: "Cerrar",
   },
   en: {
-    pageTitle: "Course Builder",
+    pageTitle: "Crea tu Curso",
     pageSubtitle: "Design your own AI training course step by step",
     back: "Back",
     courseTitle: "Course title",

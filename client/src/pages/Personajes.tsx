@@ -61,7 +61,7 @@ type Character = {
 const FAMILIA_ORIGINAL: Character[] = [
   {
     id: "yayolin",
-    name: "YAYOLIN",
+    name: "ABUELO",
     role: "El Abuelo Intenso",
     gender: "M",
     description: "Te enseña los fundamentos de la IA desde cero",
@@ -72,7 +72,7 @@ const FAMILIA_ORIGINAL: Character[] = [
   },
   {
     id: "yayalina",
-    name: "YAYALINA",
+    name: "ABUELA",
     role: "La Abuela Cariñosa",
     gender: "F",
     description: "Explica la IA paso a paso para personas mayores",
@@ -83,7 +83,7 @@ const FAMILIA_ORIGINAL: Character[] = [
   },
   {
     id: "papalin",
-    name: "PAPALIN",
+    name: "PAPÁ",
     role: "El Estratega Profesional",
     gender: "M",
     description: "Lidera tu aprendizaje de IA de principio a fin",
@@ -94,7 +94,7 @@ const FAMILIA_ORIGINAL: Character[] = [
   },
   {
     id: "mamalina",
-    name: "MAMALINA",
+    name: "MAMÁ",
     role: "La Organizadora Empática",
     gender: "F",
     description: "Guía a mayores con paciencia infinita en el uso de IA",
@@ -105,7 +105,7 @@ const FAMILIA_ORIGINAL: Character[] = [
   },
   {
     id: "chavalin",
-    name: "CHAVALIN",
+    name: "HIJO",
     role: "El Hype Man Gen Z",
     gender: "M",
     description: "Enseña IA a niños con juegos y retos divertidos",
@@ -116,7 +116,7 @@ const FAMILIA_ORIGINAL: Character[] = [
   },
   {
     id: "chavalina",
-    name: "CHAVALINA",
+    name: "HIJA",
     role: "La Creativa Digital",
     gender: "F",
     description: "Crea contigo arte digital e imágenes con Midjourney",
@@ -127,7 +127,7 @@ const FAMILIA_ORIGINAL: Character[] = [
   },
   {
     id: "pequelin",
-    name: "PEQUELIN",
+    name: "NIÑO",
     role: "El Explorador Curioso",
     gender: "M",
     description: "Construye apps y webs con IA sin saber programar",
@@ -138,7 +138,7 @@ const FAMILIA_ORIGINAL: Character[] = [
   },
   {
     id: "pequelina",
-    name: "PEQUELINA",
+    name: "NIÑA",
     role: "La Profesora Junior",
     gender: "F",
     description: "Demuestra lo que la IA puede hacer en tiempo real",
@@ -149,7 +149,7 @@ const FAMILIA_ORIGINAL: Character[] = [
   },
   {
     id: "atolondralin",
-    name: "ATOLONDRALIN",
+    name: "TÍO",
     role: "El Torpecillo Adorable",
     gender: "M",
     description: "Demuestra que equivocarse con IA es parte de aprender",
@@ -160,7 +160,7 @@ const FAMILIA_ORIGINAL: Character[] = [
   },
   {
     id: "sabelin",
-    name: "SABELIN",
+    name: "PRIMO",
     role: "El Genio Sutil",
     gender: "M",
     description: "Te guía con preguntas para que descubras la IA por ti mismo",

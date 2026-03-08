@@ -38,7 +38,7 @@ import { BackButton } from "@/components/BackButton";
 
 // ─── Avatar Guide for Arsenal IA ───
 const GUIDE_AVATAR = {
-  name: "ATOLONDRALIN",
+  name: "TÍO",
   role: "El Explorador Tech",
   img: AVATAR_FRONTAL.ATOLONDRALIN,
   expr: AVATAR_EXPRESSIONS.ATOLONDRALIN,
@@ -178,7 +178,7 @@ const TOOLS: Array<{
   { name: "Photoroom", category: "diseno", url: "https://photoroom.com", desc: "Edición de fotos de producto con IA. E-commerce, social media, catálogos.", free: true, pricing: { free: true, freeTier: "Edición básica gratis con watermark", price: "Pro: $9.99/mes (sin watermark, batch)", tokenValue: "N/A" }, example: "Sube foto de producto → elimina fondo → añade fondo profesional → listo para tienda" },
   { name: "Spline AI", category: "diseno", url: "https://spline.design", desc: "Diseño 3D con IA en el navegador. Genera objetos 3D desde texto.", free: true, pricing: { free: true, freeTier: "Editor 3D completo gratis", price: "Pro: $7/mes (exportar, colaborar)", tokenValue: "N/A" }, example: "Escribe: 'robot futurista con ojos brillantes' → genera modelo 3D interactivo" },
   { name: "Uizard", category: "diseno", url: "https://uizard.io", desc: "Wireframes y mockups desde texto o bocetos a mano. Prototipado rápido.", free: true, pricing: { free: true, freeTier: "3 proyectos gratis", price: "Pro: $12/mes (ilimitado, componentes)", tokenValue: "N/A" }, example: "Sube foto de boceto en papel → Uizard lo convierte en wireframe digital editable" },
-  { name: "Galileo AI", category: "diseno", url: "https://usegalileo.ai", desc: "Genera diseños UI completos desde descripciones de texto. Alta fidelidad.", free: true, pricing: { free: true, freeTier: "Acceso limitado en beta", price: "Pro: $19/mes (generaciones ilimitadas)", tokenValue: "N/A" }, example: "Describe: 'app de delivery con mapa, lista de restaurantes y carrito' → diseño completo" },
+  { name: "Galileo AI", category: "diseno", url: "https://usegalileo.ai", desc: "Genera diseños UI completos desde descripciones de texto. Alta fidelidad.", free: true, pricing: { free: true, freeTier: "Acceso limitado gratuito", price: "Pro: $19/mes (generaciones ilimitadas)", tokenValue: "N/A" }, example: "Describe: 'app de delivery con mapa, lista de restaurantes y carrito' → diseño completo" },
   { name: "Vizcom", category: "diseno", url: "https://vizcom.ai", desc: "Transforma bocetos a mano en renders fotorrealistas. Ideal para diseño industrial.", free: true, pricing: { free: true, freeTier: "Renders limitados gratis", price: "Pro: $29/mes (ilimitado, alta resolución)", tokenValue: "N/A" }, example: "Dibuja boceto de zapatilla → Vizcom genera render 3D fotorrealista con materiales" },
 
   // ═══ INVESTIGACIÓN (8) ═══
@@ -440,15 +440,15 @@ export default function ArsenalIA() {
               <Zap className="w-4 h-4 text-[#00E5FF]" />
               <span className="text-[#00E5FF] text-sm font-medium">Ecosistema de Herramientas IA</span>
             </div>
-            <h1 className="font-['Space_Grotesk'] font-bold text-4xl sm:text-5xl text-white mb-4">
+            <h1 className="font-['Space_Grotesk'] font-bold text-4xl sm:text-6xl text-white mb-5">
               Arsenal <span className="text-[#00E5FF]">IA</span>
             </h1>
-            <p className="text-[#B0B0B0] text-lg max-w-2xl mx-auto mb-2">
+            <p className="text-white/70 text-lg sm:text-xl max-w-2xl mx-auto mb-3">
               <span className="text-[#00E5FF] font-bold">{TOOLS.length} herramientas</span> de inteligencia artificial organizadas en{" "}
               <span className="text-[#D4A843] font-bold">{CATEGORIES.length - 1} categorías</span>.
               Todas verificadas, con precios actualizados y ejemplos de uso.
             </p>
-            <p className="text-cyan-400/60 text-sm max-w-xl mx-auto">
+            <p className="text-cyan-400/70 text-base max-w-xl mx-auto">
               Haz clic en cualquier herramienta para ver precios, acceso gratuito, valor del token y ejemplo de uso.
             </p>
             <div className="mt-4 inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-white/[0.03] border border-[#00E5FF]/15">
@@ -461,24 +461,24 @@ export default function ArsenalIA() {
           </div>
 
           {/* Search */}
-          <div className="relative mb-6">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#B0B0B0]/40" />
+          <div className="relative mb-8">
+            <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-white/30" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Buscar herramienta por nombre o descripción..."
-              className="w-full pl-12 pr-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white placeholder:text-[#B0B0B0]/40 focus:border-[#00E5FF]/50 focus:outline-none transition-colors"
+              className="w-full pl-14 pr-5 py-4 bg-white/[0.04] border-2 border-white/[0.1] rounded-2xl text-lg text-white placeholder:text-white/30 focus:border-[#00E5FF]/50 focus:outline-none transition-colors"
             />
           </div>
 
           {/* Category Filter */}
-          <div className="flex flex-wrap gap-2 mb-8">
+          <div className="flex flex-wrap gap-2.5 mb-10">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all border ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all border-2 ${
                   activeCategory === cat.id
                     ? `text-[#0A0A0A] border-transparent`
                     : "bg-white/[0.02] border-white/[0.06] text-[#B0B0B0] hover:border-white/[0.15] hover:text-white"
@@ -538,29 +538,29 @@ export default function ArsenalIA() {
           </div>
 
           {/* Results count */}
-          <p className="text-[#B0B0B0] text-xs mb-4">{filteredTools.length} de {TOOLS.length} herramientas</p>
+          <p className="text-white/50 text-sm mb-5 font-medium">{filteredTools.length} de {TOOLS.length} herramientas</p>
 
           {/* Tools Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {filteredTools.map((tool, i) => (
               <button key={i} onClick={() => setSelectedTool(tool)}
-                className="group p-4 bg-[#111] border border-[#222] rounded-xl hover:border-[#00E5FF]/30 transition-all text-left">
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-['Space_Grotesk'] font-bold text-white text-sm group-hover:text-[#00E5FF] transition-colors">{tool.name}</h4>
-                  <div className="flex items-center gap-1.5">
-                    {tool.featured && <Star className="w-3 h-3 text-[#D4A843]" />}
-                    <Info className="w-3.5 h-3.5 text-[#B0B0B0]/30 group-hover:text-[#00E5FF] transition-colors" />
+                className="group p-5 sm:p-6 bg-[#111] border-2 border-[#222] rounded-2xl hover:border-[#00E5FF]/30 transition-all text-left min-h-[140px]">
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="font-['Space_Grotesk'] font-bold text-white text-base sm:text-lg group-hover:text-[#00E5FF] transition-colors">{tool.name}</h4>
+                  <div className="flex items-center gap-2">
+                    {tool.featured && <Star className="w-4 h-4 text-[#D4A843]" />}
+                    <Info className="w-4 h-4 text-[#B0B0B0]/30 group-hover:text-[#00E5FF] transition-colors" />
                   </div>
                 </div>
-                <p className="text-[#B0B0B0] text-xs leading-relaxed line-clamp-2 mb-3">{tool.desc}</p>
+                <p className="text-white/60 text-sm leading-relaxed line-clamp-2 mb-4">{tool.desc}</p>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    {tool.free && <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">FREE</span>}
-                    <span className="text-[9px] px-1.5 py-0.5 rounded text-[#B0B0B0]/60" style={{ backgroundColor: `${categoryColor(tool.category)}15`, color: categoryColor(tool.category) }}>
+                  <div className="flex items-center gap-2.5">
+                    {tool.free && <span className="text-xs px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold">GRATIS</span>}
+                    <span className="text-xs px-2.5 py-1 rounded-lg" style={{ backgroundColor: `${categoryColor(tool.category)}15`, color: categoryColor(tool.category) }}>
                       {CATEGORIES.find(c => c.id === tool.category)?.label}
                     </span>
                   </div>
-                  {tool.pricing?.freeTier && <span className="text-[9px] text-[#B0B0B0]/40 truncate max-w-[140px]">{tool.pricing.freeTier}</span>}
+                  {tool.pricing?.freeTier && <span className="text-xs text-white/30 truncate max-w-[160px]">{tool.pricing.freeTier}</span>}
                 </div>
               </button>
             ))}

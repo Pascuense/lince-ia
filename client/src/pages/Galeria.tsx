@@ -47,7 +47,7 @@ const ENV_LABELS: Record<string, string> = {
   naturaleza: "Naturaleza",
   ciudad: "Ciudad / Urbano",
   espacio: "Espacio Exterior",
-  submarino: "Submarino",
+  marino: "Marino",
   fantasia: "Fantasía",
   interior: "Interior",
   desierto: "Desierto",
@@ -343,7 +343,7 @@ export default function Galeria() {
               href="/prompt-studio"
               className="text-[#00E5FF] text-xs font-medium px-3 py-1.5 rounded-full bg-[#00E5FF]/10 border border-[#00E5FF]/30 hover:bg-[#00E5FF]/20 transition-colors"
             >
-              IMAGELIN
+              Crear Imagen
             </a>
             <span className="text-[#D4A843] text-xs font-medium px-3 py-1.5 rounded-full bg-[#D4A843]/10 border border-[#D4A843]/30">
               Galería
@@ -365,7 +365,7 @@ export default function Galeria() {
               Galería <span className="text-[#D4A843]">LINCE</span>
             </h1>
             <p className="text-[#B0B0B0] text-lg max-w-2xl mx-auto mb-2">
-              Explora las imágenes generadas con IA usando IMAGELIN. Cada imagen fue creada con solo 4 campos simples.
+              Explora las imágenes generadas con IA usando Crear Imagen. Cada imagen fue creada con solo 4 campos simples.
             </p>
             <p className="text-[#B0B0B0]/40 text-xs flex items-center justify-center gap-1">
               <Shield className="w-3 h-3" />
@@ -416,13 +416,13 @@ export default function Galeria() {
                 <ImageIcon className="w-10 h-10 text-[#B0B0B0]/20" />
               </div>
               <h3 className="font-['Space_Grotesk'] font-bold text-white text-xl mb-2">La galería está vacía</h3>
-              <p className="text-[#B0B0B0] text-sm mb-6">Sé el primero en crear una imagen con IMAGELIN</p>
+              <p className="text-[#B0B0B0] text-sm mb-6">Sé el primero en crear una imagen con Crear Imagen</p>
               <a
                 href="/prompt-studio"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-[#00E5FF] text-[#0A0A0A] rounded-xl font-['Space_Grotesk'] font-bold text-sm shadow-[0_0_20px_rgba(0,229,255,0.2)]"
               >
                 <Wand2 className="w-4 h-4" />
-                Ir a IMAGELIN
+                Crear Imagen
               </a>
             </div>
           )}
@@ -526,7 +526,7 @@ export default function Galeria() {
                   className="inline-flex items-center gap-2 text-[#00E5FF] text-sm font-medium hover:underline"
                 >
                   <Camera className="w-4 h-4" />
-                  Prueba IMAGELIN ahora
+                  Prueba Crear Imagen ahora
                 </a>
               </div>
             </div>

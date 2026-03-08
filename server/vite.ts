@@ -25,7 +25,8 @@ export async function setupVite(app: Express, server: Server) {
 
   app.use(vite.middlewares);
 
-  app.use("*", async (req, res, next) => {
+  // catch-all handler for dev server, no path pattern to avoid router conflicts
+  app.use(async (req, res, next) => {
     const url = req.originalUrl;
     try {
       const clientTemplate = path.resolve(

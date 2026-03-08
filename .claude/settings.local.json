@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm --version)",
+      "Bash(pnpm install)",
+      "Bash(pnpm approve-builds --yes)",
+      "Bash(pnpm run build)",
+      "Bash(pnpm add cross-env)",
+      "Bash(pnpm run dev)",
+      "Bash(unzip -o \"duolince 05-03-2026..zip\" -d \"duolince-fresh-extract\")",
+      "Bash(xargs grep -l \"YAYOLIN\\\\|getAvatarName\")",
+      "Bash(netstat -ano)"
+    ]
+  }
+}

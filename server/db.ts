@@ -1,6 +1,8 @@
 import { desc, eq, sql, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
+import mysql from "mysql2/promise";
 import { InsertUser, users, promptCreations, InsertPromptCreation, gamePlayers, InsertGamePlayer, GamePlayer, legalAcceptances, InsertLegalAcceptance, LegalAcceptance, customCourses, InsertCustomCourse, CustomCourse, toolViews, InsertToolView, ToolView, chatSessions, InsertChatSession, ChatSession, chatMessages, InsertChatMessage, ChatMessage } from "../drizzle/schema";
+import { ENV } from './_core/env';
 import bcrypt from "bcryptjs";
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -9,7 +11,17 @@ let _db: ReturnType<typeof drizzle> | null = null;
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      _db = drizzle(process.env.DATABASE_URL);
+      // Strip SSL params from URL and pass ssl config separately (mysql2 v3 compatibility)
+      const rawUrl = process.env.DATABASE_URL;
+      const urlWithoutSsl = rawUrl.replace(/[?&]ssl=[^&]*/g, "").replace(/\?$/, "");
+      const needsSsl = rawUrl.includes("ssl=");
+      const pool = mysql.createPool({
+        uri: urlWithoutSsl,
+        ssl: needsSsl ? { rejectUnauthorized: true } : undefined,
+        waitForConnections: true,
+        connectionLimit: 10,
+      });
+      _db = drizzle(pool);
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
@@ -18,49 +30,75 @@ export async function getDb() {
   return _db;
 }
 
-// ─── User Management (Azure JWT Auth) ───
+export async function upsertUser(user: InsertUser): Promise<void> {
+  if (!user.openId) {
+    throw new Error("User openId is required for upsert");
+  }
 
-export async function createUser(data: {
-  email: string;
-  passwordHash: string;
-  name: string | null;
-  role: string;
-}): Promise<any | null> {
   const db = await getDb();
-  if (!db) throw new Error("Database not available");
+  if (!db) {
+    console.warn("[Database] Cannot upsert user: database not available");
+    return;
+  }
 
-  await db.insert(users).values({
-    email: data.email.toLowerCase().trim(),
-    passwordHash: data.passwordHash,
-    name: data.name,
-    role: data.role as "user" | "admin",
-  });
+  try {
+    const values: InsertUser = {
+      openId: user.openId,
+    };
+    const updateSet: Record<string, unknown> = {};
 
-  const rows = await db.select().from(users).where(eq(users.email, data.email.toLowerCase().trim())).limit(1);
-  return rows[0] ?? null;
+    const textFields = ["name", "email", "loginMethod"] as const;
+    type TextField = (typeof textFields)[number];
+
+    const assignNullable = (field: TextField) => {
+      const value = user[field];
+      if (value === undefined) return;
+      const normalized = value ?? null;
+      values[field] = normalized;
+      updateSet[field] = normalized;
+    };
+
+    textFields.forEach(assignNullable);
+
+    if (user.lastSignedIn !== undefined) {
+      values.lastSignedIn = user.lastSignedIn;
+      updateSet.lastSignedIn = user.lastSignedIn;
+    }
+    if (user.role !== undefined) {
+      values.role = user.role;
+      updateSet.role = user.role;
+    } else if (user.openId === ENV.ownerOpenId) {
+      values.role = 'admin';
+      updateSet.role = 'admin';
+    }
+
+    if (!values.lastSignedIn) {
+      values.lastSignedIn = new Date();
+    }
+
+    if (Object.keys(updateSet).length === 0) {
+      updateSet.lastSignedIn = new Date();
+    }
+
+    await db.insert(users).values(values).onDuplicateKeyUpdate({
+      set: updateSet,
+    });
+  } catch (error) {
+    console.error("[Database] Failed to upsert user:", error);
+    throw error;
+  }
 }
 
-export async function getUserByEmail(email: string) {
+export async function getUserByOpenId(openId: string) {
   const db = await getDb();
-  if (!db) return undefined;
+  if (!db) {
+    console.warn("[Database] Cannot get user: database not available");
+    return undefined;
+  }
 
-  const result = await db.select().from(users).where(eq(users.email, email.toLowerCase().trim())).limit(1);
+  const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
+
   return result.length > 0 ? result[0] : undefined;
-}
-
-export async function getUserById(id: number) {
-  const db = await getDb();
-  if (!db) return undefined;
-
-  const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
-  return result.length > 0 ? result[0] : undefined;
-}
-
-export async function updateUserLastSignIn(id: number) {
-  const db = await getDb();
-  if (!db) return;
-
-  await db.update(users).set({ lastSignedIn: new Date() }).where(eq(users.id, id));
 }
 
 // ─── Game Players Queries ───

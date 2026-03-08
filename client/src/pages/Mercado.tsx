@@ -197,7 +197,7 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
 
 const CATEGORY_LABELS: Record<string, Record<string, string>> = {
   all: { es: "Todo", en: "All", zh: "全部" },
-  avatar: { es: "Avatares", en: "Avatars", zh: "角色" },
+  avatar: { es: "Especialistas", en: "Avatars", zh: "角色" },
   background: { es: "Fondos", en: "Backgrounds", zh: "背景" },
   shield: { es: "Escudos", en: "Shields", zh: "盾牌" },
   badge: { es: "Insignias", en: "Badges", zh: "徽章" },
@@ -206,8 +206,8 @@ const CATEGORY_LABELS: Record<string, Record<string, string>> = {
 
 const T: Record<string, Record<string, string>> = {
   es: {
-    title: "Mercado LINCE",
-    subtitle: "Gasta tus LinceCoins en recompensas exclusivas",
+    title: "Tienda LINCE",
+    subtitle: "Gasta tus LinceCoins en premios exclusivos",
     balance: "Tu saldo",
     buy: "Comprar",
     owned: "Adquirido",
@@ -228,8 +228,8 @@ const T: Record<string, Record<string, string>> = {
     empty: "No hay items en esta categoría",
   },
   en: {
-    title: "LINCE Market",
-    subtitle: "Spend your LinceCoins on exclusive rewards",
+    title: "LINCE Shop",
+    subtitle: "Spend your LinceCoins on exclusive prizes",
     balance: "Your balance",
     buy: "Buy",
     owned: "Owned",
@@ -250,7 +250,7 @@ const T: Record<string, Record<string, string>> = {
     empty: "No items in this category",
   },
   zh: {
-    title: "LINCE 商城",
+    title: "LINCE 商店",
     subtitle: "用你的林斯币兑换独家奖励",
     balance: "你的余额",
     buy: "购买",

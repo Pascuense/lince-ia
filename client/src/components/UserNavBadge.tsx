@@ -90,8 +90,8 @@ export function UserNavBadge({ variant = "compact", className = "", onAvatarClic
     window.location.href = '/';
   };
 
-  const logoutLabel = tl(lang, { es: 'Cerrar sesión', en: 'Log out', zh: '退出登录', 'pt-BR': 'Cerrar sesión', 'pt-PT': 'Cerrar sesión' });
-  const profileLabel = tl(lang, { es: 'Mi Perfil', en: 'My Profile', zh: '我的资料', 'pt-BR': 'Mi Perfil', 'pt-PT': 'Mi Perfil' });
+  const logoutLabel = tl(lang, { es: 'Salir', en: 'Log out', zh: '退出', 'pt-BR': 'Sair', 'pt-PT': 'Sair' });
+  const profileLabel = tl(lang, { es: 'Mi Progreso', en: 'My Progress', zh: '我的进度', 'pt-BR': 'Meu Progresso', 'pt-PT': 'Meu Progresso' });
 
   if (user) {
     const avatarUrl = user.avatarKey ? getAvatarImage(user.avatarKey) : "";

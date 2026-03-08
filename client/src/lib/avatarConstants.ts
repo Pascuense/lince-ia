@@ -4,121 +4,121 @@
  * NEVER define avatar URLs locally in page files.
  */
 
-// Frontal portrait images with IA on nose bridge + cyan circuit lines — PRIMARY image for each character everywhere
+// Frontal portrait images — PRIMARY image for each character everywhere
 export const AVATAR_FRONTAL: Record<string, string> = {
-  YAYALIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/TedHqiSnDeqVLWYL.png",
-  YAYALINA: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WfeEePnooEIdDgYk.png",
-  PAPALIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/XEosGupCXgAGsCQR.png",
-  MAMALINA: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/shyHALJVPawIqHDK.png",
-  CHAVALIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/tSUjgomygkyryWcE.png",
-  CHAVALINA: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/uBYCYoGZHNpmDnIS.png",
-  PEQUELIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/DgZpHtXwQciCdVnO.png",
-  PEQUELINA: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/dWmzqMVLiDQzlyOz.png",
-  ATOLONDRALIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WJoPcpoVcIMaHcjk.png",
-  SABELIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/jtEEtbRUpTtEBKGn.png",
+  YAYALIN: "/avatars/YAYALIN_frontal.png",
+  YAYALINA: "/avatars/YAYALINA_frontal.png",
+  PAPALIN: "/avatars/PAPALIN_frontal.png",
+  MAMALINA: "/avatars/MAMALINA_frontal.png",
+  CHAVALIN: "/avatars/CHAVALIN_frontal.png",
+  CHAVALINA: "/avatars/CHAVALINA_frontal.png",
+  PEQUELIN: "/avatars/PEQUELIN_frontal.png",
+  PEQUELINA: "/avatars/PEQUELINA_frontal.png",
+  ATOLONDRALIN: "/avatars/ATOLONDRALIN_frontal.png",
+  SABELIN: "/avatars/SABELIN_frontal.png",
 };
 
-// Educational themed portraits — same as FRONTAL (all have IA on nose bridge + cyan circuit lines)
+// Educational themed portraits
 export const AVATAR_EDU: Record<string, string> = {
-  YAYALIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/TedHqiSnDeqVLWYL.png",
-  YAYALINA: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WfeEePnooEIdDgYk.png",
-  PAPALIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/XEosGupCXgAGsCQR.png",
-  MAMALINA: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/shyHALJVPawIqHDK.png",
-  CHAVALIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/tSUjgomygkyryWcE.png",
-  CHAVALINA: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/uBYCYoGZHNpmDnIS.png",
-  PEQUELIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/DgZpHtXwQciCdVnO.png",
-  PEQUELINA: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/dWmzqMVLiDQzlyOz.png",
-  ATOLONDRALIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WJoPcpoVcIMaHcjk.png",
-  SABELIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/jtEEtbRUpTtEBKGn.png",
+  YAYALIN: "/avatars/YAYALIN_edu.png",
+  YAYALINA: "/avatars/YAYALINA_edu.png",
+  PAPALIN: "/avatars/PAPALIN_edu.png",
+  MAMALINA: "/avatars/MAMALINA_frontal.png",
+  CHAVALIN: "/avatars/CHAVALIN_frontal.png",
+  CHAVALINA: "/avatars/CHAVALINA_edu.png",
+  PEQUELIN: "/avatars/PEQUELIN_frontal.png",
+  PEQUELINA: "/avatars/PEQUELINA_edu.png",
+  ATOLONDRALIN: "/avatars/ATOLONDRALIN_edu.png",
+  SABELIN: "/avatars/SABELIN_frontal.png",
 };
 
-// Expression variants — used in expanded Family profiles (ALL with IA on nose bridge + cyan circuit lines)
+// Expression variants — used in expanded Family profiles
 export const AVATAR_EXPRESSIONS: Record<string, Record<string, string>> = {
   YAYALIN: {
-    feliz: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/ByJjGfJMKQXhxMjM.png",
-    pensando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/NNxGHMKuLxqNNHOH.png",
-    celebrando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/IfauUyQJMTIkjRmK.png",
+    feliz: "/avatars/YAYALIN_frontal.png",
+    pensando: "/avatars/YAYALIN_fondo.png",
+    celebrando: "/avatars/YAYALIN_celebrando.png",
   },
   YAYALINA: {
-    feliz: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/ugzleSCDCooMlYXp.png",
-    pensando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/UVTLFHmkpBatMpJg.png",
-    celebrando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/bYgktTTMftbqxtOU.png",
+    feliz: "/avatars/ugzleSCDCooMlYXp.png",
+    pensando: "/avatars/UVTLFHmkpBatMpJg.png",
+    celebrando: "/avatars/bYgktTTMftbqxtOU.png",
   },
   PAPALIN: {
-    feliz: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/FCWSeqIKUElLlyvX.png",
-    pensando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/iJRwIUHvjeFUkMWT.png",
-    celebrando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/CRDLvOASyzhdTRzg.png",
+    feliz: "/avatars/FCWSeqIKUElLlyvX.png",
+    pensando: "/avatars/iJRwIUHvjeFUkMWT.png",
+    celebrando: "/avatars/CRDLvOASyzhdTRzg.png",
   },
   MAMALINA: {
-    feliz: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/AeBgePjknhKWpoyx.png",
-    pensando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/XYeveGLEGvBaZvJp.png",
-    celebrando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/kHdPfPdUYsudgYrR.png",
+    feliz: "/avatars/AeBgePjknhKWpoyx.png",
+    pensando: "/avatars/XYeveGLEGvBaZvJp.png",
+    celebrando: "/avatars/kHdPfPdUYsudgYrR.png",
   },
   CHAVALIN: {
-    feliz: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/DBeBLdvTlDBdIxGu.png",
-    pensando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/yQbXJJGhqVOWSbHl.png",
-    celebrando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/QbvxgnrqLFmfzWcL.png",
+    feliz: "/avatars/DBeBLdvTlDBdIxGu.png",
+    pensando: "/avatars/yQbXJJGhqVOWSbHl.png",
+    celebrando: "/avatars/QbvxgnrqLFmfzWcL.png",
   },
   CHAVALINA: {
-    feliz: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/ZpnKqhsEhXwSuRQk.png",
-    pensando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/yEImAJfQhjWQEdSw.png",
-    celebrando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/tlshQKeJrOXOVeng.png",
+    feliz: "/avatars/ZpnKqhsEhXwSuRQk.png",
+    pensando: "/avatars/yEImAJfQhjWQEdSw.png",
+    celebrando: "/avatars/tlshQKeJrOXOVeng.png",
   },
   PEQUELIN: {
-    feliz: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/FhcrDEXORbKBvgwF.png",
-    pensando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/HyeoErvQROUrpPPa.png",
-    celebrando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/OOwWBdkEDrTFnsJG.png",
+    feliz: "/avatars/FhcrDEXORbKBvgwF.png",
+    pensando: "/avatars/HyeoErvQROUrpPPa.png",
+    celebrando: "/avatars/OOwWBdkEDrTFnsJG.png",
   },
   PEQUELINA: {
-    feliz: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/pDxOiOubFMAlyuSh.png",
-    pensando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/kWbJIdVfrFAQQSye.png",
-    celebrando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/zPwYDkVmOqREAtyv.png",
+    feliz: "/avatars/pDxOiOubFMAlyuSh.png",
+    pensando: "/avatars/kWbJIdVfrFAQQSye.png",
+    celebrando: "/avatars/zPwYDkVmOqREAtyv.png",
   },
   ATOLONDRALIN: {
-    feliz: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/ZqhhIEkyPYKCCJpV.png",
-    pensando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/OEcDTFRjrrpnAhyA.png",
-    celebrando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/vkllglNCWfFXszDL.png",
+    feliz: "/avatars/ZqhhIEkyPYKCCJpV.png",
+    pensando: "/avatars/OEcDTFRjrrpnAhyA.png",
+    celebrando: "/avatars/vkllglNCWfFXszDL.png",
   },
   SABELIN: {
-    feliz: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/iviBILbCRaLBCfbZ.png",
-    pensando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/ETWrsjACQxqnMOLQ.png",
-    celebrando: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/aWNRltCJsZQAqJWP.png",
+    feliz: "/avatars/iviBILbCRaLBCfbZ.png",
+    pensando: "/avatars/ETWrsjACQxqnMOLQ.png",
+    celebrando: "/avatars/aWNRltCJsZQAqJWP.png",
   },
 };
 
 // Background scene images — used behind Family profile cards
 export const AVATAR_BG: Record<string, string> = {
-  YAYALIN: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/JlMjXRzbzsIyKsfD.png',
-  YAYALINA: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/HUPXHelvMeDvPMAZ.png',
-  PAPALIN: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/vssKEmYPIAEbtihh.png',
-  MAMALINA: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/IYFZDySYEsMPeswY.png',
-  CHAVALIN: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/mOIBKsbXvajCsrrF.png',
-  CHAVALINA: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/UxGKdzKruCyICmnJ.png',
-  PEQUELIN: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/BkxseyoLySgebKgV.png',
-  PEQUELINA: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/vLABycdxKaJGTRfF.png',
-  ATOLONDRALIN: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/YFqKlXvPpLqNTmsV.png',
-  SABELIN: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/rQgOmzbOelVInseH.png',
+  YAYALIN: '/avatars/personaje_YAYALIN_escena.png',
+  YAYALINA: '/avatars/personaje_YAYALINA_escena.png',
+  PAPALIN: '/avatars/personaje_PAPALIN_escena.png',
+  MAMALINA: '/avatars/personaje_MAMALINA_escena.png',
+  CHAVALIN: '/avatars/personaje_CHAVALIN_escena.png',
+  CHAVALINA: '/avatars/personaje_CHAVALINA_escena.png',
+  PEQUELIN: '/avatars/personaje_PEQUELIN_escena.png',
+  PEQUELINA: '/avatars/personaje_PEQUELINA_escena.png',
+  ATOLONDRALIN: '/avatars/personaje_ATOLONDRALIN_escena.png',
+  SABELIN: '/avatars/personaje_SABELIN_escena.png',
 };
 
 // Scene images for Mundo LINCE
 export const MUNDO_IMAGES = {
-  hero: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/grqtfslvoNSfRhbd.png',
-  familyWorld: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/SbEGHjajCJjASNUh.png',
-  friendsWorld: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/OAVCOqXZjzoOcUgU.png',
-  activities: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WkIFPMxERNkqsXTd.png',
-  connection: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/vrlNYGLpNphiIAlK.png',
+  hero: '/avatars/HERO_IMG_principal.png',
+  familyWorld: '/avatars/SbEGHjajCJjASNUh.png',
+  friendsWorld: '/avatars/OAVCOqXZjzoOcUgU.png',
+  activities: '/avatars/WkIFPMxERNkqsXTd.png',
+  connection: '/avatars/personaje_FAMILIA_grupo.png',
 };
 
 // Scene images for LINCE Raids
 export const RAIDS_IMAGES = {
-  hero: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WVvCaISFJPMmvrzg.png',
-  attack: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/mfoJVCQIDWeJBXRh.png',
-  defense: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/ZpUPCtTHNEfHaqru.png',
-  leaderboard: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/YTVfzhDosEKGAutF.png',
+  hero: '/avatars/WVvCaISFJPMmvrzg.png',
+  attack: '/avatars/mfoJVCQIDWeJBXRh.png',
+  defense: '/avatars/ZpUPCtTHNEfHaqru.png',
+  leaderboard: '/avatars/YTVfzhDosEKGAutF.png',
 };
 
-// Hero background for Academia — group portrait of all 10 characters in academy setting
-export const ACADEMIA_HERO_BG = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/yboYHmRuuKzxTKzs.png";
+// Hero background for Academia
+export const ACADEMIA_HERO_BG = "/avatars/GAMIFICATION_BANNER.png";
 
 // ─── MUSICALIN AVATARS — Avatares musicales que enseñan IA ───
 export const AVATAR_MUSICALIN: Record<string, string> = {
@@ -265,16 +265,16 @@ export const AVATAR_ZARAGOZA_HISTORICO: Record<string, string> = {
 
 // ─── AVATAR PROFILE PICS (Familia LINCE estilo foto de familia) ───
 export const AVATAR_PROFILE_PIC: Record<string, string> = {
-  SABELIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/TaipYnCqzLWVXUFe.png",
-  YAYALIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/ACMcLjcejJAFhHgW.png",
-  YAYALINA: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/lEsLkqvBqCUvEhLB.png",
-  PAPALIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/IsEfJNNTbnlNvXVZ.png",
-  MAMALINA: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/oAnneGwQbqGNEgqU.png",
-  CHAVALIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/WqTzgSqxVxHLVzgw.png",
-  CHAVALINA: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/glDKambfkdNXWUzs.png",
-  PEQUELIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/MszKUedlFdbmWoJi.png",
-  PEQUELINA: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/kOxSvLPnJhxzpVjo.png",
-  ATOLONDRALIN: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/tlmTnXTPwBlJAFUl.png",
+  SABELIN: "/avatars/SABELIN_profile.png",
+  YAYALIN: "/avatars/YAYALIN_profile.png",
+  YAYALINA: "/avatars/YAYALINA_profile.png",
+  PAPALIN: "/avatars/PAPALIN_profile.png",
+  MAMALINA: "/avatars/MAMALINA_profile.png",
+  CHAVALIN: "/avatars/CHAVALIN_profile.png",
+  CHAVALINA: "/avatars/CHAVALINA_profile.png",
+  PEQUELIN: "/avatars/PEQUELIN_profile.png",
+  PEQUELINA: "/avatars/PEQUELINA_profile.png",
+  ATOLONDRALIN: "/avatars/ATOLONDRALIN_profile.png",
 };
 
 // ─── ZARAGOZA HISTÓRICO CHARACTER DATA ───
@@ -293,16 +293,16 @@ export const ZARAGOZA_HISTORICO_CHARACTERS: CharacterData[] = [
 
 // ─── ZARAGOZA / SPAIN FAMILY DATA ───
 export const FAMILY_CHARACTERS: CharacterData[] = [
-  { key: "YAYALIN", name: "YAYALÍN", role: { es: "Abuelo · Director General", en: "Grandfather · CEO", zh: "祖父·总监" }, specialty: { es: "Estrategia empresarial IA", en: "AI business strategy", zh: "AI商业战略" }, region: "Zaragoza", flag: "🇪🇸", color: "#00E5FF" },
-  { key: "YAYALINA", name: "YAYALINA", role: { es: "Abuela · Sabiduría Digital", en: "Grandmother · Digital Wisdom", zh: "祖母·数字智慧" }, specialty: { es: "IA para mayores", en: "AI for seniors", zh: "老年人AI" }, region: "Zaragoza", flag: "🇪🇸", color: "#D4A843" },
-  { key: "PAPALIN", name: "PAPALÍN", role: { es: "Padre · Profesor IA", en: "Father · AI Professor", zh: "父亲·AI教授" }, specialty: { es: "Machine Learning avanzado", en: "Advanced Machine Learning", zh: "高级机器学习" }, region: "Zaragoza", flag: "🇪🇸", color: "#00C853" },
-  { key: "MAMALINA", name: "MAMALINA", role: { es: "Madre · Investigadora", en: "Mother · Researcher", zh: "母亲·研究员" }, specialty: { es: "Ética e investigación IA", en: "AI ethics & research", zh: "AI伦理与研究" }, region: "Zaragoza", flag: "🇪🇸", color: "#FF4081" },
-  { key: "CHAVALIN", name: "CHAVALÍN", role: { es: "Hijo Adolescente · Gamer", en: "Teen Son · Gamer", zh: "青少年·游戏玩家" }, specialty: { es: "IA en videojuegos", en: "AI in gaming", zh: "游戏AI" }, region: "Zaragoza", flag: "🇪🇸", color: "#7C4DFF" },
-  { key: "CHAVALINA", name: "CHAVALINA", role: { es: "Hija Adolescente · Creativa", en: "Teen Daughter · Creative", zh: "青少年·创意" }, specialty: { es: "Diseño con IA", en: "AI design", zh: "AI设计" }, region: "Zaragoza", flag: "🇪🇸", color: "#FF6D00" },
-  { key: "PEQUELIN", name: "PEQUELÍN", role: { es: "Niño · Explorador", en: "Child · Explorer", zh: "儿童·探索者" }, specialty: { es: "IA para niños", en: "AI for kids", zh: "儿童AI" }, region: "Zaragoza", flag: "🇪🇸", color: "#00BFA5" },
-  { key: "PEQUELINA", name: "PEQUELINA", role: { es: "Niña · Curiosa", en: "Child · Curious", zh: "儿童·好奇" }, specialty: { es: "Creatividad infantil con IA", en: "Kids creativity with AI", zh: "儿童AI创意" }, region: "Zaragoza", flag: "🇪🇸", color: "#F50057" },
-  { key: "ATOLONDRALIN", name: "ATOLONDRALÍN", role: { es: "Tío · Hacker Ético", en: "Uncle · Ethical Hacker", zh: "叔叔·道德黑客" }, specialty: { es: "Ciberseguridad IA", en: "AI cybersecurity", zh: "AI网络安全" }, region: "Zaragoza", flag: "🇪🇸", color: "#FF3D00" },
-  { key: "SABELIN", name: "SABELÍN", role: { es: "Primo · Genio Inventor", en: "Cousin · Genius Inventor", zh: "表兄·天才发明家" }, specialty: { es: "Innovación y startups IA", en: "AI innovation & startups", zh: "AI创新与创业" }, region: "Zaragoza", flag: "🇪🇸", color: "#FFAB00" },
+  { key: "YAYALIN", name: "ABUELO", role: { es: "Abuelo · Director General", en: "Grandfather · CEO", zh: "祖父·总监" }, specialty: { es: "Estrategia empresarial IA", en: "AI business strategy", zh: "AI商业战略" }, region: "Zaragoza", flag: "🇪🇸", color: "#00E5FF" },
+  { key: "YAYALINA", name: "ABUELA", role: { es: "Abuela · Sabiduría Digital", en: "Grandmother · Digital Wisdom", zh: "祖母·数字智慧" }, specialty: { es: "IA para mayores", en: "AI for seniors", zh: "老年人AI" }, region: "Zaragoza", flag: "🇪🇸", color: "#D4A843" },
+  { key: "PAPALIN", name: "PAPÁ", role: { es: "Padre · Profesor IA", en: "Father · AI Professor", zh: "父亲·AI教授" }, specialty: { es: "Machine Learning avanzado", en: "Advanced Machine Learning", zh: "高级机器学习" }, region: "Zaragoza", flag: "🇪🇸", color: "#00C853" },
+  { key: "MAMALINA", name: "MAMÁ", role: { es: "Madre · Investigadora", en: "Mother · Researcher", zh: "母亲·研究员" }, specialty: { es: "Ética e investigación IA", en: "AI ethics & research", zh: "AI伦理与研究" }, region: "Zaragoza", flag: "🇪🇸", color: "#FF4081" },
+  { key: "CHAVALIN", name: "HIJO", role: { es: "Hijo Adolescente · Gamer", en: "Teen Son · Gamer", zh: "青少年·游戏玩家" }, specialty: { es: "IA en videojuegos", en: "AI in gaming", zh: "游戏AI" }, region: "Zaragoza", flag: "🇪🇸", color: "#7C4DFF" },
+  { key: "CHAVALINA", name: "HIJA", role: { es: "Hija Adolescente · Creativa", en: "Teen Daughter · Creative", zh: "青少年·创意" }, specialty: { es: "Diseño con IA", en: "AI design", zh: "AI设计" }, region: "Zaragoza", flag: "🇪🇸", color: "#FF6D00" },
+  { key: "PEQUELIN", name: "NIÑO", role: { es: "Niño · Explorador", en: "Child · Explorer", zh: "儿童·探索者" }, specialty: { es: "IA para niños", en: "AI for kids", zh: "儿童AI" }, region: "Zaragoza", flag: "🇪🇸", color: "#00BFA5" },
+  { key: "PEQUELINA", name: "NIÑA", role: { es: "Niña · Curiosa", en: "Child · Curious", zh: "儿童·好奇" }, specialty: { es: "Creatividad infantil con IA", en: "Kids creativity with AI", zh: "儿童AI创意" }, region: "Zaragoza", flag: "🇪🇸", color: "#F50057" },
+  { key: "ATOLONDRALIN", name: "TÍO", role: { es: "Tío · Hacker Ético", en: "Uncle · Ethical Hacker", zh: "叔叔·道德黑客" }, specialty: { es: "Ciberseguridad IA", en: "AI cybersecurity", zh: "AI网络安全" }, region: "Zaragoza", flag: "🇪🇸", color: "#FF3D00" },
+  { key: "SABELIN", name: "PRIMO", role: { es: "Primo · Genio Inventor", en: "Cousin · Genius Inventor", zh: "表兄·天才发明家" }, specialty: { es: "Innovación y startups IA", en: "AI innovation & startups", zh: "AI创新与创业" }, region: "Zaragoza", flag: "🇪🇸", color: "#FFAB00" },
 ];
 
 // ─── ALL CHARACTERS COMBINED ───
@@ -315,6 +315,11 @@ export const ALL_CHARACTERS: CharacterData[] = [
 
 // ─── HELPER: get avatar image by key from any collection ───
 export function getAvatarImage(key: string): string {
+  return AVATAR_FRONTAL[key] || AVATAR_MUSICALIN[key] || AVATAR_ZARAGOZA_HISTORICO[key] || AVATAR_PROFILE_PIC[key] || '';
+}
+
+// Helper: get profile pic (for small thumbnails in sidebar)
+export function getAvatarProfilePic(key: string): string {
   return AVATAR_PROFILE_PIC[key] || AVATAR_FRONTAL[key] || AVATAR_MUSICALIN[key] || AVATAR_ZARAGOZA_HISTORICO[key] || '';
 }
 

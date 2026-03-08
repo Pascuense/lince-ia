@@ -4,7 +4,7 @@
  * Works even when the app is closed.
  */
 import webpush from "web-push";
-import { ENV } from "./env";
+import { ENV } from "./_core/env";
 import { getDb } from "./db";
 import { pushSubscriptions, gamePlayers } from "../drizzle/schema";
 import { eq, and, sql } from "drizzle-orm";

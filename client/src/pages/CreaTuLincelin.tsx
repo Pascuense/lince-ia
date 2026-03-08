@@ -145,7 +145,7 @@ function GenerationProgress({ current, total, currentStyle }: { current: number;
       </div>
 
       <div className="text-center">
-        <h3 className="text-white font-bold text-xl mb-1">Generando LINCELIN...</h3>
+        <h3 className="text-white font-bold text-xl mb-1">Generando Avatar...</h3>
         <p className="text-[#888] text-sm">Generando estilo <span className="text-[#00E5FF] font-semibold">{styleName}</span></p>
       </div>
 
@@ -190,14 +190,14 @@ function ResultCard({ avatar, index }: { avatar: GeneratedAvatar; index: number 
         const fs = Math.max(14, Math.min(24, img.width * 0.028));
         cx.font = `bold ${fs}px 'Space Grotesk', sans-serif`; cx.textBaseline = 'middle';
         const ym = img.height - sh / 2;
-        cx.fillStyle = '#00E5FF'; cx.textAlign = 'left'; cx.fillText('LINCELIN', 12, ym);
-        cx.fillStyle = 'rgba(255,255,255,0.6)'; cx.textAlign = 'right'; cx.font = `${fs*0.8}px 'Space Grotesk', sans-serif`; cx.fillText('lince.com', img.width - 12, ym);
+        cx.fillStyle = '#00E5FF'; cx.textAlign = 'left'; cx.fillText('LINCE IA', 12, ym);
+        cx.fillStyle = 'rgba(255,255,255,0.6)'; cx.textAlign = 'right'; cx.font = `${fs*0.8}px 'Space Grotesk', sans-serif`; cx.fillText('lince.app', img.width - 12, ym);
         c.toBlob((b) => {
           if (!b) return;
           const u = URL.createObjectURL(b);
           const a = document.createElement('a'); a.href = u; a.download = `mi-lincelin-${avatar.style}-${Date.now()}.png`; a.click();
           URL.revokeObjectURL(u);
-          toast.success("¡Avatar descargado con marca LINCELIN!");
+          toast.success("¡Avatar descargado con marca LINCE!");
         }, 'image/png');
       };
       img.src = URL.createObjectURL(blob);
@@ -208,7 +208,7 @@ function ResultCard({ avatar, index }: { avatar: GeneratedAvatar; index: number 
 
   const handleShare = async (platform: string) => {
     setSharing(true);
-    const text = encodeURIComponent("¡Mira mi LINCELIN! 🐱 Crea el tuyo en LINCE — la plataforma de IA gamificada 🚀");
+    const text = encodeURIComponent("¡Mira mi avatar LINCE! 🐱 Crea el tuyo en LINCE — la plataforma de IA gamificada 🚀");
     const url = encodeURIComponent(window.location.origin + "/crea-tu-lincelin");
     const imageUrl = encodeURIComponent(avatar.imageUrl);
 
@@ -241,7 +241,7 @@ function ResultCard({ avatar, index }: { avatar: GeneratedAvatar; index: number 
 
       {/* Avatar Image */}
       <div className="aspect-square bg-[#0a0a0a] flex items-center justify-center p-2">
-        <img src={avatar.imageUrl} alt={`LINCELIN ${style?.label}`} className="w-full h-full object-contain rounded-xl" />
+        <img src={avatar.imageUrl} alt={`Avatar ${style?.label}`} className="w-full h-full object-contain rounded-xl" />
       </div>
 
       {/* Actions - ShareDownloadBar */}
@@ -250,7 +250,7 @@ function ResultCard({ avatar, index }: { avatar: GeneratedAvatar; index: number 
             content={{
               type: "lincelin",
               url: avatar.imageUrl,
-              text: `Mi LINCELIN estilo ${style?.label} creado en LINCE!`,
+              text: `Mi avatar estilo ${style?.label} creado en LINCE!`,
               filename: `mi-lincelin-${avatar.style}-${Date.now()}.png`,
             }}
           />
@@ -347,7 +347,7 @@ export default function CreaTuLincelin() {
       } else {
         // Mark LINCELIN mission as complete for welcome missions
         try { localStorage.setItem("lince-mission-lincelin", "true"); } catch {}
-        toast.success(`¡${results.length} LINCELIN${results.length > 1 ? "s" : ""} creado${results.length > 1 ? "s" : ""}!`);
+        toast.success(`¡${results.length} Avatar${results.length > 1 ? "es" : ""} creado${results.length > 1 ? "s" : ""}!`);
       }
     } catch (error: any) {
       toast.error(error.message || "Error al generar. Inténtalo de nuevo.");
@@ -381,27 +381,27 @@ export default function CreaTuLincelin() {
           <h1 className="font-['Space_Grotesk'] font-black text-4xl sm:text-5xl lg:text-7xl leading-[0.95] mb-4">
             CREA TU{" "}
             <span className="bg-gradient-to-r from-[#00E5FF] via-[#00E5FF] to-[#D4A843] bg-clip-text text-transparent">
-              LINCELIN
+              Mi Avatar
             </span>
           </h1>
 
-          <p className="text-[#999] text-base sm:text-lg max-w-xl mx-auto leading-relaxed mb-2">
+          <p className="text-white/50 text-lg sm:text-xl max-w-xl mx-auto leading-relaxed mb-4">
             Sube tu foto y nuestra IA creará tu avatar como <strong className="text-white">lince ibérico</strong> personalizado.
             Elige hasta 3 estilos y comparte en redes sociales.
           </p>
 
-          <div className="flex justify-center gap-6 mt-6 text-sm">
-            <div className="flex items-center gap-2 text-[#888]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF]" />
-              Sube tu foto
+          <div className="flex justify-center gap-8 mt-6 text-base">
+            <div className="flex items-center gap-2.5 text-white/50">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#00E5FF]" />
+              <span className="font-semibold">Sube tu foto</span>
             </div>
-            <div className="flex items-center gap-2 text-[#888]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D4A843]" />
-              Elige 3 estilos
+            <div className="flex items-center gap-2.5 text-white/50">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#D4A843]" />
+              <span className="font-semibold">Elige 3 estilos</span>
             </div>
-            <div className="flex items-center gap-2 text-[#888]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B35]" />
-              Comparte
+            <div className="flex items-center gap-2.5 text-white/50">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#FF6B35]" />
+              <span className="font-semibold">Comparte</span>
             </div>
           </div>
         </div>
@@ -411,9 +411,9 @@ export default function CreaTuLincelin() {
       <div className="container pb-24">
         {/* Step 1: Upload */}
         <div className="max-w-2xl mx-auto mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-8 rounded-full bg-[#00E5FF] text-black font-black text-sm flex items-center justify-center">1</div>
-            <h2 className="text-white font-bold text-lg">Sube tu foto</h2>
+          <div className="flex items-center gap-4 mb-5">
+            <div className="w-10 h-10 rounded-full bg-[#00E5FF] text-black font-black text-lg flex items-center justify-center">1</div>
+            <h2 className="text-white font-bold text-xl sm:text-2xl">Sube tu foto</h2>
             {photoPreview && (
               <button onClick={handleReset} className="ml-auto text-xs text-[#888] hover:text-[#00E5FF] transition-colors">
                 Cambiar foto
@@ -426,10 +426,10 @@ export default function CreaTuLincelin() {
         {/* Step 2: Select Styles */}
         {photoPreview && (
           <div className="max-w-3xl mx-auto mb-10">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 rounded-full bg-[#D4A843] text-black font-black text-sm flex items-center justify-center">2</div>
-              <h2 className="text-white font-bold text-lg">Elige hasta 3 estilos</h2>
-              <span className="ml-auto text-xs text-[#888]">{selectedStyles.length}/3 seleccionados</span>
+            <div className="flex items-center gap-4 mb-5">
+              <div className="w-10 h-10 rounded-full bg-[#D4A843] text-black font-black text-lg flex items-center justify-center">2</div>
+              <h2 className="text-white font-bold text-xl sm:text-2xl">Elige hasta 3 estilos</h2>
+              <span className="ml-auto text-sm text-white/40 font-semibold">{selectedStyles.length}/3 seleccionados</span>
             </div>
             <StyleSelector selected={selectedStyles} onSelect={handleStyleToggle} disabled={isGenerating} />
           </div>
@@ -446,7 +446,7 @@ export default function CreaTuLincelin() {
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
-                CREAR MI LINCELIN
+                CREAR MI AVATAR
               </span>
             </button>
             <p className="text-[#555] text-xs mt-3">Generación con IA · {selectedStyles.length} estilo{selectedStyles.length > 1 ? "s" : ""} · ~30 segundos cada uno</p>
@@ -468,7 +468,7 @@ export default function CreaTuLincelin() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-8 rounded-full bg-[#FF6B35] text-black font-black text-sm flex items-center justify-center">3</div>
               <h2 className="text-white font-bold text-lg">
-                {generatedAvatars.length === 1 ? "Tu LINCELIN" : `Tus ${generatedAvatars.length} LINCELINs`}
+                {generatedAvatars.length === 1 ? "Tu Avatar" : `Tus ${generatedAvatars.length} Avatares`}
               </h2>
               {!isGenerating && (
                 <button

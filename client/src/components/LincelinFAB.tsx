@@ -44,7 +44,7 @@ const HELP_CONTENT: Record<string, { title: string; tips: string[] }> = {
     ],
   },
   "/prompt-studio": {
-    title: "IMAGELIN",
+    title: "Crear Imagen",
     tips: [
       "Rellena los 4 campos y la IA mejorará tu prompt.",
       "Prueba el modo Visual para generar imágenes con IA.",
@@ -52,7 +52,7 @@ const HELP_CONTENT: Record<string, { title: string; tips: string[] }> = {
     ],
   },
   "/arsenal-ia": {
-    title: "Arsenal IA",
+    title: "Herramientas IA",
     tips: [
       "Explora más de 60 herramientas de IA organizadas por categoría.",
       "Filtra por tipo: Chat, Imagen, Video, Audio, Código...",
@@ -60,7 +60,7 @@ const HELP_CONTENT: Record<string, { title: string; tips: string[] }> = {
     ],
   },
   "/catalogo-formativo": {
-    title: "Catálogo Formativo",
+    title: "Todos los Cursos",
     tips: [
       "Más de 120 cursos de 7 horas cada uno.",
       "Filtra por categoría y nivel (Básico/Intermedio/Avanzado).",
@@ -84,7 +84,7 @@ const HELP_CONTENT: Record<string, { title: string; tips: string[] }> = {
     ],
   },
   "/raids": {
-    title: "LINCE Raids",
+    title: "LINCE Batallas",
     tips: [
       "Los raids son desafíos cooperativos en equipo.",
       "Forma equipo con otros jugadores para completar misiones.",

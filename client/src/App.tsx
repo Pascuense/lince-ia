@@ -10,7 +10,6 @@ import { GuestProvider } from "./contexts/GuestContext";
 import { PWAInstallBanner } from "./components/PWAInstallBanner";
 import { OfflineSyncIndicator } from "./components/OfflineSyncIndicator";
 import { CookieBanner } from "./components/CookieBanner";
-import { BetaBanner } from "./components/BetaBanner";
 import { UnlockCelebration } from "./components/UnlockCelebration";
 import { GlobalFooter } from "./components/GlobalFooter";
 import { LincelinFAB } from "./components/LincelinFAB";
@@ -71,6 +70,7 @@ const PromptGame = lazy(() => import("./pages/PromptGame"));
 const RaidsBattle = lazy(() => import("./pages/RaidsBattle"));
 const GuiaBase44 = lazy(() => import("./pages/GuiaBase44"));
 const CreaTuLincelin = lazy(() => import("./pages/CreaTuLincelin"));
+const ChatDashboard = lazy(() => import("./pages/ChatDashboard"));
 
 // Public Profile
 const PublicProfile = lazy(() => import("./pages/PublicProfile"));
@@ -124,22 +124,24 @@ function AllRoutes() {
         <Route path={"/bienvenida"} component={Bienvenida} />
 
         {/* ─── CORE TOOLS: Accesibles para TODOS sin registro ─── */}
-        {/* Arsenal IA */}
+        {/* Herramientas IA */}
         <Route path={"/arsenal-ia"} component={ArsenalIA} />
         <Route path={"/arsenal-ia/:toolId"} component={ArsenalIADetail} />
 
-        {/* IMAGELIN (Prompt Studio) */}
+        {/* Crear Imagen (Prompt Studio) */}
         <Route path={"/prompt-studio"} component={PromptStudio} />
 
-        {/* PROMPTLIN (Juego competitivo de prompts) */}
+        {/* Aprender Prompts (Juego competitivo de prompts) */}
         <Route path={"/promptear"} component={PromptGame} />
 
-        {/* LINCELIN (Crea tu avatar) */}
+        {/* Mi Avatar (Crea tu avatar) */}
         <Route path={"/lincelin"} component={CreaTuLincelin} />
         {/* Legacy redirect */}
         <Route path={"/crea-tu-lincelin"}>{() => <Redirect to="/lincelin" />}</Route>
 
-        {/* Avatares */}
+        {/* Chat Dashboard - Layout tipo ChatGPT */}
+        <Route path={"/chat"} component={ChatDashboard} />
+        {/* Especialistas */}
         <Route path={"/personajes"} component={Personajes} />
 
         {/* Juego de niveles */}
@@ -236,7 +238,6 @@ function AppContent() {
       {isLoggedIn && <StreakRiskNotification />}
       <NotificationScheduler lang={lang} />
       <NotificationPrompt lang={lang as "es" | "en" | "zh"} />
-      <BetaBanner />
       <UnlockCelebration />
       {showOnboarding && (
         <OnboardingTour

@@ -20,21 +20,21 @@ import type { UnlockState } from "@/hooks/useProgressiveUnlock";
 const STEP_MAP: Record<string, (lang: PRDLanguage, unlocks: UnlockState) => NextStep> = {
   "/jugar": (lang, unlocks) => ({
     icon: <Sparkles className="w-5 h-5" />,
-    label: tl(lang, { es: 'Prueba IMAGELIN', en: 'Try IMAGELIN', zh: '试试IMAGELIN', 'pt-BR': 'Experimente IMAGELIN', 'pt-PT': 'Experimente IMAGELIN' }),
+    label: tl(lang, { es: 'Crear Imagen', en: 'Create Image', zh: '创建图像', 'pt-BR': 'Criar Imagem', 'pt-PT': 'Criar Imagem' }),
     description: tl(lang, { es: 'Crea imágenes con IA usando 4 campos simples', en: 'Create AI images with 4 simple fields', zh: '用4个简单字段创建AI图像', 'pt-BR': 'Crie imagens com IA usando 4 campos simples', 'pt-PT': 'Crie imagens com IA usando 4 campos simples' }),
     href: "/prompt-studio",
     color: "#9C27B0",
   }),
   "/prompt-studio": (lang, unlocks) => ({
     icon: <Brain className="w-5 h-5" />,
-    label: tl(lang, { es: 'Juega a PROMPTLIN', en: 'Play PROMPTLIN', zh: '玩PROMPTLIN', 'pt-BR': 'Jogue PROMPTLIN', 'pt-PT': 'Jogue PROMPTLIN' }),
+    label: tl(lang, { es: 'Aprender Prompts', en: 'Learn Prompts', zh: '学习提示词', 'pt-BR': 'Aprender Prompts', 'pt-PT': 'Aprender Prompts' }),
     description: tl(lang, { es: '6 modos de juego competitivos para dominar prompts', en: '6 competitive game modes to master prompts', zh: '6种竞技游戏模式掌握提示', 'pt-BR': '6 modos de jogo competitivos para dominar prompts', 'pt-PT': '6 modos de jogo competitivos para dominar prompts' }),
     href: "/promptear",
     color: "#7C3AED",
   }),
   "/promptear": (lang) => ({
     icon: <Palette className="w-5 h-5" />,
-    label: "LINCELIN",
+    label: "Mi Avatar",
     description: tl(lang, { es: 'Diseña tu avatar único con IA', en: 'Design your unique AI avatar', zh: '设计你独特的AI角色', 'pt-BR': 'Desenhe seu avatar único com IA', 'pt-PT': 'Desenhe o seu avatar único com IA' }),
     href: "/lincelin",
     color: "#EC4899",
@@ -48,7 +48,7 @@ const STEP_MAP: Record<string, (lang: PRDLanguage, unlocks: UnlockState) => Next
   }),
   "/personajes": (lang, unlocks) => ({
     icon: <Sparkles className="w-5 h-5" />,
-    label: tl(lang, { es: 'Arsenal IA', en: 'AI Arsenal', zh: 'AI武器库', 'pt-BR': 'Arsenal IA', 'pt-PT': 'Arsenal IA' }),
+    label: tl(lang, { es: 'Herramientas IA', en: 'AI Tools', zh: 'AI工具', 'pt-BR': 'Ferramentas IA', 'pt-PT': 'Ferramentas IA' }),
     description: tl(lang, { es: 'Descubre herramientas y recursos de IA', en: 'Discover AI tools and resources', zh: '发现AI工具和资源', 'pt-BR': 'Descubra ferramentas e recursos de IA', 'pt-PT': 'Descubra ferramentas e recursos de IA' }),
     href: "/arsenal-ia",
     color: "#00E5FF",
@@ -63,7 +63,7 @@ const STEP_MAP: Record<string, (lang: PRDLanguage, unlocks: UnlockState) => Next
   }),
   "/mundo": (lang, unlocks) => ({
     icon: <Swords className="w-5 h-5" />,
-    label: "Raids",
+    label: "Batallas",
     description: tl(lang, { es: 'Desafíos cooperativos épicos de IA', en: 'Epic cooperative AI challenges', zh: '史诗级合作AI挑战', 'pt-BR': 'Desafios cooperativos épicos de IA', 'pt-PT': 'Desafios cooperativos épicos de IA' }),
     href: "/raids",
     color: "#EF4444",
@@ -71,7 +71,7 @@ const STEP_MAP: Record<string, (lang: PRDLanguage, unlocks: UnlockState) => Next
   }),
   "/raids": (lang, unlocks) => ({
     icon: <GraduationCap className="w-5 h-5" />,
-    label: tl(lang, { es: 'Academia', en: 'Academy', zh: '学院', 'pt-BR': 'Academia', 'pt-PT': 'Academia' }),
+    label: tl(lang, { es: 'Cursos', en: 'Courses', zh: '课程', 'pt-BR': 'Cursos', 'pt-PT': 'Cursos' }),
     description: tl(lang, { es: 'Rutas de aprendizaje estructuradas de IA', en: 'Structured AI learning paths', zh: '结构化AI学习路径', 'pt-BR': 'Rotas de aprendizagem estruturadas de IA', 'pt-PT': 'Rotas de aprendizagem estruturadas de IA' }),
     href: "/academia",
     color: "#10B981",

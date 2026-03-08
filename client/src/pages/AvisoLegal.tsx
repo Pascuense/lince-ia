@@ -12,7 +12,7 @@ const LANG_LABELS: Record<string, string> = { es: "Español", en: "English", zh:
 // ─── TRANSLATIONS ───
 const t: Record<string, Record<string, string>> = {
   es: {
-    pageTitle: "Aviso Legal",
+    pageTitle: "Legal",
     backBtn: "← Volver",
     lastUpdate: "Última actualización: Febrero 2026",
 
