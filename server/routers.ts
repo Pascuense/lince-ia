@@ -44,6 +44,7 @@ import {
 } from "./db";
 import { notifyOwner } from "./_core/notification";
 import { getAvatarPrompt, buildFullPrompt, AVATAR_PROMPTS } from "@shared/avatarPrompts";
+import { resolveReferralFromResponse } from "./referralMatching";
 import {
   savePushSubscription,
   removePushSubscription,
@@ -2001,20 +2002,7 @@ const avatarChatRouter = router({
             : "Lo siento, no pude generar una respuesta. ¡Inténtalo de nuevo!";
 
         // Check if the avatar suggested a referral
-        let referral: { key: string; displayName: string; specialty: string } | null = null;
-        if (avatarConfig.referralKeys.length > 0) {
-          for (const refKey of avatarConfig.referralKeys) {
-            const refAvatar = getAvatarPrompt(refKey);
-            if (refAvatar && responseText.toLowerCase().includes(refAvatar.displayName.toLowerCase())) {
-              referral = {
-                key: refAvatar.key,
-                displayName: refAvatar.displayName,
-                specialty: refAvatar.specialty,
-              };
-              break;
-            }
-          }
-        }
+        const referral = resolveReferralFromResponse(responseText, avatarConfig.referralKeys);
 
         // Persist to DB if gamePlayerId is provided
         let relationshipLevel = "new";

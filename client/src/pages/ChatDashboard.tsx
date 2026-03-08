@@ -5,6 +5,8 @@ import { ArtistChatModal } from "@/components/ArtistChatModal";
 import { PRDLanguageSelector } from "@/components/PRDLanguageSelector";
 import { FirstUseTutorial } from "@/components/FirstUseTutorial";
 import { Search, ChevronLeft, Menu, X, Sparkles, Wrench, MessageCircle, Image as ImageIcon, Loader2, FileText } from "lucide-react";
+import { useLocation } from "wouter";
+import { resolveChatDashboardReferralAction } from "@/lib/avatarRouting";
 
 const PromptStudio = lazy(() => import("@/pages/PromptStudio"));
 const PromptProfesional = lazy(() => import("@/pages/PromptProfesional"));
@@ -278,6 +280,7 @@ export default function ChatDashboard() {
   const [activeTab, setActiveTab] = useState<'familia' | 'imagelin' | 'prompts'>('familia');
 
   const searchRef = useRef<HTMLInputElement>(null);
+  const [, navigate] = useLocation();
 
   const professors = useMemo(() => buildProfessorList(), []);
 
@@ -312,12 +315,26 @@ export default function ChatDashboard() {
   }, []);
 
   const handleSwitchAvatar = useCallback((avatarKey: string) => {
-    const target = professors.find(p => p.key === avatarKey || p.key === avatarKey.toUpperCase());
-    if (target) {
+    const action = resolveChatDashboardReferralAction(
+      professors.map((p) => p.key),
+      avatarKey
+    );
+
+    if (!action) return;
+
+    if (action.kind === "switch") {
+      const target = professors.find((p) => p.key === action.avatarKey);
+      if (!target) return;
       setChatProfessor(null);
       setTimeout(() => setChatProfessor(target), 50);
+      return;
     }
-  }, [professors]);
+
+    setChatProfessor(null);
+    setSelectedProfessor(null);
+    setMobileSidebarOpen(false);
+    navigate(action.path);
+  }, [professors, navigate]);
 
   const profToCharacterData = useCallback((p: Professor): CharacterData => ({
     key: p.key,

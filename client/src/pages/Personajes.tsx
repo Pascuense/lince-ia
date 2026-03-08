@@ -6,6 +6,8 @@ import { GlobalNavBar } from "@/components/GlobalNavBar";
 import { FictionalDisclaimer } from "@/components/FictionalDisclaimer";
 import { BackButton } from "@/components/BackButton";
 import { ArtistChatModal } from "@/components/ArtistChatModal";
+import { useLocation } from "wouter";
+import { getAvatarKeyForCharacterId, getCharacterIdByAvatarKey, toCanonicalAvatarKey } from "@/lib/avatarRouting";
 
 // ─── SPECIALTY BADGE HELPER ───
 function getSpecialtyBadge(speciality: string): string {
@@ -620,104 +622,9 @@ const GROUPS = [
 ] as const;
 
 // ─── CHARACTER CARD ───
-// Map character IDs to avatar prompt keys (UPPERCASE) for chat + name resolution
-const ID_TO_AVATAR_KEY: Record<string, string> = {
-  // Familia Original (10)
-  yayolin: "YAYALIN",
-  yayalina: "YAYALINA",
-  papalin: "PAPALIN",
-  mamalina: "MAMALINA",
-  chavalin: "CHAVALIN",
-  chavalina: "CHAVALINA",
-  pequelin: "PEQUELIN",
-  pequelina: "PEQUELINA",
-  atolondralin: "ATOLONDRALIN",
-  sabelin: "SABELIN",
-  // Especialistas (13)
-  eticolin: "ETICOLÍN",
-  datolin: "DATOLÍN",
-  eticalin: "ETICALÍN",
-  abogalin: "ABOGALÍN",
-  influencelin: "INFLUENCELÍN",
-  curralin: "CURRALÍN",
-  doctolin: "DOCTOLÍN",
-  profalin: "PROFALÍN",
-  emprendalin: "EMPRENDALÍN",
-  conspiralin: "CONSPIRALÍN",
-  abuelin: "ABUELÍN",
-  artistalin: "ARTISTALÍN",
-  gamerlin: "GAMERLÍN",
-  // MUSICALIN (42)
-  trapzolin: "TRAPZOLÍN",
-  lumalin: "LUMALÍN",
-  cristalin: "CRISTALÍN",
-  cronoslin: "CRONOSLÍN",
-  sirenlin: "SIRENLÍN",
-  kumeylin: "KUMEYLÍN",
-  versolin: "VERSOLÍN",
-  rimalin: "RIMALÍN",
-  brislin: "BRISLÍN",
-  wavelin: "WAVELÍN",
-  sonalin: "SONALÍN",
-  zotealin: "ZOTEALÍN",
-  grafalin: "GRAFALÍN",
-  mantralin: "MANTRALÍN",
-  flowalin: "FLOWALÍN",
-  pulsolin: "PULSOLÍN",
-  beatlin: "BEATLÍN",
-  stilin: "STILÍN",
-  coreolin: "COREOLÍN",
-  voltzlin: "VOLTZLÍN",
-  gamelin: "GAMELÍN",
-  maraklin: "MARAKLÍN",
-  // Artistas Internacionales (20)
-  flamencalin: "FLAMENCALÍN",
-  iberalin: "IBERALÍN",
-  tonalin: "TONALÍN",
-  solearlin: "SOLEARLÍN",
-  gaditaklin: "GADITAKLÍN",
-  tangarlin: "TANGARLÍN",
-  cumbielin: "CUMBIELÍN",
-  pampalin: "PAMPALÍN",
-  milonguelin: "MILONGUELÍN",
-  gauchalin: "GAUCHALÍN",
-  boriqualin: "BORIQUALÍN",
-  tropiklin: "TROPIKLÍN",
-  perrealin: "PERREALÍN",
-  islalina: "ISLALINA",
-  salsalin: "SALSALÍN",
-  cumbialin: "CUMBIALÍN",
-  vallenatalin: "VALLENATALÍN",
-  parcelin: "PARCELÍN",
-  cafetalin: "CAFETALÍN",
-  champetaklin: "CHAMPETAKLÍN",
-  // Aragoneses (10)
-  manolin: "MANOLIN",
-  pilarin: "PILARÍN",
-  cierzolin: "CIERZOLÍN",
-  goyalin: "GOYALÍN",
-  jotalin: "JOTALÍN",
-  ternelin: "TERNELÍN",
-  baturralin: "BATURRALÍN",
-  mudejarin: "MUDEJARÍN",
-  ebrolin: "EBROLÍN",
-  borrajin: "BORRAJÍN",
-  // Zaragoza Histórico (10)
-  lafitalin: "LAFITALIN",
-  nayimin: "NAYIMIN",
-  anderin: "ANDERIN",
-  gabilin: "GABILIN",
-  pardezalin: "PARDEZALIN",
-  caminerin: "CAMINERIN",
-  senorin: "SENORIN",
-  aguadin: "AGUADIN",
-  villalin: "VILLALIN",
-  sorianin: "SORIANIN",
-};
-
 /** Convert a Character to the CharacterData format expected by ArtistChatModal */
 function charToArtist(char: Character): CharacterData {
-  const key = ID_TO_AVATAR_KEY[char.id] || char.id.toUpperCase();
+  const key = getAvatarKeyForCharacterId(char.id);
   return {
     key,
     name: char.name,
@@ -900,6 +807,7 @@ export default function Personajes() {
   const [selectedChar, setSelectedChar] = useState<Character | null>(null);
   const [chatChar, setChatChar] = useState<Character | null>(null);
   const { getAvatarName } = usePRDLanguage();
+  const [location, navigate] = useLocation();
 
   // Open chat with a character (close detail modal first)
   const openChat = (char: Character) => {
@@ -909,31 +817,57 @@ export default function Personajes() {
 
   // Switch to a different avatar from a referral button
   const handleSwitchAvatar = (avatarKey: string) => {
-    // Find the character by avatar key
-    const targetId = Object.entries(ID_TO_AVATAR_KEY).find(([, v]) => v === avatarKey)?.[0];
-    if (targetId) {
-      const targetChar = ALL_CHARS.find((c) => c.id === targetId);
-      if (targetChar) {
-        setChatChar(null);
-        // Small delay to allow modal close animation
-        setTimeout(() => setChatChar(targetChar), 150);
-        return;
-      }
-    }
-    // Fallback: try to find by key directly in ALL_CHARS
-    const fallbackChar = ALL_CHARS.find((c) => c.id.toUpperCase() === avatarKey || c.name.toUpperCase() === avatarKey);
-    if (fallbackChar) {
-      setChatChar(null);
-      setTimeout(() => setChatChar(fallbackChar), 150);
-    }
+    const canonicalKey = toCanonicalAvatarKey(avatarKey);
+    if (!canonicalKey) return;
+
+    const targetId = getCharacterIdByAvatarKey(canonicalKey);
+    if (!targetId) return;
+
+    const targetChar = ALL_CHARS.find((c) => c.id === targetId);
+    if (!targetChar) return;
+
+    setChatChar(null);
+    // Small delay to allow modal close animation
+    setTimeout(() => setChatChar(targetChar), 150);
   };
 
   // Resolve display name for family characters based on country
   const getDisplayName = (char: Character): string => {
-    const avatarKey = ID_TO_AVATAR_KEY[char.id];
+    const avatarKey = getAvatarKeyForCharacterId(char.id);
     if (avatarKey) return getAvatarName(avatarKey);
     return char.name;
   };
+
+  useEffect(() => {
+    if (!location.startsWith("/personajes")) return;
+
+    const searchParams = new URLSearchParams(window.location.search);
+    const referralParam = searchParams.get("ref");
+    if (!referralParam) return;
+
+    const clearReferralParam = () => {
+      searchParams.delete("ref");
+      const nextQuery = searchParams.toString();
+      navigate(nextQuery ? "/personajes?" + nextQuery : "/personajes");
+    };
+
+    const canonicalReferralKey = toCanonicalAvatarKey(referralParam);
+    if (!canonicalReferralKey) {
+      clearReferralParam();
+      return;
+    }
+
+    const targetId = getCharacterIdByAvatarKey(canonicalReferralKey);
+    if (targetId) {
+      const targetChar = ALL_CHARS.find((c) => c.id === targetId);
+      if (targetChar) {
+        setSelectedChar(null);
+        setChatChar(targetChar);
+      }
+    }
+
+    clearReferralParam();
+  }, [location, navigate]);
 
   const getCharacters = () => {
     switch (activeGroup) {
