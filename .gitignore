@@ -2,6 +2,9 @@
 **/node_modules
 .pnpm-store/
 
+# Manus debug logs (no longer used — Manus plugins removed)
+.manus-logs/
+
 # Build outputs
 dist/
 build/
