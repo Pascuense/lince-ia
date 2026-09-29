@@ -15,22 +15,33 @@ DBPASS="${DB_PASSWORD:?Define DB_PASSWORD antes de ejecutar}"
 ST=stlinceuploads
 CONTAINER=lince-uploads
 
+echo "== Registro de proveedores de la suscripción (solo la primera vez)"
+for NS in Microsoft.Web Microsoft.DBforMySQL Microsoft.Storage; do
+  az provider register --namespace "$NS" --wait -o none
+done
+
 echo "== Grupo de recursos"
 az group create -n "$RG" -l "$LOC" -o none
 
 echo "== App Service (Linux, Node 22)"
 az appservice plan create -g "$RG" -n "$PLAN" -l "$LOC" --is-linux --sku B1 -o none
-az webapp create -g "$RG" -p "$PLAN" -n "$APP" --runtime "NODE:22-lts" -o none
+if ! az webapp show -g "$RG" -n "$APP" -o none 2>/dev/null; then
+  az webapp create -g "$RG" -p "$PLAN" -n "$APP" --runtime "NODE:22-lts" -o none
+fi
 
 echo "== MySQL Flexible Server"
-az mysql flexible-server create -g "$RG" -n "$DB" -l "$LOC" \
-  --admin-user "$DBUSER" --admin-password "$DBPASS" \
-  --sku-name Standard_B1ms --tier Burstable --storage-size 32 --version 8.0.21 \
-  --public-access 0.0.0.0 --yes -o none
+if ! az mysql flexible-server show -g "$RG" -n "$DB" -o none 2>/dev/null; then
+  az mysql flexible-server create -g "$RG" -n "$DB" -l "$LOC" \
+    --admin-user "$DBUSER" --admin-password "$DBPASS" \
+    --sku-name Standard_B1ms --tier Burstable --storage-size 32 --version 8.0.21 \
+    --public-access 0.0.0.0 --yes -o none
+fi
 az mysql flexible-server db create -g "$RG" -s "$DB" -d "$DBNAME" -o none
 
 echo "== Blob Storage"
-az storage account create -g "$RG" -n "$ST" -l "$LOC" --sku Standard_LRS -o none
+if ! az storage account show -g "$RG" -n "$ST" -o none 2>/dev/null; then
+  az storage account create -g "$RG" -n "$ST" -l "$LOC" --sku Standard_LRS -o none
+fi
 CONN=$(az storage account show-connection-string -g "$RG" -n "$ST" -o tsv)
 az storage container create --name "$CONTAINER" --connection-string "$CONN" -o none
 
