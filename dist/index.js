@@ -7036,6 +7036,31 @@ function getAvatarPrompt(key) {
   return AVATAR_PROMPTS.find((a) => a.key === key);
 }
 
+// server/referralMatching.ts
+function normalizeReferralText(value) {
+  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase().replace(/[^A-Z0-9\u4E00-\u9FFF]+/g, " ").replace(/\s+/g, " ").trim();
+}
+function resolveReferralFromResponse(responseText, referralKeys) {
+  const normalizedResponse = normalizeReferralText(responseText);
+  if (!normalizedResponse) return null;
+  for (const refKey of referralKeys) {
+    const refAvatar = getAvatarPrompt(refKey);
+    if (!refAvatar) continue;
+    const normalizedKey = normalizeReferralText(refAvatar.key);
+    const normalizedDisplayName = normalizeReferralText(refAvatar.displayName);
+    const matchesByKey = normalizedKey.length > 0 && normalizedResponse.includes(normalizedKey);
+    const matchesByDisplayName = normalizedDisplayName.length > 0 && normalizedResponse.includes(normalizedDisplayName);
+    if (matchesByKey || matchesByDisplayName) {
+      return {
+        key: refAvatar.key,
+        displayName: refAvatar.displayName,
+        specialty: refAvatar.specialty
+      };
+    }
+  }
+  return null;
+}
+
 // server/pushService.ts
 import webpush from "web-push";
 import { eq as eq2, and as and2, sql as sql2 } from "drizzle-orm";
@@ -9094,20 +9119,7 @@ var avatarChatRouter = router({
         maxTokens: 1024
       });
       const responseText = typeof result.choices[0]?.message?.content === "string" ? result.choices[0].message.content : Array.isArray(result.choices[0]?.message?.content) ? result.choices[0].message.content.filter((c) => c.type === "text").map((c) => c.text).join("") : "Lo siento, no pude generar una respuesta. \xA1Int\xE9ntalo de nuevo!";
-      let referral = null;
-      if (avatarConfig.referralKeys.length > 0) {
-        for (const refKey of avatarConfig.referralKeys) {
-          const refAvatar = getAvatarPrompt(refKey);
-          if (refAvatar && responseText.toLowerCase().includes(refAvatar.displayName.toLowerCase())) {
-            referral = {
-              key: refAvatar.key,
-              displayName: refAvatar.displayName,
-              specialty: refAvatar.specialty
-            };
-            break;
-          }
-        }
-      }
+      const referral = resolveReferralFromResponse(responseText, avatarConfig.referralKeys);
       let relationshipLevel = "new";
       if (input.gamePlayerId) {
         try {
@@ -9380,212 +9392,20 @@ async function createContext(opts) {
   };
 }
 
-// server/_core/vite.ts
+// server/_core/static.ts
 import express from "express";
-import fs2 from "fs";
-import { nanoid } from "nanoid";
-import path2 from "path";
-import { createServer as createViteServer } from "vite";
-
-// vite.config.ts
-import { jsxLocPlugin } from "@builder.io/vite-plugin-jsx-loc";
-import tailwindcss from "@tailwindcss/vite";
-import react from "@vitejs/plugin-react";
-import fs from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "url";
-import { defineConfig } from "vite";
-import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
-var _dirname = import.meta.dirname ?? path.dirname(fileURLToPath(import.meta.url));
-var PROJECT_ROOT = _dirname;
-var LOG_DIR = path.join(PROJECT_ROOT, ".manus-logs");
-var MAX_LOG_SIZE_BYTES = 1 * 1024 * 1024;
-var TRIM_TARGET_BYTES = Math.floor(MAX_LOG_SIZE_BYTES * 0.6);
-function ensureLogDir() {
-  if (!fs.existsSync(LOG_DIR)) {
-    fs.mkdirSync(LOG_DIR, { recursive: true });
-  }
-}
-function trimLogFile(logPath, maxSize) {
-  try {
-    if (!fs.existsSync(logPath) || fs.statSync(logPath).size <= maxSize) {
-      return;
-    }
-    const lines = fs.readFileSync(logPath, "utf-8").split("\n");
-    const keptLines = [];
-    let keptBytes = 0;
-    const targetSize = TRIM_TARGET_BYTES;
-    for (let i = lines.length - 1; i >= 0; i--) {
-      const lineBytes = Buffer.byteLength(`${lines[i]}
-`, "utf-8");
-      if (keptBytes + lineBytes > targetSize) break;
-      keptLines.unshift(lines[i]);
-      keptBytes += lineBytes;
-    }
-    fs.writeFileSync(logPath, keptLines.join("\n"), "utf-8");
-  } catch {
-  }
-}
-function writeToLogFile(source, entries) {
-  if (entries.length === 0) return;
-  ensureLogDir();
-  const logPath = path.join(LOG_DIR, `${source}.log`);
-  const lines = entries.map((entry) => {
-    const ts = (/* @__PURE__ */ new Date()).toISOString();
-    return `[${ts}] ${JSON.stringify(entry)}`;
-  });
-  fs.appendFileSync(logPath, `${lines.join("\n")}
-`, "utf-8");
-  trimLogFile(logPath, MAX_LOG_SIZE_BYTES);
-}
-function vitePluginManusDebugCollector() {
-  return {
-    name: "manus-debug-collector",
-    transformIndexHtml(html) {
-      if (process.env.NODE_ENV === "production") {
-        return html;
-      }
-      return {
-        html,
-        tags: [
-          {
-            tag: "script",
-            attrs: {
-              src: "/__manus__/debug-collector.js",
-              defer: true
-            },
-            injectTo: "head"
-          }
-        ]
-      };
-    },
-    configureServer(server) {
-      server.middlewares.use("/__manus__/logs", (req, res, next) => {
-        if (req.method !== "POST") {
-          return next();
-        }
-        const handlePayload = (payload) => {
-          if (payload.consoleLogs?.length > 0) {
-            writeToLogFile("browserConsole", payload.consoleLogs);
-          }
-          if (payload.networkRequests?.length > 0) {
-            writeToLogFile("networkRequests", payload.networkRequests);
-          }
-          if (payload.sessionEvents?.length > 0) {
-            writeToLogFile("sessionReplay", payload.sessionEvents);
-          }
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: true }));
-        };
-        const reqBody = req.body;
-        if (reqBody && typeof reqBody === "object") {
-          try {
-            handlePayload(reqBody);
-          } catch (e) {
-            res.writeHead(400, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ success: false, error: String(e) }));
-          }
-          return;
-        }
-        let body = "";
-        req.on("data", (chunk) => {
-          body += chunk.toString();
-        });
-        req.on("end", () => {
-          try {
-            const payload = JSON.parse(body);
-            handlePayload(payload);
-          } catch (e) {
-            res.writeHead(400, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ success: false, error: String(e) }));
-          }
-        });
-      });
-    }
-  };
-}
-var plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
-var vite_config_default = defineConfig({
-  plugins,
-  resolve: {
-    alias: {
-      "@": path.resolve(_dirname, "client", "src"),
-      "@shared": path.resolve(_dirname, "shared"),
-      "@assets": path.resolve(_dirname, "attached_assets")
-    },
-    dedupe: ["react", "react-dom"]
-  },
-  envDir: path.resolve(_dirname),
-  root: path.resolve(_dirname, "client"),
-  publicDir: path.resolve(_dirname, "client", "public"),
-  build: {
-    outDir: path.resolve(_dirname, "dist/public"),
-    emptyOutDir: true
-  },
-  server: {
-    host: true,
-    allowedHosts: [
-      ".manuspre.computer",
-      ".manus.computer",
-      ".manus-asia.computer",
-      ".manuscomputer.ai",
-      ".manusvm.computer",
-      "localhost",
-      "127.0.0.1"
-    ],
-    fs: {
-      strict: true,
-      deny: ["**/.*"]
-    }
-  }
-});
-
-// server/_core/vite.ts
-async function setupVite(app, server) {
-  const serverOptions = {
-    middlewareMode: true,
-    hmr: { server },
-    allowedHosts: true
-  };
-  const vite = await createViteServer({
-    ...vite_config_default,
-    configFile: false,
-    server: serverOptions,
-    appType: "custom"
-  });
-  app.use(vite.middlewares);
-  app.use("*", async (req, res, next) => {
-    const url = req.originalUrl;
-    try {
-      const clientTemplate = path2.resolve(
-        import.meta.dirname,
-        "../..",
-        "client",
-        "index.html"
-      );
-      let template = await fs2.promises.readFile(clientTemplate, "utf-8");
-      template = template.replace(
-        `src="/src/main.tsx"`,
-        `src="/src/main.tsx?v=${nanoid()}"`
-      );
-      const page = await vite.transformIndexHtml(url, template);
-      res.status(200).set({ "Content-Type": "text/html" }).end(page);
-    } catch (e) {
-      vite.ssrFixStacktrace(e);
-      next(e);
-    }
-  });
-}
+import fs from "fs";
+import path from "path";
 function serveStatic(app) {
-  const distPath = process.env.NODE_ENV === "development" ? path2.resolve(import.meta.dirname, "../..", "dist", "public") : path2.resolve(import.meta.dirname, "public");
-  if (!fs2.existsSync(distPath)) {
+  const distPath = process.env.NODE_ENV === "development" ? path.resolve(import.meta.dirname, "../..", "dist", "public") : path.resolve(import.meta.dirname, "public");
+  if (!fs.existsSync(distPath)) {
     console.error(
       `Could not find the build directory: ${distPath}, make sure to build the client first`
     );
   }
   app.use(express.static(distPath, { dotfiles: "allow" }));
   app.use("*", (_req, res) => {
-    res.sendFile(path2.resolve(distPath, "index.html"));
+    res.sendFile(path.resolve(distPath, "index.html"));
   });
 }
 
@@ -9701,6 +9521,7 @@ async function startServer() {
     })
   );
   if (process.env.NODE_ENV === "development") {
+    const { setupVite } = await import("./vite");
     await setupVite(app, server);
   } else {
     serveStatic(app);
