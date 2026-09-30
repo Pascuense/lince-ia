@@ -66,14 +66,14 @@
       "ms_ac_template": "widget/daily-challenge",
       "screenshots": [
         {
-          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/CkJPAoRrGuirECtr.png",
+          "src": "/assets/CkJPAoRrGuirECtr.png",
           "sizes": "540x960",
           "label": "Widget de desafío diario"
         }
       ],
       "icons": [
         {
-          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KFhkdThKcTKeYtcE.png",
+          "src": "/assets/KFhkdThKcTKeYtcE.png",
           "sizes": "192x192"
         }
       ]
@@ -87,19 +87,19 @@
       "purpose": "any"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/iNmYckrMjqZFTgzV.png",
+      "src": "/assets/iNmYckrMjqZFTgzV.png",
       "sizes": "48x48",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/tpbXkTYGLdHxJkDH.png",
+      "src": "/assets/tpbXkTYGLdHxJkDH.png",
       "sizes": "64x64",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/UsERtMXxhQzTehHN.png",
+      "src": "/assets/UsERtMXxhQzTehHN.png",
       "sizes": "128x128",
       "type": "image/png",
       "purpose": "any"
@@ -111,25 +111,25 @@
       "purpose": "any"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KFhkdThKcTKeYtcE.png",
+      "src": "/assets/KFhkdThKcTKeYtcE.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KFhkdThKcTKeYtcE.png",
+      "src": "/assets/KFhkdThKcTKeYtcE.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/joKaovHvXrfjDPNU.png",
+      "src": "/assets/joKaovHvXrfjDPNU.png",
       "sizes": "256x256",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/eosbFAPLTjeRluFk.png",
+      "src": "/assets/eosbFAPLTjeRluFk.png",
       "sizes": "384x384",
       "type": "image/png",
       "purpose": "any"
@@ -147,7 +147,7 @@
       "purpose": "maskable"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/kAPnAUydSIrXJKwM.png",
+      "src": "/assets/kAPnAUydSIrXJKwM.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
@@ -161,21 +161,21 @@
   ],
   "screenshots": [
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/xEzDOwGgXNNQpfwx.png",
+      "src": "/assets/xEzDOwGgXNNQpfwx.png",
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
       "label": "LINCE IA — Pantalla principal: Aprende IA Jugando con avatares adaptativos"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KHudbeOqrCxosptY.png",
+      "src": "/assets/KHudbeOqrCxosptY.png",
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
       "label": "Sistema de gamificación: LinceCoins, XP, Raids PvP y más"
     },
     {
-      "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/CkJPAoRrGuirECtr.png",
+      "src": "/assets/CkJPAoRrGuirECtr.png",
       "sizes": "540x960",
       "type": "image/png",
       "form_factor": "narrow",
@@ -190,7 +190,7 @@
       "url": "/jugar",
       "icons": [
         {
-          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KFhkdThKcTKeYtcE.png",
+          "src": "/assets/KFhkdThKcTKeYtcE.png",
           "sizes": "192x192",
           "type": "image/png"
         }
@@ -203,7 +203,7 @@
       "url": "/mundo",
       "icons": [
         {
-          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KFhkdThKcTKeYtcE.png",
+          "src": "/assets/KFhkdThKcTKeYtcE.png",
           "sizes": "192x192",
           "type": "image/png"
         }
@@ -216,7 +216,7 @@
       "url": "/raids",
       "icons": [
         {
-          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KFhkdThKcTKeYtcE.png",
+          "src": "/assets/KFhkdThKcTKeYtcE.png",
           "sizes": "192x192",
           "type": "image/png"
         }
@@ -229,7 +229,7 @@
       "url": "/academia",
       "icons": [
         {
-          "src": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KFhkdThKcTKeYtcE.png",
+          "src": "/assets/KFhkdThKcTKeYtcE.png",
           "sizes": "192x192",
           "type": "image/png"
         }

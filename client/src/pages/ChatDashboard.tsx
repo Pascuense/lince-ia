@@ -361,7 +361,7 @@ export default function ChatDashboard() {
         {/* Logo */}
         <a href="/" className="flex items-center gap-2 flex-shrink-0">
           <img
-            src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/bUKqcjlDiFJuymcE.png"
+            src="/assets/bUKqcjlDiFJuymcE.png"
             alt="LINCE"
             className="w-9 h-9 rounded-xl object-cover"
           />
@@ -772,7 +772,7 @@ export default function ChatDashboard() {
                   {/* Lince mascot image */}
                   <div className="mx-auto mb-6 w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-[#00E5FF]/40" style={{ boxShadow: '0 0 30px rgba(0,229,255,0.3), 0 0 60px rgba(0,229,255,0.15)' }}>
                     <img
-                      src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/bUKqcjlDiFJuymcE.png"
+                      src="/assets/bUKqcjlDiFJuymcE.png"
                       alt="LINCE - Mascota"
                       className="w-full h-full object-cover"
                     />

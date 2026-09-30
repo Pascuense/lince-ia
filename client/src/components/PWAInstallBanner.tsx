@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { usePWA } from '@/hooks/usePWA';
 import { X, Download, Share, Plus, Smartphone, Monitor, Wifi, WifiOff, RefreshCw } from 'lucide-react';
 
-const LINCE_ICON = 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/gSDtLqkjlQcuFnNK.png';
+const LINCE_ICON = '/assets/gSDtLqkjlQcuFnNK.png';
 
 // ─── Translations ───
 const translations: Record<string, Record<string, string>> = {

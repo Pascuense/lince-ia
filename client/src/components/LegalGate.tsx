@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { trpc } from "@/lib/trpc";
 
-const LINCE_LOGO = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/jtEEtbRUpTtEBKGn.png";
+const LINCE_LOGO = "/assets/jtEEtbRUpTtEBKGn.png";
 
 const LEGAL_ACCEPTED_KEY = "lince-legal-accepted";
 const LEGAL_VERSION = "2.0"; // Bumped: merged NDA + IP gate

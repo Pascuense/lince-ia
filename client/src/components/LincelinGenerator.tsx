@@ -2,7 +2,7 @@ import { tl } from "@/contexts/PRDLanguageContext";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { trpc } from "@/lib/trpc";
 
-const LINCE_LOGO = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/jtEEtbRUpTtEBKGn.png";
+const LINCE_LOGO = "/assets/jtEEtbRUpTtEBKGn.png";
 
 // 5 minutes in seconds
 const REQUIRED_TIME_SECONDS = 5 * 60;

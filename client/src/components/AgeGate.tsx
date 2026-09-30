@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const AGE_VERIFIED_KEY = "lince-age-verified";
-const LINCE_LOGO = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/jtEEtbRUpTtEBKGn.png";
+const LINCE_LOGO = "/assets/jtEEtbRUpTtEBKGn.png";
 
 type Lang = "es" | "en" | "zh" | "pt-BR" | "pt-PT";
 

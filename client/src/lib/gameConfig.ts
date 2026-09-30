@@ -63,11 +63,11 @@ export const HOME_NAV_SECTIONS = [
 
 // ─── CDN ASSETS ───
 export const CDN_ASSETS = {
-  HERO_IMG: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/yboYHmRuuKzxTKzs.png",
-  DUOLINGO_LOGO: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/qgXZcfwSCwpzPeFx.png",
-  SABELIN_FALLBACK: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/jtEEtbRUpTtEBKGn.png",
-  GAMIFICATION_BANNER: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/tfGGDPjUkHfjrzUV.png",
-  BG_CIRCUIT: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/lYyiMFzPopBynGTY.png",
+  HERO_IMG: "/assets/yboYHmRuuKzxTKzs.png",
+  DUOLINGO_LOGO: "/assets/qgXZcfwSCwpzPeFx.png",
+  SABELIN_FALLBACK: "/assets/jtEEtbRUpTtEBKGn.png",
+  GAMIFICATION_BANNER: "/assets/tfGGDPjUkHfjrzUV.png",
+  BG_CIRCUIT: "/assets/lYyiMFzPopBynGTY.png",
 } as const;
 
 // ─── THEME COLORS ───

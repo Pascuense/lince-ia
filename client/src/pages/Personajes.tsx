@@ -183,7 +183,7 @@ const ESPECIALISTAS: Character[] = [
     description: "Evalúa cualquier herramienta IA con criterios éticos reales",
     personality: "Directa, ingeniosa, investigadora, sin pelos en la lengua",
     speciality: "Ética de la IA, sesgos algorítmicos, EU AI Act, dilemas morales",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/ajiaIbKOPwyPDkUH.png",
+    image: "/assets/ajiaIbKOPwyPDkUH.png",
     color: "#8B5CF6",
   },
   {
@@ -194,7 +194,7 @@ const ESPECIALISTAS: Character[] = [
     description: "Analiza datasets complejos con ChatGPT y Google Sheets IA",
     personality: "Relajado, gracioso, pícaro, genio disfrazado de vago",
     speciality: "RGPD, privacidad de datos, qué hacen las IAs con tu información",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/sEgoRVeZEfinCSjX.png",
+    image: "/assets/sEgoRVeZEfinCSjX.png",
     color: "#22C55E",
   },
   {
@@ -205,7 +205,7 @@ const ESPECIALISTAS: Character[] = [
     description: "Detecta sesgos y garantiza el uso ético de la IA",
     personality: "Académica, rigurosa, accesible, justa",
     speciality: "Ética aplicada a la IA, filosofía de la tecnología, marcos regulatorios",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/GzAoPGrFFcTlIWwe.png",
+    image: "/assets/GzAoPGrFFcTlIWwe.png",
     color: "#D4A843",
   },
   {
@@ -216,7 +216,7 @@ const ESPECIALISTAS: Character[] = [
     description: "Navega el EU AI Act y los derechos digitales con IA",
     personality: "Astuto, rápido, irónico, siempre encuentra la trampa",
     speciality: "Propiedad intelectual, copyright de contenido IA, demandas Big Tech",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/OldfUfbiKwJNWrVz.png",
+    image: "/assets/OldfUfbiKwJNWrVz.png",
     color: "#78716C",
   },
   {
@@ -227,7 +227,7 @@ const ESPECIALISTAS: Character[] = [
     description: "Escala tu presencia en redes sociales con IA como aliada",
     personality: "Glamurosa, reveladora, auténtica, conectada",
     speciality: "Deepfakes, filtros IA, manipulación algorítmica de redes sociales",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/XHusJemglBUJYsTH.png",
+    image: "/assets/XHusJemglBUJYsTH.png",
     color: "#F43F5E",
   },
   {
@@ -238,7 +238,7 @@ const ESPECIALISTAS: Character[] = [
     description: "Potencia tu carrera profesional con LinkedIn AI y Notion",
     personality: "Preocupado, honesto, representativo, esperanzado",
     speciality: "IA y empleo, automatización, reconversión profesional",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/eamRyPwpzgjqnwaY.png",
+    image: "/assets/eamRyPwpzgjqnwaY.png",
     color: "#F97316",
   },
   {
@@ -249,7 +249,7 @@ const ESPECIALISTAS: Character[] = [
     description: "Usa IA para buscar información médica verificada y fiable",
     personality: "Escéptica, rigurosa, científica, protectora",
     speciality: "IA en salud, diagnóstico asistido, apps médicas, bioética",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/vlMTJFnDdJNdCkcL.png",
+    image: "/assets/vlMTJFnDdJNdCkcL.png",
     color: "#06B6D4",
   },
   {
@@ -260,7 +260,7 @@ const ESPECIALISTAS: Character[] = [
     description: "Perfecciona tus prompts con la técnica CREA paso a paso",
     personality: "Tradicional, escéptico, sabio, adaptándose",
     speciality: "IA en educación, pedagogía vs tecnología, brecha digital docente",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/fHzPQXuVPYTWXbZi.png",
+    image: "/assets/fHzPQXuVPYTWXbZi.png",
     color: "#92400E",
   },
   {
@@ -271,7 +271,7 @@ const ESPECIALISTAS: Character[] = [
     description: "Lanza tu negocio usando IA en cada paso del camino",
     personality: "Hiperactiva, práctica, obsesionada con la eficiencia",
     speciality: "Herramientas IA para startups, automatización de negocios, growth hacking",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/lVjQlxiAwkRMFxXj.png",
+    image: "/assets/lVjQlxiAwkRMFxXj.png",
     color: "#2563EB",
   },
   {
@@ -282,7 +282,7 @@ const ESPECIALISTAS: Character[] = [
     description: "Detecta deepfakes y noticias falsas generadas por IA",
     personality: "Desconfiado pero reformándose, investigador, sorprendente",
     speciality: "Desinformación sobre IA, mitos vs realidades, fact-checking tecnológico",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KvWiFByaYOmfjPTu.png",
+    image: "/assets/KvWiFByaYOmfjPTu.png",
     color: "#65A30D",
   },
   {
@@ -293,7 +293,7 @@ const ESPECIALISTAS: Character[] = [
     description: "Da tus primeros pasos con la IA de forma segura y sin miedo",
     personality: "Tierna, decidida, valiente, inspiradora",
     speciality: "Alfabetización digital para mayores, estafas digitales, inclusión",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/gqQwwTeePsNproay.png",
+    image: "/assets/gqQwwTeePsNproay.png",
     color: "#D946EF",
   },
   {
@@ -304,7 +304,7 @@ const ESPECIALISTAS: Character[] = [
     description: "Crea imágenes con IA simplemente describiendo lo que imaginas",
     personality: "Apasionado, furioso, creativo, en conflicto",
     speciality: "IA generativa y arte, derechos de autor, el debate 'IA no es arte'",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/CrLXBeJExUZRmDRp.png",
+    image: "/assets/CrLXBeJExUZRmDRp.png",
     color: "#DC2626",
   },
   {
@@ -315,7 +315,7 @@ const ESPECIALISTAS: Character[] = [
     description: "Mejora en videojuegos y crea contenido gaming con IA",
     personality: "Competitivo, nocturno, apasionado, comunidad",
     speciality: "IA en videojuegos, NPCs inteligentes, trampas con IA, matchmaking",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/DQOaFidFiiWYpvHc.png",
+    image: "/assets/DQOaFidFiiWYpvHc.png",
     color: "#4ADE80",
   },
 ];
@@ -381,7 +381,7 @@ const ARAGONESES: Character[] = [
     description: "Aplica la IA al trabajo en equipo y la colaboración",
     personality: "Tozudo, noble, directo, orgulloso de sus raíces",
     speciality: "Persistencia en el aprendizaje de IA, no rendirse nunca",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/jDgVYaQZiEIJVorX.png",
+    image: "/assets/jDgVYaQZiEIJVorX.png",
     color: "#DC2626",
   },
   {
@@ -392,7 +392,7 @@ const ARAGONESES: Character[] = [
     description: "Crea presentaciones impactantes con Gamma y PowerPoint IA",
     personality: "Protectora, firme, inspiradora, comunitaria",
     speciality: "Comunidad tech aragonesa, networking, apoyo mutuo en IA",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/CxAMPhdznJvBLpIb.png",
+    image: "/assets/CxAMPhdznJvBLpIb.png",
     color: "#7C3AED",
   },
   {
@@ -403,7 +403,7 @@ const ARAGONESES: Character[] = [
     description: "Usa IA para tomar mejores decisiones con datos reales",
     personality: "Veloz, imparable, disperso pero eficaz, energético",
     speciality: "Noticias de IA a toda velocidad, estar siempre al día",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/CYKjvyMAzBrGPUIy.png",
+    image: "/assets/CYKjvyMAzBrGPUIy.png",
     color: "#0EA5E9",
   },
   {
@@ -414,7 +414,7 @@ const ARAGONESES: Character[] = [
     description: "Crea contenido creativo con herramientas de IA generativa",
     personality: "Visionario, provocador, genial, entre lo clásico y lo futurista",
     speciality: "IA y arte, creatividad computacional, visión artística de la tecnología",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/lciRQYltLfQvNCeX.png",
+    image: "/assets/lciRQYltLfQvNCeX.png",
     color: "#B45309",
   },
   {
@@ -425,7 +425,7 @@ const ARAGONESES: Character[] = [
     description: "Automatiza tareas repetitivas con flujos IA sin código",
     personality: "Apasionada, musical, fusión tradición-futuro, expresiva",
     speciality: "IA y música, preservación cultural con tecnología, creatividad sonora",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/ZJgkottPEafUdIcZ.png",
+    image: "/assets/ZJgkottPEafUdIcZ.png",
     color: "#E11D48",
   },
   {
@@ -436,7 +436,7 @@ const ARAGONESES: Character[] = [
     description: "Protege datos y sistemas con ciberseguridad basada en IA",
     personality: "Valiente, decidido, duro pero noble, protector",
     speciality: "Ciberseguridad, protección digital, enfrentar los retos de la IA sin miedo",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/FWdLAjGvfOyyipXv.png",
+    image: "/assets/FWdLAjGvfOyyipXv.png",
     color: "#1E293B",
   },
   {
@@ -447,7 +447,7 @@ const ARAGONESES: Character[] = [
     description: "Genera informes y resúmenes ejecutivos con IA en minutos",
     personality: "Astuta, práctica, sabia, con retranca",
     speciality: "Sentido común aplicado a la IA, soluciones prácticas, no complicarse",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/AxgrDBjSdwQlPuiH.png",
+    image: "/assets/AxgrDBjSdwQlPuiH.png",
     color: "#A16207",
   },
   {
@@ -458,7 +458,7 @@ const ARAGONESES: Character[] = [
     description: "Diseña arquitecturas de sistemas IA desde cero",
     personality: "Elegante, integradora, arquitecta de ideas, multicultural",
     speciality: "Arquitectura de IA, diseño de sistemas, fusión cultural y tecnológica",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/qkEShIzCxoUOYqOH.png",
+    image: "/assets/qkEShIzCxoUOYqOH.png",
     color: "#D4A843",
   },
   {
@@ -469,7 +469,7 @@ const ARAGONESES: Character[] = [
     description: "Usa la IA para tomar mejores decisiones con datos reales",
     personality: "Sereno, conector, profundo, fluido",
     speciality: "Flujo de información, conectar comunidades de IA, conocimiento compartido",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/lGGlkLtvYRsPZgwP.png",
+    image: "/assets/lGGlkLtvYRsPZgwP.png",
     color: "#0891B2",
   },
   {
@@ -480,7 +480,7 @@ const ARAGONESES: Character[] = [
     description: "Aplica la IA a proyectos de innovación y emprendimiento",
     personality: "Nutritiva, creativa, paciente, transformadora",
     speciality: "Hacer digeribles los conceptos complejos de IA, recetas de aprendizaje",
-    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/tHgqsSuqUhkWgeqx.png",
+    image: "/assets/tHgqsSuqUhkWgeqx.png",
     color: "#059669",
   },
 ];

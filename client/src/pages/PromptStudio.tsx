@@ -82,16 +82,16 @@ const STYLE_OPTIONS = [
 ];
 
 const ENVIRONMENT_OPTIONS = [
-  { value: "estudio", label: "Estudio Profesional", icon: "📸", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/BeRfFKiJADZGBlVC.jpg", desc: "Ideal para retratos, fotos de producto y fondos controlados con iluminación profesional" },
-  { value: "naturaleza", label: "Naturaleza", icon: "🌿", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/NDtaPNNUuCjxmzxR.jpg", desc: "Bosques, montañas, ríos y paisajes al aire libre con luz natural" },
-  { value: "ciudad", label: "Ciudad Urbana", icon: "🏙️", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/hGpVLMgftxVdCKls.jpg", desc: "Calles, edificios, graffiti y ambientes metropolitanos con energía urbana" },
-  { value: "espacio", label: "Espacio Exterior", icon: "🚀", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/AIBohNxmLHdDhNEw.jpg", desc: "Galaxias, nebulosas, planetas y escenas cósmicas con estrellas" },
-  { value: "marino", label: "Marino", icon: "🐠", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/FZPHTyPrUmwkiaEN.jpg", desc: "Océanos, arrecifes de coral, vida marina y escenas subacuáticas" },
-  { value: "fantasia", label: "Mundo de Fantasía", icon: "🏰", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/FCEHRWDwHVzhCBHm.jpg", desc: "Castillos mágicos, criaturas fantásticas y mundos de ensueño" },
-  { value: "interior", label: "Interior Moderno", icon: "🏠", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/FZLRaIVSjAoqclFg.jpg", desc: "Habitaciones, oficinas y espacios interiores con diseño contemporáneo" },
-  { value: "desierto", label: "Desierto", icon: "🏜️", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/AjEcMsrxQAKKzWea.jpg", desc: "Dunas, arena dorada, atardeceres cálidos y paisajes áridos" },
-  { value: "noche", label: "Escena Nocturna", icon: "🌙", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/KgdzzzbBUXSLUOFd.jpg", desc: "Luces de neón, cielos estrellados y ambientes nocturnos con contraste" },
-  { value: "abstracto", label: "Fondo Abstracto", icon: "🎭", thumb: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/kaKioVtFHqgiJdGA.jpg", desc: "Formas geométricas, gradientes de color y texturas artísticas" },
+  { value: "estudio", label: "Estudio Profesional", icon: "📸", thumb: "/assets/BeRfFKiJADZGBlVC.jpg", desc: "Ideal para retratos, fotos de producto y fondos controlados con iluminación profesional" },
+  { value: "naturaleza", label: "Naturaleza", icon: "🌿", thumb: "/assets/NDtaPNNUuCjxmzxR.jpg", desc: "Bosques, montañas, ríos y paisajes al aire libre con luz natural" },
+  { value: "ciudad", label: "Ciudad Urbana", icon: "🏙️", thumb: "/assets/hGpVLMgftxVdCKls.jpg", desc: "Calles, edificios, graffiti y ambientes metropolitanos con energía urbana" },
+  { value: "espacio", label: "Espacio Exterior", icon: "🚀", thumb: "/assets/AIBohNxmLHdDhNEw.jpg", desc: "Galaxias, nebulosas, planetas y escenas cósmicas con estrellas" },
+  { value: "marino", label: "Marino", icon: "🐠", thumb: "/assets/FZPHTyPrUmwkiaEN.jpg", desc: "Océanos, arrecifes de coral, vida marina y escenas subacuáticas" },
+  { value: "fantasia", label: "Mundo de Fantasía", icon: "🏰", thumb: "/assets/FCEHRWDwHVzhCBHm.jpg", desc: "Castillos mágicos, criaturas fantásticas y mundos de ensueño" },
+  { value: "interior", label: "Interior Moderno", icon: "🏠", thumb: "/assets/FZLRaIVSjAoqclFg.jpg", desc: "Habitaciones, oficinas y espacios interiores con diseño contemporáneo" },
+  { value: "desierto", label: "Desierto", icon: "🏜️", thumb: "/assets/AjEcMsrxQAKKzWea.jpg", desc: "Dunas, arena dorada, atardeceres cálidos y paisajes áridos" },
+  { value: "noche", label: "Escena Nocturna", icon: "🌙", thumb: "/assets/KgdzzzbBUXSLUOFd.jpg", desc: "Luces de neón, cielos estrellados y ambientes nocturnos con contraste" },
+  { value: "abstracto", label: "Fondo Abstracto", icon: "🎭", thumb: "/assets/kaKioVtFHqgiJdGA.jpg", desc: "Formas geométricas, gradientes de color y texturas artísticas" },
 ];
 
 // ─── Avatar-driven Examples ───

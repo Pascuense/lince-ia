@@ -66,7 +66,7 @@ export function Navigation({ activeSection }: { activeSection: string }) {
         {/* Top row: Logo + Language + User */}
         <div className="container flex items-center justify-between h-14 border-b border-white/5">
           <button onClick={() => scrollTo("hero")} className="flex items-center gap-2 flex-shrink-0 min-h-[48px] px-2" aria-label="LINCE Home">
-            <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/bUKqcjlDiFJuymcE.png" alt="LINCE" className="w-10 h-10 rounded-xl object-cover" />
+            <img src="/assets/bUKqcjlDiFJuymcE.png" alt="LINCE" className="w-10 h-10 rounded-xl object-cover" />
             <span className="font-display font-black text-2xl tracking-tight">
               <span className="text-[#00E5FF]">LINCE</span> <span className="text-[#D4A843]">IA</span>
             </span>
@@ -107,7 +107,7 @@ export function Navigation({ activeSection }: { activeSection: string }) {
       <div className="lg:hidden">
         <div className="container flex items-center justify-between h-14 gap-2">
           <button onClick={() => scrollTo("hero")} className="flex items-center gap-1.5 flex-shrink-0 min-h-[48px] px-1" aria-label="LINCE Home">
-            <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/bUKqcjlDiFJuymcE.png" alt="LINCE" className="w-8 h-8 rounded-lg object-cover" />
+            <img src="/assets/bUKqcjlDiFJuymcE.png" alt="LINCE" className="w-8 h-8 rounded-lg object-cover" />
             <span className="font-display font-black text-xl">
               <span className="text-[#00E5FF]">LINCE</span> <span className="text-[#D4A843]">IA</span>
             </span>

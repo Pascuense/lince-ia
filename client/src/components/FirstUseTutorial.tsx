@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-const LINCE_MASCOT = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/bUKqcjlDiFJuymcE.png";
+const LINCE_MASCOT = "/assets/bUKqcjlDiFJuymcE.png";
 
 const TUTORIAL_KEY = "lince-tutorial-completed";
 

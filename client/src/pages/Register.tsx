@@ -92,7 +92,7 @@ const T: Record<string, Record<string, string>> = {
   },
 };
 
-const LINCE_LOGO = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/jtEEtbRUpTtEBKGn.png";
+const LINCE_LOGO = "/assets/jtEEtbRUpTtEBKGn.png";
 
 export default function Register() {
   const [, navigate] = useLocation();

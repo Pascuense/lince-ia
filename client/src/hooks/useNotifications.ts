@@ -169,8 +169,8 @@ export function useNotifications() {
       try {
         new Notification(title, {
           body,
-          icon: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/ErVXkIKAFvfNHOyU.png',
-          badge: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/xnFQpNzJeJNRUUQe.png',
+          icon: '/assets/ErVXkIKAFvfNHOyU.png',
+          badge: '/assets/xnFQpNzJeJNRUUQe.png',
           tag: tag || 'lince-general',
           requireInteraction: false,
         });

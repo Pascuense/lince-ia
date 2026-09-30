@@ -28,7 +28,7 @@ import {
 import { usePRDLanguage } from "@/contexts/PRDLanguageContext";
 
 // ─── CDN IMAGES ───
-const HERO_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/yboYHmRuuKzxTKzs.png";
+const HERO_IMG = "/assets/yboYHmRuuKzxTKzs.png";
 
 // ─── TYPES ───
 interface WelcomeStep {

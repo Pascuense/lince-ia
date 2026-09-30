@@ -51,14 +51,14 @@ interface Tool {
 
 // CDN screenshots for tools
 const TOOL_SCREENSHOTS: Record<string, string> = {
-  chatgpt: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/YFBZOJkVssudUALq.jpg",
-  midjourney: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/jGkhSwiIQCaLNxdr.jpg",
-  gemini: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/kwjBnngUaGANOqxW.jpg",
-  dalle: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/aOPMZSLgiFQWDwMn.png",
-  "canva-ia": "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/CJjdrLluXiatQmeZ.png",
-  runway: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/RPCDFxqmrfWTozSp.png",
-  suno: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/VSlsCtuAdcOwWFmI.jpg",
-  kling: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/JLdknqDeXZLhXGAW.jpg",
+  chatgpt: "/assets/YFBZOJkVssudUALq.jpg",
+  midjourney: "/assets/jGkhSwiIQCaLNxdr.jpg",
+  gemini: "/assets/kwjBnngUaGANOqxW.jpg",
+  dalle: "/assets/aOPMZSLgiFQWDwMn.png",
+  "canva-ia": "/assets/CJjdrLluXiatQmeZ.png",
+  runway: "/assets/RPCDFxqmrfWTozSp.png",
+  suno: "/assets/VSlsCtuAdcOwWFmI.jpg",
+  kling: "/assets/JLdknqDeXZLhXGAW.jpg",
 };
 
 // ─── Category meta ───

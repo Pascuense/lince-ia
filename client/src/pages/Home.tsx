@@ -15,10 +15,10 @@ import { FirstUseTutorial } from "@/components/FirstUseTutorial";
 const WelcomeModal = lazy(() => import("@/components/WelcomeModal"));
 
 // CDN URLs for images
-const HERO_IMG = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/yboYHmRuuKzxTKzs.png";
-const DUOLINGO_LOGO = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/qgXZcfwSCwpzPeFx.png";
+const HERO_IMG = "/assets/yboYHmRuuKzxTKzs.png";
+const DUOLINGO_LOGO = "/assets/qgXZcfwSCwpzPeFx.png";
 // LINCE CEO image — SABELIN is the CEO and boss of LINCE
-const LINCE_CEO_IMG = AVATAR_FRONTAL.SABELIN || "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/jtEEtbRUpTtEBKGn.png";
+const LINCE_CEO_IMG = AVATAR_FRONTAL.SABELIN || "/assets/jtEEtbRUpTtEBKGn.png";
 
 const AVATARS = AVATAR_FRONTAL;
 
