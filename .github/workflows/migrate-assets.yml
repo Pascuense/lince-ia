@@ -2,6 +2,11 @@ name: Migrate Manus CDN assets into the repo
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - claude/check-element-visibility-ea809
+    paths:
+      - .github/workflows/migrate-assets.yml
 
 jobs:
   migrate:
