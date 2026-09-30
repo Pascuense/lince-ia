@@ -78,15 +78,15 @@ const CATEGORY_META: Record<string, { label: string; icon: string; color: string
 const TOOLS_WITH_GUIDES: Tool[] = [
   // ── Chat IA ──
   {
-    id: "chatgpt", name: "ChatGPT", category: "chat", url: "https://chat.openai.com",
-    desc: "IA conversacional de OpenAI. Modelo GPT-4o. Texto, imagen, código.", featured: true, free: true,
+    id: "chatgpt", name: "ChatGPT", category: "chat", url: "https://chatgpt.com",
+    desc: "IA conversacional de OpenAI. GPT-5.x, imágenes, voz y agentes.", featured: true, free: true,
     guide: {
       steps: [
-        { title: "Crear cuenta en OpenAI", desc: "Ve a chat.openai.com y regístrate con email o Google. La versión gratuita incluye GPT-4o mini.", tip: "Usa un email profesional para mejor organización." },
+        { title: "Crear cuenta en OpenAI", desc: "Ve a chatgpt.com y regístrate con email o Google. La versión gratuita incluye GPT-5 con límites de uso.", tip: "Usa un email profesional para mejor organización." },
         { title: "Escribir tu primer prompt", desc: "En el campo de texto, escribe una instrucción clara. Ejemplo: 'Explícame qué es machine learning como si tuviera 10 años'.", tip: "Sé específico: en vez de 'háblame de IA', di 'compara 3 tipos de redes neuronales con ejemplos prácticos'." },
         { title: "Usar GPTs personalizados", desc: "Explora la tienda de GPTs para encontrar asistentes especializados en marketing, código, educación, etc.", tip: "Puedes crear tu propio GPT con instrucciones personalizadas." },
-        { title: "Subir archivos y analizar", desc: "Arrastra PDFs, imágenes o CSVs al chat. GPT-4o puede analizar documentos, extraer datos y crear resúmenes.", tip: "Para análisis de datos, sube un CSV y pide 'analiza tendencias y crea un gráfico'." },
-        { title: "Generar imágenes con DALL-E", desc: "Escribe 'genera una imagen de...' y ChatGPT usará DALL-E 3 integrado para crear imágenes.", tip: "Añade detalles de estilo: 'en estilo acuarela', 'fotorrealista', 'pixel art'." },
+        { title: "Subir archivos y analizar", desc: "Arrastra PDFs, imágenes o CSVs al chat. GPT-5 puede analizar documentos, extraer datos y crear resúmenes.", tip: "Para análisis de datos, sube un CSV y pide 'analiza tendencias y crea un gráfico'." },
+        { title: "Generar imágenes con ChatGPT Images", desc: "Escribe 'genera una imagen de...' y ChatGPT usará su generador nativo (GPT Image), que sustituyó a DALL-E en 2026.", tip: "Añade detalles de estilo: 'en estilo acuarela', 'fotorrealista', 'pixel art'. También edita fotos que subas." },
       ],
       avatarKey: "SABELIN", avatarQuote: "ChatGPT es como tener un asistente que nunca duerme. La clave está en saber preguntar bien.",
       useCases: ["Redacción de emails profesionales", "Análisis de documentos y datos", "Generación de código", "Brainstorming de ideas", "Traducción y corrección de textos"],
@@ -99,8 +99,8 @@ const TOOLS_WITH_GUIDES: Tool[] = [
     desc: "IA de Anthropic. Razonamiento avanzado, análisis de documentos largos.", featured: true, free: true,
     guide: {
       steps: [
-        { title: "Registrarse en Claude", desc: "Ve a claude.ai y crea una cuenta. La versión gratuita incluye Claude 3.5 Sonnet.", tip: "Claude es especialmente bueno para análisis largo y razonamiento complejo." },
-        { title: "Subir documentos largos", desc: "Claude puede procesar hasta 200K tokens (~150.000 palabras). Sube PDFs, contratos o manuales completos.", tip: "Pide 'resume los puntos clave' o 'encuentra inconsistencias en este contrato'." },
+        { title: "Registrarse en Claude", desc: "Ve a claude.ai y crea una cuenta. La versión gratuita incluye Claude Sonnet 5 con límites diarios.", tip: "Claude es especialmente bueno para análisis largo, razonamiento complejo y programación." },
+        { title: "Subir documentos largos", desc: "Claude puede procesar hasta 1M tokens (~750.000 palabras). Sube PDFs, contratos o manuales completos.", tip: "Pide 'resume los puntos clave' o 'encuentra inconsistencias en este contrato'." },
         { title: "Usar Projects", desc: "Crea un Project para agrupar conversaciones y documentos relacionados. Claude mantiene el contexto entre chats.", tip: "Ideal para proyectos de investigación o desarrollo de producto." },
         { title: "Razonamiento paso a paso", desc: "Pide a Claude que 'piense paso a paso'. Activa el razonamiento extendido para problemas complejos.", tip: "Para matemáticas o lógica, di 'resuelve esto paso a paso mostrando tu razonamiento'." },
       ],
@@ -122,7 +122,7 @@ const TOOLS_WITH_GUIDES: Tool[] = [
       ],
       avatarKey: "PAPALIN", avatarQuote: "Si ya usas Google para todo, Gemini es tu mejor aliado. Se integra con Gmail, Docs y todo el ecosistema.",
       useCases: ["Redacción de emails en Gmail", "Análisis de hojas de cálculo", "Creación de presentaciones", "Búsqueda de información actualizada", "Análisis de imágenes y videos"],
-      proTips: ["Gemini Advanced incluye el modelo más potente y 2TB de almacenamiento", "Usa Gemini en Google Sheets para fórmulas complejas y análisis de datos", "Pide que genere código Apps Script para automatizar tareas en Google Workspace"],
+      proTips: ["Google AI Pro ($19.99/mes) incluye Gemini 3.x Pro, Veo, Nano Banana Pro, NotebookLM ampliado y 2TB", "Usa Gemini en Google Sheets para fórmulas complejas y análisis de datos", "Pide que genere código Apps Script para automatizar tareas en Google Workspace"],
       difficulty: "Principiante", timeToLearn: "10 min",
     },
   },
@@ -150,7 +150,7 @@ const TOOLS_WITH_GUIDES: Tool[] = [
       steps: [
         { title: "Unirse al servidor Discord", desc: "Midjourney funciona a través de Discord. Únete al servidor oficial o usa la web en midjourney.com.", tip: "La versión web es más intuitiva que Discord para principiantes." },
         { title: "Escribir tu primer prompt", desc: "Usa /imagine seguido de tu descripción. Ejemplo: '/imagine a futuristic city at sunset, cyberpunk style'.", tip: "En inglés genera mejores resultados que en español." },
-        { title: "Usar parámetros avanzados", desc: "Añade --ar 16:9 para aspecto, --v 6 para versión, --style raw para menos estilización.", tip: "--chaos 50 genera variaciones más creativas e inesperadas." },
+        { title: "Usar parámetros avanzados", desc: "Añade --ar 16:9 para aspecto, --v 8 para la versión actual, --style raw para menos estilización.", tip: "--chaos 50 genera variaciones más creativas e inesperadas." },
         { title: "Refinar con Vary y Upscale", desc: "Después de generar, usa los botones U1-U4 para ampliar y V1-V4 para crear variaciones.", tip: "Usa 'Vary (Subtle)' para cambios pequeños y 'Vary (Strong)' para cambios grandes." },
         { title: "Crear con imagen de referencia", desc: "Sube una imagen y Midjourney la usará como referencia de estilo o composición.", tip: "Combina --iw 2 para dar más peso a la imagen de referencia." },
       ],
@@ -179,12 +179,12 @@ const TOOLS_WITH_GUIDES: Tool[] = [
   },
   // ── Video ──
   {
-    id: "runway", name: "Runway", category: "video", url: "https://runwayml.com",
-    desc: "Suite de video IA. Generación, edición, efectos. Gen-3 Alpha.", featured: true, free: true,
+    id: "runway", name: "Runway", category: "video", url: "https://runway.com",
+    desc: "Suite de video IA. Generación, edición, efectos. Gen-4.5.", featured: true, free: true,
     guide: {
       steps: [
-        { title: "Crear cuenta en Runway", desc: "Regístrate en runwayml.com. Recibes créditos gratuitos para empezar.", tip: "Los créditos gratuitos son suficientes para probar todas las herramientas." },
-        { title: "Generar video desde texto", desc: "Usa Gen-3 Alpha: describe la escena y Runway genera un clip de 4-10 segundos.", tip: "Sé muy descriptivo: 'cámara lenta, un gato caminando por un tejado al atardecer, cinematográfico'." },
+        { title: "Crear cuenta en Runway", desc: "Regístrate en runway.com. Recibes 125 créditos gratuitos para empezar.", tip: "Gen-4.5, el modelo más potente, requiere el plan Standard ($12/mes anual)." },
+        { title: "Generar video desde texto", desc: "Usa Gen-4.5: describe la escena y Runway genera un clip de 5-10 segundos.", tip: "Sé muy descriptivo: 'cámara lenta, un gato caminando por un tejado al atardecer, cinematográfico'." },
         { title: "Imagen a video", desc: "Sube una imagen estática y Runway la anima. Ideal para dar vida a ilustraciones.", tip: "Las imágenes con composición clara generan mejores animaciones." },
         { title: "Eliminar fondos de video", desc: "Green Screen IA elimina el fondo de cualquier video sin necesidad de pantalla verde.", tip: "Funciona mejor con sujetos bien definidos y buena iluminación." },
       ],
@@ -212,11 +212,11 @@ const TOOLS_WITH_GUIDES: Tool[] = [
     },
   },
   {
-    id: "suno", name: "Suno", category: "audio", url: "https://suno.ai",
+    id: "suno", name: "Suno", category: "audio", url: "https://suno.com",
     desc: "Generación de música completa con IA. Letra, melodía, producción.", featured: true, free: true,
     guide: {
       steps: [
-        { title: "Acceder a Suno", desc: "Ve a suno.ai y crea una cuenta. Recibes 50 créditos diarios gratuitos (10 canciones).", tip: "Cada canción usa 5 créditos. 50 créditos = 10 canciones/día gratis." },
+        { title: "Acceder a Suno", desc: "Ve a suno.com y crea una cuenta. Recibes 50 créditos diarios gratuitos (10 canciones, sin uso comercial).", tip: "Cada canción usa 5 créditos. Pro ($10/mes) desbloquea el modelo v5.5 y las descargas comerciales." },
         { title: "Describir tu canción", desc: "Escribe una descripción: 'canción pop alegre sobre aprender IA, en español, ritmo pegadizo'.", tip: "Incluye género, idioma, mood y tema para mejores resultados." },
         { title: "Modo Custom", desc: "Escribe tus propias letras y elige el estilo musical. Más control sobre el resultado.", tip: "Usa [Verse], [Chorus], [Bridge] para estructurar la canción." },
         { title: "Extender y mezclar", desc: "Extiende canciones que te gusten, cambia secciones o mezcla estilos.", tip: "Usa 'Continue From' para añadir más versos a una canción existente." },
@@ -230,29 +230,29 @@ const TOOLS_WITH_GUIDES: Tool[] = [
   // ── Código ──
   {
     id: "github-copilot", name: "GitHub Copilot", category: "codigo", url: "https://github.com/features/copilot",
-    desc: "Asistente de código IA. Autocompletado, chat, revisión de código.", featured: true, free: false,
+    desc: "Asistente de código IA. Autocompletado, chat, agente y revisión de código.", featured: true, free: true,
     guide: {
       steps: [
-        { title: "Activar Copilot", desc: "Suscríbete en github.com/features/copilot. Instala la extensión en VS Code.", tip: "Estudiantes y open-source contributors tienen acceso gratuito." },
+        { title: "Activar Copilot", desc: "Activa el plan Free en github.com/features/copilot e instala la extensión en VS Code. Pro cuesta $10/mes.", tip: "Estudiantes y contribuidores open-source tienen Pro gratis." },
         { title: "Autocompletado inteligente", desc: "Empieza a escribir código y Copilot sugiere líneas completas. Tab para aceptar.", tip: "Escribe un comentario describiendo lo que quieres y Copilot genera el código." },
         { title: "Chat con Copilot", desc: "Abre el panel de chat (Ctrl+I) y pregunta sobre tu código. Puede explicar, refactorizar o debuggear.", tip: "Selecciona código y pregunta 'explica este código' o 'optimiza esto'." },
         { title: "Generar tests", desc: "Selecciona una función y pide 'genera tests unitarios para esta función'.", tip: "Copilot genera tests con buena cobertura de edge cases." },
       ],
       avatarKey: "SABELIN", avatarQuote: "Copilot es como pair programming con un experto 24/7. No reemplaza saber programar, pero multiplica tu velocidad.",
       useCases: ["Autocompletado de código", "Generación de tests", "Documentación automática", "Refactorización", "Aprendizaje de nuevos lenguajes"],
-      proTips: ["Escribe comentarios claros antes del código — Copilot los usa como contexto", "Usa /fix para que corrija errores automáticamente", "Copilot Workspace puede implementar features completas desde issues de GitHub"],
+      proTips: ["Escribe comentarios claros antes del código — Copilot los usa como contexto", "Usa /fix para que corrija errores automáticamente", "El agente de Copilot puede implementar issues completos de GitHub y abrir el PR por ti"],
       difficulty: "Intermedio", timeToLearn: "15 min",
     },
   },
   {
-    id: "cursor", name: "Cursor", category: "codigo", url: "https://cursor.sh",
-    desc: "Editor de código con IA integrada. Fork de VS Code con superpoderes.", featured: true, free: true,
+    id: "cursor", name: "Cursor", category: "codigo", url: "https://cursor.com",
+    desc: "Editor de código con IA integrada. Agentes en paralelo y Composer.", featured: true, free: true,
     guide: {
       steps: [
-        { title: "Descargar Cursor", desc: "Ve a cursor.sh y descarga el editor. Es un fork de VS Code — todas tus extensiones funcionan.", tip: "Importa tu configuración de VS Code automáticamente." },
+        { title: "Descargar Cursor", desc: "Ve a cursor.com y descarga el editor. Es un fork de VS Code — todas tus extensiones funcionan. El plan Hobby es gratis; Pro cuesta $20/mes.", tip: "Importa tu configuración de VS Code automáticamente." },
         { title: "Chat contextual (Ctrl+L)", desc: "Abre el chat y pregunta sobre tu proyecto. Cursor entiende todo tu codebase.", tip: "Cursor indexa tu proyecto completo — puede responder sobre cualquier archivo." },
         { title: "Edición inline (Ctrl+K)", desc: "Selecciona código y describe el cambio. Cursor modifica el código directamente.", tip: "Di 'añade manejo de errores' o 'convierte a TypeScript' y lo hace in-place." },
-        { title: "Composer (Ctrl+Shift+I)", desc: "Describe una feature completa y Cursor genera/modifica múltiples archivos.", tip: "Ideal para implementar features que tocan varios archivos a la vez." },
+        { title: "Agente (Ctrl+Shift+I)", desc: "Describe una feature completa y el agente de Cursor genera/modifica múltiples archivos, ejecuta comandos y tests.", tip: "Puedes lanzar varios agentes en paralelo o en segundo plano para tareas largas." },
       ],
       avatarKey: "CHAVALIN", avatarQuote: "Cursor es VS Code con superpoderes. El Composer puede implementar features enteras en segundos.",
       useCases: ["Desarrollo full-stack", "Refactorización de proyectos", "Aprendizaje de código existente", "Debugging avanzado", "Prototipado rápido"],
@@ -297,13 +297,13 @@ const TOOLS_WITH_GUIDES: Tool[] = [
   // ── Diseño ──
   {
     id: "figma", name: "Figma AI", category: "diseno", url: "https://figma.com",
-    desc: "Diseño colaborativo con IA. Genera componentes, auto-layout.", featured: true, free: true,
+    desc: "Diseño colaborativo con IA. Figma Make, componentes, auto-layout.", featured: true, free: true,
     guide: {
       steps: [
-        { title: "Crear cuenta en Figma", desc: "Regístrate en figma.com. El plan gratuito incluye 3 proyectos con colaboración.", tip: "Figma funciona en el navegador — no necesitas instalar nada." },
+        { title: "Crear cuenta en Figma", desc: "Regístrate en figma.com. El plan Starter gratuito incluye 3 archivos de diseño con colaboración y créditos de IA.", tip: "Figma funciona en el navegador — no necesitas instalar nada." },
         { title: "Aprender Auto Layout", desc: "Auto Layout es la base de Figma. Permite crear diseños responsivos que se adaptan al contenido.", tip: "Piensa en Auto Layout como flexbox de CSS — es el mismo concepto." },
         { title: "Usar componentes", desc: "Crea componentes reutilizables con variantes. Cambia propiedades sin duplicar diseños.", tip: "Los componentes con variantes ahorran horas de trabajo repetitivo." },
-        { title: "IA generativa", desc: "Usa plugins de IA como 'Magician' para generar iconos, imágenes y textos dentro de Figma.", tip: "Figma AI puede renombrar layers, generar textos placeholder y sugerir layouts." },
+        { title: "Figma Make", desc: "Describe una app o convierte un frame en prototipo funcional con Figma Make, incluido en los asientos Full de pago.", tip: "Cada asiento tiene créditos de IA mensuales; Figma Make es lo que más consume." },
       ],
       avatarKey: "ATOLONDRALIN", avatarQuote: "Figma es donde los diseñadores profesionales trabajan. ¡Yo lo uso para diseñar... bueno, intento diseñar!",
       useCases: ["Diseño de interfaces (UI)", "Prototipos interactivos", "Sistemas de diseño", "Colaboración en tiempo real", "Handoff a desarrolladores"],
@@ -320,7 +320,7 @@ const TOOLS_WITH_GUIDES: Tool[] = [
         { title: "Crear un notebook", desc: "Ve a notebooklm.google.com y crea un nuevo notebook. Sube PDFs, docs o pega URLs.", tip: "Puedes subir hasta 50 fuentes por notebook." },
         { title: "Hacer preguntas", desc: "Pregunta sobre tus documentos y NotebookLM responde citando las fuentes exactas.", tip: "Cada respuesta incluye citas clickeables que te llevan al párrafo original." },
         { title: "Generar resúmenes", desc: "Pide resúmenes, FAQs, guías de estudio o briefings a partir de tus documentos.", tip: "Ideal para preparar exámenes o resumir investigaciones largas." },
-        { title: "Crear Audio Overview", desc: "NotebookLM genera un podcast de 10-15 min donde dos 'presentadores IA' discuten tus documentos.", tip: "El podcast es sorprendentemente natural y es una forma genial de revisar material." },
+        { title: "Crear Audio o Video Overview", desc: "NotebookLM genera un podcast (o un vídeo explicativo) donde dos 'presentadores IA' discuten tus documentos.", tip: "Google AI Pro amplía a 300 fuentes por notebook y 5× la cuota de uso." },
       ],
       avatarKey: "YAYALINA", avatarQuote: "NotebookLM convierte documentos aburridos en podcasts entretenidos. ¡Hasta yo puedo escuchar investigaciones mientras cocino!",
       useCases: ["Investigación académica", "Preparación de exámenes", "Análisis de documentos legales", "Resumen de informes", "Creación de podcasts educativos"],
