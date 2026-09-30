@@ -583,7 +583,7 @@ export default function Bienvenida() {
 
           {/* Title */}
           <h1
-            className="text-center font-['Space_Grotesk'] font-black text-3xl sm:text-4xl lg:text-5xl mb-2 transition-colors duration-500"
+            className="text-center font-display font-black text-3xl sm:text-4xl lg:text-5xl mb-2 transition-colors duration-500"
             style={{ color: step.accentColor }}
           >
             {step.title}

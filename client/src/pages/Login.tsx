@@ -115,7 +115,7 @@ export default function Login() {
       {/* Header */}
       <header className="border-b border-white/10 bg-[oklch(0.10_0.01_240)]/95 backdrop-blur-md sticky top-0 z-50">
         <div className="container px-4 py-3 flex items-center justify-between">
-          <span className="font-['Space_Grotesk'] font-bold text-lg">
+          <span className="font-display font-bold text-lg">
             <span className="text-[oklch(0.82_0.15_195)]">LINCE</span>
           </span>
           <div className="flex gap-1">

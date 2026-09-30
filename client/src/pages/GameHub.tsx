@@ -224,7 +224,7 @@ export default function GameHub() {
             </div>
           </button>
           <div className="flex-1 min-w-0">
-            <h2 className="font-['Space_Grotesk'] font-bold text-lg text-white">
+            <h2 className="font-display font-bold text-lg text-white">
               {t.greeting}, {loggedUser?.realName || loggedUser?.username || state.playerName}!
             </h2>
             <p className="text-gray-400 text-sm mt-1 leading-relaxed">{t.welcomeMsg}</p>
@@ -308,7 +308,7 @@ export default function GameHub() {
 
       {/* ─── Level Map ─── */}
       <div className="container px-4 pb-8">
-        <h2 className="font-['Space_Grotesk'] font-bold text-xl mb-4">
+        <h2 className="font-display font-bold text-xl mb-4">
           {t.subtitle}
         </h2>
 

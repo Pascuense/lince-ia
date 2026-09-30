@@ -133,7 +133,7 @@ export function GlossaryTooltip({ term, children, variant = "underline" }: Gloss
             <div className="relative">
               <div className="flex items-center gap-2 mb-1.5">
                 <span className="text-lg">{entry.icon}</span>
-                <span className="font-['Space_Grotesk'] font-bold text-[#00E5FF] text-sm">{entry.title}</span>
+                <span className="font-display font-bold text-[#00E5FF] text-sm">{entry.title}</span>
               </div>
               <p className="text-[#B0B0B0] text-xs leading-relaxed">{entry.desc}</p>
             </div>

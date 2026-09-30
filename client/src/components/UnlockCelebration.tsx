@@ -211,7 +211,7 @@ export function UnlockCelebration() {
         <div className="p-6 sm:p-8 text-center">
           {/* Title with glow */}
           <h2
-            className="font-['Space_Grotesk'] font-black text-3xl sm:text-4xl mb-2 tracking-wider"
+            className="font-display font-black text-3xl sm:text-4xl mb-2 tracking-wider"
             style={{
               color: "#00E5FF",
               textShadow: "0 0 20px rgba(0, 229, 255, 0.5), 0 0 40px rgba(0, 229, 255, 0.3)",
@@ -253,7 +253,7 @@ export function UnlockCelebration() {
                   {/* Label */}
                   <div className="flex-1 text-left">
                     <p
-                      className="font-['Space_Grotesk'] font-bold text-lg"
+                      className="font-display font-bold text-lg"
                       style={{ color: meta.color }}
                     >
                       {label[lang] || label.es}

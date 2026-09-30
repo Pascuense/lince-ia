@@ -103,7 +103,7 @@ export function NextStepFooter({ currentPath }: { currentPath: string }) {
             <Lock className="w-5 h-5" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-500 font-['Space_Grotesk']">{step.label}</p>
+            <p className="text-sm font-medium text-gray-500 font-display">{step.label}</p>
             <p className="text-xs text-gray-600 truncate">
               {tl(lang, { es: 'Completa más niveles para desbloquear', en: 'Complete more levels to unlock', zh: '完成更多关卡解锁', 'pt-BR': 'Complete mais níveis para desbloquear', 'pt-PT': 'Complete mais níveis para desbloquear' })}
             </p>
@@ -126,7 +126,7 @@ export function NextStepFooter({ currentPath }: { currentPath: string }) {
           {step.icon}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-white font-['Space_Grotesk']">
+          <p className="text-sm font-medium text-white font-display">
             {tl(lang, { es: 'Siguiente:', en: 'Next:', zh: '下一步:', 'pt-BR': 'Próximo:', 'pt-PT': 'Próximo:' })}{' '}
             <span style={{ color: step.color }}>{step.label}</span>
           </p>

@@ -208,7 +208,7 @@ export default function Changelog() {
               </div>
             </div>
             <div>
-              <h1 className="font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl">
+              <h1 className="font-display font-bold text-2xl sm:text-3xl">
                 <span className="text-white">Changelog</span>{" "}
                 <span className="text-[#00E5FF]">LINCE</span>
               </h1>
@@ -290,7 +290,7 @@ export default function Changelog() {
                     <div className="flex items-start justify-between gap-3 mb-2">
                       <div className="flex items-center gap-2">
                         <span className={sc.color}>{entry.icon}</span>
-                        <h3 className="font-['Space_Grotesk'] font-semibold text-sm text-white">
+                        <h3 className="font-display font-semibold text-sm text-white">
                           {entry.title}
                         </h3>
                         {entry.version && (

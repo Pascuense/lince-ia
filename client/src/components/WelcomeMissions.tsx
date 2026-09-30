@@ -270,14 +270,14 @@ export function WelcomeMissions({ lang = "es" }: { lang?: "es" | "en" | "zh" }) 
             {showCelebration === "bonus" ? (
               <>
                 <div className="text-5xl mb-3 animate-bounce">🎉</div>
-                <h3 className="font-['Space_Grotesk'] font-bold text-xl text-[oklch(0.72_0.12_75)] mb-2">{t.bonusTitle}</h3>
+                <h3 className="font-display font-bold text-xl text-[oklch(0.72_0.12_75)] mb-2">{t.bonusTitle}</h3>
                 <p className="text-gray-300 text-sm mb-2">{t.bonusDesc}</p>
                 <p className="text-[oklch(0.82_0.15_195)] font-bold text-sm">{t.bonusReward}</p>
               </>
             ) : (
               <>
                 <div className="text-5xl mb-3 animate-bounce">✅</div>
-                <h3 className="font-['Space_Grotesk'] font-bold text-lg text-emerald-400 mb-1">
+                <h3 className="font-display font-bold text-lg text-emerald-400 mb-1">
                   {t[showCelebration] || "Mission Complete"}
                 </h3>
                 <p className="text-gray-300 text-sm">{t.completed}!</p>
@@ -297,7 +297,7 @@ export function WelcomeMissions({ lang = "es" }: { lang?: "es" | "en" | "zh" }) 
             <img src={avatarImg} alt="Avatar" className="w-full h-full object-cover" />
           </div>
           <div>
-            <h3 className="font-['Space_Grotesk'] font-bold text-sm text-white">{t.title}</h3>
+            <h3 className="font-display font-bold text-sm text-white">{t.title}</h3>
             <p className="text-gray-500 text-[10px] max-w-[200px]">{t.subtitle}</p>
           </div>
         </div>

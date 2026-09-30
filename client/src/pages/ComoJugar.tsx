@@ -421,7 +421,7 @@ export default function ComoJugar() {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-white font-['Inter',sans-serif] pt-14">
+    <div className="min-h-screen bg-[#0A0A0A] text-white font-sans pt-14">
       <GlobalNavBar />
 
       {/* ═══ HERO ═══ */}
@@ -432,7 +432,7 @@ export default function ComoJugar() {
         </div>
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <FadeIn>
-            <h1 className="font-['Space_Grotesk'] text-5xl sm:text-7xl font-black mb-4 leading-tight">
+            <h1 className="font-display text-5xl sm:text-7xl font-black mb-4 leading-tight">
               <span className="text-white">{t.heroTitle} </span>
               <span className="text-[#00E5FF]">{t.heroAccent}</span>
             </h1>
@@ -457,7 +457,7 @@ export default function ComoJugar() {
                     <span className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-black" style={{ backgroundColor: s.color + '20', color: s.color }}>{s.num}</span>
                     <span className="text-xl">{s.icon}</span>
                   </div>
-                  <h3 className="font-['Space_Grotesk'] font-bold text-sm mb-1" style={{ color: s.color }}>{s.title}</h3>
+                  <h3 className="font-display font-bold text-sm mb-1" style={{ color: s.color }}>{s.title}</h3>
                   <p className="text-[#888] text-xs leading-relaxed">{s.desc}</p>
                 </div>
               ))}
@@ -471,7 +471,7 @@ export default function ComoJugar() {
         <div className="max-w-4xl mx-auto">
           <FadeIn>
             <div className="text-center mb-10">
-              <h2 className="font-['Space_Grotesk'] text-3xl sm:text-4xl font-black text-white mb-3">{t.toolsTitle}</h2>
+              <h2 className="font-display text-3xl sm:text-4xl font-black text-white mb-3">{t.toolsTitle}</h2>
               <p className="text-[#B0B0B0] text-lg">{t.toolsSub}</p>
             </div>
           </FadeIn>
@@ -490,7 +490,7 @@ export default function ComoJugar() {
                   >
                     <span className="text-3xl sm:text-4xl flex-shrink-0">{tool.icon}</span>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-['Space_Grotesk'] font-black text-lg sm:text-xl" style={{ color: tool.color }}>{tool.name}</h3>
+                      <h3 className="font-display font-black text-lg sm:text-xl" style={{ color: tool.color }}>{tool.name}</h3>
                       <p className="text-[#888] text-sm mt-0.5 truncate">{tool.whatDesc}</p>
                     </div>
                     <div className="flex items-center gap-3 flex-shrink-0">
@@ -547,7 +547,7 @@ export default function ComoJugar() {
         <div className="max-w-4xl mx-auto">
           <FadeIn>
             <div className="text-center mb-10">
-              <h2 className="font-['Space_Grotesk'] text-3xl sm:text-4xl font-black text-white mb-3">{t.recoTitle}</h2>
+              <h2 className="font-display text-3xl sm:text-4xl font-black text-white mb-3">{t.recoTitle}</h2>
               <p className="text-[#B0B0B0] text-lg">{t.recoSub}</p>
             </div>
           </FadeIn>
@@ -556,7 +556,7 @@ export default function ComoJugar() {
               <FadeIn key={i} delay={i * 80}>
                 <div className="bg-[#111]/80 border border-[#1A1A2E] rounded-2xl p-6 hover:border-white/10 transition-all h-full flex flex-col">
                   <span className="text-3xl mb-3">{r.emoji}</span>
-                  <h3 className="font-['Space_Grotesk'] font-bold text-lg mb-2" style={{ color: r.color }}>{r.title}</h3>
+                  <h3 className="font-display font-bold text-lg mb-2" style={{ color: r.color }}>{r.title}</h3>
                   <p className="text-[#B0B0B0] text-sm leading-relaxed flex-1 mb-4">{r.desc}</p>
                   <Link href={r.href} className="inline-flex items-center gap-1 text-sm font-bold transition-colors hover:underline" style={{ color: r.color }}>
                     {r.btn} →
@@ -573,7 +573,7 @@ export default function ComoJugar() {
         <div className="max-w-3xl mx-auto">
           <FadeIn>
             <div className="bg-gradient-to-br from-[#00E5FF]/5 to-[#FFD700]/5 border border-[#00E5FF]/20 rounded-2xl p-6 sm:p-8">
-              <h2 className="font-['Space_Grotesk'] text-2xl sm:text-3xl font-black text-[#00E5FF] mb-4">{t.promptTitle}</h2>
+              <h2 className="font-display text-2xl sm:text-3xl font-black text-[#00E5FF] mb-4">{t.promptTitle}</h2>
               <p className="text-[#B0B0B0] leading-relaxed mb-6">{t.promptDesc}</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <div className="bg-red-500/5 border border-red-500/20 rounded-xl p-4">
@@ -596,7 +596,7 @@ export default function ComoJugar() {
         <div className="max-w-3xl mx-auto">
           <FadeIn>
             <div className="text-center mb-10">
-              <h2 className="font-['Space_Grotesk'] text-3xl sm:text-4xl font-black text-white mb-3">{t.faqTitle}</h2>
+              <h2 className="font-display text-3xl sm:text-4xl font-black text-white mb-3">{t.faqTitle}</h2>
             </div>
           </FadeIn>
           <div className="space-y-3">
@@ -607,7 +607,7 @@ export default function ComoJugar() {
                     onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
                     className="w-full flex items-center justify-between p-5 text-left"
                   >
-                    <h3 className="font-['Space_Grotesk'] font-bold text-base text-white">{faq.q}</h3>
+                    <h3 className="font-display font-bold text-base text-white">{faq.q}</h3>
                     <svg className={`w-5 h-5 text-[#555] transition-transform flex-shrink-0 ml-3 ${expandedFaq === i ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
@@ -628,7 +628,7 @@ export default function ComoJugar() {
       <section className="py-16 px-4 bg-gradient-to-t from-[#00E5FF]/5 to-transparent">
         <FadeIn>
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="font-['Space_Grotesk'] text-3xl sm:text-4xl font-black text-white mb-4">{t.ctaTitle}</h2>
+            <h2 className="font-display text-3xl sm:text-4xl font-black text-white mb-4">{t.ctaTitle}</h2>
             <p className="text-[#B0B0B0] mb-8">{t.ctaDesc}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/registro" className="bg-[#00E5FF] text-black px-8 py-3 rounded-xl font-bold text-lg hover:bg-[#00E5FF]/80 transition-colors text-center">

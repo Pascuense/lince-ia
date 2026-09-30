@@ -384,14 +384,14 @@ export function LegalGate({ children }: { children: React.ReactNode }) {
                 </div>
               </div>
             </div>
-            <h1 className="font-['Space_Grotesk'] font-bold text-xl sm:text-2xl text-white mb-1 tracking-wide">
+            <h1 className="font-display font-bold text-xl sm:text-2xl text-white mb-1 tracking-wide">
               <span className="text-[#00E5FF]">LINCE</span><span className="text-[#D4A843] text-xs sm:text-sm align-super">®</span>
             </h1>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 mb-2">
               <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
               <span className="text-red-400 text-[10px] sm:text-xs font-bold">{t.warning}</span>
             </div>
-            <h2 className="font-['Space_Grotesk'] font-semibold text-xs sm:text-sm text-[#D4A843]">{t.title}</h2>
+            <h2 className="font-display font-semibold text-xs sm:text-sm text-[#D4A843]">{t.title}</h2>
             <p className="text-[#B0B0B0] text-[10px] sm:text-xs mt-1">{t.subtitle}</p>
           </div>
 
@@ -404,7 +404,7 @@ export function LegalGate({ children }: { children: React.ReactNode }) {
             <div className="bg-white/[0.02] border border-[#FF5252]/20 rounded-lg p-3 sm:p-4 mb-4">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-lg">⚖️</span>
-                <h3 className="text-white font-['Space_Grotesk'] font-bold text-xs sm:text-sm">{t.ndaTitle}</h3>
+                <h3 className="text-white font-display font-bold text-xs sm:text-sm">{t.ndaTitle}</h3>
               </div>
               <p className="text-[#B0B0B0] text-[10px] sm:text-xs mb-1"><span className="text-white font-medium">{t.titular}</span> {t.titularValue}</p>
               <p className="text-[#B0B0B0] text-[10px] sm:text-xs mb-3"><span className="text-white font-medium">{t.creador}</span> {t.creadorValue}</p>
@@ -430,7 +430,7 @@ export function LegalGate({ children }: { children: React.ReactNode }) {
             <div className="bg-white/[0.02] border border-[#00E5FF]/20 rounded-lg p-3 sm:p-4 mb-4">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-lg">🛡️</span>
-                <h3 className="text-white font-['Space_Grotesk'] font-bold text-xs sm:text-sm">{t.ipTitle}</h3>
+                <h3 className="text-white font-display font-bold text-xs sm:text-sm">{t.ipTitle}</h3>
               </div>
               <div className="space-y-2">
                 {[t.ip1, t.ip2, t.ip3, t.ip4, t.ip5].map((text, i) => (
@@ -444,7 +444,7 @@ export function LegalGate({ children }: { children: React.ReactNode }) {
 
             {/* Terms */}
             <div className="border-t border-[#00E5FF]/10 pt-3 mb-3">
-              <h3 className="text-white font-['Space_Grotesk'] font-semibold text-xs mb-2">{t.termsTitle}</h3>
+              <h3 className="text-white font-display font-semibold text-xs mb-2">{t.termsTitle}</h3>
               <div className="space-y-1.5">
                 {[t.terms1, t.terms2, t.terms3, t.terms4].map((term, i) => (
                   <div key={i} className="flex items-start gap-2">
@@ -498,7 +498,7 @@ export function LegalGate({ children }: { children: React.ReactNode }) {
             <div className="flex flex-col sm:flex-row gap-2">
               <button
                 onClick={handleAccept}
-                className={`flex-1 py-3 px-6 rounded-xl font-['Space_Grotesk'] font-bold text-xs sm:text-sm transition-all duration-300 ${
+                className={`flex-1 py-3 px-6 rounded-xl font-display font-bold text-xs sm:text-sm transition-all duration-300 ${
                   checked
                     ? "bg-gradient-to-r from-[#00E5FF] to-[#00B8D4] text-black hover:shadow-[0_0_20px_rgba(0,229,255,0.3)] hover:scale-[1.01] active:scale-[0.99]"
                     : "bg-white/10 text-white/40 cursor-not-allowed"
@@ -508,7 +508,7 @@ export function LegalGate({ children }: { children: React.ReactNode }) {
               </button>
               <button
                 onClick={handleReject}
-                className="py-3 px-6 rounded-xl font-['Space_Grotesk'] font-bold text-xs sm:text-sm border border-white/20 text-[#B0B0B0] hover:border-[#FF5252]/50 hover:text-[#FF5252] transition-all duration-300"
+                className="py-3 px-6 rounded-xl font-display font-bold text-xs sm:text-sm border border-white/20 text-[#B0B0B0] hover:border-[#FF5252]/50 hover:text-[#FF5252] transition-all duration-300"
               >
                 {t.rejectBtn}
               </button>

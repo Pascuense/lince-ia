@@ -425,7 +425,7 @@ export default function MiPerfil() {
           <Link href="/" className="text-gray-400 hover:text-white text-sm font-medium transition-colors">
             {t.back}
           </Link>
-          <h1 className="font-['Space_Grotesk'] font-bold">{t.title}</h1>
+          <h1 className="font-display font-bold">{t.title}</h1>
           <div className="flex gap-1">
             {(["es", "en", "zh"] as const).map((l) => (
               <button
@@ -454,7 +454,7 @@ export default function MiPerfil() {
               <Camera className="w-6 h-6 text-white" />
             </button>
           </div>
-          <h2 className="font-['Space_Grotesk'] font-bold text-xl text-[oklch(0.82_0.15_195)] mt-4">
+          <h2 className="font-display font-bold text-xl text-[oklch(0.82_0.15_195)] mt-4">
             {loggedUser?.username || state.playerName}
           </h2>
           <p className="text-gray-400 text-sm mt-1">{loggedUser?.realName}</p>
@@ -475,7 +475,7 @@ export default function MiPerfil() {
 
       {/* Stats Grid */}
       <div className="container px-4 pt-4">
-        <h3 className="font-['Space_Grotesk'] font-bold text-lg mb-3">{t.stats}</h3>
+        <h3 className="font-display font-bold text-lg mb-3">{t.stats}</h3>
         <div className="grid grid-cols-2 gap-3">
           <div className="bg-[oklch(0.14_0.015_240)] rounded-xl p-4 border border-white/5">
             <span className="text-2xl">🪙</span>
@@ -511,7 +511,7 @@ export default function MiPerfil() {
 
       {/* ─── VISUAL PROGRESS ─── */}
       <div className="container px-4 pt-6">
-        <h3 className="font-['Space_Grotesk'] font-bold text-lg mb-3">{t.progressTitle}</h3>
+        <h3 className="font-display font-bold text-lg mb-3">{t.progressTitle}</h3>
         
         {/* XP Progress Bar */}
         <div className="bg-[oklch(0.14_0.015_240)] rounded-xl p-4 border border-white/5 mb-3">
@@ -597,7 +597,7 @@ export default function MiPerfil() {
 
       {/* ─── MIS CONVERSACIONES ─── */}
       <div className="container px-4 pt-6">
-        <h3 className="font-['Space_Grotesk'] font-bold text-lg mb-3 flex items-center gap-2">
+        <h3 className="font-display font-bold text-lg mb-3 flex items-center gap-2">
           <MessageCircle className="w-5 h-5 text-[oklch(0.82_0.15_195)]" />
           {t.myConversations}
         </h3>
@@ -646,7 +646,7 @@ export default function MiPerfil() {
                   {/* Info */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className="font-['Space_Grotesk'] font-bold text-sm truncate" style={{ color: character?.color || "#00E5FF" }}>
+                      <p className="font-display font-bold text-sm truncate" style={{ color: character?.color || "#00E5FF" }}>
                         {character?.name || session.avatarKey}
                       </p>
                       <span
@@ -694,7 +694,7 @@ export default function MiPerfil() {
 
       {/* Achievements */}
       <div className="container px-4 pt-6 pb-8">
-        <h3 className="font-['Space_Grotesk'] font-bold text-lg mb-3">{t.achievements}</h3>
+        <h3 className="font-display font-bold text-lg mb-3">{t.achievements}</h3>
         <div className="space-y-3">
           {achievements.map((a) => (
             <div

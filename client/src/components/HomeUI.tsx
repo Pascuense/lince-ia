@@ -32,8 +32,8 @@ export function FadeIn({ children, className = "", delay = 0 }: { children: Reac
 export function SectionHeader({ number, title, subtitle }: { number: string; title: string; subtitle: string }) {
   return (
     <div className="mb-8 sm:mb-12">
-      <span className="text-[#00E5FF] font-['Space_Grotesk'] font-bold text-sm tracking-[0.3em] uppercase">{number}</span>
-      <h2 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl lg:text-5xl text-white mt-2 mb-3">{title}</h2>
+      <span className="text-[#00E5FF] font-display font-bold text-sm tracking-[0.3em] uppercase">{number}</span>
+      <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-white mt-2 mb-3">{title}</h2>
       <p className="text-[#B0B0B0] text-base sm:text-lg max-w-2xl">{subtitle}</p>
     </div>
   );
@@ -53,7 +53,7 @@ export function CollapsibleSection({ id, title, icon, defaultOpen = false, child
         >
           <div className="flex items-center gap-3">
             <span className="text-xl sm:text-2xl">{icon}</span>
-            <h2 className="font-['Space_Grotesk'] font-bold text-base sm:text-lg text-white/80 group-hover:text-white transition-colors">{title}</h2>
+            <h2 className="font-display font-bold text-base sm:text-lg text-white/80 group-hover:text-white transition-colors">{title}</h2>
           </div>
           <svg
             className={`w-5 h-5 text-[#00E5FF]/50 group-hover:text-[#00E5FF] transition-all duration-300 ${open ? 'rotate-180' : ''}`}

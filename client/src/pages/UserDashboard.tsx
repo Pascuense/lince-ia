@@ -160,7 +160,7 @@ export default function UserDashboard() {
       <GlobalNavBar />
         <div className="text-center max-w-md px-6">
           <Brain className="w-16 h-16 text-[#00E5FF]/30 mx-auto mb-6" />
-          <h1 className="font-['Space_Grotesk'] font-bold text-2xl text-white mb-3">{t.loginRequired}</h1>
+          <h1 className="font-display font-bold text-2xl text-white mb-3">{t.loginRequired}</h1>
           <p className="text-[#B0B0B0] text-sm mb-6">{t.noData}</p>
           <a href="/login" className="inline-flex items-center gap-2 px-6 py-3 bg-[#00E5FF] text-[#0A0A0A] font-bold rounded-xl hover:brightness-110 transition-all">
             {t.loginBtn}
@@ -190,7 +190,7 @@ export default function UserDashboard() {
           {/* Title + Avatar */}
           <div className="mb-10 flex flex-col sm:flex-row items-start gap-6">
             <div className="flex-1">
-              <h1 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl text-white mb-2">{t.title}</h1>
+              <h1 className="font-display font-bold text-3xl sm:text-4xl text-white mb-2">{t.title}</h1>
               <p className="text-[#B0B0B0] text-sm">{t.subtitle}</p>
             </div>
             <div className="flex items-start gap-3 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] max-w-sm">
@@ -208,7 +208,7 @@ export default function UserDashboard() {
                 </div>
                 <span className="text-[#B0B0B0] text-sm font-medium">{t.totalPrompts}</span>
               </div>
-              <p className="font-['Space_Grotesk'] font-bold text-3xl text-white">
+              <p className="font-display font-bold text-3xl text-white">
                 {isLoading ? "..." : stats?.totalPrompts ?? 0}
               </p>
             </div>
@@ -220,7 +220,7 @@ export default function UserDashboard() {
                 </div>
                 <span className="text-[#B0B0B0] text-sm font-medium">{t.totalCourses}</span>
               </div>
-              <p className="font-['Space_Grotesk'] font-bold text-3xl text-white">
+              <p className="font-display font-bold text-3xl text-white">
                 {isLoading ? "..." : stats?.totalCourses ?? 0}
               </p>
             </div>
@@ -232,7 +232,7 @@ export default function UserDashboard() {
                 </div>
                 <span className="text-[#B0B0B0] text-sm font-medium">{t.totalToolViews}</span>
               </div>
-              <p className="font-['Space_Grotesk'] font-bold text-3xl text-white">
+              <p className="font-display font-bold text-3xl text-white">
                 {isLoading ? "..." : stats?.totalToolViews ?? 0}
               </p>
             </div>
@@ -240,7 +240,7 @@ export default function UserDashboard() {
 
           {/* Quick Actions */}
           <div className="mb-10">
-            <h2 className="font-['Space_Grotesk'] font-bold text-lg text-white mb-4 flex items-center gap-2">
+            <h2 className="font-display font-bold text-lg text-white mb-4 flex items-center gap-2">
               <Zap className="w-4 h-4 text-[#00E5FF]" /> {t.quickActions}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -267,7 +267,7 @@ export default function UserDashboard() {
             {/* Recent Prompts */}
             <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-['Space_Grotesk'] font-bold text-base text-white flex items-center gap-2">
+                <h3 className="font-display font-bold text-base text-white flex items-center gap-2">
                   <FileText className="w-4 h-4 text-[#00E5FF]" /> {t.recentPrompts}
                 </h3>
                 <a href="/historial-prompts" className="text-xs text-[#00E5FF] hover:underline">{t.viewAll}</a>
@@ -299,7 +299,7 @@ export default function UserDashboard() {
             {/* Recent Tools */}
             <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-['Space_Grotesk'] font-bold text-base text-white flex items-center gap-2">
+                <h3 className="font-display font-bold text-base text-white flex items-center gap-2">
                   <Wrench className="w-4 h-4 text-[#9C27B0]" /> {t.recentTools}
                 </h3>
                 <a href="/arsenal-ia" className="text-xs text-[#9C27B0] hover:underline">{t.viewAll}</a>
@@ -327,7 +327,7 @@ export default function UserDashboard() {
             {/* Recent Courses */}
             <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06] lg:col-span-2">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-['Space_Grotesk'] font-bold text-base text-white flex items-center gap-2">
+                <h3 className="font-display font-bold text-base text-white flex items-center gap-2">
                   <BookOpen className="w-4 h-4 text-[#D4A843]" /> {t.recentCourses}
                 </h3>
                 <a href="/course-builder" className="text-xs text-[#D4A843] hover:underline">{t.viewAll}</a>

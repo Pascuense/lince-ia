@@ -239,7 +239,7 @@ export default function MapaProgresion() {
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-3 mb-3">
               <Map className="w-8 h-8 text-[#00E5FF]" />
-              <h1 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl text-white">{t("title")}</h1>
+              <h1 className="font-display font-bold text-3xl sm:text-4xl text-white">{t("title")}</h1>
             </div>
             <p className="text-[#B0B0B0] text-lg">{t("subtitle")}</p>
           </div>
@@ -248,7 +248,7 @@ export default function MapaProgresion() {
           <div className="bg-gradient-to-r from-[#1A1A2E] to-[#0F0F1A] border border-white/10 rounded-2xl p-6 mb-8">
             <div className="flex items-center justify-between mb-3">
               <span className="text-sm text-gray-400">{t("overall")}</span>
-              <span className="font-['Space_Grotesk'] font-bold text-lg text-white">{overallProgress}%</span>
+              <span className="font-display font-bold text-lg text-white">{overallProgress}%</span>
             </div>
             <div className="w-full h-3 bg-black/30 rounded-full overflow-hidden mb-4">
               <div
@@ -258,19 +258,19 @@ export default function MapaProgresion() {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-['Space_Grotesk'] font-bold text-[#00E5FF]">{state.xp}</div>
+                <div className="text-2xl font-display font-bold text-[#00E5FF]">{state.xp}</div>
                 <div className="text-xs text-gray-500">{t("yourXP")}</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-['Space_Grotesk'] font-bold text-emerald-400">{stats.unlockedAreas}/{stats.totalAreas}</div>
+                <div className="text-2xl font-display font-bold text-emerald-400">{stats.unlockedAreas}/{stats.totalAreas}</div>
                 <div className="text-xs text-gray-500">{t("areas")} {t("unlocked").toLowerCase()}</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-['Space_Grotesk'] font-bold text-amber-400">{stats.completedSkills}/{stats.totalSkills}</div>
+                <div className="text-2xl font-display font-bold text-amber-400">{stats.completedSkills}/{stats.totalSkills}</div>
                 <div className="text-xs text-gray-500">{t("skills")}</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-['Space_Grotesk'] font-bold text-purple-400">{state.totalPromptsWritten}</div>
+                <div className="text-2xl font-display font-bold text-purple-400">{state.totalPromptsWritten}</div>
                 <div className="text-xs text-gray-500">Prompts</div>
               </div>
             </div>
@@ -302,7 +302,7 @@ export default function MapaProgresion() {
                       <div className={`text-3xl ${!isUnlocked ? "grayscale opacity-50" : ""}`}>{area.icon}</div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <h3 className="font-['Space_Grotesk'] font-bold text-lg text-white truncate">
+                          <h3 className="font-display font-bold text-lg text-white truncate">
                             {area.name[l] || area.name.es}
                           </h3>
                           {!isUnlocked && <Lock className="w-4 h-4 text-gray-500 flex-shrink-0" />}

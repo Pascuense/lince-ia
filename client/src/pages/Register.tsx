@@ -173,7 +173,7 @@ export default function Register() {
       {/* Header */}
       <header className="border-b border-[#00E5FF]/10 bg-[#0A0A0A]/95 backdrop-blur-md sticky top-0 z-50">
         <div className="container px-4 py-3 flex items-center justify-between">
-          <Link href="/" className="font-['Space_Grotesk'] font-bold text-lg">
+          <Link href="/" className="font-display font-bold text-lg">
             <span className="text-[#00E5FF]">LINCE</span>
           </Link>
           <div className="flex gap-1">

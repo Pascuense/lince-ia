@@ -121,7 +121,7 @@ function ImageModal({ creation, onClose }: { creation: PromptCreation; onClose: 
               <Sparkles className="w-4 h-4 text-[#00E5FF]" />
             </div>
             <div className="min-w-0">
-              <h3 className="font-['Space_Grotesk'] font-bold text-white text-lg truncate">{creation.subject}</h3>
+              <h3 className="font-display font-bold text-white text-lg truncate">{creation.subject}</h3>
               <div className="flex items-center gap-2 mt-0.5">
                 <span className="text-[#B0B0B0]/50 text-[10px] flex items-center gap-1">
                   <Clock className="w-2.5 h-2.5" />
@@ -163,7 +163,7 @@ function ImageModal({ creation, onClose }: { creation: PromptCreation; onClose: 
           <div className="p-4 sm:p-5 space-y-4 border-l border-white/[0.04]">
             {/* Original Input Fields */}
             <div>
-              <h4 className="font-['Space_Grotesk'] font-bold text-white text-sm mb-3 flex items-center gap-2">
+              <h4 className="font-display font-bold text-white text-sm mb-3 flex items-center gap-2">
                 <Layers className="w-4 h-4 text-[#00E5FF]" />
                 Campos Originales (4 inputs)
               </h4>
@@ -211,7 +211,7 @@ function ImageModal({ creation, onClose }: { creation: PromptCreation; onClose: 
             {creation.enhancedPrompt && (
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-['Space_Grotesk'] font-bold text-[#D4A843] text-sm flex items-center gap-2">
+                  <h4 className="font-display font-bold text-[#D4A843] text-sm flex items-center gap-2">
                     <Wand2 className="w-4 h-4" />
                     Prompt Mejorado por IA
                   </h4>
@@ -224,7 +224,7 @@ function ImageModal({ creation, onClose }: { creation: PromptCreation; onClose: 
                   </button>
                 </div>
                 <div className="relative">
-                  <p className="text-[#B0B0B0] text-[11px] leading-relaxed font-['JetBrains_Mono'] p-3 bg-[#D4A843]/[0.03] rounded-lg border border-[#D4A843]/10">
+                  <p className="text-[#B0B0B0] text-[11px] leading-relaxed font-mono p-3 bg-[#D4A843]/[0.03] rounded-lg border border-[#D4A843]/10">
                     {creation.enhancedPrompt}
                   </p>
                   <div className="absolute top-2 right-2">
@@ -336,7 +336,7 @@ export default function Galeria() {
           <a href="/" className="flex items-center gap-1">
             <ArrowLeft className="w-4 h-4 text-[#B0B0B0]" />
             
-            <span className="font-['Space_Grotesk'] font-bold text-base text-[#00E5FF]">LINCE</span>
+            <span className="font-display font-bold text-base text-[#00E5FF]">LINCE</span>
           </a>
           <div className="flex items-center gap-3">
             <a
@@ -361,7 +361,7 @@ export default function Galeria() {
               <ImageIcon className="w-4 h-4 text-[#D4A843]" />
               <span className="text-[#D4A843] text-sm font-medium">Creaciones de la Comunidad</span>
             </div>
-            <h1 className="font-['Space_Grotesk'] font-bold text-4xl sm:text-5xl text-white mb-4">
+            <h1 className="font-display font-bold text-4xl sm:text-5xl text-white mb-4">
               Galería <span className="text-[#D4A843]">LINCE</span>
             </h1>
             <p className="text-[#B0B0B0] text-lg max-w-2xl mx-auto mb-2">
@@ -376,18 +376,18 @@ export default function Galeria() {
           {/* Stats Bar */}
           <div className="flex items-center justify-center gap-6 mb-10 flex-wrap">
             <div className="text-center">
-              <span className="font-['Space_Grotesk'] font-bold text-2xl text-[#00E5FF]">{completedCreations.length}</span>
+              <span className="font-display font-bold text-2xl text-[#00E5FF]">{completedCreations.length}</span>
               <p className="text-[#B0B0B0] text-xs">Imágenes</p>
             </div>
             <div className="w-px h-8 bg-white/10 hidden sm:block" />
             <div className="text-center">
-              <span className="font-['Space_Grotesk'] font-bold text-2xl text-[#D4A843]">{uniqueStyles}</span>
+              <span className="font-display font-bold text-2xl text-[#D4A843]">{uniqueStyles}</span>
               <p className="text-[#B0B0B0] text-xs">Estilos</p>
             </div>
             <div className="w-px h-8 bg-white/10 hidden sm:block" />
             <a
               href="/prompt-studio"
-              className="flex items-center gap-2 px-5 py-2.5 bg-[#00E5FF] text-[#0A0A0A] rounded-xl font-['Space_Grotesk'] font-bold text-sm hover:bg-[#00E5FF]/90 transition-colors shadow-[0_0_20px_rgba(0,229,255,0.2)]"
+              className="flex items-center gap-2 px-5 py-2.5 bg-[#00E5FF] text-[#0A0A0A] rounded-xl font-display font-bold text-sm hover:bg-[#00E5FF]/90 transition-colors shadow-[0_0_20px_rgba(0,229,255,0.2)]"
             >
               <Plus className="w-4 h-4" />
               Crear Nueva
@@ -415,11 +415,11 @@ export default function Galeria() {
               <div className="w-20 h-20 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex items-center justify-center mx-auto mb-6">
                 <ImageIcon className="w-10 h-10 text-[#B0B0B0]/20" />
               </div>
-              <h3 className="font-['Space_Grotesk'] font-bold text-white text-xl mb-2">La galería está vacía</h3>
+              <h3 className="font-display font-bold text-white text-xl mb-2">La galería está vacía</h3>
               <p className="text-[#B0B0B0] text-sm mb-6">Sé el primero en crear una imagen con Crear Imagen</p>
               <a
                 href="/prompt-studio"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[#00E5FF] text-[#0A0A0A] rounded-xl font-['Space_Grotesk'] font-bold text-sm shadow-[0_0_20px_rgba(0,229,255,0.2)]"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#00E5FF] text-[#0A0A0A] rounded-xl font-display font-bold text-sm shadow-[0_0_20px_rgba(0,229,255,0.2)]"
               >
                 <Wand2 className="w-4 h-4" />
                 Crear Imagen
@@ -486,35 +486,35 @@ export default function Galeria() {
           {/* How it works - Educational Footer */}
           {completedCreations.length > 0 && (
             <div className="mt-16 p-6 bg-white/[0.01] border border-white/[0.04] rounded-2xl">
-              <h3 className="font-['Space_Grotesk'] font-bold text-white text-lg mb-4 flex items-center gap-2">
+              <h3 className="font-display font-bold text-white text-lg mb-4 flex items-center gap-2">
                 <Lightbulb className="w-5 h-5 text-[#D4A843]" />
                 Cómo se crearon estas imágenes
               </h3>
               <div className="grid sm:grid-cols-4 gap-4">
                 <div className="text-center p-4 bg-white/[0.02] rounded-xl">
                   <div className="w-10 h-10 rounded-full bg-[#00E5FF]/10 flex items-center justify-center mx-auto mb-2">
-                    <span className="font-['Space_Grotesk'] font-bold text-[#00E5FF]">1</span>
+                    <span className="font-display font-bold text-[#00E5FF]">1</span>
                   </div>
                   <p className="text-white text-xs font-bold mb-1">Sujeto</p>
                   <p className="text-[#B0B0B0]/60 text-[10px]">Describe qué quieres ver</p>
                 </div>
                 <div className="text-center p-4 bg-white/[0.02] rounded-xl">
                   <div className="w-10 h-10 rounded-full bg-[#D4A843]/10 flex items-center justify-center mx-auto mb-2">
-                    <span className="font-['Space_Grotesk'] font-bold text-[#D4A843]">2</span>
+                    <span className="font-display font-bold text-[#D4A843]">2</span>
                   </div>
                   <p className="text-white text-xs font-bold mb-1">Estilo</p>
                   <p className="text-[#B0B0B0]/60 text-[10px]">Elige el estilo visual</p>
                 </div>
                 <div className="text-center p-4 bg-white/[0.02] rounded-xl">
                   <div className="w-10 h-10 rounded-full bg-[#00C853]/10 flex items-center justify-center mx-auto mb-2">
-                    <span className="font-['Space_Grotesk'] font-bold text-[#00C853]">3</span>
+                    <span className="font-display font-bold text-[#00C853]">3</span>
                   </div>
                   <p className="text-white text-xs font-bold mb-1">Entorno</p>
                   <p className="text-[#B0B0B0]/60 text-[10px]">Define dónde ocurre</p>
                 </div>
                 <div className="text-center p-4 bg-white/[0.02] rounded-xl">
                   <div className="w-10 h-10 rounded-full bg-[#9C27B0]/10 flex items-center justify-center mx-auto mb-2">
-                    <span className="font-['Space_Grotesk'] font-bold text-[#9C27B0]">4</span>
+                    <span className="font-display font-bold text-[#9C27B0]">4</span>
                   </div>
                   <p className="text-white text-xs font-bold mb-1">Detalles</p>
                   <p className="text-[#B0B0B0]/60 text-[10px]">Añade colores e iluminación</p>

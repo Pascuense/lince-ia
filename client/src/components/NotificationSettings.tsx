@@ -142,7 +142,7 @@ export function NotificationSettings({ lang = 'es', playerId = null }: Notificat
 
   return (
     <div className="space-y-4">
-      <h3 className="font-['Space_Grotesk'] font-bold text-lg flex items-center gap-2">
+      <h3 className="font-display font-bold text-lg flex items-center gap-2">
         <Bell className="w-5 h-5 text-[oklch(0.82_0.15_195)]" />
         {t.title}
       </h3>

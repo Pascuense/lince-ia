@@ -359,7 +359,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
     <section className="pt-14 mb-10">
       <BackButton variant="inline" />
       <GlobalNavBar />
-      <h2 className="font-['Space_Grotesk'] font-bold text-xl sm:text-2xl text-[#00E5FF] mb-4 pb-2 border-b border-[#00E5FF]/20">
+      <h2 className="font-display font-bold text-xl sm:text-2xl text-[#00E5FF] mb-4 pb-2 border-b border-[#00E5FF]/20">
         {title}
       </h2>
       {children}
@@ -421,7 +421,7 @@ export default function AvisoLegal() {
               {l.backBtn}
             </a>
             <span className="text-white/20">|</span>
-            <span className="font-['Space_Grotesk'] font-bold text-sm">
+            <span className="font-display font-bold text-sm">
               <span className="text-[#00E5FF]">LINCE</span>
             </span>
           </div>
@@ -445,7 +445,7 @@ export default function AvisoLegal() {
           {/* Sidebar TOC */}
           <aside className="hidden lg:block">
             <nav className="sticky top-20 space-y-1">
-              <p className="font-['Space_Grotesk'] font-bold text-[#D4A843] text-xs uppercase tracking-wider mb-3">
+              <p className="font-display font-bold text-[#D4A843] text-xs uppercase tracking-wider mb-3">
                 {tl(lang, { es: "Índice", en: "Table of Contents", zh: "目录", 'pt-BR': "Índice", 'pt-PT': "Índice" })}
               </p>
               {sections.map((s) => (
@@ -468,17 +468,17 @@ export default function AvisoLegal() {
                 <span className="w-2 h-2 rounded-full bg-[#00E5FF]" />
                 <span className="text-[#00E5FF] text-xs font-medium">{l.lastUpdate}</span>
               </div>
-              <h1 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl text-white mb-2">
+              <h1 className="font-display font-bold text-3xl sm:text-4xl text-white mb-2">
                 {l.pageTitle}
               </h1>
-              <p className="font-['Space_Grotesk'] text-lg text-[#D4A843]">
+              <p className="font-display text-lg text-[#D4A843]">
                 <span className="text-[#00E5FF]">LINCE</span><span className="text-[#D4A843] text-xs align-super">®</span> — ACNB IA SL
               </p>
             </div>
 
             {/* Mobile TOC */}
             <div className="lg:hidden mb-8 p-4 bg-white/[0.02] border border-white/[0.06] rounded-lg">
-              <p className="font-['Space_Grotesk'] font-bold text-[#D4A843] text-xs uppercase tracking-wider mb-2">
+              <p className="font-display font-bold text-[#D4A843] text-xs uppercase tracking-wider mb-2">
                 {tl(lang, { es: "Índice", en: "Table of Contents", zh: "目录", 'pt-BR': "Índice", 'pt-PT': "Índice" })}
               </p>
               <div className="flex flex-wrap gap-1">
@@ -669,7 +669,7 @@ export default function AvisoLegal() {
 
             {/* ─── FOOTER ─── */}
             <div className="mt-12 pt-6 border-t border-white/[0.06] text-center">
-              <p className="font-['Space_Grotesk'] font-bold text-sm text-white mb-1">
+              <p className="font-display font-bold text-sm text-white mb-1">
                 <span className="text-[#00E5FF]">LINCE</span><span className="text-[#D4A843] text-xs align-super">®</span>
               </p>
               <p className="text-[#B0B0B0]/60 text-xs mb-1">{l.footerText}</p>

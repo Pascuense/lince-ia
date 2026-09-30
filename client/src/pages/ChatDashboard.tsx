@@ -365,7 +365,7 @@ export default function ChatDashboard() {
             alt="LINCE"
             className="w-9 h-9 rounded-xl object-cover"
           />
-          <span className="font-['Space_Grotesk'] font-bold text-lg text-white/90">LINCE</span>
+          <span className="font-display font-bold text-lg text-white/90">LINCE</span>
         </a>
 
         {/* Country flag */}
@@ -675,7 +675,7 @@ export default function ChatDashboard() {
                   </div>
                   {/* Name and role */}
                   <div className="text-center sm:text-left flex-1">
-                    <h1 className="font-['Space_Grotesk'] font-black text-3xl sm:text-4xl text-white mb-2">
+                    <h1 className="font-display font-black text-3xl sm:text-4xl text-white mb-2">
                       {getDisplayName(selectedProfessor)}
                     </h1>
                     <p className="text-xl sm:text-2xl text-white/60 mb-3">
@@ -780,7 +780,7 @@ export default function ChatDashboard() {
                   <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-[#00E5FF]/10 to-[#D4A843]/10 border border-[#00E5FF]/20 mb-6">
                     <span className="text-base sm:text-lg font-bold text-[#00E5FF]">Aprende Inteligencia Artificial jugando</span>
                   </div>
-                  <h1 className="font-['Space_Grotesk'] font-black text-3xl sm:text-4xl lg:text-5xl mb-5 text-white leading-tight">
+                  <h1 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl mb-5 text-white leading-tight">
                     Bienvenido a <span className="text-[#00E5FF]">LINCE</span> <span className="text-[#D4A843]">IA</span>
                   </h1>
                   <p className="text-white/70 text-lg sm:text-xl lg:text-2xl max-w-2xl mx-auto leading-relaxed">

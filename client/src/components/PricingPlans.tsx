@@ -182,7 +182,7 @@ export function PricingPlans({ embedded = false }: { embedded?: boolean }) {
       <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         {/* ─── HEADER ─── */}
         <div className="text-center mb-10 sm:mb-14">
-          <h1 className="font-['Space_Grotesk'] font-black text-3xl sm:text-4xl lg:text-5xl text-white mb-4">
+          <h1 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white mb-4">
             {t(lang, 'title')}
           </h1>
           <p className="text-white/60 text-lg sm:text-xl max-w-xl mx-auto">
@@ -200,13 +200,13 @@ export function PricingPlans({ embedded = false }: { embedded?: boolean }) {
                 <Zap size={24} className="text-white/60" />
               </div>
               <div>
-                <h2 className="font-['Space_Grotesk'] font-black text-xl sm:text-2xl text-white">
+                <h2 className="font-display font-black text-xl sm:text-2xl text-white">
                   {t(lang, 'free')}
                 </h2>
               </div>
             </div>
             <div className="mb-5">
-              <span className="font-['Space_Grotesk'] font-black text-4xl sm:text-5xl text-white">0 €</span>
+              <span className="font-display font-black text-4xl sm:text-5xl text-white">0 €</span>
               <span className="text-white/40 text-lg ml-1">{t(lang, 'perMonth')}</span>
             </div>
             <p className="text-white/50 text-sm sm:text-base leading-relaxed mb-6 flex-1">
@@ -231,13 +231,13 @@ export function PricingPlans({ embedded = false }: { embedded?: boolean }) {
                 <Crown size={24} className="text-[#D4A843]" />
               </div>
               <div>
-                <h2 className="font-['Space_Grotesk'] font-black text-xl sm:text-2xl text-[#D4A843]">
+                <h2 className="font-display font-black text-xl sm:text-2xl text-[#D4A843]">
                   {t(lang, 'premium')}
                 </h2>
               </div>
             </div>
             <div className="mb-5">
-              <span className="font-['Space_Grotesk'] font-black text-4xl sm:text-5xl text-white">9,99 €</span>
+              <span className="font-display font-black text-4xl sm:text-5xl text-white">9,99 €</span>
               <span className="text-white/40 text-lg ml-1">{t(lang, 'perMonth')}</span>
             </div>
             <p className="text-[#D4A843]/70 text-sm sm:text-base leading-relaxed mb-6 flex-1">
@@ -258,13 +258,13 @@ export function PricingPlans({ embedded = false }: { embedded?: boolean }) {
                 <Building2 size={24} className="text-[#00E5FF]" />
               </div>
               <div>
-                <h2 className="font-['Space_Grotesk'] font-black text-xl sm:text-2xl text-[#00E5FF]">
+                <h2 className="font-display font-black text-xl sm:text-2xl text-[#00E5FF]">
                   {t(lang, 'enterprise')}
                 </h2>
               </div>
             </div>
             <div className="mb-5">
-              <span className="font-['Space_Grotesk'] font-black text-3xl sm:text-4xl text-white">{t(lang, 'enterprisePrice')}</span>
+              <span className="font-display font-black text-3xl sm:text-4xl text-white">{t(lang, 'enterprisePrice')}</span>
             </div>
             <p className="text-[#00E5FF]/60 text-sm sm:text-base leading-relaxed mb-6 flex-1">
               {t(lang, 'enterpriseIdeal')}
@@ -281,7 +281,7 @@ export function PricingPlans({ embedded = false }: { embedded?: boolean }) {
         {/* ─── COMPARISON TABLE ─── */}
         <div className="bg-[#0f1520] border border-white/[0.08] rounded-2xl overflow-hidden">
           <div className="p-5 sm:p-6 border-b border-white/[0.06]">
-            <h2 className="font-['Space_Grotesk'] font-black text-xl sm:text-2xl text-white">
+            <h2 className="font-display font-black text-xl sm:text-2xl text-white">
               {t(lang, 'comparisonTitle')}
             </h2>
           </div>

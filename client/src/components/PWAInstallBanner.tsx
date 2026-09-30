@@ -110,7 +110,7 @@ function InstallBanner({
 
           {/* Text */}
           <div className="flex-1 min-w-0">
-            <h3 className="font-['Space_Grotesk'] font-bold text-white text-sm leading-tight">
+            <h3 className="font-display font-bold text-white text-sm leading-tight">
               {t.installTitle}
             </h3>
             <p className="text-[#B0B0B0] text-xs mt-0.5 leading-tight">
@@ -164,7 +164,7 @@ function IOSInstallGuide({ onDismiss }: { onDismiss: () => void }) {
           </div>
 
           <div className="flex-1">
-            <h3 className="font-['Space_Grotesk'] font-bold text-white text-sm mb-2">
+            <h3 className="font-display font-bold text-white text-sm mb-2">
               {t.iosTitle}
             </h3>
             <div className="space-y-2">
@@ -221,7 +221,7 @@ function UpdateBanner({ onUpdate }: { onUpdate: () => void }) {
         <div className="flex items-center gap-3">
           <RefreshCw size={20} className="text-[#D4A843] animate-spin-slow flex-shrink-0" />
           <div className="flex-1">
-            <h3 className="font-['Space_Grotesk'] font-bold text-white text-xs">
+            <h3 className="font-display font-bold text-white text-xs">
               {t.updateTitle}
             </h3>
             <p className="text-[#B0B0B0] text-[10px]">{t.updateDesc}</p>

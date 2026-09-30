@@ -569,7 +569,7 @@ export default function RaidsBattle() {
         {mode === 'menu' && (
           <div className="space-y-8">
             <div className="text-center">
-              <h1 className="font-['Space_Grotesk'] font-black text-4xl md:text-5xl mb-3">
+              <h1 className="font-display font-black text-4xl md:text-5xl mb-3">
                 <span className="text-white">LINCE </span>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-yellow-500">RAIDS</span>
               </h1>
@@ -585,7 +585,7 @@ export default function RaidsBattle() {
                     <Swords className="w-7 h-7 text-red-400" />
                   </div>
                   <div>
-                    <h2 className="font-['Space_Grotesk'] font-bold text-xl text-white">ATACAR</h2>
+                    <h2 className="font-display font-bold text-xl text-white">ATACAR</h2>
                     <p className="text-red-400 text-xs font-medium">Asalta una base</p>
                   </div>
                 </div>
@@ -606,7 +606,7 @@ export default function RaidsBattle() {
                     <Shield className="w-7 h-7 text-blue-400" />
                   </div>
                   <div>
-                    <h2 className="font-['Space_Grotesk'] font-bold text-xl text-white">DEFENDER</h2>
+                    <h2 className="font-display font-bold text-xl text-white">DEFENDER</h2>
                     <p className="text-blue-400 text-xs font-medium">Protege tu base</p>
                   </div>
                 </div>
@@ -630,7 +630,7 @@ export default function RaidsBattle() {
                     <Palette className="w-7 h-7 text-purple-400" />
                   </div>
                   <div>
-                    <h2 className="font-['Space_Grotesk'] font-bold text-xl text-white">CREATIVIDAD</h2>
+                    <h2 className="font-display font-bold text-xl text-white">CREATIVIDAD</h2>
                     <p className="text-purple-400 text-xs font-medium">Supera a la IA</p>
                   </div>
                 </div>
@@ -662,7 +662,7 @@ export default function RaidsBattle() {
 
             {/* Creativity Rules Preview */}
             <div className="bg-gradient-to-r from-purple-500/5 to-pink-500/5 border border-purple-500/10 rounded-2xl p-5">
-              <h3 className="font-['Space_Grotesk'] font-bold text-sm text-purple-400 mb-3 flex items-center gap-2">
+              <h3 className="font-display font-bold text-sm text-purple-400 mb-3 flex items-center gap-2">
                 <Sparkles className="w-4 h-4" /> Reglas de Batalla de Creatividad
               </h3>
               <div className="grid sm:grid-cols-2 gap-3 text-xs text-gray-400">
@@ -718,7 +718,7 @@ export default function RaidsBattle() {
             <div className="bg-gradient-to-br from-purple-500/10 via-pink-500/5 to-transparent border border-purple-500/20 rounded-2xl p-6 sm:p-8">
               <div className="text-center mb-6">
                 <span className="text-5xl mb-3 block">{creativityChallenges[creativityRound].icon}</span>
-                <h2 className="font-['Space_Grotesk'] font-black text-2xl sm:text-3xl text-white mb-2">
+                <h2 className="font-display font-black text-2xl sm:text-3xl text-white mb-2">
                   {creativityChallenges[creativityRound].theme}
                 </h2>
                 <div className="flex items-center justify-center gap-2 text-purple-400 text-sm">
@@ -839,7 +839,7 @@ export default function RaidsBattle() {
                     <h3 className="font-bold text-white text-sm flex items-center gap-2">
                       <span className="text-lg">👤</span> Tu Respuesta
                     </h3>
-                    <div className={`text-2xl font-black font-['Space_Grotesk'] ${playerCreativityScore && playerCreativityScore.total >= 70 ? 'text-purple-400' : playerCreativityScore && playerCreativityScore.total >= 50 ? 'text-cyan-400' : 'text-orange-400'}`}>
+                    <div className={`text-2xl font-black font-display ${playerCreativityScore && playerCreativityScore.total >= 70 ? 'text-purple-400' : playerCreativityScore && playerCreativityScore.total >= 50 ? 'text-cyan-400' : 'text-orange-400'}`}>
                       {playerCreativityScore?.total || 0}
                       <span className="text-gray-600 text-sm font-normal">/100</span>
                     </div>
@@ -874,7 +874,7 @@ export default function RaidsBattle() {
                     <h3 className="font-bold text-white text-sm flex items-center gap-2">
                       <span className="text-lg">🤖</span> Respuesta de la IA
                     </h3>
-                    <div className={`text-2xl font-black font-['Space_Grotesk'] text-purple-400`}>
+                    <div className={`text-2xl font-black font-display text-purple-400`}>
                       {currentAIData?.score.total || 0}
                       <span className="text-gray-600 text-sm font-normal">/100</span>
                     </div>
@@ -929,7 +929,7 @@ export default function RaidsBattle() {
             <div className="text-center">
               <div className="inline-block">
                 <p className="text-purple-400 text-xs font-bold mb-2 tracking-widest">BATALLA DE CREATIVIDAD</p>
-                <div className="text-6xl sm:text-7xl font-black font-['Space_Grotesk'] text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+                <div className="text-6xl sm:text-7xl font-black font-display text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
                   {creativityRoundsWon}/{TOTAL_CREATIVITY_ROUNDS}
                 </div>
                 <p className="text-gray-500 text-sm mt-1">Rondas ganadas</p>
@@ -949,13 +949,13 @@ export default function RaidsBattle() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center">
                   <p className="text-gray-500 text-xs mb-1">👤 Tú</p>
-                  <p className={`text-3xl font-black font-['Space_Grotesk'] ${creativityTotalScore > creativityAITotalScore ? 'text-emerald-400' : 'text-white'}`}>
+                  <p className={`text-3xl font-black font-display ${creativityTotalScore > creativityAITotalScore ? 'text-emerald-400' : 'text-white'}`}>
                     {creativityTotalScore}
                   </p>
                 </div>
                 <div className="text-center">
                   <p className="text-gray-500 text-xs mb-1">🤖 IA</p>
-                  <p className={`text-3xl font-black font-['Space_Grotesk'] ${creativityAITotalScore > creativityTotalScore ? 'text-purple-400' : 'text-white'}`}>
+                  <p className={`text-3xl font-black font-display ${creativityAITotalScore > creativityTotalScore ? 'text-purple-400' : 'text-white'}`}>
                     {creativityAITotalScore}
                   </p>
                 </div>
@@ -1038,7 +1038,7 @@ export default function RaidsBattle() {
                 )}
                 <div>
                   <p className="text-red-400 text-xs font-bold mb-1">OBJETIVO</p>
-                  <h2 className="font-['Space_Grotesk'] font-bold text-xl text-white">{target.avatarKey ? getAvatarName(target.avatarKey) : target.name}</h2>
+                  <h2 className="font-display font-bold text-xl text-white">{target.avatarKey ? getAvatarName(target.avatarKey) : target.name}</h2>
                   <div className="flex items-center gap-1 mt-1">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <Star key={i} className={`w-3 h-3 ${i < target.difficulty ? 'text-yellow-400 fill-yellow-400' : 'text-gray-700'}`} />
@@ -1062,7 +1062,7 @@ export default function RaidsBattle() {
             {/* Attack Style Selection */}
             {!attackStyle && (
               <div>
-                <h3 className="font-['Space_Grotesk'] font-bold text-lg text-white mb-4">Elige tu estilo de ataque</h3>
+                <h3 className="font-display font-bold text-lg text-white mb-4">Elige tu estilo de ataque</h3>
                 <div className="grid grid-cols-2 gap-3">
                   {ATTACK_STYLES.map(s => (
                     <button key={s.id} onClick={() => beginWriting(s.id)}
@@ -1128,7 +1128,7 @@ export default function RaidsBattle() {
                 </div>
                 <div>
                   <p className="text-blue-400 text-xs font-bold mb-1">ALERTA DE INTRUSIÓN</p>
-                  <h2 className="font-['Space_Grotesk'] font-bold text-xl text-white">{defenseScenario.attacker}</h2>
+                  <h2 className="font-display font-bold text-xl text-white">{defenseScenario.attacker}</h2>
                 </div>
               </div>
               <div className="bg-black/30 rounded-lg p-3">
@@ -1182,7 +1182,7 @@ export default function RaidsBattle() {
             {/* Score */}
             <div className="text-center">
               <div className={`inline-block ${showScoreAnimation ? 'animate-bounce' : ''}`}>
-                <div className={`text-7xl font-black font-['Space_Grotesk'] ${result.score >= 80 ? 'text-yellow-400' : result.score >= 60 ? 'text-cyan-400' : result.score >= 40 ? 'text-orange-400' : 'text-red-400'}`}>
+                <div className={`text-7xl font-black font-display ${result.score >= 80 ? 'text-yellow-400' : result.score >= 60 ? 'text-cyan-400' : result.score >= 40 ? 'text-orange-400' : 'text-red-400'}`}>
                   {result.score}
                 </div>
                 <div className="text-gray-500 text-sm">/100</div>

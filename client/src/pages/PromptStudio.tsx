@@ -239,7 +239,7 @@ function ScoreBar({ score, max, color, label }: { score: number; max: number; co
     <div className="space-y-1">
       <div className="flex items-center justify-between text-xs">
         <span className="text-[#B0B0B0]">{label}</span>
-        <span className="font-['JetBrains_Mono'] font-bold" style={{ color }}>{score}/{max}</span>
+        <span className="font-mono font-bold" style={{ color }}>{score}/{max}</span>
       </div>
       <div className="h-2 rounded-full bg-white/[0.06] overflow-hidden">
         <div
@@ -389,7 +389,7 @@ export default function PromptStudio(props?: any) {
                 </div>
               </div>
             </div>
-            <h2 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl text-white mb-2">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white mb-2">
               Crear <span className="text-[#00E5FF]">Imagen</span> con IA
             </h2>
             <p className="text-white/60 text-base sm:text-lg max-w-lg mx-auto leading-relaxed">
@@ -400,12 +400,12 @@ export default function PromptStudio(props?: any) {
           {/* Puntuación simplificada - Grande y visual */}
           <div className="mb-10 p-5 sm:p-6 bg-gradient-to-r from-[#00E5FF]/[0.05] to-[#D4A843]/[0.05] border border-white/[0.1] rounded-2xl">
             <div className="flex items-center justify-between mb-5">
-              <h3 className="font-['Space_Grotesk'] font-bold text-white text-lg sm:text-xl flex items-center gap-2">
+              <h3 className="font-display font-bold text-white text-lg sm:text-xl flex items-center gap-2">
                 <BarChart3 className="w-5 h-5 text-[#00E5FF]" />
                 Tu puntuación
               </h3>
               <div className="flex items-center gap-3">
-                <span className="font-['Space_Grotesk'] font-black text-3xl sm:text-4xl" style={{ color: scoreColor }}>{liveEval.percentage}%</span>
+                <span className="font-display font-black text-3xl sm:text-4xl" style={{ color: scoreColor }}>{liveEval.percentage}%</span>
                 <div className="w-16 h-16 relative">
                   <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
                     <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="3.5" />
@@ -447,7 +447,7 @@ export default function PromptStudio(props?: any) {
             <div className="space-y-8">
               {/* PASO 1: Sujeto */}
               <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border-2 border-[#00E5FF]/20">
-                <label className="flex items-center gap-3 text-white font-['Space_Grotesk'] font-bold text-lg sm:text-xl mb-4">
+                <label className="flex items-center gap-3 text-white font-display font-bold text-lg sm:text-xl mb-4">
                   <span className="w-10 h-10 rounded-full bg-[#00E5FF]/20 flex items-center justify-center text-[#00E5FF] font-black text-lg">1</span>
                   ¿Qué quieres crear?
                   <span className="text-[#FF5252] text-sm">*</span>
@@ -459,7 +459,7 @@ export default function PromptStudio(props?: any) {
 
               {/* PASO 2: Estilo Visual */}
               <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border-2 border-[#D4A843]/20">
-                <label className="flex items-center gap-3 text-white font-['Space_Grotesk'] font-bold text-lg sm:text-xl mb-4">
+                <label className="flex items-center gap-3 text-white font-display font-bold text-lg sm:text-xl mb-4">
                   <span className="w-10 h-10 rounded-full bg-[#D4A843]/20 flex items-center justify-center text-[#D4A843] font-black text-lg">2</span>
                   Elige un estilo
                   <span className="text-[#FF5252] text-sm">*</span>
@@ -481,7 +481,7 @@ export default function PromptStudio(props?: any) {
 
               {/* PASO 3: Entorno */}
               <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border-2 border-[#00C853]/20">
-                <label className="flex items-center gap-3 text-white font-['Space_Grotesk'] font-bold text-lg sm:text-xl mb-4">
+                <label className="flex items-center gap-3 text-white font-display font-bold text-lg sm:text-xl mb-4">
                   <span className="w-10 h-10 rounded-full bg-[#00C853]/20 flex items-center justify-center text-[#00C853] font-black text-lg">3</span>
                   Elige un entorno
                   <span className="text-[#FF5252] text-sm">*</span>
@@ -529,7 +529,7 @@ export default function PromptStudio(props?: any) {
 
               {/* PASO 4: Detalles */}
               <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border-2 border-[#9C27B0]/20">
-                <label className="flex items-center gap-3 text-white font-['Space_Grotesk'] font-bold text-lg sm:text-xl mb-4">
+                <label className="flex items-center gap-3 text-white font-display font-bold text-lg sm:text-xl mb-4">
                   <span className="w-10 h-10 rounded-full bg-[#9C27B0]/20 flex items-center justify-center text-[#9C27B0] font-black text-lg">4</span>
                   Detalles extra
                   <span className="text-white/40 text-sm ml-1">(opcional)</span>
@@ -541,7 +541,7 @@ export default function PromptStudio(props?: any) {
               {/* Botones de acción - GRANDES */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button onClick={handleGenerate} disabled={!isFormValid || isGenerating}
-                  className="flex-1 h-16 sm:h-18 text-lg sm:text-xl bg-[#00E5FF] text-[#0A0A0A] font-['Space_Grotesk'] font-black hover:bg-[#00E5FF]/90 shadow-[0_0_30px_rgba(0,229,255,0.3)] disabled:opacity-40 rounded-2xl">
+                  className="flex-1 h-16 sm:h-18 text-lg sm:text-xl bg-[#00E5FF] text-[#0A0A0A] font-display font-black hover:bg-[#00E5FF]/90 shadow-[0_0_30px_rgba(0,229,255,0.3)] disabled:opacity-40 rounded-2xl">
                   {isGenerating ? (<><Loader2 className="w-6 h-6 mr-3 animate-spin" />Generando...</>) : (<><ImageIcon className="w-6 h-6 mr-3" />GENERAR IMAGEN</>)}
                 </Button>
                 <Button onClick={handlePreview} disabled={!isFormValid || isPreviewing} variant="outline"
@@ -559,7 +559,7 @@ export default function PromptStudio(props?: any) {
               {enhancedPrompt && (
                 <div className="p-5 bg-[#D4A843]/5 border border-[#D4A843]/20 rounded-2xl">
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-['Space_Grotesk'] font-bold text-[#D4A843] text-base flex items-center gap-2"><Wand2 className="w-4 h-4" /> Prompt Mejorado</h4>
+                    <h4 className="font-display font-bold text-[#D4A843] text-base flex items-center gap-2"><Wand2 className="w-4 h-4" /> Prompt Mejorado</h4>
                     <button onClick={copyPrompt} className="text-[#B0B0B0] hover:text-white transition-colors p-2"><Copy className="w-5 h-5" /></button>
                   </div>
                   <p className="text-[#B0B0B0] text-sm leading-relaxed">{enhancedPrompt}</p>
@@ -642,7 +642,7 @@ export default function PromptStudio(props?: any) {
           <a href="/" className="flex items-center gap-1">
             <ArrowLeft className="w-4 h-4 text-[#B0B0B0]" />
             
-            <span className="font-['Space_Grotesk'] font-bold text-base text-[#00E5FF]">LINCE</span>
+            <span className="font-display font-bold text-base text-[#00E5FF]">LINCE</span>
           </a>
           <div className="flex items-center gap-3">
             <div className="flex rounded-full border border-white/10 overflow-hidden">
@@ -689,10 +689,10 @@ export default function PromptStudio(props?: any) {
             <div className="max-w-md mx-auto mb-4">
               <PromptLevelProgress stats={promptStats} lang="es" compact={false} />
             </div>
-            <h1 className="font-['Space_Grotesk'] font-bold text-4xl sm:text-6xl text-white mb-2">
+            <h1 className="font-display font-bold text-4xl sm:text-6xl text-white mb-2">
               IMA<span className="text-[#00E5FF]">GELIN</span>
             </h1>
-            <p className="text-base sm:text-lg font-semibold text-white/50 font-['Space_Grotesk'] uppercase tracking-widest mb-5">Crea imágenes con IA en 4 pasos</p>
+            <p className="text-base sm:text-lg font-semibold text-white/50 font-display uppercase tracking-widest mb-5">Crea imágenes con IA en 4 pasos</p>
             <p className="text-white/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
               Crea imágenes con IA rellenando <span className="text-[#00E5FF] font-bold">4 campos simples</span>.
               Evaluación en tiempo real + mejora automática del prompt + generación instantánea.
@@ -713,12 +713,12 @@ export default function PromptStudio(props?: any) {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
               <div className="flex items-center gap-3">
                 <BarChart3 className="w-5 h-5 text-[#00E5FF]" />
-                <h3 className="font-['Space_Grotesk'] font-bold text-white text-sm">Evaluación en Tiempo Real</h3>
+                <h3 className="font-display font-bold text-white text-sm">Evaluación en Tiempo Real</h3>
                 <span className="text-[#B0B0B0]/60 text-xs">(se actualiza mientras escribes)</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="text-center">
-                  <span className="font-['Space_Grotesk'] font-bold text-2xl" style={{ color: scoreColor }}>{liveEval.percentage}%</span>
+                  <span className="font-display font-bold text-2xl" style={{ color: scoreColor }}>{liveEval.percentage}%</span>
                   <p className="text-[#B0B0B0]/60 text-[10px]">Calidad</p>
                 </div>
                 <div className="w-16 h-16 relative">
@@ -755,7 +755,7 @@ export default function PromptStudio(props?: any) {
             >
               <div className="flex items-center gap-3">
                 <Target className="w-5 h-5 text-[#D4A843]" />
-                <span className="font-['Space_Grotesk'] font-bold text-white text-sm">Parámetros de Evaluación — Cómo se puntúa cada campo</span>
+                <span className="font-display font-bold text-white text-sm">Parámetros de Evaluación — Cómo se puntúa cada campo</span>
               </div>
               <ChevronDown className={`w-5 h-5 text-[#B0B0B0] transition-transform duration-300 ${showEvalCriteria ? "rotate-180" : ""}`} />
             </button>
@@ -779,7 +779,7 @@ export default function PromptStudio(props?: any) {
                       >
                         <div className="flex items-center gap-2">
                           <span className="text-lg">{field.icon}</span>
-                          <span className="font-['Space_Grotesk'] font-bold text-sm" style={{ color: field.color }}>{field.name}</span>
+                          <span className="font-display font-bold text-sm" style={{ color: field.color }}>{field.name}</span>
                           <span className="text-[#B0B0B0]/60 text-xs">({field.maxScore} pts)</span>
                         </div>
                         <ChevronRight className={`w-4 h-4 text-[#B0B0B0] transition-transform ${activeEvalField === key ? "rotate-90" : ""}`} />
@@ -820,7 +820,7 @@ export default function PromptStudio(props?: any) {
             >
               <div className="flex items-center gap-3">
                 <Lightbulb className="w-5 h-5 text-[#D4A843]" />
-                <span className="font-['Space_Grotesk'] font-bold text-white text-sm">Metodología: Cómo crear prompts efectivos</span>
+                <span className="font-display font-bold text-white text-sm">Metodología: Cómo crear prompts efectivos</span>
               </div>
               <ChevronDown className={`w-5 h-5 text-[#B0B0B0] transition-transform duration-300 ${showMethodology ? "rotate-180" : ""}`} />
             </button>
@@ -841,7 +841,7 @@ export default function PromptStudio(props?: any) {
                     <div key={step.num} className="p-4 rounded-lg" style={{ backgroundColor: `${step.color}08`, border: `1px solid ${step.color}20` }}>
                       <div className="flex items-center gap-2 mb-2">
                         <span className="w-7 h-7 rounded-full flex items-center justify-center font-bold text-sm" style={{ backgroundColor: `${step.color}20`, color: step.color }}>{step.num}</span>
-                        <h4 className="font-['Space_Grotesk'] font-bold text-white text-sm">{step.title}</h4>
+                        <h4 className="font-display font-bold text-white text-sm">{step.title}</h4>
                       </div>
                       <p className="text-[#B0B0B0] text-xs">{step.text}</p>
                     </div>
@@ -860,7 +860,7 @@ export default function PromptStudio(props?: any) {
 
           {/* ─── AVATAR-DRIVEN EXAMPLES ─── */}
           <div className="mb-8">
-            <h3 className="font-['Space_Grotesk'] font-semibold text-white text-sm mb-3 flex items-center gap-2">
+            <h3 className="font-display font-semibold text-white text-sm mb-3 flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-[#D4A843]" />
               La familia LINCE te muestra ejemplos — haz clic para probar
             </h3>
@@ -895,7 +895,7 @@ export default function PromptStudio(props?: any) {
             <div className="space-y-6">
               {/* Field 1: Subject */}
               <div>
-                <label className="flex items-center gap-2 text-white font-['Space_Grotesk'] font-bold text-base sm:text-lg mb-3">
+                <label className="flex items-center gap-2 text-white font-display font-bold text-base sm:text-lg mb-3">
                   <FileText className="w-5 h-5 text-[#00E5FF]" />
                   <span className="text-[#00E5FF] text-xl font-black">1.</span> ¿Qué quieres crear?
                   <span className="text-[#FF5252] text-sm">*</span>
@@ -918,7 +918,7 @@ export default function PromptStudio(props?: any) {
 
               {/* Field 2: Style */}
               <div>
-                <label className="flex items-center gap-2 text-white font-['Space_Grotesk'] font-bold text-base sm:text-lg mb-3">
+                <label className="flex items-center gap-2 text-white font-display font-bold text-base sm:text-lg mb-3">
                   <Palette className="w-5 h-5 text-[#D4A843]" />
                   <span className="text-[#D4A843] text-xl font-black">2.</span> Estilo Visual
                   <span className="text-[#FF5252] text-sm">*</span>
@@ -941,7 +941,7 @@ export default function PromptStudio(props?: any) {
 
               {/* Field 3: Environment */}
               <div>
-                <label className="flex items-center gap-2 text-white font-['Space_Grotesk'] font-bold text-base sm:text-lg mb-3">
+                <label className="flex items-center gap-2 text-white font-display font-bold text-base sm:text-lg mb-3">
                   <MapPin className="w-5 h-5 text-[#00C853]" />
                   <span className="text-[#00C853] text-xl font-black">3.</span> Entorno / Escenario
                   <span className="text-[#FF5252] text-sm">*</span>
@@ -990,7 +990,7 @@ export default function PromptStudio(props?: any) {
 
               {/* Field 4: Details */}
               <div>
-                <label className="flex items-center gap-2 text-white font-['Space_Grotesk'] font-bold text-base sm:text-lg mb-3">
+                <label className="flex items-center gap-2 text-white font-display font-bold text-base sm:text-lg mb-3">
                   <Sparkles className="w-5 h-5 text-[#9C27B0]" />
                   <span className="text-[#9C27B0] text-xl font-black">4.</span> Detalles Adicionales
                   <span className="text-white/40 text-sm font-normal">(opcional)</span>
@@ -1014,11 +1014,11 @@ export default function PromptStudio(props?: any) {
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-3">
                 <Button onClick={handleGenerate} disabled={!isFormValid || isGenerating}
-                  className="flex-1 h-14 text-base bg-[#00E5FF] text-[#0A0A0A] font-['Space_Grotesk'] font-black hover:bg-[#00E5FF]/90 shadow-[0_0_20px_rgba(0,229,255,0.3)] disabled:opacity-40 rounded-xl">
+                  className="flex-1 h-14 text-base bg-[#00E5FF] text-[#0A0A0A] font-display font-black hover:bg-[#00E5FF]/90 shadow-[0_0_20px_rgba(0,229,255,0.3)] disabled:opacity-40 rounded-xl">
                   {isGenerating ? (<><Loader2 className="w-5 h-5 mr-2 animate-spin" />Generando imagen...</>) : (<><ImageIcon className="w-5 h-5 mr-2" />Generar Imagen con IA</>)}
                 </Button>
                 <Button onClick={handlePreview} disabled={!isFormValid || isPreviewing} variant="outline"
-                  className="h-14 text-base border-2 border-[#D4A843]/30 text-[#D4A843] hover:bg-[#D4A843]/10 font-['Space_Grotesk'] font-bold rounded-xl">
+                  className="h-14 text-base border-2 border-[#D4A843]/30 text-[#D4A843] hover:bg-[#D4A843]/10 font-display font-bold rounded-xl">
                   {isPreviewing ? (<><Loader2 className="w-5 h-5 mr-2 animate-spin" />Mejorando...</>) : (<><Eye className="w-5 h-5 mr-2" />Ver Prompt Mejorado</>)}
                 </Button>
                 <Button onClick={handleReset} variant="outline" className="h-14 text-base border-2 border-white/10 text-white/50 hover:bg-white/5 rounded-xl">
@@ -1033,21 +1033,21 @@ export default function PromptStudio(props?: any) {
               {enhancedPrompt && (
                 <div className="p-4 bg-[#D4A843]/5 border border-[#D4A843]/20 rounded-xl">
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-['Space_Grotesk'] font-bold text-[#D4A843] text-sm flex items-center gap-2">
+                    <h4 className="font-display font-bold text-[#D4A843] text-sm flex items-center gap-2">
                       <Wand2 className="w-4 h-4" /> Prompt Mejorado por IA
                     </h4>
                     <button onClick={copyPrompt} className="text-[#B0B0B0] hover:text-white transition-colors" title="Copiar prompt">
                       <Copy className="w-4 h-4" />
                     </button>
                   </div>
-                  <p className="text-[#B0B0B0] text-xs leading-relaxed font-['JetBrains_Mono']">{enhancedPrompt}</p>
+                  <p className="text-[#B0B0B0] text-xs leading-relaxed font-mono">{enhancedPrompt}</p>
                 </div>
               )}
 
               {/* AI Breakdown */}
               {breakdown && (
                 <div className="p-4 bg-[#9C27B0]/5 border border-[#9C27B0]/20 rounded-xl">
-                  <h4 className="font-['Space_Grotesk'] font-bold text-[#9C27B0] text-sm flex items-center gap-2 mb-3">
+                  <h4 className="font-display font-bold text-[#9C27B0] text-sm flex items-center gap-2 mb-3">
                     <Zap className="w-4 h-4" /> Desglose de la Mejora IA
                   </h4>
                   <div className="space-y-2">
@@ -1081,7 +1081,7 @@ export default function PromptStudio(props?: any) {
                       <Wand2 className="w-6 h-6 text-[#00E5FF] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
                     </div>
                     <div className="text-center">
-                      <p className="text-white font-['Space_Grotesk'] font-bold text-sm">Generando tu imagen...</p>
+                      <p className="text-white font-display font-bold text-sm">Generando tu imagen...</p>
                       <p className="text-[#B0B0B0] text-xs mt-1">La IA está mejorando tu prompt y creando la imagen</p>
                       <p className="text-[#00E5FF]/60 text-[10px] mt-2">Guardando en base de datos de forma segura</p>
                     </div>
@@ -1172,7 +1172,7 @@ export default function PromptStudio(props?: any) {
 
               {/* Prompt Summary */}
               <div className="p-4 bg-white/[0.02] border border-white/[0.06] rounded-xl">
-                <h4 className="font-['Space_Grotesk'] font-bold text-white text-xs mb-3 flex items-center gap-1.5">
+                <h4 className="font-display font-bold text-white text-xs mb-3 flex items-center gap-1.5">
                   <Info className="w-3.5 h-3.5 text-[#00E5FF]" /> Resumen de tu Prompt
                 </h4>
                 <div className="space-y-2 text-xs">
@@ -1194,7 +1194,7 @@ export default function PromptStudio(props?: any) {
                   </div>
                   <div className="pt-2 mt-2 border-t border-white/[0.06] flex justify-between">
                     <span className="text-[#B0B0B0]">Puntuación:</span>
-                    <span className="font-['Space_Grotesk'] font-bold" style={{ color: scoreColor }}>{liveEval.percentage}/100</span>
+                    <span className="font-display font-bold" style={{ color: scoreColor }}>{liveEval.percentage}/100</span>
                   </div>
                 </div>
               </div>
@@ -1212,9 +1212,9 @@ export default function PromptStudio(props?: any) {
           {/* Footer CTA */}
           <div className="mt-16 text-center">
             <div className="inline-block p-8 rounded-2xl bg-gradient-to-b from-[#00E5FF]/[0.04] to-transparent border border-[#00E5FF]/10">
-              <p className="font-['Space_Grotesk'] text-xl text-white font-medium mb-2">¿Quieres ver todas las creaciones?</p>
+              <p className="font-display text-xl text-white font-medium mb-2">¿Quieres ver todas las creaciones?</p>
               <p className="text-[#B0B0B0] text-sm mb-4">Explora la galería de imágenes generadas por la comunidad LINCE</p>
-              <a href="/galeria" className="inline-flex items-center gap-2 px-6 py-3 bg-[#D4A843] text-[#0A0A0A] rounded-xl font-['Space_Grotesk'] font-bold text-sm hover:bg-[#D4A843]/90 transition-colors">
+              <a href="/galeria" className="inline-flex items-center gap-2 px-6 py-3 bg-[#D4A843] text-[#0A0A0A] rounded-xl font-display font-bold text-sm hover:bg-[#D4A843]/90 transition-colors">
                 <ImageIcon className="w-4 h-4" /> Ver Galería
               </a>
             </div>

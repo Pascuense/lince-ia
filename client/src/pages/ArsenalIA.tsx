@@ -413,7 +413,7 @@ export default function ArsenalIA() {
           <a href="/" className="flex items-center gap-1">
             <ArrowLeft className="w-4 h-4 text-[#B0B0B0]" />
             
-            <span className="font-['Space_Grotesk'] font-bold text-base text-[#00E5FF]">LINCE</span>
+            <span className="font-display font-bold text-base text-[#00E5FF]">LINCE</span>
           </a>
           <div className="flex items-center gap-2">
             <span className="text-[#00E5FF] text-xs font-medium px-3 py-1 rounded-full bg-[#00E5FF]/10 border border-[#00E5FF]/30 flex items-center gap-1.5">
@@ -440,7 +440,7 @@ export default function ArsenalIA() {
               <Zap className="w-4 h-4 text-[#00E5FF]" />
               <span className="text-[#00E5FF] text-sm font-medium">Ecosistema de Herramientas IA</span>
             </div>
-            <h1 className="font-['Space_Grotesk'] font-bold text-4xl sm:text-6xl text-white mb-5">
+            <h1 className="font-display font-bold text-4xl sm:text-6xl text-white mb-5">
               Arsenal <span className="text-[#00E5FF]">IA</span>
             </h1>
             <p className="text-white/70 text-lg sm:text-xl max-w-2xl mx-auto mb-3">
@@ -498,7 +498,7 @@ export default function ArsenalIA() {
           {/* Featured Section */}
           {activeCategory === "all" && !search && (
             <div className="mb-10">
-              <h3 className="font-['Space_Grotesk'] font-bold text-white text-lg mb-4 flex items-center gap-2">
+              <h3 className="font-display font-bold text-white text-lg mb-4 flex items-center gap-2">
                 <Star className="w-5 h-5 text-[#D4A843]" /> Destacadas
               </h3>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -506,7 +506,7 @@ export default function ArsenalIA() {
                   <button key={i} onClick={() => setSelectedTool(tool)}
                     className="group p-4 bg-gradient-to-br from-[#D4A843]/[0.06] to-transparent border border-[#D4A843]/20 rounded-xl hover:border-[#D4A843]/40 transition-all text-left">
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-['Space_Grotesk'] font-bold text-white text-sm group-hover:text-[#D4A843] transition-colors truncate">{tool.name}</h4>
+                      <h4 className="font-display font-bold text-white text-sm group-hover:text-[#D4A843] transition-colors truncate">{tool.name}</h4>
                       <Info className="w-3.5 h-3.5 text-[#B0B0B0]/30 group-hover:text-[#D4A843] transition-colors flex-shrink-0" />
                     </div>
                     <p className="text-[#B0B0B0] text-[11px] leading-relaxed line-clamp-2">{tool.desc}</p>
@@ -546,7 +546,7 @@ export default function ArsenalIA() {
               <button key={i} onClick={() => setSelectedTool(tool)}
                 className="group p-5 sm:p-6 bg-[#111] border-2 border-[#222] rounded-2xl hover:border-[#00E5FF]/30 transition-all text-left min-h-[140px]">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-['Space_Grotesk'] font-bold text-white text-base sm:text-lg group-hover:text-[#00E5FF] transition-colors">{tool.name}</h4>
+                  <h4 className="font-display font-bold text-white text-base sm:text-lg group-hover:text-[#00E5FF] transition-colors">{tool.name}</h4>
                   <div className="flex items-center gap-2">
                     {tool.featured && <Star className="w-4 h-4 text-[#D4A843]" />}
                     <Info className="w-4 h-4 text-[#B0B0B0]/30 group-hover:text-[#00E5FF] transition-colors" />

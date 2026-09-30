@@ -112,7 +112,7 @@ export function StreakRiskNotification() {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-500/10 mb-3">
             <span className="text-4xl animate-pulse" style={{ filter: "drop-shadow(0 0 10px #ef4444)" }}>🔥</span>
           </div>
-          <h3 className="font-['Space_Grotesk'] font-bold text-xl text-red-400">{t("title")}</h3>
+          <h3 className="font-display font-bold text-xl text-red-400">{t("title")}</h3>
           <p className="text-[#B0B0B0] mt-1">
             {t("subtitle")} <strong className="text-white">{state.streak}</strong> {t("days")}
           </p>

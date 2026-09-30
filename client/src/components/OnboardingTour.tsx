@@ -415,7 +415,7 @@ export function OnboardingTour({ onComplete, lang = "es" }: OnboardingTourProps)
 
             {/* Title */}
             <h3
-              className="font-['Space_Grotesk'] font-bold text-xl mb-2 transition-colors duration-500"
+              className="font-display font-bold text-xl mb-2 transition-colors duration-500"
               style={{ color: step.accentColor }}
             >
               {step.title}

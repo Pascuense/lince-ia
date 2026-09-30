@@ -212,7 +212,7 @@ function JugarContent() {
                   {loggedUser.username.charAt(0).toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h2 className="font-['Space_Grotesk'] font-bold text-xl sm:text-2xl text-white">
+                  <h2 className="font-display font-bold text-xl sm:text-2xl text-white">
                     {t.hello}, {loggedUser.username}!
                   </h2>
                   <p className="text-gray-400 text-sm sm:text-base mt-0.5">{t.welcome}</p>
@@ -294,7 +294,7 @@ function JugarContent() {
           </div>
 
           {/* ═══ YOUR ADVENTURE — Level path ═══ */}
-          <h2 className="font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl text-white mb-6">{t.yourAdventure}</h2>
+          <h2 className="font-display font-bold text-2xl sm:text-3xl text-white mb-6">{t.yourAdventure}</h2>
 
           <div className="relative">
             {/* Connecting line */}
@@ -347,7 +347,7 @@ function JugarContent() {
                             {completed && <span className="text-sm text-green-400 font-bold">✓ {t.completed}</span>}
                             <DifficultyBadge difficulty={LEVEL_DIFFICULTY[level.id]} lang={lang} size="sm" />
                           </div>
-                          <h3 className="font-['Space_Grotesk'] font-bold text-xl sm:text-2xl text-white">{t[tKey]}</h3>
+                          <h3 className="font-display font-bold text-xl sm:text-2xl text-white">{t[tKey]}</h3>
                           <p className="text-gray-400 text-base sm:text-lg mt-1">{t[tDescKey]}</p>
                           {completed && levelState.stars > 0 && (
                             <div className="mt-2 text-yellow-400 text-xl">
@@ -395,7 +395,7 @@ function JugarContent() {
                       🔒
                     </div>
                     <div className="flex-1 rounded-2xl p-5 sm:p-6 bg-[oklch(0.12_0.01_240)] border border-gray-800">
-                      <h3 className="font-['Space_Grotesk'] font-bold text-lg sm:text-xl text-gray-500">{t[tKey] || `Nivel ${level.id}`}</h3>
+                      <h3 className="font-display font-bold text-lg sm:text-xl text-gray-500">{t[tKey] || `Nivel ${level.id}`}</h3>
                       <p className="text-gray-600 text-base mt-1">{t[tDescKey] || t.comingSoon}</p>
                       <div className="mt-4 w-full text-center py-3 rounded-2xl text-base bg-gray-800 text-gray-600 font-bold">
                         {t.comingSoon}

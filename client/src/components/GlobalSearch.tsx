@@ -184,7 +184,7 @@ export function GlobalSearch({ lang = "es" }: GlobalSearchProps) {
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={t.placeholder}
-            className="flex-1 bg-transparent text-white text-sm sm:text-base placeholder:text-white/30 outline-none font-['Space_Grotesk']"
+            className="flex-1 bg-transparent text-white text-sm sm:text-base placeholder:text-white/30 outline-none font-display"
             autoComplete="off"
             spellCheck={false}
           />

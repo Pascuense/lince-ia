@@ -673,7 +673,7 @@ function LevelUpBanner({
       <div className="flex items-center justify-center gap-2 mb-1">
         <span className="text-2xl">{config.emoji}</span>
         <span
-          className="font-['Space_Grotesk'] font-black text-sm uppercase tracking-wider"
+          className="font-display font-black text-sm uppercase tracking-wider"
           style={{ color: config.color }}
         >
           {tl(lang, { es: "¡Nivel de relación subido!", en: "Level Up!", zh: "升级了！", 'pt-BR': "¡Nivel de relación subido!", 'pt-PT': "¡Nivel de relación subido!" })}
@@ -757,7 +757,7 @@ function ReferralButton({
         </div>
       )}
       <div className="flex-1 text-left min-w-0">
-        <p className="text-[#00E5FF] font-['Space_Grotesk'] font-bold text-xs truncate group-hover:text-white transition-colors">
+        <p className="text-[#00E5FF] font-display font-bold text-xs truncate group-hover:text-white transition-colors">
           {label}
         </p>
         <p className="text-white/30 text-[10px] truncate">{specialtyLabel}</p>
@@ -1189,7 +1189,7 @@ export function ArtistChatModal({ artist, lang, onClose, onSwitchAvatar, embedde
             <img src={avatarUrl} alt={artist.name} className="w-full h-full object-cover" />
           </div>
           <div className="min-w-0">
-            <p className="font-['Space_Grotesk'] font-black text-sm" style={{ color: artist.color }}>{artist.name}</p>
+            <p className="font-display font-black text-sm" style={{ color: artist.color }}>{artist.name}</p>
             <p className="text-white/40 text-[10px] truncate">
               {prompt ? prompt.specialty : (artist.role[lang] || artist.role.es)}
               {artist.realArtist ? ` · ${artist.realArtist}` : ""}

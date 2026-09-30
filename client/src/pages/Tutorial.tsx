@@ -335,7 +335,7 @@ export default function Tutorial() {
       {/* Header */}
       <header className="border-b border-[#00E5FF]/10 bg-[#0A0A0A]/95 backdrop-blur-md sticky top-0 z-50">
         <div className="container px-4 py-3 flex items-center justify-between">
-          <span className="font-['Space_Grotesk'] font-bold text-lg">
+          <span className="font-display font-bold text-lg">
             <span className="text-[#00E5FF]">LINCE</span>
           </span>
           <button onClick={skip} className="text-gray-500 text-xs hover:text-gray-300 transition-colors">
@@ -411,7 +411,7 @@ export default function Tutorial() {
 
           {/* Title */}
           <h1
-            className="text-center font-['Space_Grotesk'] font-black text-2xl sm:text-3xl mb-4 transition-colors duration-500"
+            className="text-center font-display font-black text-2xl sm:text-3xl mb-4 transition-colors duration-500"
             style={{ color: step.accentColor }}
           >
             {step.title}

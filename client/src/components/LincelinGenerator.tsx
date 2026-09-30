@@ -304,7 +304,7 @@ export function LincelinGenerator({ lang }: { lang: Lang }) {
               <div className="absolute inset-0 rounded-full border-2 border-[#00E5FF]/20 animate-ping" />
             </div>
 
-            <h3 className="font-['Space_Grotesk'] font-black text-2xl sm:text-3xl text-white mb-2">
+            <h3 className="font-display font-black text-2xl sm:text-3xl text-white mb-2">
               {t.lockedTitle}
             </h3>
             <p className="text-white/40 text-sm mb-8">{t.lockedSub}</p>
@@ -320,7 +320,7 @@ export function LincelinGenerator({ lang }: { lang: Lang }) {
             {/* Timer */}
             <div className="flex items-center justify-center gap-2 mb-6">
               <span className="text-white/40 text-sm">{t.timeLeft}:</span>
-              <span className="font-['Space_Grotesk'] font-bold text-xl text-[#00E5FF]">
+              <span className="font-display font-bold text-xl text-[#00E5FF]">
                 {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
               </span>
             </div>
@@ -347,7 +347,7 @@ export function LincelinGenerator({ lang }: { lang: Lang }) {
               <img src={LINCE_LOGO} alt="LINCE" className="w-12 h-12 rounded-full" />
             </div>
 
-            <h3 className="font-['Space_Grotesk'] font-black text-2xl sm:text-3xl text-white mb-2">
+            <h3 className="font-display font-black text-2xl sm:text-3xl text-white mb-2">
               {t.unlockedTitle}
             </h3>
             <p className="text-white/40 text-sm mb-6">{t.unlockedSub}</p>
@@ -447,7 +447,7 @@ export function LincelinGenerator({ lang }: { lang: Lang }) {
               )}
             </div>
 
-            <h3 className="font-['Space_Grotesk'] font-black text-2xl text-white mb-2">
+            <h3 className="font-display font-black text-2xl text-white mb-2">
               {t.generating}
             </h3>
             <p className="text-white/40 text-sm mb-4">{t.generatingHint}</p>
@@ -477,7 +477,7 @@ export function LincelinGenerator({ lang }: { lang: Lang }) {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#FF6B35]/3 to-transparent" />
       <div className="container relative z-10 px-4">
         <div className="max-w-lg mx-auto text-center">
-          <h3 className="font-['Space_Grotesk'] font-black text-2xl sm:text-3xl text-white mb-6">
+          <h3 className="font-display font-black text-2xl sm:text-3xl text-white mb-6">
             {t.ready}
           </h3>
 

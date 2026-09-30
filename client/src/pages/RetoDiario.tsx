@@ -365,7 +365,7 @@ export default function RetoDiario() {
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-3 mb-3">
               <Trophy className="w-8 h-8 text-amber-400" />
-              <h1 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl text-white">{t("title")}</h1>
+              <h1 className="font-display font-bold text-3xl sm:text-4xl text-white">{t("title")}</h1>
             </div>
             <p className="text-[#B0B0B0] text-lg">{t("subtitle")}</p>
           </div>
@@ -378,7 +378,7 @@ export default function RetoDiario() {
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <span className="text-xs text-[#00E5FF] font-medium uppercase tracking-wider">{t("todayChallenge")}</span>
-                    <h2 className="font-['Space_Grotesk'] font-bold text-2xl text-white mt-1">
+                    <h2 className="font-display font-bold text-2xl text-white mt-1">
                       {challenge.title[l] || challenge.title.es}
                     </h2>
                   </div>
@@ -413,7 +413,7 @@ export default function RetoDiario() {
                     timeLeft < 30 ? "bg-red-500/10 border border-red-500/30" : "bg-white/5 border border-white/10"
                   }`}>
                     <Clock className={`w-5 h-5 ${timeLeft < 30 ? "text-red-400 animate-pulse" : "text-[#00E5FF]"}`} />
-                    <span className={`font-['Space_Grotesk'] font-bold text-xl ${timeLeft < 30 ? "text-red-400" : "text-white"}`}>
+                    <span className={`font-display font-bold text-xl ${timeLeft < 30 ? "text-red-400" : "text-white"}`}>
                       {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, "0")}
                     </span>
                     <span className="text-gray-500 text-sm">{t("timeLeft")}</span>
@@ -433,7 +433,7 @@ export default function RetoDiario() {
                   <div className="text-center py-8">
                     {score !== null && (
                       <div className="mb-4">
-                        <div className="text-6xl font-['Space_Grotesk'] font-bold text-amber-400 mb-2">{score}</div>
+                        <div className="text-6xl font-display font-bold text-amber-400 mb-2">{score}</div>
                         <div className="text-gray-400">{t("yourScore")}</div>
                         <div className="flex justify-center gap-1 mt-2">
                           {[1,2,3,4,5].map(s => (
@@ -472,7 +472,7 @@ export default function RetoDiario() {
             {/* Leaderboard */}
             <div>
               <div className="bg-gradient-to-br from-[#1A1A2E] to-[#0F0F1A] border border-white/10 rounded-2xl p-5">
-                <h3 className="font-['Space_Grotesk'] font-bold text-lg text-white mb-4 flex items-center gap-2">
+                <h3 className="font-display font-bold text-lg text-white mb-4 flex items-center gap-2">
                   <Users className="w-5 h-5 text-amber-400" />
                   {t("ranking")}
                 </h3>
@@ -499,7 +499,7 @@ export default function RetoDiario() {
                           <span className={`flex-1 text-sm font-medium truncate ${isMe ? "text-[#00E5FF]" : "text-white"}`}>
                             {entry.name} {isMe && `(${t("you")})`}
                           </span>
-                          <span className="font-['Space_Grotesk'] font-bold text-amber-400 text-sm">{entry.score}</span>
+                          <span className="font-display font-bold text-amber-400 text-sm">{entry.score}</span>
                           <span className="text-xs text-gray-600">{entry.time}{t("seconds")}</span>
                         </div>
                       );

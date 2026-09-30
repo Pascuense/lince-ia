@@ -351,7 +351,7 @@ export default function PublicProfile() {
             <ArrowLeft className="w-4 h-4" />
             {t.back}
           </Link>
-          <h1 className="font-['Space_Grotesk'] font-bold text-sm">{t.title}</h1>
+          <h1 className="font-display font-bold text-sm">{t.title}</h1>
           <div className="flex gap-1">
             {(["es", "en", "zh"] as const).map((l) => (
               <button
@@ -375,7 +375,7 @@ export default function PublicProfile() {
               <img src={avatarImg} alt="Avatar" className="w-full h-full object-cover" />
             </div>
             <div>
-              <h2 className="font-['Space_Grotesk'] font-bold text-2xl text-[oklch(0.82_0.15_195)]">
+              <h2 className="font-display font-bold text-2xl text-[oklch(0.82_0.15_195)]">
                 {username}
               </h2>
               <p className="text-gray-400 text-sm mt-0.5">
@@ -411,7 +411,7 @@ export default function PublicProfile() {
           <div className="px-5 py-3 bg-[oklch(0.08_0.01_240)] flex items-center justify-between">
             <div className="flex items-center gap-1">
               
-              <span className="font-['Space_Grotesk'] font-bold text-xs text-[oklch(0.82_0.15_195)]">LINCE</span>
+              <span className="font-display font-bold text-xs text-[oklch(0.82_0.15_195)]">LINCE</span>
             </div>
             <span className="text-gray-600 text-[10px]">
               {tl(lang, { es: "Aprende IA jugando", en: "Learn AI by playing", zh: "玩游戏学AI", 'pt-BR': "Aprende IA jugando", 'pt-PT': "Aprende IA jugando" })}
@@ -422,7 +422,7 @@ export default function PublicProfile() {
 
       {/* Share Buttons */}
       <div className="container px-4 pt-6">
-        <h3 className="font-['Space_Grotesk'] font-bold text-lg mb-1 flex items-center gap-2">
+        <h3 className="font-display font-bold text-lg mb-1 flex items-center gap-2">
           <Share2 className="w-5 h-5 text-[oklch(0.82_0.15_195)]" />
           {t.shareTitle}
         </h3>
@@ -495,7 +495,7 @@ export default function PublicProfile() {
 
       {/* Achievements */}
       <div className="container px-4 pt-6">
-        <h3 className="font-['Space_Grotesk'] font-bold text-lg mb-3 flex items-center gap-2">
+        <h3 className="font-display font-bold text-lg mb-3 flex items-center gap-2">
           <Trophy className="w-5 h-5 text-[oklch(0.72_0.12_75)]" />
           {t.achievements}
         </h3>

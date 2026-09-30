@@ -989,7 +989,7 @@ export default function AcademiaLince() {
               <span className="inline-block px-4 py-1.5 text-xs font-medium bg-emerald-500/10 text-emerald-400 rounded-full border border-emerald-500/20 mb-6">
                 {t.hero.badge}
               </span>
-              <h1 className="text-5xl md:text-7xl font-['Space_Grotesk'] font-black mb-4 leading-tight">
+              <h1 className="text-5xl md:text-7xl font-display font-black mb-4 leading-tight">
                 {t.hero.title} <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">{t.hero.titleAccent}</span>
               </h1>
               <p className="text-xl md:text-2xl text-emerald-300/80 font-medium mb-6">{t.hero.subtitle}</p>
@@ -1021,7 +1021,7 @@ export default function AcademiaLince() {
           <FadeIn>
             <div className="text-center mb-12">
               <span className="inline-block px-4 py-1.5 text-xs font-medium bg-violet-500/10 text-violet-400 rounded-full border border-violet-500/20 mb-4">{t.amodeiSection.badge}</span>
-              <h2 className="text-3xl md:text-4xl font-['Space_Grotesk'] font-bold mb-3">{t.amodeiSection.title}</h2>
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-3">{t.amodeiSection.title}</h2>
               <p className="text-gray-400 max-w-2xl mx-auto">{t.amodeiSection.subtitle}</p>
             </div>
           </FadeIn>
@@ -1059,7 +1059,7 @@ export default function AcademiaLince() {
           <FadeIn>
             <div className="text-center mb-10">
               <span className="inline-block px-4 py-1.5 text-xs font-medium bg-cyan-500/10 text-cyan-400 rounded-full border border-cyan-500/20 mb-4">{t.rooms.badge}</span>
-              <h2 className="text-3xl md:text-4xl font-['Space_Grotesk'] font-bold mb-3">{t.rooms.title}</h2>
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-3">{t.rooms.title}</h2>
               <p className="text-gray-400 max-w-2xl mx-auto">{t.rooms.subtitle}</p>
             </div>
           </FadeIn>
@@ -1184,7 +1184,7 @@ export default function AcademiaLince() {
           <FadeIn>
             <div className="text-center mb-10">
               <span className="inline-block px-4 py-1.5 text-xs font-medium bg-emerald-500/10 text-emerald-400 rounded-full border border-emerald-500/20 mb-4">{t.karma.badge}</span>
-              <h2 className="text-3xl md:text-4xl font-['Space_Grotesk'] font-bold mb-3">{t.karma.title}</h2>
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-3">{t.karma.title}</h2>
               <p className="text-gray-400 max-w-2xl mx-auto">{t.karma.subtitle}</p>
             </div>
           </FadeIn>
@@ -1227,7 +1227,7 @@ export default function AcademiaLince() {
           <FadeIn>
             <div className="text-center mb-10">
               <span className="inline-block px-4 py-1.5 text-xs font-medium bg-cyan-500/10 text-cyan-400 rounded-full border border-cyan-500/20 mb-4">{t.demo.badge}</span>
-              <h2 className="text-3xl md:text-4xl font-['Space_Grotesk'] font-bold mb-3">{t.demo.title}</h2>
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-3">{t.demo.title}</h2>
               <p className="text-gray-400 max-w-2xl mx-auto">{t.demo.subtitle}</p>
             </div>
           </FadeIn>
@@ -1319,7 +1319,7 @@ export default function AcademiaLince() {
           <FadeIn>
             <div className="text-center mb-10">
               <span className="inline-block px-4 py-1.5 text-xs font-medium bg-amber-500/10 text-amber-400 rounded-full border border-amber-500/20 mb-4">{t.labor.badge}</span>
-              <h2 className="text-3xl md:text-4xl font-['Space_Grotesk'] font-bold mb-3">{t.labor.title}</h2>
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-3">{t.labor.title}</h2>
               <p className="text-gray-400 max-w-2xl mx-auto">{t.labor.subtitle}</p>
             </div>
           </FadeIn>
@@ -1359,7 +1359,7 @@ export default function AcademiaLince() {
         <div className="container px-4">
           <FadeIn>
             <div className="text-center max-w-2xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-['Space_Grotesk'] font-bold mb-4">{t.cta.title}</h2>
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">{t.cta.title}</h2>
               <p className="text-gray-400 mb-8">{t.cta.subtitle}</p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link href="/registro" className="px-8 py-3 text-sm font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 text-black rounded-xl hover:opacity-90 transition-opacity">

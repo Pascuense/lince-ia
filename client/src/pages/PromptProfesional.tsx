@@ -255,7 +255,7 @@ export default function PromptProfesional(props: any) {
                 </div>
               </div>
             </div>
-            <h2 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl text-white mb-2">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-white mb-2">
               Generar <span className="text-[#D4A843]">Prompt</span> con IA
             </h2>
             <p className="text-white/60 text-base sm:text-lg max-w-lg mx-auto leading-relaxed">
@@ -266,12 +266,12 @@ export default function PromptProfesional(props: any) {
           {/* Puntuación simplificada - Igual que PromptStudio */}
           <div className="mb-10 p-5 sm:p-6 bg-gradient-to-r from-[#D4A843]/[0.05] to-[#00E5FF]/[0.05] border border-white/[0.1] rounded-2xl">
             <div className="flex items-center justify-between mb-5">
-              <h3 className="font-['Space_Grotesk'] font-bold text-white text-lg sm:text-xl flex items-center gap-2">
+              <h3 className="font-display font-bold text-white text-lg sm:text-xl flex items-center gap-2">
                 <Target className="w-5 h-5 text-[#D4A843]" />
                 Tu puntuación
               </h3>
               <div className="flex items-center gap-3">
-                <span className="font-['Space_Grotesk'] font-black text-3xl sm:text-4xl" style={{ color: scoreColor }}>{localScore}%</span>
+                <span className="font-display font-black text-3xl sm:text-4xl" style={{ color: scoreColor }}>{localScore}%</span>
                 <div className="w-16 h-16 relative">
                   <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
                     <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="3.5" />
@@ -314,7 +314,7 @@ export default function PromptProfesional(props: any) {
             <div className="space-y-8">
               {/* PASO 1: Rol y Contexto */}
               <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border-2 border-[#00E5FF]/20">
-                <label className="flex items-center gap-3 text-white font-['Space_Grotesk'] font-bold text-lg sm:text-xl mb-4">
+                <label className="flex items-center gap-3 text-white font-display font-bold text-lg sm:text-xl mb-4">
                   <span className="w-10 h-10 rounded-full bg-[#00E5FF]/20 flex items-center justify-center text-[#00E5FF] font-black text-lg">1</span>
                   ¿Quién eres?
                   <span className="text-[#FF5252] text-sm">*</span>
@@ -328,7 +328,7 @@ export default function PromptProfesional(props: any) {
 
               {/* PASO 2: Tarea */}
               <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border-2 border-[#D4A843]/20">
-                <label className="flex items-center gap-3 text-white font-['Space_Grotesk'] font-bold text-lg sm:text-xl mb-4">
+                <label className="flex items-center gap-3 text-white font-display font-bold text-lg sm:text-xl mb-4">
                   <span className="w-10 h-10 rounded-full bg-[#D4A843]/20 flex items-center justify-center text-[#D4A843] font-black text-lg">2</span>
                   ¿Qué necesitas?
                   <span className="text-[#FF5252] text-sm">*</span>
@@ -342,7 +342,7 @@ export default function PromptProfesional(props: any) {
 
               {/* PASO 3: Formato y Tono */}
               <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border-2 border-[#00C853]/20">
-                <label className="flex items-center gap-3 text-white font-['Space_Grotesk'] font-bold text-lg sm:text-xl mb-4">
+                <label className="flex items-center gap-3 text-white font-display font-bold text-lg sm:text-xl mb-4">
                   <span className="w-10 h-10 rounded-full bg-[#00C853]/20 flex items-center justify-center text-[#00C853] font-black text-lg">3</span>
                   Elige formato y tono
                   <span className="text-[#FF5252] text-sm">*</span>
@@ -381,7 +381,7 @@ export default function PromptProfesional(props: any) {
 
               {/* PASO 4: Ejemplo */}
               <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border-2 border-[#9C27B0]/20">
-                <label className="flex items-center gap-3 text-white font-['Space_Grotesk'] font-bold text-lg sm:text-xl mb-4">
+                <label className="flex items-center gap-3 text-white font-display font-bold text-lg sm:text-xl mb-4">
                   <span className="w-10 h-10 rounded-full bg-[#9C27B0]/20 flex items-center justify-center text-[#9C27B0] font-black text-lg">4</span>
                   Ejemplo
                   <span className="text-white/40 text-sm ml-1">(opcional)</span>
@@ -395,7 +395,7 @@ export default function PromptProfesional(props: any) {
               {/* Botones de acción - GRANDES */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button onClick={handleGenerate} disabled={!isFormValid || isGenerating}
-                  className="flex-1 h-16 sm:h-18 text-lg sm:text-xl bg-[#D4A843] text-[#0A0A0A] font-['Space_Grotesk'] font-black hover:bg-[#D4A843]/90 shadow-[0_0_30px_rgba(212,168,67,0.3)] disabled:opacity-40 rounded-2xl">
+                  className="flex-1 h-16 sm:h-18 text-lg sm:text-xl bg-[#D4A843] text-[#0A0A0A] font-display font-black hover:bg-[#D4A843]/90 shadow-[0_0_30px_rgba(212,168,67,0.3)] disabled:opacity-40 rounded-2xl">
                   {isGenerating ? (<><Loader2 className="w-6 h-6 mr-3 animate-spin" />Generando...</>) : (<><Wand2 className="w-6 h-6 mr-3" />GENERAR PROMPT</>)}
                 </Button>
                 <Button onClick={handleReset} variant="outline" className="h-16 sm:h-18 text-base border-2 border-white/15 text-white/50 hover:bg-white/5 rounded-2xl px-6">
@@ -409,7 +409,7 @@ export default function PromptProfesional(props: any) {
               {enhancedPrompt && (
                 <div className="p-5 bg-[#D4A843]/5 border border-[#D4A843]/20 rounded-2xl">
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-['Space_Grotesk'] font-bold text-[#D4A843] text-base flex items-center gap-2"><Wand2 className="w-4 h-4" /> Tu Prompt Profesional</h4>
+                    <h4 className="font-display font-bold text-[#D4A843] text-base flex items-center gap-2"><Wand2 className="w-4 h-4" /> Tu Prompt Profesional</h4>
                     <button onClick={copyPrompt} className="text-[#B0B0B0] hover:text-white transition-colors p-2"><Copy className="w-5 h-5" /></button>
                   </div>
                   <div className="text-[#B0B0B0] text-sm leading-relaxed whitespace-pre-wrap max-h-[400px] overflow-y-auto pr-2">
@@ -421,8 +421,8 @@ export default function PromptProfesional(props: any) {
               {aiScore !== null && (
                 <div className="p-4 bg-[#00E5FF]/5 border border-[#00E5FF]/20 rounded-2xl">
                   <div className="flex items-center justify-between mb-3">
-                    <h4 className="font-['Space_Grotesk'] font-bold text-[#00E5FF] text-sm flex items-center gap-2"><Zap className="w-4 h-4" /> Análisis IA</h4>
-                    <span className="font-['Space_Grotesk'] font-bold text-xl" style={{ color: aiScore >= 70 ? '#00C853' : aiScore >= 40 ? '#D4A843' : '#FF5252' }}>{aiScore}/100</span>
+                    <h4 className="font-display font-bold text-[#00E5FF] text-sm flex items-center gap-2"><Zap className="w-4 h-4" /> Análisis IA</h4>
+                    <span className="font-display font-bold text-xl" style={{ color: aiScore >= 70 ? '#00C853' : aiScore >= 40 ? '#D4A843' : '#FF5252' }}>{aiScore}/100</span>
                   </div>
                   {technique && (
                     <div className="flex items-center gap-2 mb-3 p-2 bg-[#9C27B0]/10 border border-[#9C27B0]/20 rounded-lg">
@@ -479,7 +479,7 @@ export default function PromptProfesional(props: any) {
         <div className="container flex items-center justify-between h-16">
           <a href="/" className="flex items-center gap-1">
             <ArrowLeft className="w-4 h-4 text-[#B0B0B0]" />
-            <span className="font-['Space_Grotesk'] font-bold text-base text-[#00E5FF]">LINCE IA</span>
+            <span className="font-display font-bold text-base text-[#00E5FF]">LINCE IA</span>
           </a>
           <div className="flex items-center gap-3">
             <div className="flex rounded-full border border-white/10 overflow-hidden">
@@ -506,7 +506,7 @@ export default function PromptProfesional(props: any) {
                 </div>
               </div>
             </div>
-            <h1 className="font-['Space_Grotesk'] font-bold text-4xl sm:text-5xl text-white mb-4">
+            <h1 className="font-display font-bold text-4xl sm:text-5xl text-white mb-4">
               Prompt <span className="text-[#D4A843]">Profesional</span>
             </h1>
             <p className="text-[#B0B0B0] text-lg max-w-2xl mx-auto">

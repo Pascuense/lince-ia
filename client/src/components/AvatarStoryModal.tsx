@@ -177,7 +177,7 @@ export function AvatarStoryModal({ character, lang, onClose }: AvatarStoryModalP
             )}
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="font-['Space_Grotesk'] font-bold text-xl text-white">{character.name}</h3>
+            <h3 className="font-display font-bold text-xl text-white">{character.name}</h3>
             {character.realArtist && (
               <p className="text-sm mt-0.5" style={{ color: character.color }}>{character.realArtist}</p>
             )}
@@ -199,7 +199,7 @@ export function AvatarStoryModal({ character, lang, onClose }: AvatarStoryModalP
         </div>
 
         <div className="px-6 pb-4">
-          <h4 className="font-['Space_Grotesk'] font-bold text-sm text-[#D4A843] mb-2 flex items-center gap-2">
+          <h4 className="font-display font-bold text-sm text-[#D4A843] mb-2 flex items-center gap-2">
             <span>📖</span>
             {tl(lang as PRDLanguage, { es: 'Historia de Origen', en: 'Origin Story', zh: 'Historia de Origen', 'pt-BR': 'Historia de Origen', 'pt-PT': 'Historia de Origen' })}
           </h4>

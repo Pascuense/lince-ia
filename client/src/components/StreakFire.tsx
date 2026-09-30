@@ -132,7 +132,7 @@ export function StreakFire({ size = "md", showLabel = true, showRisk = true, cla
       {/* Streak number + label */}
       {showLabel && (
         <div className="flex flex-col">
-          <span className={`font-['Space_Grotesk'] font-bold leading-none ${
+          <span className={`font-display font-bold leading-none ${
             size === "lg" ? "text-2xl" : size === "md" ? "text-lg" : "text-sm"
           } ${streak > 0 ? "text-white" : "text-gray-500"}`}>
             {streak}

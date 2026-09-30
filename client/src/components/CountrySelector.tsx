@@ -122,7 +122,7 @@ export function CountrySelector({ compact = false, className = "" }: CountrySele
             <Globe className="w-5 h-5 text-amber-400" />
           </div>
           <div>
-            <h3 className="font-['Space_Grotesk'] font-bold text-base text-white">{t.title}</h3>
+            <h3 className="font-display font-bold text-base text-white">{t.title}</h3>
             <p className="text-gray-500 text-xs">{t.subtitle}</p>
           </div>
         </div>

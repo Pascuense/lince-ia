@@ -669,7 +669,7 @@ function CopyButton({ text, label }: { text: string; label?: string }) {
   return (
     <button
       onClick={handleCopy}
-      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-['Space_Grotesk'] font-bold text-sm transition-all duration-300"
+      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-display font-bold text-sm transition-all duration-300"
       style={{
         backgroundColor: copied ? "rgba(0,200,83,0.2)" : "rgba(0,229,255,0.15)",
         border: copied ? "1px solid rgba(0,200,83,0.5)" : "1px solid rgba(0,229,255,0.3)",
@@ -713,12 +713,12 @@ function PromptCard({ section, isActive }: { section: PromptSection; isActive: b
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
-                <span className="font-['JetBrains_Mono'] text-xs font-bold" style={{ color: section.color + "80" }}>PROMPT {section.number}</span>
+                <span className="font-mono text-xs font-bold" style={{ color: section.color + "80" }}>PROMPT {section.number}</span>
                 {section.id === "prompt-4" && (
                   <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-[#FF6D00]/20 text-[#FF6D00] border border-[#FF6D00]/30">CLAVE</span>
                 )}
               </div>
-              <h3 className="font-['Space_Grotesk'] font-bold text-xl lg:text-2xl text-white">{section.title}</h3>
+              <h3 className="font-display font-bold text-xl lg:text-2xl text-white">{section.title}</h3>
               <p className="text-sm mt-1" style={{ color: section.color }}>{section.subtitle}</p>
             </div>
           </div>
@@ -740,7 +740,7 @@ function PromptCard({ section, isActive }: { section: PromptSection; isActive: b
             <CopyButton text={section.prompt} />
             <button
               onClick={() => setExpanded(!expanded)}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-['Space_Grotesk'] font-medium text-sm bg-white/[0.05] border border-white/[0.1] text-[#B0B0B0] hover:text-white hover:bg-white/[0.08] transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-display font-medium text-sm bg-white/[0.05] border border-white/[0.1] text-[#B0B0B0] hover:text-white hover:bg-white/[0.08] transition-all"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className={`transition-transform duration-300 ${expanded ? "rotate-180" : ""}`}>
                 <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -753,10 +753,10 @@ function PromptCard({ section, isActive }: { section: PromptSection; isActive: b
           {expanded && (
             <div className="relative rounded-xl overflow-hidden border border-white/[0.08]">
               <div className="flex items-center justify-between px-4 py-2 bg-white/[0.04] border-b border-white/[0.06]">
-                <span className="font-['JetBrains_Mono'] text-xs text-[#B0B0B0]">prompt-{section.number}.txt</span>
+                <span className="font-mono text-xs text-[#B0B0B0]">prompt-{section.number}.txt</span>
                 <CopyButton text={section.prompt} label="Copiar" />
               </div>
-              <pre className="p-4 lg:p-6 text-[#B0B0B0] text-xs lg:text-sm leading-relaxed overflow-x-auto font-['JetBrains_Mono'] bg-[#0A0A0A]/80 max-h-[500px] overflow-y-auto whitespace-pre-wrap">
+              <pre className="p-4 lg:p-6 text-[#B0B0B0] text-xs lg:text-sm leading-relaxed overflow-x-auto font-mono bg-[#0A0A0A]/80 max-h-[500px] overflow-y-auto whitespace-pre-wrap">
                 {section.prompt}
               </pre>
             </div>
@@ -830,7 +830,7 @@ export default function GuiaBase44() {
               {sidebarOpen ? <path d="M18 6L6 18M6 6l12 12" /> : <path d="M3 12h18M3 6h18M3 18h18" />}
             </svg>
           </button>
-          <span className="font-['Space_Grotesk'] font-bold text-sm">
+          <span className="font-display font-bold text-sm">
             <span className="text-[#00E5FF]">LINCE</span> <span className="text-[#B0B0B0] font-normal text-xs">Base44 Guide</span>
           </span>
           <div className="flex items-center gap-2">
@@ -850,7 +850,7 @@ export default function GuiaBase44() {
           {/* Sidebar header */}
           <div className="p-5 border-b border-white/[0.06]">
             <a href="/" className="block mb-4">
-              <span className="font-['Space_Grotesk'] font-bold text-lg">
+              <span className="font-display font-bold text-lg">
                 <span className="text-[#00E5FF]">LINCE</span>
               </span>
               <span className="block text-[#D4A843] text-xs font-medium mt-0.5">Guía de Prompts para Base44</span>
@@ -920,10 +920,10 @@ export default function GuiaBase44() {
                     <span className="w-2 h-2 rounded-full bg-[#00E5FF] animate-pulse" />
                     <span className="text-[#00E5FF] text-xs font-medium">Guía Completa para Base44</span>
                   </div>
-                  <h1 className="font-['Space_Grotesk'] font-bold text-4xl lg:text-6xl text-white leading-tight mb-4">
+                  <h1 className="font-display font-bold text-4xl lg:text-6xl text-white leading-tight mb-4">
                     <span className="text-[#00E5FF]">LINCE</span>
                   </h1>
-                  <h2 className="font-['Space_Grotesk'] text-xl lg:text-2xl text-[#D4A843] font-medium mb-4">
+                  <h2 className="font-display text-xl lg:text-2xl text-[#D4A843] font-medium mb-4">
                     Prompt Maestro para Base44
                   </h2>
                   <p className="text-[#B0B0B0] text-base lg:text-lg max-w-2xl leading-relaxed mb-8">
@@ -938,7 +938,7 @@ export default function GuiaBase44() {
                       { n: "4", l: "Integraciones IA", c: "#FF6D00" },
                     ].map((s) => (
                       <div key={s.l} className="px-4 py-3 rounded-lg" style={{ backgroundColor: s.c + "10", border: `1px solid ${s.c}30` }}>
-                        <span className="font-['Space_Grotesk'] font-bold text-2xl" style={{ color: s.c }}>{s.n}</span>
+                        <span className="font-display font-bold text-2xl" style={{ color: s.c }}>{s.n}</span>
                         <span className="text-[#B0B0B0] text-xs ml-2">{s.l}</span>
                       </div>
                     ))}
@@ -950,8 +950,8 @@ export default function GuiaBase44() {
             {/* ── REQUISITOS PREVIOS ── */}
             <section id="requisitos" className="scroll-mt-24 space-y-6">
               <div className="mb-2">
-                <span className="font-['JetBrains_Mono'] text-[#00E5FF]/40 text-xs">ANTES DE EMPEZAR</span>
-                <h2 className="font-['Space_Grotesk'] font-bold text-2xl lg:text-3xl text-white mt-1">Requisitos Previos</h2>
+                <span className="font-mono text-[#00E5FF]/40 text-xs">ANTES DE EMPEZAR</span>
+                <h2 className="font-display font-bold text-2xl lg:text-3xl text-white mt-1">Requisitos Previos</h2>
                 <div className="w-16 h-1 bg-gradient-to-r from-[#00E5FF] to-[#D4A843] rounded-full mt-3" />
               </div>
 
@@ -963,11 +963,11 @@ export default function GuiaBase44() {
                   { n: "4", title: "Estrategia de prompts", desc: "Base44 funciona mejor con prompts iterativos. Pega el Prompt 1 primero, espera a que genere, y luego ve añadiendo los siguientes uno a uno.", color: "#9C27B0" },
                 ].map((req) => (
                   <div key={req.n} className="flex items-start gap-4 p-5 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center font-['Space_Grotesk'] font-bold text-lg flex-shrink-0" style={{ backgroundColor: req.color + "15", color: req.color }}>
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center font-display font-bold text-lg flex-shrink-0" style={{ backgroundColor: req.color + "15", color: req.color }}>
                       {req.n}
                     </div>
                     <div>
-                      <h3 className="font-['Space_Grotesk'] font-bold text-white text-base mb-1">{req.title}</h3>
+                      <h3 className="font-display font-bold text-white text-base mb-1">{req.title}</h3>
                       <p className="text-[#B0B0B0] text-sm leading-relaxed">{req.desc}</p>
                       {req.link && (
                         <a href={req.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs mt-2 hover:underline" style={{ color: req.color }}>
@@ -997,8 +997,8 @@ export default function GuiaBase44() {
             {/* ── FOLLOW-UP PROMPTS ── */}
             <section id="followup" className="scroll-mt-24 space-y-6">
               <div className="mb-2">
-                <span className="font-['JetBrains_Mono'] text-[#D4A843]/40 text-xs">REFINAMIENTO</span>
-                <h2 className="font-['Space_Grotesk'] font-bold text-2xl lg:text-3xl text-white mt-1">Prompts de Seguimiento</h2>
+                <span className="font-mono text-[#D4A843]/40 text-xs">REFINAMIENTO</span>
+                <h2 className="font-display font-bold text-2xl lg:text-3xl text-white mt-1">Prompts de Seguimiento</h2>
                 <p className="text-[#B0B0B0] text-sm mt-2">Usa estos prompts después de que la app esté funcionando para refinar.</p>
                 <div className="w-16 h-1 bg-gradient-to-r from-[#D4A843] to-[#00E5FF] rounded-full mt-3" />
               </div>
@@ -1008,9 +1008,9 @@ export default function GuiaBase44() {
                   <div key={fp.id} className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.06]">
                     <div className="flex items-center gap-3 mb-3">
                       <span className="text-xl">{fp.icon}</span>
-                      <h3 className="font-['Space_Grotesk'] font-bold text-white">{fp.title}</h3>
+                      <h3 className="font-display font-bold text-white">{fp.title}</h3>
                     </div>
-                    <pre className="text-[#B0B0B0] text-xs leading-relaxed font-['JetBrains_Mono'] bg-[#0A0A0A]/60 p-4 rounded-lg border border-white/[0.06] whitespace-pre-wrap mb-3 max-h-48 overflow-y-auto">
+                    <pre className="text-[#B0B0B0] text-xs leading-relaxed font-mono bg-[#0A0A0A]/60 p-4 rounded-lg border border-white/[0.06] whitespace-pre-wrap mb-3 max-h-48 overflow-y-auto">
                       {fp.prompt}
                     </pre>
                     <CopyButton text={fp.prompt} />
@@ -1022,8 +1022,8 @@ export default function GuiaBase44() {
             {/* ── CONFIGURACIÓN POST-CREACIÓN ── */}
             <section id="configuracion" className="scroll-mt-24 space-y-6">
               <div className="mb-2">
-                <span className="font-['JetBrains_Mono'] text-[#00C853]/40 text-xs">POST-CREACIÓN</span>
-                <h2 className="font-['Space_Grotesk'] font-bold text-2xl lg:text-3xl text-white mt-1">Configuración Manual</h2>
+                <span className="font-mono text-[#00C853]/40 text-xs">POST-CREACIÓN</span>
+                <h2 className="font-display font-bold text-2xl lg:text-3xl text-white mt-1">Configuración Manual</h2>
                 <p className="text-[#B0B0B0] text-sm mt-2">Después de que Base44 genere la app, realiza estos pasos.</p>
                 <div className="w-16 h-1 bg-gradient-to-r from-[#00C853] to-[#00E5FF] rounded-full mt-3" />
               </div>
@@ -1036,9 +1036,9 @@ export default function GuiaBase44() {
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-['JetBrains_Mono'] text-[10px] text-[#00C853]/60">PASO {step.step}</span>
+                        <span className="font-mono text-[10px] text-[#00C853]/60">PASO {step.step}</span>
                       </div>
-                      <h4 className="font-['Space_Grotesk'] font-bold text-white text-sm">{step.title}</h4>
+                      <h4 className="font-display font-bold text-white text-sm">{step.title}</h4>
                       <p className="text-[#B0B0B0] text-xs mt-0.5">{step.description}</p>
                     </div>
                   </div>
@@ -1049,8 +1049,8 @@ export default function GuiaBase44() {
             {/* ── COSTOS ── */}
             <section id="costos" className="scroll-mt-24 space-y-6">
               <div className="mb-2">
-                <span className="font-['JetBrains_Mono'] text-[#D4A843]/40 text-xs">INVERSIÓN</span>
-                <h2 className="font-['Space_Grotesk'] font-bold text-2xl lg:text-3xl text-white mt-1">Costos Estimados</h2>
+                <span className="font-mono text-[#D4A843]/40 text-xs">INVERSIÓN</span>
+                <h2 className="font-display font-bold text-2xl lg:text-3xl text-white mt-1">Costos Estimados</h2>
                 <div className="w-16 h-1 bg-gradient-to-r from-[#D4A843] to-[#FF6D00] rounded-full mt-3" />
               </div>
 
@@ -1058,8 +1058,8 @@ export default function GuiaBase44() {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/[0.08]">
-                      <th className="text-left py-3 px-5 text-[#00E5FF] font-['Space_Grotesk'] font-bold">Concepto</th>
-                      <th className="text-left py-3 px-5 text-[#D4A843] font-['Space_Grotesk'] font-bold">Costo</th>
+                      <th className="text-left py-3 px-5 text-[#00E5FF] font-display font-bold">Concepto</th>
+                      <th className="text-left py-3 px-5 text-[#D4A843] font-display font-bold">Costo</th>
                       <th className="text-left py-3 px-5 text-[#B0B0B0] font-medium">Nota</th>
                     </tr>
                   </thead>
@@ -1067,15 +1067,15 @@ export default function GuiaBase44() {
                     {COSTS.map((c, i) => (
                       <tr key={i} className="border-b border-white/[0.04]">
                         <td className="py-3 px-5 text-white font-medium">{c.concept}</td>
-                        <td className="py-3 px-5 font-['JetBrains_Mono'] text-[#D4A843]">{c.cost}</td>
+                        <td className="py-3 px-5 font-mono text-[#D4A843]">{c.cost}</td>
                         <td className="py-3 px-5 text-[#B0B0B0] text-xs">{c.note}</td>
                       </tr>
                     ))}
                   </tbody>
                   <tfoot>
                     <tr className="bg-white/[0.02]">
-                      <td className="py-3 px-5 text-white font-['Space_Grotesk'] font-bold">Total mensual estimado</td>
-                      <td className="py-3 px-5 font-['JetBrains_Mono'] font-bold text-[#00E5FF] text-lg">~$50-80/mes</td>
+                      <td className="py-3 px-5 text-white font-display font-bold">Total mensual estimado</td>
+                      <td className="py-3 px-5 font-mono font-bold text-[#00E5FF] text-lg">~$50-80/mes</td>
                       <td className="py-3 px-5 text-[#B0B0B0] text-xs">Sin contar dominio</td>
                     </tr>
                   </tfoot>
@@ -1086,8 +1086,8 @@ export default function GuiaBase44() {
             {/* ── NOTAS IMPORTANTES ── */}
             <section id="notas" className="scroll-mt-24 space-y-6">
               <div className="mb-2">
-                <span className="font-['JetBrains_Mono'] text-[#FF5252]/40 text-xs">IMPORTANTE</span>
-                <h2 className="font-['Space_Grotesk'] font-bold text-2xl lg:text-3xl text-white mt-1">Notas Importantes</h2>
+                <span className="font-mono text-[#FF5252]/40 text-xs">IMPORTANTE</span>
+                <h2 className="font-display font-bold text-2xl lg:text-3xl text-white mt-1">Notas Importantes</h2>
                 <div className="w-16 h-1 bg-gradient-to-r from-[#FF5252] to-[#D4A843] rounded-full mt-3" />
               </div>
 
@@ -1121,7 +1121,7 @@ export default function GuiaBase44() {
                   <div key={note.title} className="p-5 rounded-xl border" style={{ backgroundColor: note.color + "05", borderColor: note.color + "20" }}>
                     <div className="flex items-center gap-3 mb-2">
                       <span className="text-xl">{note.icon}</span>
-                      <h3 className="font-['Space_Grotesk'] font-bold" style={{ color: note.color }}>{note.title}</h3>
+                      <h3 className="font-display font-bold" style={{ color: note.color }}>{note.title}</h3>
                     </div>
                     <p className="text-[#B0B0B0] text-sm leading-relaxed">{note.text}</p>
                   </div>
@@ -1131,7 +1131,7 @@ export default function GuiaBase44() {
 
             {/* ── FOOTER ── */}
             <footer className="border-t border-white/[0.06] pt-8 pb-12 text-center space-y-3">
-              <p className="font-['Space_Grotesk'] font-bold text-lg text-white">
+              <p className="font-display font-bold text-lg text-white">
                 <span className="text-[#00E5FF]">LINCE</span><span className="text-[#D4A843] text-xs align-super">®</span>
               </p>
               <p className="text-[#B0B0B0]/60 text-xs">

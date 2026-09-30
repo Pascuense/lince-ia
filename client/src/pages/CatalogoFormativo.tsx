@@ -225,7 +225,7 @@ export default function CatalogoFormativo() {
           <a href="/" className="flex items-center gap-1">
             <ArrowLeft className="w-4 h-4 text-[#B0B0B0]" />
             
-            <span className="font-['Space_Grotesk'] font-bold text-base text-[#00E5FF]">LINCE</span>
+            <span className="font-display font-bold text-base text-[#00E5FF]">LINCE</span>
           </a>
           <div className="flex items-center gap-2">
             <span className="text-[#00E5FF] text-xs font-medium px-3 py-1 rounded-full bg-[#00E5FF]/10 border border-[#00E5FF]/30 flex items-center gap-1.5">
@@ -256,7 +256,7 @@ export default function CatalogoFormativo() {
               <BookOpen className="w-4 h-4 text-[#00E5FF]" />
               <span className="text-[#00E5FF] text-sm font-medium">Formación Profesional en IA</span>
             </div>
-            <h1 className="font-['Space_Grotesk'] font-bold text-4xl sm:text-5xl text-white mb-4">
+            <h1 className="font-display font-bold text-4xl sm:text-5xl text-white mb-4">
               Catálogo <span className="text-[#00E5FF]">Formativo</span>
             </h1>
             <p className="text-[#B0B0B0] text-lg max-w-2xl mx-auto">
@@ -277,19 +277,19 @@ export default function CatalogoFormativo() {
             {/* Stats */}
             <div className="flex flex-wrap justify-center gap-4 mt-6">
               <div className="px-4 py-2 bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-lg">
-                <span className="text-[#00E5FF] font-['Space_Grotesk'] font-bold text-xl">{COURSES.length}</span>
+                <span className="text-[#00E5FF] font-display font-bold text-xl">{COURSES.length}</span>
                 <span className="text-[#B0B0B0] text-xs ml-2">Cursos</span>
               </div>
               <div className="px-4 py-2 bg-[#D4A843]/10 border border-[#D4A843]/30 rounded-lg">
-                <span className="text-[#D4A843] font-['Space_Grotesk'] font-bold text-xl">7h</span>
+                <span className="text-[#D4A843] font-display font-bold text-xl">7h</span>
                 <span className="text-[#B0B0B0] text-xs ml-2">Por curso</span>
               </div>
               <div className="px-4 py-2 bg-[#00C853]/10 border border-[#00C853]/30 rounded-lg">
-                <span className="text-[#00C853] font-['Space_Grotesk'] font-bold text-xl">3</span>
+                <span className="text-[#00C853] font-display font-bold text-xl">3</span>
                 <span className="text-[#B0B0B0] text-xs ml-2">Objetivos/curso</span>
               </div>
               <div className="px-4 py-2 bg-[#9C27B0]/10 border border-[#9C27B0]/30 rounded-lg">
-                <span className="text-[#9C27B0] font-['Space_Grotesk'] font-bold text-xl">{COURSE_CATEGORIES.length - 1}</span>
+                <span className="text-[#9C27B0] font-display font-bold text-xl">{COURSE_CATEGORIES.length - 1}</span>
                 <span className="text-[#B0B0B0] text-xs ml-2">Categorías</span>
               </div>
             </div>
@@ -304,7 +304,7 @@ export default function CatalogoFormativo() {
                 </div>
               </div>
               <div className="flex-1">
-                <h3 className="font-['Space_Grotesk'] font-bold text-xl text-white mb-2 flex items-center gap-2">
+                <h3 className="font-display font-bold text-xl text-white mb-2 flex items-center gap-2">
                   <span className="text-[#D4A843]">Cursos Presenciales</span> con Agenda
                 </h3>
                 <p className="text-[#B0B0B0] text-sm leading-relaxed mb-3">
@@ -420,7 +420,7 @@ export default function CatalogoFormativo() {
                     >
                       <div className="flex items-center gap-3 min-w-0">
                         {course.featured && <Star className="w-4 h-4 text-[#D4A843] flex-shrink-0" />}
-                        <h4 className="font-['Space_Grotesk'] font-bold text-white text-sm truncate">{course.name}</h4>
+                        <h4 className="font-display font-bold text-white text-sm truncate">{course.name}</h4>
                         <span className="text-[9px] font-bold px-2 py-0.5 rounded-full flex-shrink-0" style={{ backgroundColor: `${categoryColor(course.category)}15`, color: categoryColor(course.category) }}>
                           {COURSE_CATEGORIES.find(c => c.id === course.category)?.label}
                         </span>
@@ -476,10 +476,10 @@ export default function CatalogoFormativo() {
               Todos los cursos siguen el formato de 7 horas con objetivos medibles. Alineados con el marco DigComp 2.2.
             </p>
             <div className="inline-flex gap-4">
-              <a href="/prompt-profesional" className="inline-flex items-center gap-2 px-6 py-3 bg-[#D4A843]/10 border border-[#D4A843]/30 text-[#D4A843] rounded-xl font-['Space_Grotesk'] font-bold text-sm hover:bg-[#D4A843]/20 transition-colors">
+              <a href="/prompt-profesional" className="inline-flex items-center gap-2 px-6 py-3 bg-[#D4A843]/10 border border-[#D4A843]/30 text-[#D4A843] rounded-xl font-display font-bold text-sm hover:bg-[#D4A843]/20 transition-colors">
                 <Brain className="w-4 h-4" /> Prompt Profesional
               </a>
-              <a href="/arsenal-ia" className="inline-flex items-center gap-2 px-6 py-3 bg-[#00E5FF]/10 border border-[#00E5FF]/30 text-[#00E5FF] rounded-xl font-['Space_Grotesk'] font-bold text-sm hover:bg-[#00E5FF]/20 transition-colors">
+              <a href="/arsenal-ia" className="inline-flex items-center gap-2 px-6 py-3 bg-[#00E5FF]/10 border border-[#00E5FF]/30 text-[#00E5FF] rounded-xl font-display font-bold text-sm hover:bg-[#00E5FF]/20 transition-colors">
                 <Zap className="w-4 h-4" /> Herramientas IA
               </a>
             </div>

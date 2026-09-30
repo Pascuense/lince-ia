@@ -116,7 +116,7 @@ export function AgeGate({ children }: { children: React.ReactNode }) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
             </svg>
           </div>
-          <h2 className="font-['Space_Grotesk'] text-2xl font-bold text-white mb-4">{t.underageTitle}</h2>
+          <h2 className="font-display text-2xl font-bold text-white mb-4">{t.underageTitle}</h2>
           <p className="text-[#B0B0B0] text-sm leading-relaxed mb-6">{t.underageMsg}</p>
           <p className="text-[#00E5FF]/60 text-xs mb-6">{t.contact}</p>
           <button
@@ -167,7 +167,7 @@ export function AgeGate({ children }: { children: React.ReactNode }) {
           </div>
 
           {/* Title */}
-          <h1 className="font-['Space_Grotesk'] text-3xl font-bold text-white mb-1">
+          <h1 className="font-display text-3xl font-bold text-white mb-1">
             <span className="text-[#00E5FF]">LINCE</span>
           </h1>
           <p className="text-[#B0B0B0] text-sm mb-6">{t.subtitle}</p>
@@ -181,7 +181,7 @@ export function AgeGate({ children }: { children: React.ReactNode }) {
           </div>
 
           {/* Question */}
-          <h2 className="font-['Space_Grotesk'] text-xl font-semibold text-white mb-8">{t.question}</h2>
+          <h2 className="font-display text-xl font-semibold text-white mb-8">{t.question}</h2>
 
           {/* Buttons */}
           <div className="space-y-3">

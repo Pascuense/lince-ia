@@ -1,0 +1,32 @@
+name: Migrate Manus CDN assets into the repo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+
+      - name: Download assets and rewrite references
+        run: node scripts/migrate-manus-assets.mjs
+
+      - name: Commit result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A client/public/assets client/src shared client/index.html client/public/manifest.json
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+            exit 0
+          fi
+          git commit -m "chore(assets): self-host images previously served from Manus CDN"
+          git push

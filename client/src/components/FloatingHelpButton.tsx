@@ -135,7 +135,7 @@ export function FloatingHelpButton() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <span className="w-8 h-8 rounded-full bg-[#00FF88] flex items-center justify-center text-black font-bold text-sm">?</span>
-                <h3 className="font-['Space_Grotesk'] font-bold text-lg text-white">{help.title}</h3>
+                <h3 className="font-display font-bold text-lg text-white">{help.title}</h3>
               </div>
               <button
                 onClick={() => setOpen(false)}

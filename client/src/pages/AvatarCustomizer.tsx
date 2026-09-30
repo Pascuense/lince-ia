@@ -286,7 +286,7 @@ function SectionLabel({ children, badge }: { children: React.ReactNode; badge?: 
     <div className="pt-14 flex items-center gap-2 mb-3">
       <BackButton variant="inline" />
       <GlobalNavBar />
-      <h4 className="font-['Space_Grotesk'] font-bold text-white text-sm">{children}</h4>
+      <h4 className="font-display font-bold text-white text-sm">{children}</h4>
       {badge && (
         <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#00C853]/20 text-[#00C853] font-bold">{badge}</span>
       )}
@@ -452,7 +452,7 @@ function AvatarPreview({ state, compact = false, previewRef }: { state: Customiz
       {/* Name and info */}
       {!compact && (
         <div className="text-center">
-          <h3 className="font-['Space_Grotesk'] font-bold text-white text-xl">
+          <h3 className="font-display font-bold text-white text-xl">
             {state.avatarName || AVATAR_LIST.find(a => a.key === avatarKey)?.name || avatarKey}
           </h3>
           <p className="text-[#B0B0B0] text-sm mt-1">
@@ -478,7 +478,7 @@ function StepSelect({ state, setState }: { state: CustomizationState; setState: 
   return (
     <div>
       <div className="mb-6">
-        <h3 className="font-['Space_Grotesk'] font-bold text-white text-xl mb-2">{t('customizer.chooseAvatar')}</h3>
+        <h3 className="font-display font-bold text-white text-xl mb-2">{t('customizer.chooseAvatar')}</h3>
         <p className="text-[#B0B0B0] text-sm">{t('customizer.chooseAvatarDesc')}</p>
       </div>
 
@@ -517,7 +517,7 @@ function StepSelect({ state, setState }: { state: CustomizationState; setState: 
               <div className="w-full aspect-square rounded-lg overflow-hidden mb-2 bg-white/[0.02]">
                 <img src={img} alt={avatar.name} className="w-full h-full object-contain" />
               </div>
-              <p className="font-['Space_Grotesk'] font-bold text-white text-xs text-center truncate">{getAvatarName(avatar.key)}</p>
+              <p className="font-display font-bold text-white text-xs text-center truncate">{getAvatarName(avatar.key)}</p>
               {country !== 'default' && getAvatarName(avatar.key) !== avatar.name && <p className="text-[9px] text-white/30 text-center">({avatar.name})</p>}
               <p className="text-[10px] text-center mt-0.5" style={{ color: avatar.color }}>{avatar.role}</p>
               <p className="text-[#B0B0B0]/60 text-[10px] text-center mt-0.5">{avatar.generation}</p>
@@ -540,7 +540,7 @@ function StepAppearance({ state, setState }: { state: CustomizationState; setSta
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="font-['Space_Grotesk'] font-bold text-white text-xl mb-2">Personaliza la apariencia</h3>
+        <h3 className="font-display font-bold text-white text-xl mb-2">Personaliza la apariencia</h3>
         <p className="text-[#B0B0B0] text-sm">Dale tu toque personal al pelaje, ojos y patrón de manchas.</p>
       </div>
 
@@ -608,7 +608,7 @@ function StepIdentity({ state, setState }: { state: CustomizationState; setState
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="font-['Space_Grotesk'] font-bold text-white text-xl mb-2">Define la identidad</h3>
+        <h3 className="font-display font-bold text-white text-xl mb-2">Define la identidad</h3>
         <p className="text-[#B0B0B0] text-sm">Nombre, pronombres y voz. Todo es opcional y sin restricciones.</p>
       </div>
 
@@ -620,7 +620,7 @@ function StepIdentity({ state, setState }: { state: CustomizationState; setState
           value={state.avatarName}
           onChange={e => setState({ ...state, avatarName: e.target.value })}
           placeholder={AVATAR_LIST.find(a => a.key === state.selectedAvatar)?.name || "Nombre del avatar"}
-          className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-[#B0B0B0]/40 focus:border-[#00E5FF] focus:outline-none focus:shadow-[0_0_12px_rgba(0,229,255,0.2)] transition-all font-['Space_Grotesk']"
+          className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-[#B0B0B0]/40 focus:border-[#00E5FF] focus:outline-none focus:shadow-[0_0_12px_rgba(0,229,255,0.2)] transition-all font-display"
           maxLength={20}
         />
         <p className="text-[#B0B0B0]/40 text-xs mt-1">{state.avatarName.length}/20 caracteres</p>
@@ -674,7 +674,7 @@ function StepClothing({ state, setState }: { state: CustomizationState; setState
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="font-['Space_Grotesk'] font-bold text-white text-xl mb-2">{t('customizer.clothing')}</h3>
+        <h3 className="font-display font-bold text-white text-xl mb-2">{t('customizer.clothing')}</h3>
         <p className="text-[#B0B0B0] text-sm">{t('customizer.clothingDesc')}</p>
       </div>
 
@@ -711,7 +711,7 @@ function StepAccessories({ state, setState }: { state: CustomizationState; setSt
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="font-['Space_Grotesk'] font-bold text-white text-xl mb-2">Accesorios</h3>
+        <h3 className="font-display font-bold text-white text-xl mb-2">Accesorios</h3>
         <p className="text-[#B0B0B0] text-sm">Accesorios de cabeza, cuerpo y diversidad cultural.</p>
       </div>
 
@@ -748,13 +748,13 @@ function StepAssistive({ state, setState }: { state: CustomizationState; setStat
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="font-['Space_Grotesk'] font-bold text-white text-xl mb-2">Diversidad Funcional</h3>
+        <h3 className="font-display font-bold text-white text-xl mb-2">Diversidad Funcional</h3>
         <p className="text-[#B0B0B0] text-sm">Representación respetuosa de la diversidad. Todos los dispositivos son gratuitos.</p>
       </div>
 
       {/* Free banner */}
       <div className="p-4 bg-[#00C853]/10 border border-[#00C853]/30 rounded-xl">
-        <p className="text-[#00C853] font-['Space_Grotesk'] font-bold text-sm flex items-center gap-2">
+        <p className="text-[#00C853] font-display font-bold text-sm flex items-center gap-2">
           <span>❤️</span> REGLA INQUEBRANTABLE: Los dispositivos de asistencia son SIEMPRE GRATUITOS. La representación NUNCA se monetiza.
         </p>
       </div>
@@ -822,7 +822,7 @@ function StepSummary({ state, onExportJSON, onExportPNG, isExporting }: { state:
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="font-['Space_Grotesk'] font-bold text-white text-xl mb-2">Tu avatar está listo</h3>
+        <h3 className="font-display font-bold text-white text-xl mb-2">Tu avatar está listo</h3>
         <p className="text-[#B0B0B0] text-sm">Resumen de todas las personalizaciones. Puedes volver a cualquier paso para cambiar algo.</p>
       </div>
 
@@ -847,7 +847,7 @@ function StepSummary({ state, onExportJSON, onExportPNG, isExporting }: { state:
 
       {/* Export buttons */}
       <div className="p-5 bg-white/[0.02] border border-white/[0.08] rounded-xl">
-        <h4 className="font-['Space_Grotesk'] font-bold text-white text-sm mb-3">Exportar configuración</h4>
+        <h4 className="font-display font-bold text-white text-sm mb-3">Exportar configuración</h4>
         <p className="text-[#B0B0B0] text-xs mb-4">Descarga tu avatar personalizado para compartirlo con el equipo o guardarlo como referencia.</p>
         <div className="flex flex-wrap gap-3">
           <button
@@ -872,7 +872,7 @@ function StepSummary({ state, onExportJSON, onExportPNG, isExporting }: { state:
 
       {/* CTA */}
       <div className="p-5 bg-gradient-to-r from-[#00E5FF]/10 to-[#D4A843]/10 border border-[#00E5FF]/20 rounded-xl text-center">
-        <p className="text-white font-['Space_Grotesk'] font-bold text-lg mb-2">
+        <p className="text-white font-display font-bold text-lg mb-2">
           ¡{state.avatarName || avatar?.name} está listo para enseñarte IA!
         </p>
         <p className="text-[#B0B0B0] text-sm">
@@ -1136,9 +1136,9 @@ export default function AvatarCustomizer() {
         <div className="container flex items-center justify-between h-12 sm:h-14">
           <a href="/?nda=ok" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
             
-            <span className="font-['Space_Grotesk'] font-bold text-base sm:text-lg text-[#00E5FF]">LINCE</span>
+            <span className="font-display font-bold text-base sm:text-lg text-[#00E5FF]">LINCE</span>
           </a>
-          <span className="text-[#B0B0B0] text-[10px] sm:text-xs font-['JetBrains_Mono'] hidden sm:inline">{t('customizer.headerTitle')}</span>
+          <span className="text-[#B0B0B0] text-[10px] sm:text-xs font-mono hidden sm:inline">{t('customizer.headerTitle')}</span>
           <div className="flex items-center gap-2">
             <a href="/?nda=ok" className="text-[#B0B0B0] text-xs sm:text-sm hover:text-white transition-colors">← <span className="hidden sm:inline">{t('customizer.backToPRD')}</span><span className="sm:hidden">Inicio</span></a>
             <UserNavBadge variant="compact" />
@@ -1207,7 +1207,7 @@ export default function AvatarCustomizer() {
             <div className="hidden lg:block">
               <div className="sticky top-24">
                 <div className="p-6 bg-[#111111] border border-white/[0.06] rounded-2xl">
-                  <h4 className="font-['Space_Grotesk'] font-bold text-[#00E5FF] text-xs mb-4 text-center tracking-widest uppercase">
+                  <h4 className="font-display font-bold text-[#00E5FF] text-xs mb-4 text-center tracking-widest uppercase">
                     Vista previa en vivo
                   </h4>
                   <AvatarPreview state={state} previewRef={avatarPreviewRef} />
@@ -1221,7 +1221,7 @@ export default function AvatarCustomizer() {
         {currentStep !== "select" && state.selectedAvatar && (
           <div className="lg:hidden mt-4 sm:mt-6">
             <details className="bg-[#111111] border border-white/[0.06] rounded-xl sm:rounded-2xl" open>
-              <summary className="p-3 sm:p-4 cursor-pointer font-['Space_Grotesk'] font-bold text-[#00E5FF] text-xs sm:text-sm text-center">
+              <summary className="p-3 sm:p-4 cursor-pointer font-display font-bold text-[#00E5FF] text-xs sm:text-sm text-center">
                 👁️ Ver vista previa del avatar
               </summary>
               <div className="p-3 sm:p-4 pt-0">
@@ -1236,7 +1236,7 @@ export default function AvatarCustomizer() {
           <button
             onClick={goPrev}
             disabled={currentStepIndex === 0}
-            className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-['Space_Grotesk'] font-bold text-xs sm:text-sm transition-all ${
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-display font-bold text-xs sm:text-sm transition-all ${
               currentStepIndex === 0
                 ? "bg-white/5 text-[#B0B0B0]/30 cursor-not-allowed"
                 : "bg-white/5 text-white hover:bg-white/10 border border-white/10"
@@ -1245,7 +1245,7 @@ export default function AvatarCustomizer() {
             ← <span className="hidden sm:inline">{t('customizer.previous')}</span>
           </button>
 
-          <span className="text-[#B0B0B0]/40 text-[10px] sm:text-xs font-['JetBrains_Mono']">
+          <span className="text-[#B0B0B0]/40 text-[10px] sm:text-xs font-mono">
             {currentStepIndex + 1} / {steps.length}
           </span>
 
@@ -1253,7 +1253,7 @@ export default function AvatarCustomizer() {
             <button
               onClick={goNext}
               disabled={!canGoNext}
-              className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-['Space_Grotesk'] font-bold text-xs sm:text-sm transition-all ${
+              className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-display font-bold text-xs sm:text-sm transition-all ${
                 canGoNext
                   ? "bg-[#00E5FF] text-[#0A0A0A] hover:bg-[#00E5FF]/90 shadow-[0_0_20px_rgba(0,229,255,0.3)]"
                   : "bg-white/10 text-white/30 cursor-not-allowed"
@@ -1264,7 +1264,7 @@ export default function AvatarCustomizer() {
           ) : (
             <a
               href="/?nda=ok"
-              className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-['Space_Grotesk'] font-bold text-xs sm:text-sm bg-gradient-to-r from-[#00E5FF] to-[#D4A843] text-[#0A0A0A] shadow-[0_0_20px_rgba(0,229,255,0.3)] hover:opacity-90 transition-opacity"
+              className="px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-display font-bold text-xs sm:text-sm bg-gradient-to-r from-[#00E5FF] to-[#D4A843] text-[#0A0A0A] shadow-[0_0_20px_rgba(0,229,255,0.3)] hover:opacity-90 transition-opacity"
             >
               {t('customizer.backToPRD')}
             </a>

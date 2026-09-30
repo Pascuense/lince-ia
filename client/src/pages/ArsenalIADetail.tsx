@@ -451,7 +451,7 @@ export default function ArsenalIADetail() {
           <div className="mb-10">
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
               <div className="flex-1">
-                <h1 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl text-white mb-2">{tool.name}</h1>
+                <h1 className="font-display font-bold text-3xl sm:text-4xl text-white mb-2">{tool.name}</h1>
                 <p className="text-[#B0B0B0] text-base leading-relaxed">{tool.desc}</p>
               </div>
               <a href={tool.url} target="_blank" rel="noopener noreferrer"
@@ -491,7 +491,7 @@ export default function ArsenalIADetail() {
           {/* Tool Screenshot */}
           {TOOL_SCREENSHOTS[tool.id] && (
             <div className="mb-10">
-              <h2 className="font-['Space_Grotesk'] font-bold text-base text-white mb-4 flex items-center gap-2">
+              <h2 className="font-display font-bold text-base text-white mb-4 flex items-center gap-2">
                 <Image className="w-4 h-4" style={{ color: catMeta!.color }} /> {tr.screenshot || 'Interfaz de la herramienta'}
               </h2>
               <div className="rounded-2xl overflow-hidden border border-white/[0.1] bg-white/[0.02]">
@@ -512,7 +512,7 @@ export default function ArsenalIADetail() {
 
           {/* Step-by-Step Guide */}
           <div className="mb-10">
-            <h2 className="font-['Space_Grotesk'] font-bold text-xl text-white mb-6 flex items-center gap-2">
+            <h2 className="font-display font-bold text-xl text-white mb-6 flex items-center gap-2">
               <BookOpen className="w-5 h-5" style={{ color: catMeta!.color }} /> {tr.stepByStep}
             </h2>
 
@@ -540,7 +540,7 @@ export default function ArsenalIADetail() {
                 <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold" style={{ backgroundColor: `${catMeta!.color}20`, color: catMeta!.color }}>
                   {activeStep + 1}
                 </div>
-                <h3 className="font-['Space_Grotesk'] font-bold text-lg text-white pt-0.5">
+                <h3 className="font-display font-bold text-lg text-white pt-0.5">
                   {tool.guide.steps[activeStep].title}
                 </h3>
               </div>
@@ -577,7 +577,7 @@ export default function ArsenalIADetail() {
           <div className="grid sm:grid-cols-2 gap-4 mb-10">
             {/* Use Cases */}
             <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/[0.08]">
-              <h3 className="font-['Space_Grotesk'] font-bold text-base text-white mb-4 flex items-center gap-2">
+              <h3 className="font-display font-bold text-base text-white mb-4 flex items-center gap-2">
                 <Star className="w-4 h-4" style={{ color: catMeta!.color }} /> {tr.useCases}
               </h3>
               <ul className="space-y-2">
@@ -592,7 +592,7 @@ export default function ArsenalIADetail() {
 
             {/* Pro Tips */}
             <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/[0.08]">
-              <h3 className="font-['Space_Grotesk'] font-bold text-base text-white mb-4 flex items-center gap-2">
+              <h3 className="font-display font-bold text-base text-white mb-4 flex items-center gap-2">
                 <Lightbulb className="w-4 h-4 text-[#D4A843]" /> {tr.proTips}
               </h3>
               <ul className="space-y-3">

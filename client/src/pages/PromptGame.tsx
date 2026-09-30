@@ -364,7 +364,7 @@ export default function PromptGame() {
               <GraduationCap className="w-4 h-4 text-[#00E5FF]" />
               <span className="text-[#00E5FF] text-sm font-medium">{t("heroSubtitle")}</span>
             </div>
-            <h1 className="font-['Space_Grotesk'] font-bold text-5xl sm:text-7xl text-white mb-4">
+            <h1 className="font-display font-bold text-5xl sm:text-7xl text-white mb-4">
               {t("heroTitle")}<span className="text-[#00E5FF]">{t("heroTitleAccent")}</span>
             </h1>
             <p className="text-white/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-8">{t("heroDesc")}</p>
@@ -407,7 +407,7 @@ export default function PromptGame() {
               <div className="w-16 h-16 rounded-2xl bg-[#00E5FF]/15 flex items-center justify-center mb-5">
                 <GraduationCap className="w-8 h-8 text-[#00E5FF]" />
               </div>
-              <h3 className="font-['Space_Grotesk'] font-black text-xl sm:text-2xl text-white mb-3">{t("startGuided")}</h3>
+              <h3 className="font-display font-black text-xl sm:text-2xl text-white mb-3">{t("startGuided")}</h3>
               <p className="text-sm sm:text-base text-white/50 leading-relaxed">{t("startGuidedDesc")}</p>
               <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-[#00E5FF] opacity-0 group-hover:opacity-100 transition-opacity" />
               <span className="absolute top-4 right-4 px-3 py-1 text-xs font-bold rounded-full bg-[#00E5FF]/20 text-[#00E5FF] border border-[#00E5FF]/30">
@@ -419,7 +419,7 @@ export default function PromptGame() {
               <div className="w-16 h-16 rounded-2xl bg-[#D4A843]/15 flex items-center justify-center mb-5">
                 <PenTool className="w-8 h-8 text-[#D4A843]" />
               </div>
-              <h3 className="font-['Space_Grotesk'] font-black text-xl sm:text-2xl text-white mb-3">{t("startFree")}</h3>
+              <h3 className="font-display font-black text-xl sm:text-2xl text-white mb-3">{t("startFree")}</h3>
               <p className="text-sm sm:text-base text-white/50 leading-relaxed">{t("startFreeDesc")}</p>
               <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-[#D4A843] opacity-0 group-hover:opacity-100 transition-opacity" />
             </button>
@@ -428,14 +428,14 @@ export default function PromptGame() {
               <div className="w-16 h-16 rounded-2xl bg-[#FF5252]/15 flex items-center justify-center mb-5">
                 <Swords className="w-8 h-8 text-[#FF5252]" />
               </div>
-              <h3 className="font-['Space_Grotesk'] font-black text-xl sm:text-2xl text-white mb-3">{t("startChallenge")}</h3>
+              <h3 className="font-display font-black text-xl sm:text-2xl text-white mb-3">{t("startChallenge")}</h3>
               <p className="text-sm sm:text-base text-white/50 leading-relaxed">{t("startChallengeDesc")}</p>
               <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-[#FF5252] opacity-0 group-hover:opacity-100 transition-opacity" />
             </button>
           </div>
 
           <div className="bg-[#1A1A2E] rounded-2xl border-2 border-white/10 p-7 sm:p-8 mb-12">
-            <h3 className="font-['Space_Grotesk'] font-bold text-xl text-white mb-6 flex items-center gap-3">
+            <h3 className="font-display font-bold text-xl text-white mb-6 flex items-center gap-3">
               <Lightbulb className="w-6 h-6 text-[#D4A843]" /> {t("howItWorks")}
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -459,7 +459,7 @@ export default function PromptGame() {
 
           {history.length > 0 && (
             <div>
-              <h2 className="font-['Space_Grotesk'] font-semibold text-xl text-white mb-4">{t("history")}</h2>
+              <h2 className="font-display font-semibold text-xl text-white mb-4">{t("history")}</h2>
               <div className="space-y-2">
                 {history.slice(0, 10).map((entry, idx) => (
                   <div key={idx} className="flex items-center gap-3 bg-[#1A1A2E] rounded-lg p-3 border border-white/5">
@@ -505,7 +505,7 @@ export default function PromptGame() {
           <BackButton />
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="font-['Space_Grotesk'] font-bold text-2xl text-white">
+              <h1 className="font-display font-bold text-2xl text-white">
                 {mode === "challenge" ? t("challengeTitle") : t("guidedTitle")}
               </h1>
               <p className="text-sm text-[#B0B0B0]">
@@ -556,7 +556,7 @@ export default function PromptGame() {
                       <StepIcon className="w-5 h-5 text-[#00E5FF]" />
                     </div>
                     <div>
-                      <h2 className="font-['Space_Grotesk'] font-bold text-lg text-white">
+                      <h2 className="font-display font-bold text-lg text-white">
                         {t("step")} {currentStep + 1} {t("of")} 6: {t(step.key)}
                       </h2>
                       <p className="text-sm text-[#B0B0B0]">{t(`${step.key}Desc`)}</p>
@@ -637,7 +637,7 @@ export default function PromptGame() {
             <div className="lg:col-span-3">
               <div className="bg-[#1A1A2E] rounded-xl border border-white/10 p-5 sticky top-24">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-['Space_Grotesk'] font-bold text-sm text-white flex items-center gap-2">
+                  <h3 className="font-display font-bold text-sm text-white flex items-center gap-2">
                     <Eye className="w-4 h-4 text-[#00E5FF]" /> {t("livePreview")}
                   </h3>
                   <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
@@ -686,7 +686,7 @@ export default function PromptGame() {
         <div className="container pt-24 pb-16 max-w-3xl">
           <BackButton />
           <div className="mb-6">
-            <h1 className="font-['Space_Grotesk'] font-bold text-2xl text-white mb-1">{t("freeTitle")}</h1>
+            <h1 className="font-display font-bold text-2xl text-white mb-1">{t("freeTitle")}</h1>
             <p className="text-sm text-[#B0B0B0]">{t("freeSubtitle")}</p>
           </div>
           <div className="bg-[#1A1A2E] rounded-xl border border-white/10 p-6 mb-6">
@@ -738,12 +738,12 @@ export default function PromptGame() {
             </div>
             <div className="flex items-center justify-center gap-6 mb-4">
               <div>
-                <div className="text-6xl font-bold font-['Space_Grotesk']" style={{ color: gradeColor }}>{result.grade}</div>
+                <div className="text-6xl font-bold font-display" style={{ color: gradeColor }}>{result.grade}</div>
                 <div className="text-sm text-[#B0B0B0]">{t("grade")}</div>
               </div>
               <div className="w-px h-16 bg-white/10" />
               <div>
-                <div className="text-5xl font-bold font-['Space_Grotesk'] text-white">{result.overallScore}</div>
+                <div className="text-5xl font-bold font-display text-white">{result.overallScore}</div>
                 <div className="text-sm text-[#B0B0B0]">{t("overallScore")}</div>
               </div>
             </div>
@@ -760,7 +760,7 @@ export default function PromptGame() {
           </div>
 
           <div className="bg-[#1A1A2E] rounded-xl border border-white/10 p-6 mb-6">
-            <h3 className="font-['Space_Grotesk'] font-bold text-lg text-white mb-4 flex items-center gap-2">
+            <h3 className="font-display font-bold text-lg text-white mb-4 flex items-center gap-2">
               <Brain className="w-5 h-5 text-[#00E5FF]" /> {t("componentAnalysis")}
             </h3>
             <div className="space-y-4">
@@ -802,7 +802,7 @@ export default function PromptGame() {
             <div className="flex items-start gap-4">
               <img src={AVATAR_FRONTAL.YAYALIN} alt="Mentor" className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
               <div>
-                <h3 className="font-['Space_Grotesk'] font-bold text-lg text-white mb-2">{t("feedback")}</h3>
+                <h3 className="font-display font-bold text-lg text-white mb-2">{t("feedback")}</h3>
                 <p className="text-[#B0B0B0] leading-relaxed mb-3">{result.generalFeedback}</p>
                 {result.nextLevelTip && (
                   <div className="flex items-start gap-2 p-3 rounded-xl bg-[#00E5FF]/5 border border-[#00E5FF]/20">
@@ -820,7 +820,7 @@ export default function PromptGame() {
           {result.promptRewrite && result.promptRewrite !== "[Version mejorada no disponible]" && (
             <div className="bg-gradient-to-br from-[#00E5FF]/5 to-[#D4A843]/5 rounded-xl border border-[#00E5FF]/20 p-6 mb-6">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="font-['Space_Grotesk'] font-bold text-lg text-white flex items-center gap-2">
+                <h3 className="font-display font-bold text-lg text-white flex items-center gap-2">
                   <Wand2 className="w-5 h-5 text-[#00E5FF]" /> {t("improvedVersion")}
                 </h3>
                 <Button onClick={() => { navigator.clipboard.writeText(result.promptRewrite); toast.success(t("copied")); }}

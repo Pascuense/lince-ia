@@ -39,7 +39,7 @@ export function AvatarSelector({ isOpen, onClose, currentAvatarKey, onSelect, sa
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-white/10">
-          <h3 className="font-['Space_Grotesk'] font-bold text-lg text-white">
+          <h3 className="font-display font-bold text-lg text-white">
             Elige tu avatar
           </h3>
           <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors">

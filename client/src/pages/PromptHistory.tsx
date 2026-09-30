@@ -255,7 +255,7 @@ export default function PromptHistory() {
         <div className="container max-w-4xl">
           {/* Title */}
           <div className="mb-8">
-            <h1 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl text-white mb-2">{t.pageTitle}</h1>
+            <h1 className="font-display font-bold text-3xl sm:text-4xl text-white mb-2">{t.pageTitle}</h1>
             <p className="text-[#B0B0B0] text-sm">{t.pageSubtitle}</p>
           </div>
 

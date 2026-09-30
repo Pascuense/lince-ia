@@ -378,7 +378,7 @@ export default function CreaTuLincelin() {
             <span className="text-[#00E5FF] text-xs font-medium tracking-wide">GENERADOR IA</span>
           </div>
 
-          <h1 className="font-['Space_Grotesk'] font-black text-4xl sm:text-5xl lg:text-7xl leading-[0.95] mb-4">
+          <h1 className="font-display font-black text-4xl sm:text-5xl lg:text-7xl leading-[0.95] mb-4">
             CREA TU{" "}
             <span className="bg-gradient-to-r from-[#00E5FF] via-[#00E5FF] to-[#D4A843] bg-clip-text text-transparent">
               Mi Avatar

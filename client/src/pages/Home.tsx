@@ -35,12 +35,12 @@ function HeroSection() {
       </div>
       <div className="container relative z-10 pt-32 sm:pt-36 pb-12 sm:pb-16">
         <FadeIn delay={100}>
-          <h1 className="font-['Space_Grotesk'] font-bold text-5xl sm:text-7xl lg:text-8xl text-white leading-[0.95] mb-5 sm:mb-7">
+          <h1 className="font-display font-bold text-5xl sm:text-7xl lg:text-8xl text-white leading-[0.95] mb-5 sm:mb-7">
             DUO<span className="text-[#00E5FF]">LINCE</span>
           </h1>
         </FadeIn>
         <FadeIn delay={200}>
-          <h2 className="font-['Space_Grotesk'] text-xl sm:text-3xl lg:text-4xl text-[#D4A843] font-semibold mb-5 sm:mb-7">
+          <h2 className="font-display text-xl sm:text-3xl lg:text-4xl text-[#D4A843] font-semibold mb-5 sm:mb-7">
             {lang === 'es' ? (
               <>Aprende a usar la IA <span className="text-[#00E5FF]">jugando</span></>
             ) : lang === 'en' ? (
@@ -68,7 +68,7 @@ function HeroSection() {
               <span className="text-4xl">🐱</span>
               <div className="flex flex-col">
                 <div className="flex items-center gap-2">
-                  <span className="text-amber-300 font-['Space_Grotesk'] font-black text-xl sm:text-2xl">{tl(lang, { es: 'Familia LINCE IA', en: 'LINCE IA Family', zh: 'LINCE IA家族', 'pt-BR': 'Família LINCE IA', 'pt-PT': 'Família LINCE IA' })}</span>
+                  <span className="text-amber-300 font-display font-black text-xl sm:text-2xl">{tl(lang, { es: 'Familia LINCE IA', en: 'LINCE IA Family', zh: 'LINCE IA家族', 'pt-BR': 'Família LINCE IA', 'pt-PT': 'Família LINCE IA' })}</span>
                   <span className="px-2.5 py-0.5 bg-amber-400/30 text-amber-200 text-xs sm:text-sm font-bold rounded-full">{tl(lang, { es: '¡EMPIEZA AQUÍ!', en: 'START HERE!', zh: '从这里开始!', 'pt-BR': 'COMECE AQUI!', 'pt-PT': 'COMECE AQUI!' })}</span>
                 </div>
                 <span className="text-amber-200/70 text-sm sm:text-base mt-0.5">{tl(lang, { es: '10 especialistas en IA te enseñan paso a paso. Elige uno y pregúntale lo que quieras.', en: '10 AI specialists teach you step by step. Pick one and ask anything.', zh: '10位AI专家一步步教你。选一个，问任何问题。', 'pt-BR': '10 especialistas em IA te ensinam passo a passo. Escolha um e pergunte o que quiser.', 'pt-PT': '10 especialistas em IA ensinam-te passo a passo. Escolhe um e pergunta o que quiseres.' })}</span>
@@ -80,7 +80,7 @@ function HeroSection() {
             <a href="/prompt-studio" data-tour="prompt-studio" className="group flex items-center gap-3 px-5 py-4 bg-purple-500/15 border-2 border-purple-500/40 rounded-2xl hover:bg-purple-500/25 transition-all duration-300 min-h-[70px]">
               <span className="text-2xl">🖼️</span>
               <div className="flex flex-col">
-                <span className="text-purple-300 font-['Space_Grotesk'] font-bold text-base sm:text-lg">{tl(lang, { es: 'Crear Imagen', en: 'Create Image', zh: '创建图像', 'pt-BR': 'Criar Imagem', 'pt-PT': 'Criar Imagem' })}</span>
+                <span className="text-purple-300 font-display font-bold text-base sm:text-lg">{tl(lang, { es: 'Crear Imagen', en: 'Create Image', zh: '创建图像', 'pt-BR': 'Criar Imagem', 'pt-PT': 'Criar Imagem' })}</span>
                 <span className="text-purple-300/60 text-xs sm:text-sm">{tl(lang, { es: 'Genera imágenes con IA', en: 'Generate images with AI', zh: '用AI生成图像', 'pt-BR': 'Gere imagens com IA', 'pt-PT': 'Gera imagens com IA' })}</span>
               </div>
             </a>
@@ -89,7 +89,7 @@ function HeroSection() {
             <a href="/lincelin" className="group flex items-center gap-3 px-5 py-4 bg-pink-500/15 border-2 border-pink-500/40 rounded-2xl hover:bg-pink-500/25 transition-all duration-300 min-h-[70px]">
               <span className="text-2xl">🎨</span>
               <div className="flex flex-col">
-                <span className="text-pink-300 font-['Space_Grotesk'] font-bold text-base sm:text-lg">{tl(lang, { es: 'Mi Avatar', en: 'My Avatar', zh: '我的头像', 'pt-BR': 'Meu Avatar', 'pt-PT': 'Meu Avatar' })}</span>
+                <span className="text-pink-300 font-display font-bold text-base sm:text-lg">{tl(lang, { es: 'Mi Avatar', en: 'My Avatar', zh: '我的头像', 'pt-BR': 'Meu Avatar', 'pt-PT': 'Meu Avatar' })}</span>
                 <span className="text-pink-300/60 text-xs sm:text-sm">{tl(lang, { es: 'Crea tu personaje LINCE', en: 'Create your LINCE character', zh: '创建你的LINCE角色', 'pt-BR': 'Crie seu personagem LINCE', 'pt-PT': 'Cria o teu personagem LINCE' })}</span>
               </div>
             </a>
@@ -98,7 +98,7 @@ function HeroSection() {
             <a href="/arsenal-ia" className="group flex items-center gap-3 px-5 py-4 bg-[#00E5FF]/15 border-2 border-[#00E5FF]/40 rounded-2xl hover:bg-[#00E5FF]/25 transition-all duration-300 min-h-[70px]">
               <span className="text-2xl">⚡</span>
               <div className="flex flex-col">
-                <span className="text-[#00E5FF] font-['Space_Grotesk'] font-bold text-base sm:text-lg">{tl(lang, { es: 'Herramientas IA', en: 'AI Tools', zh: 'AI工具', 'pt-BR': 'Ferramentas IA', 'pt-PT': 'Ferramentas IA' })}</span>
+                <span className="text-[#00E5FF] font-display font-bold text-base sm:text-lg">{tl(lang, { es: 'Herramientas IA', en: 'AI Tools', zh: 'AI工具', 'pt-BR': 'Ferramentas IA', 'pt-PT': 'Ferramentas IA' })}</span>
                 <span className="text-[#00E5FF]/60 text-xs sm:text-sm">{tl(lang, { es: 'Descubre las mejores apps de IA', en: 'Discover the best AI apps', zh: '发现最好的AI应用', 'pt-BR': 'Descubra os melhores apps de IA', 'pt-PT': 'Descobre as melhores apps de IA' })}</span>
               </div>
             </a>
@@ -107,7 +107,7 @@ function HeroSection() {
             <a href="/promptear" className="group flex items-center gap-3 px-5 py-4 bg-violet-500/15 border-2 border-violet-500/40 rounded-2xl hover:bg-violet-500/25 transition-all duration-300 min-h-[70px]">
               <span className="text-2xl">🧠</span>
               <div className="flex flex-col">
-                <span className="text-violet-300 font-['Space_Grotesk'] font-bold text-base sm:text-lg">{tl(lang, { es: 'Aprender Prompts', en: 'Learn Prompts', zh: '学习提示', 'pt-BR': 'Aprender Prompts', 'pt-PT': 'Aprender Prompts' })}</span>
+                <span className="text-violet-300 font-display font-bold text-base sm:text-lg">{tl(lang, { es: 'Aprender Prompts', en: 'Learn Prompts', zh: '学习提示', 'pt-BR': 'Aprender Prompts', 'pt-PT': 'Aprender Prompts' })}</span>
                 <span className="text-violet-300/60 text-xs sm:text-sm">{tl(lang, { es: 'Aprende a hablar con la IA', en: 'Learn to talk to AI', zh: '学习与AI对话', 'pt-BR': 'Aprenda a falar com a IA', 'pt-PT': 'Aprende a falar com a IA' })}</span>
               </div>
             </a>
@@ -116,7 +116,7 @@ function HeroSection() {
             <a href="/tutorial" data-tour="play" className="group flex items-center gap-3 px-5 py-4 bg-[oklch(0.82_0.15_195)]/20 border-2 border-[oklch(0.82_0.15_195)]/50 rounded-2xl hover:bg-[oklch(0.82_0.15_195)]/30 transition-all duration-300 min-h-[70px]">
               <span className="text-2xl">🕹️</span>
               <div className="flex flex-col">
-                <span className="text-[oklch(0.82_0.15_195)] font-['Space_Grotesk'] font-bold text-base sm:text-lg">{tl(lang, { es: 'EMPIEZA GRATIS >', en: 'START FREE >', zh: '免费开始 >', 'pt-BR': 'COMECE GRÁTIS >', 'pt-PT': 'COMECE GRÁTIS >' })}</span>
+                <span className="text-[oklch(0.82_0.15_195)] font-display font-bold text-base sm:text-lg">{tl(lang, { es: 'EMPIEZA GRATIS >', en: 'START FREE >', zh: '免费开始 >', 'pt-BR': 'COMECE GRÁTIS >', 'pt-PT': 'COMECE GRÁTIS >' })}</span>
                 <span className="text-[oklch(0.82_0.15_195)]/60 text-xs sm:text-sm">{tl(lang, { es: 'Juega y sube de nivel', en: 'Play and level up', zh: '玩游戏升级', 'pt-BR': 'Jogue e suba de nível', 'pt-PT': 'Joga e sobe de nível' })}</span>
               </div>
             </a>
@@ -124,15 +124,15 @@ function HeroSection() {
               <>
                 <a href="/mundo" className="group flex items-center gap-3 px-5 py-4 bg-amber-500/10 border-2 border-amber-500/30 rounded-2xl hover:bg-amber-500/20 transition-all duration-300 opacity-70 min-h-[60px]">
                   <span className="text-2xl">🌍</span>
-                  <span className="text-amber-400 font-['Space_Grotesk'] font-bold text-base">{tl(lang, { es: 'Mundo', en: 'World', zh: '世界', 'pt-BR': 'Mundo', 'pt-PT': 'Mundo' })}</span>
+                  <span className="text-amber-400 font-display font-bold text-base">{tl(lang, { es: 'Mundo', en: 'World', zh: '世界', 'pt-BR': 'Mundo', 'pt-PT': 'Mundo' })}</span>
                 </a>
                 <a href="/raids" className="group flex items-center gap-3 px-5 py-4 bg-red-500/10 border-2 border-red-500/30 rounded-2xl hover:bg-red-500/20 transition-all duration-300 opacity-70 min-h-[60px]">
                   <span className="text-2xl">⚔️</span>
-                  <span className="text-red-400 font-['Space_Grotesk'] font-bold text-base">Batallas</span>
+                  <span className="text-red-400 font-display font-bold text-base">Batallas</span>
                 </a>
                 <a href="/academia" className="group flex items-center gap-3 px-5 py-4 bg-emerald-500/10 border-2 border-emerald-500/30 rounded-2xl hover:bg-emerald-500/20 transition-all duration-300 opacity-70 min-h-[60px]">
                   <span className="text-2xl">🎓</span>
-                  <span className="text-emerald-400 font-['Space_Grotesk'] font-bold text-base">{tl(lang, { es: 'Academia', en: 'Academy', zh: '学院', 'pt-BR': 'Academia', 'pt-PT': 'Academia' })}</span>
+                  <span className="text-emerald-400 font-display font-bold text-base">{tl(lang, { es: 'Academia', en: 'Academy', zh: '学院', 'pt-BR': 'Academia', 'pt-PT': 'Academia' })}</span>
                 </a>
               </>
             )}
@@ -143,19 +143,19 @@ function HeroSection() {
         <FadeIn delay={450}>
           <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-3 sm:gap-4 mb-8">
             <div className="px-4 sm:px-6 py-3 sm:py-4 bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-xl">
-              <span className="text-[#00E5FF] font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl">80</span>
+              <span className="text-[#00E5FF] font-display font-bold text-2xl sm:text-3xl">80</span>
               <span className="text-white/70 text-sm sm:text-base ml-2 font-medium">{t('hero.stat1')}</span>
             </div>
             <div className="px-4 sm:px-6 py-3 sm:py-4 bg-[#D4A843]/10 border border-[#D4A843]/30 rounded-xl">
-              <span className="text-[#D4A843] font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl">60+</span>
+              <span className="text-[#D4A843] font-display font-bold text-2xl sm:text-3xl">60+</span>
               <span className="text-white/70 text-sm sm:text-base ml-2 font-medium">{t('hero.stat2')}</span>
             </div>
             <div className="px-4 sm:px-6 py-3 sm:py-4 bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-xl">
-              <span className="text-[#00E5FF] font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl">4</span>
+              <span className="text-[#00E5FF] font-display font-bold text-2xl sm:text-3xl">4</span>
               <span className="text-white/70 text-sm sm:text-base ml-2 font-medium">{t('hero.stat3')}</span>
             </div>
             <div className="px-4 sm:px-6 py-3 sm:py-4 bg-[#D4A843]/10 border border-[#D4A843]/30 rounded-xl">
-              <span className="text-[#D4A843] font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl">✓</span>
+              <span className="text-[#D4A843] font-display font-bold text-2xl sm:text-3xl">✓</span>
               <span className="text-white/70 text-sm sm:text-base ml-2 font-medium">{t('hero.stat4')}</span>
             </div>
           </div>
@@ -259,7 +259,7 @@ function VisionSection() {
           <div className="flex justify-center mb-8">
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#00E5FF]/40 bg-[#00E5FF]/5">
               <span className="w-2.5 h-2.5 rounded-full bg-[#00E5FF] animate-pulse" />
-              <span className="text-[#00E5FF] text-sm font-['Space_Grotesk'] font-bold tracking-wider">{c.badge}</span>
+              <span className="text-[#00E5FF] text-sm font-display font-bold tracking-wider">{c.badge}</span>
             </div>
           </div>
         </FadeIn>
@@ -270,13 +270,13 @@ function VisionSection() {
             <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-[#00E5FF]/50 shadow-[0_0_40px_rgba(0,229,255,0.3)] mb-6">
               <img src={LINCE_CEO_IMG} alt="LINCE - CEO de LINCE" className="w-full h-full object-cover" />
             </div>
-            <h2 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-5xl lg:text-6xl text-white leading-tight mb-2">
+            <h2 className="font-display font-bold text-3xl sm:text-5xl lg:text-6xl text-white leading-tight mb-2">
               {c.title}
             </h2>
-            <h2 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-5xl lg:text-6xl text-[#00E5FF] leading-tight mb-2">
+            <h2 className="font-display font-bold text-3xl sm:text-5xl lg:text-6xl text-[#00E5FF] leading-tight mb-2">
               {c.titleHighlight}
             </h2>
-            <h2 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-5xl lg:text-6xl text-[#D4A843] leading-tight">
+            <h2 className="font-display font-bold text-3xl sm:text-5xl lg:text-6xl text-[#D4A843] leading-tight">
               {c.titleEnd}
             </h2>
           </div>
@@ -290,7 +290,7 @@ function VisionSection() {
                 <img src={LINCE_CEO_IMG} alt="LINCE CEO" className="w-full h-full object-cover" />
               </div>
               <div className="flex-1">
-                <p className="text-[#00E5FF] font-['Space_Grotesk'] font-bold text-sm mb-2">LINCE</p>
+                <p className="text-[#00E5FF] font-display font-bold text-sm mb-2">LINCE</p>
                 <p className="text-white text-lg sm:text-xl font-medium italic leading-relaxed">"{c.intro}"</p>
               </div>
             </div>
@@ -305,12 +305,12 @@ function VisionSection() {
           </FadeIn>
 
           <FadeIn delay={400}>
-            <p className="text-[#D4A843] text-2xl sm:text-3xl font-['Space_Grotesk'] font-bold text-center my-10">{c.p3}</p>
+            <p className="text-[#D4A843] text-2xl sm:text-3xl font-display font-bold text-center my-10">{c.p3}</p>
           </FadeIn>
 
           {/* WHY — 4 reasons */}
           <FadeIn delay={450}>
-            <h3 className="text-[#00E5FF] text-3xl sm:text-4xl font-['Space_Grotesk'] font-black text-center mb-8">{c.why}</h3>
+            <h3 className="text-[#00E5FF] text-3xl sm:text-4xl font-display font-black text-center mb-8">{c.why}</h3>
           </FadeIn>
 
           <div className="space-y-6">
@@ -324,7 +324,7 @@ function VisionSection() {
                 <div className="flex items-start gap-4 p-5 bg-white/[0.03] border border-white/[0.08] rounded-xl hover:border-opacity-30 transition-all" style={{ borderColor: `${r.color}30` }}>
                   <span className="text-3xl flex-shrink-0">{r.icon}</span>
                   <div>
-                    <p className="font-['Space_Grotesk'] font-bold text-white text-base sm:text-lg" style={{ color: r.color }}>{r.title}</p>
+                    <p className="font-display font-bold text-white text-base sm:text-lg" style={{ color: r.color }}>{r.title}</p>
                     <p className="text-[#B0B0B0] text-sm sm:text-base mt-1">{r.sub}</p>
                   </div>
                 </div>
@@ -335,7 +335,7 @@ function VisionSection() {
           {/* Manifesto quote */}
           <FadeIn delay={850}>
             <div className="my-12 p-6 sm:p-10 bg-gradient-to-br from-[#00E5FF]/5 via-transparent to-[#D4A843]/5 border border-[#00E5FF]/20 rounded-2xl text-center">
-              <p className="text-white text-lg sm:text-2xl font-['Space_Grotesk'] font-medium leading-relaxed italic">
+              <p className="text-white text-lg sm:text-2xl font-display font-medium leading-relaxed italic">
                 "{c.manifesto}"
               </p>
             </div>
@@ -348,14 +348,14 @@ function VisionSection() {
               <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[#D4A843]/50">
                 <img src={LINCE_CEO_IMG} alt="LINCE CEO" className="w-full h-full object-cover" />
               </div>
-              <p className="text-[#D4A843] font-['Space_Grotesk'] font-bold text-lg">{c.signature}</p>
+              <p className="text-[#D4A843] font-display font-bold text-lg">{c.signature}</p>
             </div>
           </FadeIn>
 
           {/* CTA */}
           <FadeIn delay={950}>
             <div className="text-center mt-12">
-              <a href="/registro" className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#00E5FF] to-[#00B8D4] text-black font-['Space_Grotesk'] font-black text-lg rounded-xl hover:shadow-[0_0_30px_rgba(0,229,255,0.4)] hover:scale-105 transition-all duration-300">
+              <a href="/registro" className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#00E5FF] to-[#00B8D4] text-black font-display font-black text-lg rounded-xl hover:shadow-[0_0_30px_rgba(0,229,255,0.4)] hover:scale-105 transition-all duration-300">
                 🔥 {c.cta}
               </a>
             </div>
@@ -443,7 +443,7 @@ function GraciasSection() {
                   <img src={LINCE_CEO_IMG} alt="LINCE CEO" className="absolute -bottom-3 -right-3 w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover border-2 border-[#00E5FF]" style={{ animation: 'float 3s ease-in-out infinite alternate' }} />
                 </div>
                 <div className="flex-1 text-center lg:text-left">
-                  <h3 className="font-['Space_Grotesk'] font-bold text-xl sm:text-2xl lg:text-3xl text-white mb-3 sm:mb-4">
+                  <h3 className="font-display font-bold text-xl sm:text-2xl lg:text-3xl text-white mb-3 sm:mb-4">
                     {tData('gracias.tributeTitle') as string} <span className="text-[#58CC02]">{tData('gracias.tributeHighlight') as string}</span>
                   </h3>
                   <p className="text-[#B0B0B0] text-sm sm:text-lg leading-relaxed mb-3 sm:mb-4">
@@ -484,7 +484,7 @@ function GraciasSection() {
                       }`} />
                     )}
                     <div className="text-3xl mb-3">{item.icon}</div>
-                    <h4 className="font-['Space_Grotesk'] font-bold text-white text-lg mb-2 group-hover:text-[#58CC02] transition-colors pr-12">{item.title}</h4>
+                    <h4 className="font-display font-bold text-white text-lg mb-2 group-hover:text-[#58CC02] transition-colors pr-12">{item.title}</h4>
                     <p className="text-[#B0B0B0] text-sm leading-relaxed">{item.desc}</p>
                     {/* Fun progress bar */}
                     <div className="mt-3 w-full h-1 bg-white/5 rounded-full overflow-hidden">
@@ -509,7 +509,7 @@ function GraciasSection() {
                     <img src={DUOLINGO_LOGO} alt="" className="w-8 h-8 rounded-full object-contain bg-[#58CC02]/20 p-1 border border-[#58CC02]/30" />
                     <img src={AVATARS.PEQUELIN} alt="" className="w-8 h-8 rounded-full object-cover border-2 border-[#00E5FF]" />
                   </div>
-                  <span className="font-['Space_Grotesk'] font-bold text-white text-sm sm:text-base">
+                  <span className="font-display font-bold text-white text-sm sm:text-base">
                     {tData('gracias.comparisonTitle') as string || 'Duolingo vs LINCE'}
                   </span>
                 </div>
@@ -525,13 +525,13 @@ function GraciasSection() {
                         <th className="text-center py-3 px-4">
                           <div className="flex items-center justify-center gap-2">
                             <img src={DUOLINGO_LOGO} alt="" className="w-6 h-6 object-contain" />
-                            <span className="text-[#58CC02] font-['Space_Grotesk'] font-bold">{tData('gracias.compDuolingo') as string}</span>
+                            <span className="text-[#58CC02] font-display font-bold">{tData('gracias.compDuolingo') as string}</span>
                           </div>
                         </th>
                         <th className="text-center py-3 px-4">
                           <div className="flex items-center justify-center gap-2">
                             <img src={AVATARS.PEQUELIN} alt="" className="w-6 h-6 rounded-full object-cover" />
-                            <span className="text-[#00E5FF] font-['Space_Grotesk'] font-bold">{tData('gracias.compLince') as string}</span>
+                            <span className="text-[#00E5FF] font-display font-bold">{tData('gracias.compLince') as string}</span>
                           </div>
                         </th>
                       </tr>
@@ -563,7 +563,7 @@ function GraciasSection() {
                       style={{ animation: `float ${4 + Math.random() * 2}s ease-in-out infinite alternate` }} />
                   ))}
                 </div>
-                <p className="text-white text-base sm:text-xl lg:text-2xl font-['Space_Grotesk'] font-medium leading-relaxed mb-4 sm:mb-6">
+                <p className="text-white text-base sm:text-xl lg:text-2xl font-display font-medium leading-relaxed mb-4 sm:mb-6">
                   {tData('gracias.emotionalQuote') as string}
                 </p>
                 <div className="w-16 h-0.5 bg-gradient-to-r from-[#58CC02] to-[#00E5FF] mx-auto mb-4" />
@@ -645,7 +645,7 @@ function AvatarSection() {
                   <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-xl overflow-hidden border border-white/10 mb-3 group-hover:border-[#00E5FF]/40 transition-all">
                     <img src={avatar.img} alt={displayName} className="w-full h-full object-cover group-hover:scale-105 transition-transform" loading="lazy" />
                   </div>
-                  <h4 className="font-['Space_Grotesk'] font-bold text-white text-xs sm:text-sm truncate">{displayName}</h4>
+                  <h4 className="font-display font-bold text-white text-xs sm:text-sm truncate">{displayName}</h4>
                   {char?.realArtist && <p className="text-[#D4A843] text-[10px] truncate mt-0.5">{char.realArtist.split(',')[0]}</p>}
                   <p className="text-[#B0B0B0] text-[10px] sm:text-xs mt-1 truncate">{role}</p>
                   <p className="text-white/30 text-[10px] mt-1">{avatar.region}</p>
@@ -665,7 +665,7 @@ function AvatarSection() {
               title="Conoce a la Familia LINCE IA — Aprende IA con avatares únicos"
               imageUrl={Object.values(AVATAR_FRONTAL)[0]}
             />
-            <a href="/personajes" className="inline-flex items-center gap-2 px-6 py-3 bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-xl text-[#00E5FF] font-['Space_Grotesk'] font-bold hover:bg-[#00E5FF]/20 transition-all">
+            <a href="/personajes" className="inline-flex items-center gap-2 px-6 py-3 bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-xl text-[#00E5FF] font-display font-bold hover:bg-[#00E5FF]/20 transition-all">
               🎭 {tl(lang, { es: 'Ver Todos los Personajes', en: 'View All Characters', zh: '查看所有角色', 'pt-BR': 'Ver Todos os Personagens', 'pt-PT': 'Ver Todos os Personagens' })}
             </a>
           </div>
@@ -728,7 +728,7 @@ function FamiliaSection() {
               <div className="p-6 sm:p-8 bg-white/[0.02] border border-white/[0.06] rounded-2xl">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-3xl">{group.flag}</span>
-                  <h3 className="font-['Space_Grotesk'] font-bold text-xl sm:text-2xl text-white">{group.title}</h3>
+                  <h3 className="font-display font-bold text-xl sm:text-2xl text-white">{group.title}</h3>
                 </div>
                 <p className="text-[#B0B0B0] text-sm mb-6 max-w-3xl">{group.description}</p>
                 {/* Family photo: all members together — CLICKABLE */}
@@ -754,7 +754,7 @@ function FamiliaSection() {
                   })}
                 </div>
                 <div className="mt-4 flex items-center justify-center gap-4">
-                  <span className="text-sm font-['Space_Grotesk'] font-medium" style={{ color: group.color }}>
+                  <span className="text-sm font-display font-medium" style={{ color: group.color }}>
                     {group.members.length} {tl(lang, { es: 'personajes', en: 'characters', zh: '个角色', 'pt-BR': 'personajes', 'pt-PT': 'personajes' })}
                   </span>
                   <SocialShareBar
@@ -770,7 +770,7 @@ function FamiliaSection() {
         {/* Coming soon */}
         <FadeIn delay={300}>
           <div className="mt-8 p-6 bg-[#D4A843]/5 border border-[#D4A843]/20 rounded-2xl text-center">
-            <h3 className="font-['Space_Grotesk'] font-bold text-lg text-[#D4A843] mb-2">
+            <h3 className="font-display font-bold text-lg text-[#D4A843] mb-2">
               {tl(lang, { es: 'Más Países Próximamente', en: 'More Countries Coming Soon', zh: '更多国家即将推出', 'pt-BR': 'Más Países Próximamente', 'pt-PT': 'Más Países Próximamente' })}
             </h3>
             <p className="text-[#B0B0B0] text-sm">
@@ -931,8 +931,8 @@ function GameSectionsPreview() {
             <FadeIn key={i} delay={i * 80}>
               <a href={s.href} className={`block p-6 sm:p-8 bg-gradient-to-br ${s.gradient} border-2 ${s.border} rounded-2xl transition-all duration-300 hover:scale-[1.02] group min-h-[200px]`}>
                 <div className="text-5xl mb-5">{s.icon}</div>
-                <h3 className="font-['Space_Grotesk'] font-bold text-2xl text-white group-hover:brightness-125 mb-2" style={{ color: s.color }}>{s.title}</h3>
-                {('subtitle' in s && (s as any).subtitle) ? <span className="block text-sm font-medium text-white/60 mb-4 font-['Space_Grotesk'] uppercase tracking-wider">{(s as any).subtitle}</span> : <div className="mb-4" />}
+                <h3 className="font-display font-bold text-2xl text-white group-hover:brightness-125 mb-2" style={{ color: s.color }}>{s.title}</h3>
+                {('subtitle' in s && (s as any).subtitle) ? <span className="block text-sm font-medium text-white/60 mb-4 font-display uppercase tracking-wider">{(s as any).subtitle}</span> : <div className="mb-4" />}
                 <p className="text-white/70 text-base leading-relaxed mb-5">{s.desc}</p>
                 <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-base font-bold transition-all" style={{ color: s.color, backgroundColor: s.color + '15' }}>
                   <span>{tl(lang, { es: 'Entrar', en: 'Enter', zh: '进入', 'pt-BR': 'Entrar', 'pt-PT': 'Entrar' })}</span>
@@ -1028,7 +1028,7 @@ export default function Home() {
       <div className="mt-12 mb-6">
         <div className="container">
           <FadeIn>
-            <h2 className="font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl text-white/70 mb-3">
+            <h2 className="font-display font-bold text-2xl sm:text-3xl text-white/70 mb-3">
               {tl(lang, { es: 'Conoce Más Sobre LINCE', en: 'Learn More About LINCE', zh: '了解更多关于LINCE', 'pt-BR': 'Conoce Más Sobre LINCE', 'pt-PT': 'Conoce Más Sobre LINCE' })}
             </h2>
             <p className="text-white/50 text-base sm:text-lg">

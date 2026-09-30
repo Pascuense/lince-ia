@@ -216,7 +216,7 @@ export function FirstUseTutorial({ page, onComplete }: FirstUseTutorialProps) {
           </div>
 
           {/* Step content */}
-          <h3 className="font-['Space_Grotesk'] font-black text-xl sm:text-2xl text-white mb-3">
+          <h3 className="font-display font-black text-xl sm:text-2xl text-white mb-3">
             {step.title}
           </h3>
           <p className="text-white/70 text-base sm:text-lg leading-relaxed mb-6">

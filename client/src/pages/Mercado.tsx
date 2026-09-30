@@ -359,7 +359,7 @@ export default function Mercado() {
           <div className="text-center mb-10">
             <div className="inline-flex items-center gap-3 mb-4">
               <ShoppingBag className="w-8 h-8 text-[#00E5FF]" />
-              <h1 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl text-white">
+              <h1 className="font-display font-bold text-3xl sm:text-4xl text-white">
                 {t("title")}
               </h1>
             </div>
@@ -370,7 +370,7 @@ export default function Mercado() {
               <span className="text-2xl">🪙</span>
               <div className="text-left">
                 <span className="text-amber-400/70 text-xs font-medium block">{t("balance")}</span>
-                <span className="font-['Space_Grotesk'] font-bold text-2xl text-amber-400">
+                <span className="font-display font-bold text-2xl text-amber-400">
                   {state.linceCoins.toLocaleString()}
                 </span>
               </div>
@@ -430,7 +430,7 @@ export default function Mercado() {
                     <div className="flex items-start gap-4 mb-4">
                       <div className="text-4xl flex-shrink-0">{item.icon}</div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-['Space_Grotesk'] font-bold text-lg text-white truncate">
+                        <h3 className="font-display font-bold text-lg text-white truncate">
                           {item.name[l] || item.name.es}
                         </h3>
                         <p className="text-[#B0B0B0] text-sm leading-relaxed mt-1">
@@ -454,7 +454,7 @@ export default function Mercado() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5">
                         <span className="text-lg">🪙</span>
-                        <span className="font-['Space_Grotesk'] font-bold text-xl text-amber-400">
+                        <span className="font-display font-bold text-xl text-amber-400">
                           {item.price}
                         </span>
                       </div>
@@ -484,7 +484,7 @@ export default function Mercado() {
 
           {/* How to earn more */}
           <div className="mt-12 p-6 bg-gradient-to-r from-cyan-500/5 to-purple-500/5 border border-white/10 rounded-2xl">
-            <h3 className="font-['Space_Grotesk'] font-bold text-lg text-white mb-4 flex items-center gap-2">
+            <h3 className="font-display font-bold text-lg text-white mb-4 flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-[#00E5FF]" />
               {t("earnMore")}
             </h3>
@@ -505,7 +505,7 @@ export default function Mercado() {
         {confirmItem && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" onClick={() => setConfirmItem(null)}>
             <div className="bg-[#1A1A2E] border border-white/10 rounded-2xl p-6 max-w-sm w-full" onClick={e => e.stopPropagation()}>
-              <h3 className="font-['Space_Grotesk'] font-bold text-xl text-white mb-2">{t("confirmTitle")}</h3>
+              <h3 className="font-display font-bold text-xl text-white mb-2">{t("confirmTitle")}</h3>
               <p className="text-[#B0B0B0] mb-4">
                 {t("confirmMsg")} <strong className="text-white">{confirmItem.name[l] || confirmItem.name.es}</strong> {t("confirmPrice")}{" "}
                 <strong className="text-amber-400">🪙 {confirmItem.price}</strong>?

@@ -93,7 +93,7 @@ function PageLoader() {
       <div className="text-center">
         <div className="inline-flex items-center gap-1 mb-4">
           
-          <span className="font-['Space_Grotesk'] font-bold text-2xl text-[#00E5FF]">LINCE</span>
+          <span className="font-display font-bold text-2xl text-[#00E5FF]">LINCE</span>
         </div>
         <div className="flex items-center justify-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-[#00E5FF] animate-bounce" style={{ animationDelay: "0ms" }} />

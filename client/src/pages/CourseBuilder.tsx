@@ -506,7 +506,7 @@ export default function CourseBuilder() {
         <div className="container max-w-4xl">
           {/* Title */}
           <div className="mb-8">
-            <h1 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-4xl text-white mb-2">{t.pageTitle}</h1>
+            <h1 className="font-display font-bold text-3xl sm:text-4xl text-white mb-2">{t.pageTitle}</h1>
             <p className="text-[#B0B0B0] text-sm">{t.pageSubtitle}</p>
           </div>
 
@@ -578,7 +578,7 @@ export default function CourseBuilder() {
 
           {/* Modules */}
           <div className="mb-6">
-            <h2 className="font-['Space_Grotesk'] font-bold text-xl text-white mb-4 flex items-center gap-2">
+            <h2 className="font-display font-bold text-xl text-white mb-4 flex items-center gap-2">
               <Layers className="w-5 h-5 text-[#00E5FF]" /> {t.modules}
             </h2>
 
@@ -708,7 +708,7 @@ export default function CourseBuilder() {
 
           {/* Presencial Courses Info */}
           <div className="mt-8 p-5 rounded-2xl bg-gradient-to-br from-[#D4A843]/10 to-[#D4A843]/5 border border-[#D4A843]/30">
-            <h3 className="font-['Space_Grotesk'] font-bold text-lg text-[#D4A843] mb-2 flex items-center gap-2">
+            <h3 className="font-display font-bold text-lg text-[#D4A843] mb-2 flex items-center gap-2">
               <Target className="w-5 h-5" /> {t.presencialTitle}
             </h3>
             <p className="text-[#B0B0B0] text-sm mb-4 leading-relaxed">{t.presencialDesc}</p>
@@ -731,11 +731,11 @@ export default function CourseBuilder() {
         <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowPreview(false)}>
           <div className="bg-[#111] rounded-2xl border border-white/[0.1] max-w-2xl w-full max-h-[80vh] overflow-y-auto p-6" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="font-['Space_Grotesk'] font-bold text-xl text-white">{t.coursePreview}</h2>
+              <h2 className="font-display font-bold text-xl text-white">{t.coursePreview}</h2>
               <button onClick={() => setShowPreview(false)} className="text-[#B0B0B0] hover:text-white text-sm">{t.close}</button>
             </div>
 
-            <h3 className="font-['Space_Grotesk'] font-bold text-2xl text-white mb-2">{course.title || "—"}</h3>
+            <h3 className="font-display font-bold text-2xl text-white mb-2">{course.title || "—"}</h3>
             <p className="text-[#B0B0B0] text-sm mb-4">{course.description}</p>
 
             <div className="flex gap-2 mb-6 flex-wrap">

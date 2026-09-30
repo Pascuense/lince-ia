@@ -369,7 +369,7 @@ export function EngagementTimer({ lang = "es" }: { lang?: Lang }) {
             {!showPromptGenerator && !generatedPrompt && (
               <div className="text-center mb-8">
                 <div className="text-6xl mb-4">🎉</div>
-                <h2 className="font-['Space_Grotesk'] font-black text-2xl sm:text-3xl text-white mb-3">
+                <h2 className="font-display font-black text-2xl sm:text-3xl text-white mb-3">
                   {t.thankTitle}
                 </h2>
                 <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-3">
@@ -382,7 +382,7 @@ export function EngagementTimer({ lang = "es" }: { lang?: Lang }) {
                 {/* Gift CTA */}
                 <div className="bg-gradient-to-br from-[#00E5FF]/10 to-[#FF6B35]/10 border border-[#00E5FF]/30 rounded-2xl p-6 mb-6">
                   <div className="text-4xl mb-3">🎁</div>
-                  <h3 className="font-['Space_Grotesk'] font-black text-xl text-[#00E5FF] mb-2">
+                  <h3 className="font-display font-black text-xl text-[#00E5FF] mb-2">
                     {t.giftTitle}
                   </h3>
                   <p className="text-gray-300 text-sm leading-relaxed mb-4">
@@ -421,7 +421,7 @@ export function EngagementTimer({ lang = "es" }: { lang?: Lang }) {
                 </button>
 
                 <div className="text-center mb-4">
-                  <h2 className="font-['Space_Grotesk'] font-black text-xl sm:text-2xl text-[#00E5FF] mb-2">
+                  <h2 className="font-display font-black text-xl sm:text-2xl text-[#00E5FF] mb-2">
                     {t.step1}
                   </h2>
                   <p className="text-gray-400 text-sm">{t.giftText}</p>
@@ -584,7 +584,7 @@ export function EngagementTimer({ lang = "es" }: { lang?: Lang }) {
 
                 <div className="text-center mb-4">
                   <div className="text-5xl mb-3">🐱</div>
-                  <h2 className="font-['Space_Grotesk'] font-black text-xl sm:text-2xl text-[#00E5FF] mb-2">
+                  <h2 className="font-display font-black text-xl sm:text-2xl text-[#00E5FF] mb-2">
                     {t.yourPrompt}
                   </h2>
                   <p className="text-gray-300 text-sm">{t.promptReady}</p>
@@ -682,7 +682,7 @@ export function EngagementTimer({ lang = "es" }: { lang?: Lang }) {
         onClick={() => setMinimized(false)}
         className="fixed top-20 right-4 z-[100] px-3 py-1.5 rounded-full bg-[#0A0A0A]/90 border border-[#FF6B35]/30 backdrop-blur-md flex items-center gap-2 hover:border-[#FF6B35]/60 transition-all shadow-lg"
       >
-        <span className="text-[#FF6B35] font-['Space_Grotesk'] font-bold text-xs">
+        <span className="text-[#FF6B35] font-display font-bold text-xs">
           {String(mins).padStart(2, "0")}:{String(secs).padStart(2, "0")}
         </span>
         <div className="w-8 h-1 rounded-full bg-white/10 overflow-hidden">
@@ -713,7 +713,7 @@ export function EngagementTimer({ lang = "es" }: { lang?: Lang }) {
               }}
             />
           </div>
-          <span className="font-['Space_Grotesk'] font-bold text-sm text-[#FF6B35] tabular-nums whitespace-nowrap">
+          <span className="font-display font-bold text-sm text-[#FF6B35] tabular-nums whitespace-nowrap">
             {String(mins).padStart(2, "0")}:{String(secs).padStart(2, "0")}
           </span>
         </div>

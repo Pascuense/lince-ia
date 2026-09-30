@@ -289,7 +289,7 @@ export function LincelinFAB() {
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <span className="w-7 h-7 rounded-full bg-[#00FF88] flex items-center justify-center text-black font-bold text-xs">?</span>
-              <h3 className="font-['Space_Grotesk'] font-bold text-sm text-white">{help.title}</h3>
+              <h3 className="font-display font-bold text-sm text-white">{help.title}</h3>
             </div>
             <button onClick={() => setMode("closed")} className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/60 text-xs">✕</button>
           </div>
@@ -375,7 +375,7 @@ export function LincelinFAB() {
           <div className="relative bg-[#111827] border border-[oklch(0.82_0.15_195)]/40 rounded-2xl px-4 py-3 shadow-[0_0_24px_oklch(0.82_0.15_195/0.15)] max-w-[200px]">
             {/* Speech bubble arrow */}
             <div className="absolute -bottom-2 right-5 w-4 h-4 bg-[#111827] border-r border-b border-[oklch(0.82_0.15_195)]/40 rotate-45" />
-            <p className="font-['Space_Grotesk'] font-bold text-[oklch(0.82_0.15_195)] text-sm leading-tight">
+            <p className="font-display font-bold text-[oklch(0.82_0.15_195)] text-sm leading-tight">
               {(WELCOME_MESSAGES[lang] || WELCOME_MESSAGES.es).greeting}
             </p>
             <p className="text-white/70 text-xs mt-1 leading-snug">

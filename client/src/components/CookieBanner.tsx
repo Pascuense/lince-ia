@@ -88,7 +88,7 @@ export function CookieBanner() {
         {/* Header */}
         <div className="flex items-center gap-3 mb-3">
           <span className="text-2xl">🍪</span>
-          <h3 className="font-['Space_Grotesk'] font-bold text-white text-lg">{txt.title}</h3>
+          <h3 className="font-display font-bold text-white text-lg">{txt.title}</h3>
         </div>
 
         <p className="text-[#B0B0B0] text-sm leading-relaxed mb-4">{txt.body}</p>
@@ -136,22 +136,22 @@ export function CookieBanner() {
         {/* Buttons */}
         <div className="flex flex-wrap gap-2">
           <button onClick={() => accept('all')}
-            className="flex-1 min-w-[120px] px-4 py-2.5 bg-[#00E5FF] text-black font-['Space_Grotesk'] font-bold text-sm rounded-lg hover:brightness-110 transition-all">
+            className="flex-1 min-w-[120px] px-4 py-2.5 bg-[#00E5FF] text-black font-display font-bold text-sm rounded-lg hover:brightness-110 transition-all">
             {txt.acceptAll}
           </button>
           {showSettings ? (
             <button onClick={() => accept('custom')}
-              className="flex-1 min-w-[120px] px-4 py-2.5 bg-[#D4A843] text-black font-['Space_Grotesk'] font-bold text-sm rounded-lg hover:brightness-110 transition-all">
+              className="flex-1 min-w-[120px] px-4 py-2.5 bg-[#D4A843] text-black font-display font-bold text-sm rounded-lg hover:brightness-110 transition-all">
               {txt.save}
             </button>
           ) : (
             <>
               <button onClick={() => accept('essential')}
-                className="flex-1 min-w-[120px] px-4 py-2.5 bg-white/10 text-white font-['Space_Grotesk'] font-medium text-sm rounded-lg hover:bg-white/20 transition-all">
+                className="flex-1 min-w-[120px] px-4 py-2.5 bg-white/10 text-white font-display font-medium text-sm rounded-lg hover:bg-white/20 transition-all">
                 {txt.acceptEssential}
               </button>
               <button onClick={() => setShowSettings(true)}
-                className="px-4 py-2.5 bg-white/5 text-[#B0B0B0] font-['Space_Grotesk'] text-sm rounded-lg hover:bg-white/10 transition-all">
+                className="px-4 py-2.5 bg-white/5 text-[#B0B0B0] font-display text-sm rounded-lg hover:bg-white/10 transition-all">
                 {txt.settings}
               </button>
             </>

@@ -37,7 +37,7 @@ export function ChangeToastProvider() {
     >
       <div className="flex items-center gap-2.5 px-5 py-3 bg-[#0c0c14]/95 backdrop-blur-md border border-[#00E5FF]/30 rounded-xl shadow-[0_0_20px_rgba(0,229,255,0.15)]">
         <span className="text-xl">{toast.icon}</span>
-        <span className="text-white text-sm font-medium font-['Space_Grotesk']">{toast.message}</span>
+        <span className="text-white text-sm font-medium font-display">{toast.message}</span>
       </div>
     </div>
   );

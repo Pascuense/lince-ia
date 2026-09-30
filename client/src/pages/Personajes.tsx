@@ -670,7 +670,7 @@ function CharacterCard({ char, onClick, onChat, displayName, index = 0 }: { char
             </span>
           </div>
           <h3
-            className="font-['Space_Grotesk'] font-bold text-lg leading-tight"
+            className="font-display font-bold text-lg leading-tight"
             style={{ color: char.color }}
           >
             {displayName || char.name}
@@ -745,7 +745,7 @@ function CharacterModal({ char, onClose, onChat, displayName }: { char: Characte
             </div>
 
             <h2
-              className="font-['Space_Grotesk'] font-bold text-3xl mt-2"
+              className="font-display font-bold text-3xl mt-2"
               style={{ color: char.color }}
             >
               {displayName || char.name}
@@ -890,10 +890,10 @@ export default function Personajes() {
           <div className="flex items-center gap-3">
             <a href="/" className="flex items-center gap-1">
               
-              <span className="font-['Space_Grotesk'] font-bold text-base text-[#00E5FF]">LINCE</span>
+              <span className="font-display font-bold text-base text-[#00E5FF]">LINCE</span>
             </a>
             <span className="text-white/20">|</span>
-            <h1 className="font-['Space_Grotesk'] font-semibold text-sm text-white/80">Personajes</h1>
+            <h1 className="font-display font-semibold text-sm text-white/80">Personajes</h1>
           </div>
           <UserNavBadge />
         </div>
@@ -906,7 +906,7 @@ export default function Personajes() {
             <span className="w-2 h-2 rounded-full bg-[#00E5FF] animate-pulse" />
             <span className="text-[#00E5FF] text-xs font-medium">{ALL_CHARS.length} personajes. Todos con chat IA. Toca uno y empieza a aprender.</span>
           </div>
-          <h2 className="font-['Space_Grotesk'] font-bold text-4xl sm:text-6xl text-white mb-4">
+          <h2 className="font-display font-bold text-4xl sm:text-6xl text-white mb-4">
             Conoce a la <span className="text-[#00E5FF]">Familia</span>
           </h2>
           <p className="text-white/50 text-lg max-w-2xl mx-auto">
@@ -949,7 +949,7 @@ export default function Personajes() {
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-1 h-8 bg-[#00E5FF] rounded-full" />
                   <div>
-                    <h3 className="font-['Space_Grotesk'] font-bold text-2xl text-white">Familia Original</h3>
+                    <h3 className="font-display font-bold text-2xl text-white">Familia Original</h3>
                     <p className="text-white/40 text-sm">Los 10 personajes fundadores de LINCE</p>
                   </div>
                 </div>
@@ -965,7 +965,7 @@ export default function Personajes() {
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-1 h-8 bg-[#D4A843] rounded-full" />
                   <div>
-                    <h3 className="font-['Space_Grotesk'] font-bold text-2xl text-white">Especialistas</h3>
+                    <h3 className="font-display font-bold text-2xl text-white">Especialistas</h3>
                     <p className="text-white/40 text-sm">Expertos en ética, datos, derecho, salud, educación y más</p>
                   </div>
                 </div>
@@ -981,7 +981,7 @@ export default function Personajes() {
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-1 h-8 bg-[#FF6B35] rounded-full" />
                   <div>
-                    <h3 className="font-['Space_Grotesk'] font-bold text-2xl text-white">MUSICALIN</h3>
+                    <h3 className="font-display font-bold text-2xl text-white">MUSICALIN</h3>
                     <p className="text-white/40 text-sm">{URBANO.length} avatares cantantes ficticios — artistas musicales de todo el mundo</p>
                   </div>
                 </div>
@@ -998,7 +998,7 @@ export default function Personajes() {
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-1 h-8 bg-[#DC2626] rounded-full" />
                   <div>
-                    <h3 className="font-['Space_Grotesk'] font-bold text-2xl text-white">Colección Aragonesa</h3>
+                    <h3 className="font-display font-bold text-2xl text-white">Colección Aragonesa</h3>
                     <p className="text-white/40 text-sm">{ARAGONESES.length} personajes con el carácter maño</p>
                   </div>
                 </div>
@@ -1014,7 +1014,7 @@ export default function Personajes() {
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-1 h-8 bg-[#1E40AF] rounded-full" />
                   <div>
-                    <h3 className="font-['Space_Grotesk'] font-bold text-2xl text-white">Zaragoza Histórico</h3>
+                    <h3 className="font-display font-bold text-2xl text-white">Zaragoza Histórico</h3>
                     <p className="text-white/40 text-sm">10 leyendas del Real Zaragoza — de Nayim a David Villa</p>
                   </div>
                 </div>
@@ -1041,21 +1041,21 @@ export default function Personajes() {
         <div className="container">
           <div className="flex flex-wrap justify-center gap-6 sm:gap-12">
             <div className="text-center">
-              <span className="font-['Space_Grotesk'] font-bold text-3xl text-[#00E5FF]">{ALL_CHARS.length}</span>
+              <span className="font-display font-bold text-3xl text-[#00E5FF]">{ALL_CHARS.length}</span>
               <p className="text-white/40 text-xs mt-1">Personajes totales</p>
             </div>
             <div className="text-center">
-              <span className="font-['Space_Grotesk'] font-bold text-3xl text-[#D4A843]">5</span>
+              <span className="font-display font-bold text-3xl text-[#D4A843]">5</span>
               <p className="text-white/40 text-xs mt-1">Colecciones</p>
             </div>
             <div className="text-center">
-              <span className="font-['Space_Grotesk'] font-bold text-3xl text-[#EC4899]">
+              <span className="font-display font-bold text-3xl text-[#EC4899]">
                 {ALL_CHARS.filter(c => c.gender === "F").length}
               </span>
               <p className="text-white/40 text-xs mt-1">Personajes femeninos</p>
             </div>
             <div className="text-center">
-              <span className="font-['Space_Grotesk'] font-bold text-3xl text-[#3B82F6]">
+              <span className="font-display font-bold text-3xl text-[#3B82F6]">
                 {ALL_CHARS.filter(c => c.gender === "M").length}
               </span>
               <p className="text-white/40 text-xs mt-1">Personajes masculinos</p>

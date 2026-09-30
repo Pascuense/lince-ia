@@ -290,7 +290,7 @@ export default function MundoArtista() {
       <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center p-4">
         <div className="text-center max-w-md">
           <div className="text-6xl mb-4">🔍</div>
-          <h1 className="font-['Space_Grotesk'] font-bold text-2xl text-white mb-3">{t('notFound')}</h1>
+          <h1 className="font-display font-bold text-2xl text-white mb-3">{t('notFound')}</h1>
           <p className="text-[#B0B0B0] mb-6">{t('notFoundDesc')}</p>
           <a href="/" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#00E5FF]/20 text-[#00E5FF] font-medium hover:bg-[#00E5FF]/30 transition-colors">
             <ArrowLeft size={18} /> {t('back')}
@@ -330,7 +330,7 @@ export default function MundoArtista() {
                 <img src={avatarImg} alt={artist.name} className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 object-cover" style={{ borderColor: artist.color }} />
               </div>
               <div className="text-center sm:text-left">
-                <h1 className="font-['Space_Grotesk'] font-bold text-3xl sm:text-5xl mb-2" style={{ color: artist.color }}>{artist.name}</h1>
+                <h1 className="font-display font-bold text-3xl sm:text-5xl mb-2" style={{ color: artist.color }}>{artist.name}</h1>
                 <p className="text-[#B0B0B0] text-sm sm:text-base mb-1">{artist.realName}</p>
                 <p className="font-medium mb-4" style={{ color: artist.accentColor }}>{tArtist(artist.role)}</p>
 
@@ -357,7 +357,7 @@ export default function MundoArtista() {
         <div className="container pb-16 space-y-10">
           {/* Bio */}
           <section>
-            <h2 className="font-['Space_Grotesk'] font-bold text-xl mb-4 flex items-center gap-2">
+            <h2 className="font-display font-bold text-xl mb-4 flex items-center gap-2">
               <Mic2 size={20} style={{ color: artist.color }} /> {t('about')}
             </h2>
             <p className="text-[#B0B0B0] leading-relaxed max-w-3xl">{tArtist(artist.bio)}</p>
@@ -365,7 +365,7 @@ export default function MundoArtista() {
 
           {/* Social Links */}
           <section>
-            <h2 className="font-['Space_Grotesk'] font-bold text-xl mb-4 flex items-center gap-2">
+            <h2 className="font-display font-bold text-xl mb-4 flex items-center gap-2">
               <Music size={20} style={{ color: artist.color }} /> {t('social')}
             </h2>
             <div className="flex flex-wrap gap-3">
@@ -382,7 +382,7 @@ export default function MundoArtista() {
 
           {/* Featured Content */}
           <section>
-            <h2 className="font-['Space_Grotesk'] font-bold text-xl mb-4 flex items-center gap-2">
+            <h2 className="font-display font-bold text-xl mb-4 flex items-center gap-2">
               <Sparkles size={20} style={{ color: artist.color }} /> {t('content')}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -391,7 +391,7 @@ export default function MundoArtista() {
                   <div className="absolute top-3 right-3 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider" style={{ background: `${artist.color}20`, color: artist.color }}>
                     {t('comingSoon')}
                   </div>
-                  <h3 className="font-['Space_Grotesk'] font-bold text-white mb-2 pr-20">{tArtist(item.title)}</h3>
+                  <h3 className="font-display font-bold text-white mb-2 pr-20">{tArtist(item.title)}</h3>
                   <p className="text-[#B0B0B0] text-sm leading-relaxed">{tArtist(item.desc)}</p>
                   <p className="text-[#B0B0B0]/50 text-xs mt-3 italic">{t('comingSoonDesc')}</p>
                 </div>
@@ -401,7 +401,7 @@ export default function MundoArtista() {
 
           {/* AI Toolkit */}
           <section>
-            <h2 className="font-['Space_Grotesk'] font-bold text-xl mb-2 flex items-center gap-2">
+            <h2 className="font-display font-bold text-xl mb-2 flex items-center gap-2">
               <Sparkles size={20} style={{ color: artist.color }} /> {t('aiToolkit')}
             </h2>
             <p className="text-[#B0B0B0] text-sm mb-4">{t('aiToolkitDesc')}</p>
@@ -428,7 +428,7 @@ export default function MundoArtista() {
           <section className="border-2 rounded-2xl p-6 sm:p-8" style={{ borderColor: `${artist.color}30`, background: `${artist.color}05` }}>
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
               <div>
-                <h2 className="font-['Space_Grotesk'] font-bold text-xl text-white">{t('plan')}</h2>
+                <h2 className="font-display font-bold text-xl text-white">{t('plan')}</h2>
                 <p className="text-[#B0B0B0] text-sm mt-1">{t('planDesc')}</p>
               </div>
               <div className="px-5 py-2 rounded-full font-black text-lg" style={{ background: artist.color, color: '#000' }}>
@@ -475,7 +475,7 @@ function CodeInputPage({ t, lang }: { t: (key: string) => string; lang: string }
     <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center p-4">
       <div className="max-w-md w-full text-center">
         <div className="text-6xl mb-6">🎤</div>
-        <h1 className="font-['Space_Grotesk'] font-bold text-2xl sm:text-3xl text-white mb-3">{t('enterCode')}</h1>
+        <h1 className="font-display font-bold text-2xl sm:text-3xl text-white mb-3">{t('enterCode')}</h1>
         <p className="text-[#B0B0B0] mb-8">{t('enterCodeDesc')}</p>
 
         <form onSubmit={handleSubmit} className="flex gap-2">
@@ -485,7 +485,7 @@ function CodeInputPage({ t, lang }: { t: (key: string) => string; lang: string }
             value={inputCode}
             onChange={(e) => setInputCode(e.target.value.toUpperCase())}
             placeholder="YOUNGBRIEL"
-            className="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/20 text-white font-['Space_Grotesk'] font-bold text-center text-lg tracking-wider placeholder:text-white/20 focus:outline-none focus:border-[#00E5FF]/50"
+            className="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/20 text-white font-display font-bold text-center text-lg tracking-wider placeholder:text-white/20 focus:outline-none focus:border-[#00E5FF]/50"
           />
           <button type="submit" className="px-6 py-3 rounded-xl bg-[#00E5FF] text-black font-bold hover:brightness-110 transition-all">
             {t('go')}
