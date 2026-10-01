@@ -8,7 +8,7 @@ import sharp from "sharp";
 
 // A "/assets/..." path is read from the static public folder; an absolute URL is fetched.
 const LINCE_LOGO =
-  "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/hbjWdClTNpqzvCwu.png";
+  "/assets/hbjWdClTNpqzvCwu.png";
 
 let cachedLogoBuffer: Buffer | null = null;
 
