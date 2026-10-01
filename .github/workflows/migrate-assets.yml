@@ -7,6 +7,7 @@ on:
       - claude/check-element-visibility-ea809
     paths:
       - .github/workflows/migrate-assets.yml
+      - scripts/migrate-manus-assets.mjs
 
 jobs:
   migrate:
@@ -28,7 +29,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A client/public/assets client/src shared client/index.html client/public/manifest.json
+          git add -A client/public/assets client/src shared server client/index.html client/public/manifest.json client/public/sw.js
           if git diff --cached --quiet; then
             echo "Nothing to commit"
             exit 0

@@ -7,7 +7,7 @@ import path from "node:path";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const OUT_DIR = path.join(ROOT, "client", "public", "assets");
-const SCAN_DIRS = ["client/src", "shared", "client/public"];
+const SCAN_DIRS = ["client/src", "shared", "client/public", "server"];
 const SCAN_FILES = ["client/index.html"];
 const EXT = /\.(tsx?|jsx?|css|html|json|webmanifest)$/;
 const URL_RE = /https:\/\/files\.manuscdn\.com\/[^\s"'`)<>]+/g;

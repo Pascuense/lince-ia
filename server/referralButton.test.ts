@@ -64,7 +64,7 @@ describe("Referral Button Feature", () => {
       for (const key of urbanKeys) {
         const img = getAvatarImage(key);
         expect(img, `Urban avatar ${key} should have an image`).toBeTruthy();
-        expect(img).toContain("manuscdn.com");
+        expect(img).toMatch(/^\/(assets|avatars)\//);
       }
     });
 
@@ -73,7 +73,7 @@ describe("Referral Button Feature", () => {
       for (const key of zaragozaKeys) {
         const img = getAvatarImage(key);
         expect(img, `Zaragoza avatar ${key} should have an image`).toBeTruthy();
-        expect(img).toContain("manuscdn.com");
+        expect(img).toMatch(/^\/(assets|avatars)\//);
       }
     });
 

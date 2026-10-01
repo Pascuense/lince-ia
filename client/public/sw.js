@@ -22,8 +22,8 @@ const APP_SHELL = [
 
 // CDN assets to precache (icons)
 const CDN_ASSETS = [
-  'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/ErVXkIKAFvfNHOyU.png',
-  'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/EWnZpbxxzKXqadGf.png',
+  '/assets/ErVXkIKAFvfNHOyU.png',
+  '/assets/EWnZpbxxzKXqadGf.png',
 ];
 
 // ─── IndexedDB Helper (for SW context) ───
@@ -166,7 +166,7 @@ async function cacheFirst(request) {
   try {
     const response = await fetch(request);
     if (response.ok) {
-      const cacheName = request.url.includes('manuscdn.com') ? CDN_CACHE : STATIC_CACHE;
+      const cacheName = /\/(assets|avatars)\//.test(request.url) ? CDN_CACHE : STATIC_CACHE;
       const cache = await caches.open(cacheName);
       cache.put(request, response.clone());
     }
@@ -203,8 +203,8 @@ self.addEventListener('fetch', (event) => {
   // API requests: Network only
   if (url.pathname.startsWith('/api/')) return;
 
-  // CDN images: Cache First
-  if (url.hostname.includes('manuscdn.com') || url.hostname.includes('manus.space')) {
+  // Self-hosted images: Cache First
+  if (url.origin === self.location.origin && /^\/(assets|avatars)\//.test(url.pathname)) {
     event.respondWith(cacheFirst(request));
     return;
   }
@@ -383,8 +383,8 @@ self.addEventListener('message', (event) => {
     const { title, body, url, tag } = event.data.payload || {};
     self.registration.showNotification(title || 'LINCE', {
       body: body || '',
-      icon: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/ErVXkIKAFvfNHOyU.png',
-      badge: 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/xnFQpNzJeJNRUUQe.png',
+      icon: '/assets/ErVXkIKAFvfNHOyU.png',
+      badge: '/assets/xnFQpNzJeJNRUUQe.png',
       vibrate: [100, 50, 100],
       tag: tag || 'lince-local',
       data: { url: url || '/' },
@@ -410,8 +410,8 @@ self.addEventListener('push', (event) => {
 
   const options = {
     body: data.body || 'Tienes una nueva notificación de LINCE',
-    icon: data.icon || 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/ErVXkIKAFvfNHOyU.png',
-    badge: data.badge || 'https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/xnFQpNzJeJNRUUQe.png',
+    icon: data.icon || '/assets/ErVXkIKAFvfNHOyU.png',
+    badge: data.badge || '/assets/xnFQpNzJeJNRUUQe.png',
     vibrate: [100, 50, 100],
     tag: data.tag || 'lince-push',
     renotify: !!data.tag, // Re-alert if same tag

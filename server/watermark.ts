@@ -2,20 +2,40 @@
  * Watermark utility for LINCE IA
  * Adds a branded watermark (logo + text) to generated images
  */
+import fs from "node:fs/promises";
+import path from "node:path";
 import sharp from "sharp";
 
-const LINCE_LOGO_URL =
+// A "/assets/..." path is read from the static public folder; an absolute URL is fetched.
+const LINCE_LOGO =
   "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/hbjWdClTNpqzvCwu.png";
 
-// Cache the logo buffer to avoid re-downloading
 let cachedLogoBuffer: Buffer | null = null;
 
-async function getLogoBuffer(): Promise<Buffer> {
+async function getLogoBuffer(): Promise<Buffer | null> {
   if (cachedLogoBuffer) return cachedLogoBuffer;
-  const res = await fetch(LINCE_LOGO_URL);
-  if (!res.ok) throw new Error("Failed to fetch LINCE logo for watermark");
-  cachedLogoBuffer = Buffer.from(await res.arrayBuffer());
-  return cachedLogoBuffer;
+  try {
+    if (LINCE_LOGO.startsWith("/")) {
+      const rel = LINCE_LOGO.slice(1);
+      const candidates = [
+        path.resolve(import.meta.dirname, "public", rel),
+        path.resolve(import.meta.dirname, "..", "client", "public", rel),
+      ];
+      for (const file of candidates) {
+        try {
+          cachedLogoBuffer = await fs.readFile(file);
+          return cachedLogoBuffer;
+        } catch {}
+      }
+      return null;
+    }
+    const res = await fetch(LINCE_LOGO);
+    if (!res.ok) return null;
+    cachedLogoBuffer = Buffer.from(await res.arrayBuffer());
+    return cachedLogoBuffer;
+  } catch {
+    return null;
+  }
 }
 
 /**
@@ -58,22 +78,24 @@ export async function addWatermark(imageBuffer: Buffer): Promise<Buffer> {
   const padding = Math.max(8, Math.round(imgWidth * 0.012));
   const stripHeight = logoSize + padding * 2;
 
-  // Prepare the logo (circular, resized)
+  // Prepare the logo (circular, resized); the watermark degrades to text-only if it is unavailable
   const logoBuffer = await getLogoBuffer();
-  const resizedLogo = await sharp(logoBuffer)
-    .resize(logoSize, logoSize, { fit: "cover" })
-    .composite([
-      {
-        input: Buffer.from(
-          `<svg width="${logoSize}" height="${logoSize}">
-            <circle cx="${logoSize / 2}" cy="${logoSize / 2}" r="${logoSize / 2}" fill="white"/>
-          </svg>`
-        ),
-        blend: "dest-in",
-      },
-    ])
-    .png()
-    .toBuffer();
+  const resizedLogo = logoBuffer
+    ? await sharp(logoBuffer)
+        .resize(logoSize, logoSize, { fit: "cover" })
+        .composite([
+          {
+            input: Buffer.from(
+              `<svg width="${logoSize}" height="${logoSize}">
+                <circle cx="${logoSize / 2}" cy="${logoSize / 2}" r="${logoSize / 2}" fill="white"/>
+              </svg>`
+            ),
+            blend: "dest-in",
+          },
+        ])
+        .png()
+        .toBuffer()
+    : null;
 
   // Create the text SVG
   const textSvg = createTextSvg(imgWidth, fontSize);
@@ -95,11 +117,15 @@ export async function addWatermark(imageBuffer: Buffer): Promise<Buffer> {
         left: 0,
       },
       // Logo in bottom-right
-      {
-        input: resizedLogo,
-        top: imgHeight - stripHeight + padding,
-        left: imgWidth - logoSize - padding - Math.round(fontSize * 4.5) - padding,
-      },
+      ...(resizedLogo
+        ? [
+            {
+              input: resizedLogo,
+              top: imgHeight - stripHeight + padding,
+              left: imgWidth - logoSize - padding - Math.round(fontSize * 4.5) - padding,
+            },
+          ]
+        : []),
       // "LINCE IA" text
       {
         input: textSvg,

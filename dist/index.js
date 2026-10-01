@@ -1210,15 +1210,36 @@ async function storagePut(relKey, data, contentType = "application/octet-stream"
 }
 
 // server/watermark.ts
+import fs from "node:fs/promises";
+import path from "node:path";
 import sharp from "sharp";
-var LINCE_LOGO_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/hbjWdClTNpqzvCwu.png";
+var LINCE_LOGO = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/hbjWdClTNpqzvCwu.png";
 var cachedLogoBuffer = null;
 async function getLogoBuffer() {
   if (cachedLogoBuffer) return cachedLogoBuffer;
-  const res = await fetch(LINCE_LOGO_URL);
-  if (!res.ok) throw new Error("Failed to fetch LINCE logo for watermark");
-  cachedLogoBuffer = Buffer.from(await res.arrayBuffer());
-  return cachedLogoBuffer;
+  try {
+    if (LINCE_LOGO.startsWith("/")) {
+      const rel = LINCE_LOGO.slice(1);
+      const candidates = [
+        path.resolve(import.meta.dirname, "public", rel),
+        path.resolve(import.meta.dirname, "..", "client", "public", rel)
+      ];
+      for (const file of candidates) {
+        try {
+          cachedLogoBuffer = await fs.readFile(file);
+          return cachedLogoBuffer;
+        } catch {
+        }
+      }
+      return null;
+    }
+    const res = await fetch(LINCE_LOGO);
+    if (!res.ok) return null;
+    cachedLogoBuffer = Buffer.from(await res.arrayBuffer());
+    return cachedLogoBuffer;
+  } catch {
+    return null;
+  }
 }
 function createTextSvg(width, fontSize) {
   const svg = `
@@ -1249,16 +1270,16 @@ async function addWatermark(imageBuffer) {
   const padding = Math.max(8, Math.round(imgWidth * 0.012));
   const stripHeight = logoSize + padding * 2;
   const logoBuffer = await getLogoBuffer();
-  const resizedLogo = await sharp(logoBuffer).resize(logoSize, logoSize, { fit: "cover" }).composite([
+  const resizedLogo = logoBuffer ? await sharp(logoBuffer).resize(logoSize, logoSize, { fit: "cover" }).composite([
     {
       input: Buffer.from(
         `<svg width="${logoSize}" height="${logoSize}">
-            <circle cx="${logoSize / 2}" cy="${logoSize / 2}" r="${logoSize / 2}" fill="white"/>
-          </svg>`
+                <circle cx="${logoSize / 2}" cy="${logoSize / 2}" r="${logoSize / 2}" fill="white"/>
+              </svg>`
       ),
       blend: "dest-in"
     }
-  ]).png().toBuffer();
+  ]).png().toBuffer() : null;
   const textSvg = createTextSvg(imgWidth, fontSize);
   const stripSvg = Buffer.from(
     `<svg width="${imgWidth}" height="${stripHeight}">
@@ -1273,11 +1294,13 @@ async function addWatermark(imageBuffer) {
       left: 0
     },
     // Logo in bottom-right
-    {
-      input: resizedLogo,
-      top: imgHeight - stripHeight + padding,
-      left: imgWidth - logoSize - padding - Math.round(fontSize * 4.5) - padding
-    },
+    ...resizedLogo ? [
+      {
+        input: resizedLogo,
+        top: imgHeight - stripHeight + padding,
+        left: imgWidth - logoSize - padding - Math.round(fontSize * 4.5) - padding
+      }
+    ] : [],
     // "LINCE IA" text
     {
       input: textSvg,
@@ -9394,18 +9417,18 @@ async function createContext(opts) {
 
 // server/_core/static.ts
 import express from "express";
-import fs from "fs";
-import path from "path";
+import fs2 from "fs";
+import path2 from "path";
 function serveStatic(app) {
-  const distPath = process.env.NODE_ENV === "development" ? path.resolve(import.meta.dirname, "../..", "dist", "public") : path.resolve(import.meta.dirname, "public");
-  if (!fs.existsSync(distPath)) {
+  const distPath = process.env.NODE_ENV === "development" ? path2.resolve(import.meta.dirname, "../..", "dist", "public") : path2.resolve(import.meta.dirname, "public");
+  if (!fs2.existsSync(distPath)) {
     console.error(
       `Could not find the build directory: ${distPath}, make sure to build the client first`
     );
   }
   app.use(express.static(distPath, { dotfiles: "allow" }));
   app.use("*", (_req, res) => {
-    res.sendFile(path.resolve(distPath, "index.html"));
+    res.sendFile(path2.resolve(distPath, "index.html"));
   });
 }
 
@@ -9491,8 +9514,7 @@ async function startServer() {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
           styleSrc: ["'self'", "'unsafe-inline'"],
-          // files.manuscdn.com: legacy asset host, remove once migrate-manus-assets has run
-          imgSrc: ["'self'", "data:", "blob:", "https://*.blob.core.windows.net", "https://files.manuscdn.com"],
+          imgSrc: ["'self'", "data:", "blob:", "https://*.blob.core.windows.net"],
           fontSrc: ["'self'", "data:"],
           connectSrc: ["'self'", "https://*.blob.core.windows.net", "https://*.openai.azure.com"],
           frameSrc: ["'none'"],

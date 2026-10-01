@@ -64,8 +64,8 @@ describe('PWA Configuration', () => {
     const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
     
     for (const icon of manifest.icons) {
-      // Icons should be CDN URLs or local /icons/ paths
-      expect(icon.src).toMatch(/^(https:\/\/files\.manuscdn\.com\/|\/icons\/)/);
+      // Icons must be served from this origin
+      expect(icon.src).toMatch(/^\/(assets|icons)\//);
       expect(['image/png', 'image/svg+xml']).toContain(icon.type);
       expect(icon.sizes).toMatch(/^\d+x\d+$/);
     }
@@ -98,8 +98,8 @@ describe('PWA Configuration', () => {
     expect(content).toContain('cacheFirst');
     // Should skip API requests from caching
     expect(content).toContain('/api/');
-    // Should handle CDN assets
-    expect(content).toContain('manuscdn.com');
+    // Should cache self-hosted image assets
+    expect(content).toContain('/assets/');
   });
 
   it('index.html has manifest link', () => {

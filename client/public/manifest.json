@@ -29,9 +29,6 @@
   "scope_extensions": [
     {
       "origin": "https://*.lince.app"
-    },
-    {
-      "origin": "https://*.manuscdn.com"
     }
   ],
   "edge_side_panel": {

@@ -41,8 +41,7 @@ async function startServer() {
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
           styleSrc: ["'self'", "'unsafe-inline'"],
-          // files.manuscdn.com: legacy asset host, remove once migrate-manus-assets has run
-          imgSrc: ["'self'", "data:", "blob:", "https://*.blob.core.windows.net", "https://files.manuscdn.com"],
+          imgSrc: ["'self'", "data:", "blob:", "https://*.blob.core.windows.net"],
           fontSrc: ["'self'", "data:"],
           connectSrc: ["'self'", "https://*.blob.core.windows.net", "https://*.openai.azure.com"],
           frameSrc: ["'none'"],
