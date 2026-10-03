@@ -9,6 +9,18 @@ import App from "./App";
 import { getLoginUrl } from "./const";
 import "./index.css";
 
+// After a deploy, an open tab may request code chunks that no longer exist; reload once to pick up the new build
+window.addEventListener("vite:preloadError", event => {
+  const key = "lince-chunk-reload";
+  if (sessionStorage.getItem(key)) return;
+  sessionStorage.setItem(key, "1");
+  event.preventDefault();
+  window.location.reload();
+});
+window.addEventListener("load", () => {
+  setTimeout(() => sessionStorage.removeItem("lince-chunk-reload"), 10_000);
+});
+
 const queryClient = new QueryClient();
 
 const redirectToLoginIfUnauthorized = (error: unknown) => {

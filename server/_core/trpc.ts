@@ -3,8 +3,22 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import type { TrpcContext } from "./context";
 
+const GENERIC_INTERNAL_ERROR = "Error interno del servidor. Inténtalo de nuevo en unos minutos.";
+
 const t = initTRPC.context<TrpcContext>().create({
   transformer: superjson,
+  // Errors tRPC wraps from a plain throw (DB driver, SDKs) carry raw SQL or vendor text;
+  // in production only deliberate TRPCError messages reach the browser.
+  errorFormatter({ shape, error }) {
+    const wrapped =
+      error.code === "INTERNAL_SERVER_ERROR" &&
+      error.cause !== undefined &&
+      !(error.cause instanceof TRPCError);
+    if (process.env.NODE_ENV === "production" && wrapped) {
+      return { ...shape, message: GENERIC_INTERNAL_ERROR };
+    }
+    return shape;
+  },
 });
 
 export const router = t.router;

@@ -13,6 +13,7 @@ import jwt from "jsonwebtoken";
 import type { Request, Response, Express } from "express";
 import { ENV } from "./env";
 import * as db from "./db";
+import { getRequestIP } from "./clientIp";
 
 const COOKIE_NAME = "lince_session";
 const SALT_ROUNDS = 12;
@@ -193,10 +194,7 @@ export function registerAuthRoutes(app: Express) {
         return;
       }
 
-      const clientIP =
-        (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() ||
-        req.socket?.remoteAddress ||
-        "unknown";
+      const clientIP = getRequestIP(req);
 
       // Check account lockout before hitting the DB
       try {

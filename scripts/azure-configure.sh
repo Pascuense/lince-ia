@@ -114,12 +114,14 @@ else
   read -r -s -p "   Contraseña de MySQL ($DBUSER): " DBPASS; echo
   # Cloud Shell ships the MariaDB client, which only understands --ssl
   if mysql --version 2>/dev/null | grep -qi mariadb; then SSLFLAG="--ssl"; else SSLFLAG="--ssl-mode=REQUIRED"; fi
-  MYSQL="mysql -h $DBHOST -u $DBUSER -p$DBPASS $SSLFLAG $DBNAME"
-  TABLES=$($MYSQL -N -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='$DBNAME'")
+  # Password via environment so spaces or symbols are never split or globbed
+  export MYSQL_PWD="$DBPASS"
+  MYSQL=(mysql -h "$DBHOST" -u "$DBUSER" "$SSLFLAG" "$DBNAME")
+  TABLES=$("${MYSQL[@]}" -N -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='$DBNAME'")
   if [ "$TABLES" -ge 9 ]; then
     echo "   La base de datos ya tiene $TABLES tablas; no se importa nada."
   else
-    $MYSQL < schema.sql
+    "${MYSQL[@]}" < schema.sql
     echo "   schema.sql importado."
   fi
 fi

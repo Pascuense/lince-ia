@@ -5,6 +5,7 @@ import { FictionalDisclaimer } from "./FictionalDisclaimer";
 import ShareDownloadBar from "@/components/ShareDownloadBar";
 import { getAvatarPrompt } from "@shared/avatarPrompts";
 import { trpc } from "@/lib/trpc";
+import { useFeatures } from "@/hooks/useFeatures";
 import { useGame } from "@/contexts/GameContext";
 import { useGuest } from "@/contexts/GuestContext";
 import confetti from "canvas-confetti";
@@ -791,6 +792,7 @@ export function ArtistChatModal({ artist, lang, onClose, onSwitchAvatar, embedde
 
   // tRPC mutation for image generation
   const generateImageMutation = trpc.avatarChat.generateChatImage.useMutation();
+  const { imageGeneration } = useFeatures();
 
   // Handle image generation
   const handleGenerateImage = async () => {
@@ -1011,14 +1013,16 @@ export function ArtistChatModal({ artist, lang, onClose, onSwitchAvatar, embedde
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Build conversation history for the LLM (exclude system messages and loading)
+  // Build conversation history for the LLM (exclude system messages and loading).
+  // The server accepts at most 20 entries, so only the most recent turns are sent.
   const getHistory = useCallback(() => {
     return messages
       .filter((m) => m.from !== "system" && !m.isLoading)
       .map((m) => ({
         role: m.from === "user" ? ("user" as const) : ("assistant" as const),
         content: m.text,
-      }));
+      }))
+      .slice(-20);
   }, [messages]);
 
   // ─── LEVEL-UP DETECTION ───
@@ -1486,6 +1490,7 @@ export function ArtistChatModal({ artist, lang, onClose, onSwitchAvatar, embedde
         <div className="p-3 border-t border-white/5 bg-[#050508]">
           <div className="flex gap-2">
             {/* Image generation button */}
+            {imageGeneration && (
             <button
               onClick={() => setShowImagePrompt(!showImagePrompt)}
               disabled={isTyping || isGeneratingImage}
@@ -1502,6 +1507,7 @@ export function ArtistChatModal({ artist, lang, onClose, onSwitchAvatar, embedde
                 <polyline points="21 15 16 10 5 21" />
               </svg>
             </button>
+            )}
             <input
               type="text"
               value={customInput}

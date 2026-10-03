@@ -38,6 +38,10 @@ jobs:
   build-and-deploy:
     needs: test
     runs-on: ubuntu-latest
+    # Both deploy workflows target the same lince-app slot; never run two at once
+    concurrency:
+      group: deploy-lince-app
+      cancel-in-progress: false
     if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
 
     steps:

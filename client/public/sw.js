@@ -1,9 +1,17 @@
 // LINCE Service Worker v3.0 - Background Sync + Periodic Sync Edition
 // © 2026 ACNB IA SL - Todos los derechos reservados
 
-const CACHE_NAME = 'lince-v3';
-const STATIC_CACHE = 'lince-static-v3';
-const CDN_CACHE = 'lince-cdn-v3';
+// Bumped to v4 so caches that may hold index.html under asset URLs are dropped
+const CACHE_NAME = 'lince-v4';
+const STATIC_CACHE = 'lince-static-v4';
+const CDN_CACHE = 'lince-cdn-v4';
+
+// Only real files are cached; an HTML body under a script/image URL is a server fallback
+function isCacheable(request, response) {
+  if (!response || !response.ok) return false;
+  const type = response.headers.get('content-type') || '';
+  return request.mode === 'navigate' || !type.includes('text/html');
+}
 
 // IndexedDB constants (must match offlineStore.ts)
 const DB_NAME = 'lince-offline';
@@ -118,7 +126,7 @@ self.addEventListener('install', (event) => {
 
 // ─── ACTIVATE ───
 self.addEventListener('activate', (event) => {
-  console.log('[SW] Activating LINCE Service Worker v2');
+  console.log('[SW] Activating LINCE Service Worker v4');
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -147,7 +155,7 @@ self.addEventListener('activate', (event) => {
 async function networkFirst(request) {
   try {
     const response = await fetch(request);
-    if (response.ok) {
+    if (isCacheable(request, response)) {
       const cache = await caches.open(CACHE_NAME);
       cache.put(request, response.clone());
     }
@@ -165,7 +173,7 @@ async function cacheFirst(request) {
   if (cached) return cached;
   try {
     const response = await fetch(request);
-    if (response.ok) {
+    if (isCacheable(request, response)) {
       const cacheName = /\/(assets|avatars)\//.test(request.url) ? CDN_CACHE : STATIC_CACHE;
       const cache = await caches.open(cacheName);
       cache.put(request, response.clone());
@@ -186,7 +194,7 @@ async function staleWhileRevalidate(request) {
   const cache = await caches.open(CACHE_NAME);
   const cached = await cache.match(request);
   const fetchPromise = fetch(request).then((response) => {
-    if (response.ok) cache.put(request, response.clone());
+    if (isCacheable(request, response)) cache.put(request, response.clone());
     return response;
   }).catch(() => cached);
   return cached || fetchPromise;
@@ -429,7 +437,12 @@ self.addEventListener('push', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  const url = event.notification.data?.url || '/';
+  // Only navigate within this app, whatever URL the payload carries
+  let url = '/';
+  try {
+    const target = new URL(event.notification.data?.url || '/', self.location.origin);
+    if (target.origin === self.location.origin) url = target.pathname + target.search + target.hash;
+  } catch (e) {}
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
       for (const client of clients) {

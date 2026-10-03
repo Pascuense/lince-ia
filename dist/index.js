@@ -1,5 +1,6 @@
 // server/_core/index.ts
 import "dotenv/config";
+import compression from "compression";
 import express2 from "express";
 import { createServer } from "http";
 import net from "net";
@@ -20,7 +21,8 @@ var ENV = {
   azureOpenaiEndpoint: process.env.AZURE_OPENAI_ENDPOINT ?? "",
   azureOpenaiKey: process.env.AZURE_OPENAI_KEY ?? "",
   azureOpenaiDeployment: process.env.AZURE_OPENAI_DEPLOYMENT ?? "gpt-4o",
-  azureOpenaiImageDeployment: process.env.AZURE_OPENAI_IMAGE_DEPLOYMENT ?? "gpt-image-1",
+  // Empty means image generation is turned off in the app
+  azureOpenaiImageDeployment: process.env.AZURE_OPENAI_IMAGE_DEPLOYMENT ?? "",
   // Azure Blob Storage
   azureStorageConnectionString: process.env.AZURE_STORAGE_CONNECTION_STRING ?? "",
   azureStorageContainer: process.env.AZURE_STORAGE_CONTAINER ?? "lince-uploads",
@@ -34,7 +36,7 @@ var ENV = {
 };
 
 // server/db.ts
-import { desc, eq, sql, and } from "drizzle-orm";
+import { desc, eq, sql, and, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 
 // drizzle/schema.ts
@@ -309,7 +311,16 @@ function normalizeDatabaseUrl(raw) {
 async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      _db = drizzle(normalizeDatabaseUrl(process.env.DATABASE_URL));
+      _db = drizzle({
+        connection: {
+          uri: normalizeDatabaseUrl(process.env.DATABASE_URL),
+          connectionLimit: 10,
+          maxIdle: 2,
+          idleTimeout: 6e4,
+          enableKeepAlive: true,
+          keepAliveInitialDelay: 3e4
+        }
+      });
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
@@ -563,11 +574,19 @@ async function deleteGamePlayerAccount(gamePlayerId) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   try {
-    await db.delete(promptCreations).where(eq(promptCreations.userId, gamePlayerId));
-    await db.delete(customCourses).where(eq(customCourses.gamePlayerId, gamePlayerId));
-    await db.delete(toolViews).where(eq(toolViews.gamePlayerId, gamePlayerId));
-    await db.delete(legalAcceptances).where(eq(legalAcceptances.gamePlayerId, gamePlayerId));
-    await db.delete(gamePlayers).where(eq(gamePlayers.id, gamePlayerId));
+    await db.transaction(async (tx) => {
+      const sessions = await tx.select({ id: chatSessions.id }).from(chatSessions).where(eq(chatSessions.gamePlayerId, gamePlayerId));
+      if (sessions.length) {
+        await tx.delete(chatMessages).where(inArray(chatMessages.sessionId, sessions.map((s) => s.id)));
+      }
+      await tx.delete(chatSessions).where(eq(chatSessions.gamePlayerId, gamePlayerId));
+      await tx.delete(pushSubscriptions).where(eq(pushSubscriptions.gamePlayerId, gamePlayerId));
+      await tx.delete(promptCreations).where(eq(promptCreations.userId, gamePlayerId));
+      await tx.delete(customCourses).where(eq(customCourses.gamePlayerId, gamePlayerId));
+      await tx.delete(toolViews).where(eq(toolViews.gamePlayerId, gamePlayerId));
+      await tx.delete(legalAcceptances).where(eq(legalAcceptances.gamePlayerId, gamePlayerId));
+      await tx.delete(gamePlayers).where(eq(gamePlayers.id, gamePlayerId));
+    });
     return true;
   } catch (error) {
     console.error("[GDPR] Error deleting account:", error);
@@ -675,6 +694,21 @@ async function updateUserLastSignIn(id) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.update(gamePlayers).set({ lastLoginAt: /* @__PURE__ */ new Date() }).where(eq(gamePlayers.id, id));
+}
+
+// server/clientIp.ts
+function stripPort(raw) {
+  const value = raw.trim();
+  const bracketed = value.match(/^\[([^\]]+)\](?::\d+)?$/);
+  if (bracketed) return bracketed[1];
+  if (/^[\d.]+:\d+$/.test(value)) return value.slice(0, value.lastIndexOf(":"));
+  return value;
+}
+function getRequestIP(req) {
+  const xff = req.headers["x-forwarded-for"];
+  const header = Array.isArray(xff) ? xff.join(",") : xff;
+  const last = header?.split(",").map((s) => s.trim()).filter(Boolean).pop();
+  return last && stripPort(last) || req.socket?.remoteAddress || "unknown";
 }
 
 // server/auth.ts
@@ -804,7 +838,7 @@ function registerAuthRoutes(app) {
         res.status(400).json({ error: "Email y contrase\xF1a son obligatorios." });
         return;
       }
-      const clientIP = req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || req.socket?.remoteAddress || "unknown";
+      const clientIP = getRequestIP(req);
       try {
         checkAccountLockout(email, clientIP);
       } catch (lockErr) {
@@ -856,6 +890,7 @@ var COOKIE_NAME2 = "app_session_id";
 var ONE_YEAR_MS = 1e3 * 60 * 60 * 24 * 365;
 var UNAUTHED_ERR_MSG = "Please login (10001)";
 var NOT_ADMIN_ERR_MSG = "You do not have required permission (10002)";
+var ADMIN_EMAILS = ["cristobalalisteg@gmail.com", "cristobal@acnb.es"];
 
 // server/_core/cookies.ts
 function isSecureRequest(req) {
@@ -962,8 +997,18 @@ async function notifyOwner(payload) {
 // server/_core/trpc.ts
 import { initTRPC, TRPCError as TRPCError2 } from "@trpc/server";
 import superjson from "superjson";
+var GENERIC_INTERNAL_ERROR = "Error interno del servidor. Int\xE9ntalo de nuevo en unos minutos.";
 var t = initTRPC.context().create({
-  transformer: superjson
+  transformer: superjson,
+  // Errors tRPC wraps from a plain throw (DB driver, SDKs) carry raw SQL or vendor text;
+  // in production only deliberate TRPCError messages reach the browser.
+  errorFormatter({ shape, error }) {
+    const wrapped = error.code === "INTERNAL_SERVER_ERROR" && error.cause !== void 0 && !(error.cause instanceof TRPCError2);
+    if (process.env.NODE_ENV === "production" && wrapped) {
+      return { ...shape, message: GENERIC_INTERNAL_ERROR };
+    }
+    return shape;
+  }
 });
 var router = t.router;
 var publicProcedure = t.procedure;
@@ -1019,7 +1064,7 @@ var systemRouter = router({
 
 // server/llm.ts
 import { AzureOpenAI } from "openai";
-var API_VERSION = "2025-04-01-preview";
+var AZURE_OPENAI_API_VERSION = "2025-04-01-preview";
 var client = null;
 function getAzureOpenAI() {
   if (!client) {
@@ -1031,7 +1076,7 @@ function getAzureOpenAI() {
     client = new AzureOpenAI({
       endpoint: ENV.azureOpenaiEndpoint,
       apiKey: ENV.azureOpenaiKey,
-      apiVersion: API_VERSION
+      apiVersion: AZURE_OPENAI_API_VERSION
     });
   }
   return client;
@@ -1090,7 +1135,7 @@ async function invokeLLM(params) {
 }
 
 // server/imageGeneration.ts
-import { toFile } from "openai";
+import { AzureOpenAI as AzureOpenAI2, toFile } from "openai";
 
 // server/storage.ts
 import {
@@ -1240,14 +1285,35 @@ async function addWatermark(imageBuffer) {
 }
 
 // server/imageGeneration.ts
+function isImageGenerationEnabled() {
+  return Boolean(
+    ENV.azureOpenaiImageDeployment && ENV.azureOpenaiEndpoint && ENV.azureOpenaiKey
+  );
+}
+var imageClient = null;
+function getImageClient() {
+  if (!isImageGenerationEnabled()) {
+    throw new Error("La generaci\xF3n de im\xE1genes no est\xE1 configurada.");
+  }
+  imageClient ??= new AzureOpenAI2({
+    endpoint: ENV.azureOpenaiEndpoint,
+    apiKey: ENV.azureOpenaiKey,
+    apiVersion: AZURE_OPENAI_API_VERSION,
+    deployment: ENV.azureOpenaiImageDeployment
+  });
+  return imageClient;
+}
 async function loadImage(img, index2) {
-  const mimeType = img.mimeType || "image/png";
   let buffer;
+  let mimeType = img.mimeType || "image/png";
   if (img.b64Json) {
     buffer = Buffer.from(img.b64Json, "base64");
   } else if (img.url) {
     const res = await fetch(img.url);
-    if (!res.ok) throw new Error(`No se pudo descargar la imagen original (${res.status})`);
+    if (!res.ok) {
+      throw new Error(`No se pudo descargar la imagen original (${res.status})`);
+    }
+    mimeType = res.headers.get("content-type")?.split(";")[0] || mimeType;
     buffer = Buffer.from(await res.arrayBuffer());
   } else {
     throw new Error("Imagen original sin url ni datos");
@@ -1256,7 +1322,7 @@ async function loadImage(img, index2) {
   return toFile(buffer, `original-${index2}.${ext}`, { type: mimeType });
 }
 async function generateImage(options) {
-  const ai = getAzureOpenAI();
+  const ai = getImageClient();
   const model = ENV.azureOpenaiImageDeployment;
   const sources = options.originalImages?.filter((i) => i.url || i.b64Json) ?? [];
   try {
@@ -7373,8 +7439,28 @@ async function authenticateGamePlayer(ctx, claimedPlayerId) {
   }
   return session;
 }
+function assertImageGenerationEnabled() {
+  if (!isImageGenerationEnabled()) {
+    throw new TRPCError3({
+      code: "PRECONDITION_FAILED",
+      message: "La generaci\xF3n de im\xE1genes no est\xE1 disponible todav\xEDa."
+    });
+  }
+}
+async function requireGameAdmin(ctx) {
+  const token = ctx.req.headers["x-game-token"];
+  if (!token) {
+    throw new TRPCError3({ code: "UNAUTHORIZED", message: "Token de sesi\xF3n de juego requerido. Inicia sesi\xF3n." });
+  }
+  const session = await verifyGameToken(token);
+  const player = await getGamePlayerById(session.playerId);
+  const email = player?.email?.toLowerCase().trim();
+  if (!email || !ADMIN_EMAILS.includes(email)) {
+    throw new TRPCError3({ code: "FORBIDDEN", message: NOT_ADMIN_ERR_MSG });
+  }
+}
 function getClientIP(ctx) {
-  return ctx.req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || ctx.req.socket?.remoteAddress || "unknown";
+  return getRequestIP(ctx.req);
 }
 var EVALUATION_CRITERIA = {
   subject: {
@@ -8223,7 +8309,8 @@ var promptStudioRouter = router({
       details: z2.string().max(1e3).optional().default("")
     })
   ).mutation(async ({ input, ctx }) => {
-    const clientKey = `gen:${ctx.user?.id || ctx.req.ip || "anon"}`;
+    assertImageGenerationEnabled();
+    const clientKey = `gen:${ctx.user?.id || getClientIP(ctx)}`;
     checkRateLimit(clientKey, RATE_LIMIT_MAX_GENERATE);
     const cleanSubject = sanitizeText(input.subject);
     const cleanStyle = sanitizeText(input.style);
@@ -8280,7 +8367,7 @@ var promptStudioRouter = router({
       example: z2.string().max(2e3).optional().default("")
     })
   ).mutation(async ({ input, ctx }) => {
-    const clientKey = `textprompt:${ctx.user?.id || ctx.req.ip || "anon"}`;
+    const clientKey = `textprompt:${ctx.user?.id || getClientIP(ctx)}`;
     checkRateLimit(clientKey, RATE_LIMIT_MAX_ENHANCE);
     const cleanRole = sanitizeText(input.role);
     const cleanTask = sanitizeText(input.task);
@@ -8303,7 +8390,7 @@ var promptStudioRouter = router({
       details: z2.string().max(1e3).optional().default("")
     })
   ).mutation(async ({ input, ctx }) => {
-    const clientKey = `enh:${ctx.user?.id || ctx.req.ip || "anon"}`;
+    const clientKey = `enh:${ctx.user?.id || getClientIP(ctx)}`;
     checkRateLimit(clientKey, RATE_LIMIT_MAX_ENHANCE);
     const cleanSubject = sanitizeText(input.subject);
     const cleanStyle = sanitizeText(input.style);
@@ -8367,7 +8454,7 @@ var legalRouter = router({
   ).mutation(async ({ input, ctx }) => {
     const ip = getClientIP(ctx);
     checkRateLimit(`legal:${ip}`, 5);
-    const ipAddress = ctx.req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || ctx.req.socket?.remoteAddress || null;
+    const ipAddress = getClientIP(ctx);
     const userAgent = ctx.req.headers["user-agent"] || null;
     const userId = ctx.user?.id ?? null;
     const acceptance = await logLegalAcceptance({
@@ -8906,6 +8993,7 @@ var lincelinRouter = router({
       mimeType: z2.enum(["image/png", "image/jpeg", "image/webp"]).default("image/png")
     })
   ).mutation(async ({ input, ctx }) => {
+    assertImageGenerationEnabled();
     const ip = getClientIP(ctx);
     checkRateLimit(`lincelin-upload:${ip}`, 5);
     const base64Data = input.photoBase64.replace(/^data:image\/\w+;base64,/, "");
@@ -8926,6 +9014,7 @@ var lincelinRouter = router({
       accessories: z2.string().max(200).optional()
     })
   ).mutation(async ({ input, ctx }) => {
+    assertImageGenerationEnabled();
     const ip = getClientIP(ctx);
     checkRateLimit(`lincelin:${ip}`, 3);
     const styleModifiers = {
@@ -8942,10 +9031,7 @@ Additional details: ${sanitizeText(input.accessories)}` : ""}`;
     try {
       const { url: imageUrl } = await generateImage({
         prompt: fullPrompt,
-        originalImages: [{
-          url: input.photoUrl,
-          mimeType: "image/png"
-        }]
+        originalImages: [{ url: input.photoUrl }]
       });
       return {
         success: true,
@@ -9030,7 +9116,7 @@ var avatarChatRouter = router({
           role: z2.enum(["user", "assistant"]),
           content: z2.string()
         })
-      ).max(20).default([]),
+      ).max(100).default([]),
       language: z2.enum(["es", "en", "zh"]).default("es"),
       /** Optional: if provided, messages are persisted to DB */
       gamePlayerId: z2.number().int().optional()
@@ -9174,6 +9260,7 @@ var avatarChatRouter = router({
     prompt: z2.string().min(3).max(500),
     avatarKey: z2.string().min(1).max(50)
   })).mutation(async ({ input, ctx }) => {
+    assertImageGenerationEnabled();
     const ip = getClientIP(ctx);
     checkRateLimit(`chat-image:${ip}`, 5);
     const cleanPrompt = sanitizeText(input.prompt);
@@ -9219,7 +9306,8 @@ var pushNotificationsRouter = router({
         quietHoursEnd: z2.number().min(0).max(23)
       }).optional()
     })
-  ).mutation(async ({ input }) => {
+  ).mutation(async ({ ctx, input }) => {
+    await authenticateGamePlayer(ctx, input.playerId);
     const result = await savePushSubscription(
       input.playerId,
       input.subscription,
@@ -9234,7 +9322,8 @@ var pushNotificationsRouter = router({
       playerId: z2.number(),
       endpoint: z2.string()
     })
-  ).mutation(async ({ input }) => {
+  ).mutation(async ({ ctx, input }) => {
+    await authenticateGamePlayer(ctx, input.playerId);
     await removePushSubscription(input.playerId, input.endpoint);
     return { success: true };
   }),
@@ -9251,7 +9340,8 @@ var pushNotificationsRouter = router({
         quietHoursEnd: z2.number().min(0).max(23)
       })
     })
-  ).mutation(async ({ input }) => {
+  ).mutation(async ({ ctx, input }) => {
+    await authenticateGamePlayer(ctx, input.playerId);
     await updateSubscriptionPreferences(input.playerId, input.endpoint, input.preferences);
     return { success: true };
   }),
@@ -9260,7 +9350,8 @@ var pushNotificationsRouter = router({
     z2.object({
       playerId: z2.number()
     })
-  ).mutation(async ({ input }) => {
+  ).mutation(async ({ ctx, input }) => {
+    await authenticateGamePlayer(ctx, input.playerId);
     const result = await sendPushToPlayer(input.playerId, {
       title: "LINCE - Test",
       body: "Si ves esto, las notificaciones push funcionan correctamente.",
@@ -9275,16 +9366,19 @@ var pushNotificationsRouter = router({
   }),
   /** Admin: trigger streak reminders manually */
   triggerStreakReminders: publicProcedure.mutation(async ({ ctx }) => {
+    await requireGameAdmin(ctx);
     const result = await sendStreakReminders();
     return result;
   }),
   /** Admin: trigger daily reward reminders manually */
-  triggerRewardReminders: publicProcedure.mutation(async () => {
+  triggerRewardReminders: publicProcedure.mutation(async ({ ctx }) => {
+    await requireGameAdmin(ctx);
     const result = await sendDailyRewardReminders();
     return result;
   }),
   /** Admin: cleanup expired subscriptions */
-  cleanup: publicProcedure.mutation(async () => {
+  cleanup: publicProcedure.mutation(async ({ ctx }) => {
+    await requireGameAdmin(ctx);
     const count = await cleanupExpiredSubscriptions();
     return { cleaned: count };
   }),
@@ -9293,9 +9387,10 @@ var pushNotificationsRouter = router({
     z2.object({
       title: z2.string().min(1).max(100),
       body: z2.string().min(1).max(500),
-      url: z2.string().optional()
+      url: z2.string().startsWith("/").optional()
     })
-  ).mutation(async ({ input }) => {
+  ).mutation(async ({ ctx, input }) => {
+    await requireGameAdmin(ctx);
     const result = await sendPushBroadcast({
       title: input.title,
       body: input.body,
@@ -9307,6 +9402,10 @@ var pushNotificationsRouter = router({
 });
 var appRouter = router({
   system: systemRouter,
+  /** Which optional capabilities this deployment has configured */
+  features: publicProcedure.query(() => ({
+    imageGeneration: isImageGenerationEnabled()
+  })),
   auth: router({
     me: publicProcedure.query((opts) => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
@@ -9348,6 +9447,25 @@ async function createContext(opts) {
 import express from "express";
 import fs2 from "fs";
 import path2 from "path";
+var FILE_ONLY_PREFIXES = ["/api", "/assets", "/avatars", "/icons"];
+var IMAGE_DIRS = /^\/(assets|avatars)\//;
+var HASHED_BUNDLE = /-[A-Za-z0-9_-]{8}\.(js|css|woff2?)$/;
+var IMAGE = /\.(png|jpe?g|webp|gif|svg|ico)$/i;
+function preferWebp(distPath) {
+  return (req, res, next) => {
+    if ((req.method === "GET" || req.method === "HEAD") && IMAGE_DIRS.test(req.path) && /\.(png|jpe?g)$/i.test(req.path)) {
+      res.vary("Accept");
+      if (req.headers.accept?.includes("image/webp")) {
+        const webpPath = req.path.replace(/\.(png|jpe?g)$/i, ".webp");
+        const file = path2.join(distPath, decodeURIComponent(webpPath));
+        if (file.startsWith(distPath + path2.sep) && fs2.existsSync(file)) {
+          req.url = webpPath + req.url.slice(req.path.length);
+        }
+      }
+    }
+    next();
+  };
+}
 function serveStatic(app) {
   const distPath = process.env.NODE_ENV === "development" ? path2.resolve(import.meta.dirname, "../..", "dist", "public") : path2.resolve(import.meta.dirname, "public");
   if (!fs2.existsSync(distPath)) {
@@ -9355,8 +9473,26 @@ function serveStatic(app) {
       `Could not find the build directory: ${distPath}, make sure to build the client first`
     );
   }
-  app.use(express.static(distPath, { dotfiles: "allow" }));
-  app.use("*", (_req, res) => {
+  app.use(preferWebp(distPath));
+  app.use(
+    express.static(distPath, {
+      dotfiles: "allow",
+      setHeaders(res, filePath) {
+        if (filePath.endsWith(".html") || filePath.endsWith("sw.js")) {
+          res.setHeader("Cache-Control", "no-cache");
+        } else if (HASHED_BUNDLE.test(filePath)) {
+          res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+        } else if (IMAGE.test(filePath)) {
+          res.setHeader("Cache-Control", "public, max-age=604800");
+        }
+      }
+    })
+  );
+  app.use(FILE_ONLY_PREFIXES, (_req, res) => {
+    res.sendStatus(404);
+  });
+  app.get("*", (_req, res) => {
+    res.setHeader("Cache-Control", "no-cache");
     res.sendFile(path2.resolve(distPath, "index.html"));
   });
 }
@@ -9436,6 +9572,7 @@ async function findAvailablePort(startPort = 3e3) {
 async function startServer() {
   const app = express2();
   const server = createServer(app);
+  app.set("trust proxy", 1);
   app.use(
     helmet({
       contentSecurityPolicy: {
@@ -9462,6 +9599,7 @@ async function startServer() {
       xFrameOptions: { action: "deny" }
     })
   );
+  app.use(compression());
   app.use(express2.json({ limit: "50mb" }));
   app.use(express2.urlencoded({ limit: "50mb", extended: true }));
   registerAuthRoutes(app);
@@ -9469,7 +9607,16 @@ async function startServer() {
     "/api/trpc",
     createExpressMiddleware({
       router: appRouter,
-      createContext
+      createContext,
+      onError({ path: path3, error }) {
+        if (error.code !== "INTERNAL_SERVER_ERROR") return;
+        const cause = error.cause;
+        console.error(
+          `[tRPC] ${path3 ?? "?"} failed:`,
+          cause?.query ?? error.message.split("\nparams:")[0],
+          cause?.cause ?? cause ?? error
+        );
+      }
     })
   );
   if (process.env.NODE_ENV === "development") {

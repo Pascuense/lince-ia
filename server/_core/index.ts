@@ -1,4 +1,5 @@
 import "dotenv/config";
+import compression from "compression";
 import express from "express";
 import { createServer } from "http";
 import net from "net";
@@ -32,6 +33,8 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 async function startServer() {
   const app = express();
   const server = createServer(app);
+  // Azure App Service terminates TLS in front of the app; trust its forwarded headers
+  app.set("trust proxy", 1);
 
   // ─── Security: Helmet.js HTTP Headers ───
   app.use(
@@ -59,6 +62,8 @@ async function startServer() {
     })
   );
 
+  app.use(compression());
+
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
@@ -70,6 +75,18 @@ async function startServer() {
     createExpressMiddleware({
       router: appRouter,
       createContext,
+      onError({ path, error }) {
+        if (error.code !== "INTERNAL_SERVER_ERROR") return;
+        const cause = error.cause as
+          | (Error & { query?: string; cause?: unknown })
+          | undefined;
+        // DrizzleQueryError keeps the driver error (code, sqlMessage) in .cause; params are not logged
+        console.error(
+          `[tRPC] ${path ?? "?"} failed:`,
+          cause?.query ?? error.message.split("\nparams:")[0],
+          cause?.cause ?? cause ?? error
+        );
+      },
     })
   );
   // development mode uses Vite, production mode uses static files

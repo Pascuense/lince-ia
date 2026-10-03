@@ -202,9 +202,9 @@ describe("avatarChat.sendMessage", () => {
     expect(result.isInsultResponse).toBe(true);
   });
 
-  it("rejects history with more than 20 messages", async () => {
+  it("rejects history with more than 100 messages", async () => {
     const caller = appRouter.createCaller(createPublicContext());
-    const longHistory = Array.from({ length: 21 }, (_, i) => ({
+    const longHistory = Array.from({ length: 101 }, (_, i) => ({
       role: (i % 2 === 0 ? "user" : "assistant") as "user" | "assistant",
       content: `Message ${i}`,
     }));

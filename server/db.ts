@@ -1,6 +1,6 @@
-import { desc, eq, sql, and } from "drizzle-orm";
+import { desc, eq, sql, and, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, promptCreations, InsertPromptCreation, gamePlayers, InsertGamePlayer, GamePlayer, legalAcceptances, InsertLegalAcceptance, LegalAcceptance, customCourses, InsertCustomCourse, CustomCourse, toolViews, InsertToolView, ToolView, chatSessions, InsertChatSession, ChatSession, chatMessages, InsertChatMessage, ChatMessage } from "../drizzle/schema";
+import { InsertUser, users, promptCreations, InsertPromptCreation, gamePlayers, InsertGamePlayer, GamePlayer, legalAcceptances, InsertLegalAcceptance, LegalAcceptance, customCourses, InsertCustomCourse, CustomCourse, toolViews, InsertToolView, ToolView, chatSessions, InsertChatSession, ChatSession, chatMessages, InsertChatMessage, ChatMessage, pushSubscriptions } from "../drizzle/schema";
 import { ENV } from './_core/env';
 import bcrypt from "bcryptjs";
 
@@ -34,7 +34,17 @@ export function normalizeDatabaseUrl(raw: string): string {
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      _db = drizzle(normalizeDatabaseUrl(process.env.DATABASE_URL));
+      // Azure's network drops idle TCP connections, so keep the pool small and alive
+      _db = drizzle({
+        connection: {
+          uri: normalizeDatabaseUrl(process.env.DATABASE_URL),
+          connectionLimit: 10,
+          maxIdle: 2,
+          idleTimeout: 60_000,
+          enableKeepAlive: true,
+          keepAliveInitialDelay: 30_000,
+        },
+      });
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
@@ -524,11 +534,22 @@ export async function deleteGamePlayerAccount(gamePlayerId: number): Promise<boo
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   try {
-    await db.delete(promptCreations).where(eq(promptCreations.userId, gamePlayerId));
-    await db.delete(customCourses).where(eq(customCourses.gamePlayerId, gamePlayerId));
-    await db.delete(toolViews).where(eq(toolViews.gamePlayerId, gamePlayerId));
-    await db.delete(legalAcceptances).where(eq(legalAcceptances.gamePlayerId, gamePlayerId));
-    await db.delete(gamePlayers).where(eq(gamePlayers.id, gamePlayerId));
+    await db.transaction(async tx => {
+      const sessions = await tx
+        .select({ id: chatSessions.id })
+        .from(chatSessions)
+        .where(eq(chatSessions.gamePlayerId, gamePlayerId));
+      if (sessions.length) {
+        await tx.delete(chatMessages).where(inArray(chatMessages.sessionId, sessions.map(s => s.id)));
+      }
+      await tx.delete(chatSessions).where(eq(chatSessions.gamePlayerId, gamePlayerId));
+      await tx.delete(pushSubscriptions).where(eq(pushSubscriptions.gamePlayerId, gamePlayerId));
+      await tx.delete(promptCreations).where(eq(promptCreations.userId, gamePlayerId));
+      await tx.delete(customCourses).where(eq(customCourses.gamePlayerId, gamePlayerId));
+      await tx.delete(toolViews).where(eq(toolViews.gamePlayerId, gamePlayerId));
+      await tx.delete(legalAcceptances).where(eq(legalAcceptances.gamePlayerId, gamePlayerId));
+      await tx.delete(gamePlayers).where(eq(gamePlayers.id, gamePlayerId));
+    });
     return true;
   } catch (error) {
     console.error('[GDPR] Error deleting account:', error);

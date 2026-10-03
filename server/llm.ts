@@ -3,7 +3,7 @@ import { ENV } from "./env";
 
 // Recent API version: supports json_schema, tools and max_completion_tokens
 // for gpt-4o, gpt-4.1 and gpt-5 deployments alike.
-const API_VERSION = "2025-04-01-preview";
+export const AZURE_OPENAI_API_VERSION = "2025-04-01-preview";
 
 let client: AzureOpenAI | null = null;
 
@@ -17,7 +17,7 @@ export function getAzureOpenAI(): AzureOpenAI {
     client = new AzureOpenAI({
       endpoint: ENV.azureOpenaiEndpoint,
       apiKey: ENV.azureOpenaiKey,
-      apiVersion: API_VERSION,
+      apiVersion: AZURE_OPENAI_API_VERSION,
     });
   }
   return client;

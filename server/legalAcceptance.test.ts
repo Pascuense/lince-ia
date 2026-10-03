@@ -109,8 +109,9 @@ describe("Legal Acceptance - tRPC Router", () => {
     expect(routerContent).toContain("legal: legalRouter");
   });
 
-  it("should extract IP from x-forwarded-for header", () => {
-    expect(routerContent).toContain("x-forwarded-for");
+  it("should extract the client IP through the shared proxy-aware helper", () => {
+    expect(routerContent).toContain("const ipAddress = getClientIP(ctx)");
+    expect(routerContent).toContain('from "./clientIp"');
   });
 
   it("should extract user-agent from request headers", () => {

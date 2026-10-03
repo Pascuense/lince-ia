@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import ShareDownloadBar from "@/components/ShareDownloadBar";
 import { useGuest } from "@/contexts/GuestContext";
 import { trpc } from "@/lib/trpc";
+import { IMAGE_UNAVAILABLE_MSG, useFeatures } from "@/hooks/useFeatures";
 import { NextStepFooter } from "@/components/NextStepFooter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -308,6 +309,8 @@ export default function PromptStudio(props?: any) {
   // Guest trial system
   const { isGuest, consumeTrial, canUseTrial, setShowConversionModal } = useGuest();
 
+  const { imageGeneration } = useFeatures();
+
   const createMutation = trpc.promptStudio.create.useMutation({
     onSuccess: (data: any) => {
       if (data?.imageUrl) {
@@ -340,6 +343,7 @@ export default function PromptStudio(props?: any) {
 
   const handleGenerate = () => {
     if (!isFormValid) { toast.error("Completa los 3 campos obligatorios"); return; }
+    if (!imageGeneration) { toast.info(IMAGE_UNAVAILABLE_MSG); return; }
     // Guest trial gate: consume 1 trial per image generation
     if (isGuest) {
       if (!canUseTrial()) { setShowConversionModal(true); return; }
@@ -540,9 +544,9 @@ export default function PromptStudio(props?: any) {
 
               {/* Botones de acción - GRANDES */}
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button onClick={handleGenerate} disabled={!isFormValid || isGenerating}
+                <Button onClick={handleGenerate} disabled={!isFormValid || isGenerating || !imageGeneration} title={imageGeneration ? undefined : IMAGE_UNAVAILABLE_MSG}
                   className="flex-1 h-16 sm:h-18 text-lg sm:text-xl bg-[#00E5FF] text-[#0A0A0A] font-display font-black hover:bg-[#00E5FF]/90 shadow-[0_0_30px_rgba(0,229,255,0.3)] disabled:opacity-40 rounded-2xl">
-                  {isGenerating ? (<><Loader2 className="w-6 h-6 mr-3 animate-spin" />Generando...</>) : (<><ImageIcon className="w-6 h-6 mr-3" />GENERAR IMAGEN</>)}
+                  {isGenerating ? (<><Loader2 className="w-6 h-6 mr-3 animate-spin" />Generando...</>) : !imageGeneration ? (<><ImageIcon className="w-6 h-6 mr-3" />IMÁGENES PRÓXIMAMENTE</>) : (<><ImageIcon className="w-6 h-6 mr-3" />GENERAR IMAGEN</>)}
                 </Button>
                 <Button onClick={handlePreview} disabled={!isFormValid || isPreviewing} variant="outline"
                   className="h-16 sm:h-18 text-base sm:text-lg border-2 border-[#D4A843]/40 text-[#D4A843] hover:bg-[#D4A843]/10 font-bold rounded-2xl px-8">
@@ -1013,9 +1017,9 @@ export default function PromptStudio(props?: any) {
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-3">
-                <Button onClick={handleGenerate} disabled={!isFormValid || isGenerating}
+                <Button onClick={handleGenerate} disabled={!isFormValid || isGenerating || !imageGeneration} title={imageGeneration ? undefined : IMAGE_UNAVAILABLE_MSG}
                   className="flex-1 h-14 text-base bg-[#00E5FF] text-[#0A0A0A] font-display font-black hover:bg-[#00E5FF]/90 shadow-[0_0_20px_rgba(0,229,255,0.3)] disabled:opacity-40 rounded-xl">
-                  {isGenerating ? (<><Loader2 className="w-5 h-5 mr-2 animate-spin" />Generando imagen...</>) : (<><ImageIcon className="w-5 h-5 mr-2" />Generar Imagen con IA</>)}
+                  {isGenerating ? (<><Loader2 className="w-5 h-5 mr-2 animate-spin" />Generando imagen...</>) : !imageGeneration ? (<><ImageIcon className="w-5 h-5 mr-2" />Imágenes próximamente</>) : (<><ImageIcon className="w-5 h-5 mr-2" />Generar Imagen con IA</>)}
                 </Button>
                 <Button onClick={handlePreview} disabled={!isFormValid || isPreviewing} variant="outline"
                   className="h-14 text-base border-2 border-[#D4A843]/30 text-[#D4A843] hover:bg-[#D4A843]/10 font-display font-bold rounded-xl">

@@ -28,6 +28,7 @@ vi.mock("./imageGeneration", () => ({
   generateImage: vi.fn().mockResolvedValue({
     url: "https://example.com/generated-image.png",
   }),
+  isImageGenerationEnabled: () => true,
 }));
 
 // Mock the database module

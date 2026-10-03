@@ -1,6 +1,6 @@
-import { toFile } from "openai";
+import { AzureOpenAI, toFile } from "openai";
 import { ENV } from "./env";
-import { getAzureOpenAI } from "./llm";
+import { AZURE_OPENAI_API_VERSION } from "./llm";
 import { storagePut } from "./storage";
 import { addWatermark } from "./watermark";
 
@@ -17,17 +17,45 @@ export type GenerateImageResponse = {
   url?: string;
 };
 
+export function isImageGenerationEnabled(): boolean {
+  return Boolean(
+    ENV.azureOpenaiImageDeployment &&
+      ENV.azureOpenaiEndpoint &&
+      ENV.azureOpenaiKey
+  );
+}
+
+// images.edit sends multipart form data, so the SDK cannot read the deployment from
+// the request body; it must be fixed on the client or the call hits /openai/images/edits.
+let imageClient: AzureOpenAI | null = null;
+
+function getImageClient(): AzureOpenAI {
+  if (!isImageGenerationEnabled()) {
+    throw new Error("La generación de imágenes no está configurada.");
+  }
+  imageClient ??= new AzureOpenAI({
+    endpoint: ENV.azureOpenaiEndpoint,
+    apiKey: ENV.azureOpenaiKey,
+    apiVersion: AZURE_OPENAI_API_VERSION,
+    deployment: ENV.azureOpenaiImageDeployment,
+  });
+  return imageClient;
+}
+
 async function loadImage(
   img: NonNullable<GenerateImageOptions["originalImages"]>[number],
   index: number
 ) {
-  const mimeType = img.mimeType || "image/png";
   let buffer: Buffer;
+  let mimeType = img.mimeType || "image/png";
   if (img.b64Json) {
     buffer = Buffer.from(img.b64Json, "base64");
   } else if (img.url) {
     const res = await fetch(img.url);
-    if (!res.ok) throw new Error(`No se pudo descargar la imagen original (${res.status})`);
+    if (!res.ok) {
+      throw new Error(`No se pudo descargar la imagen original (${res.status})`);
+    }
+    mimeType = res.headers.get("content-type")?.split(";")[0] || mimeType;
     buffer = Buffer.from(await res.arrayBuffer());
   } else {
     throw new Error("Imagen original sin url ni datos");
@@ -40,7 +68,7 @@ async function loadImage(
 export async function generateImage(
   options: GenerateImageOptions
 ): Promise<GenerateImageResponse> {
-  const ai = getAzureOpenAI();
+  const ai = getImageClient();
   const model = ENV.azureOpenaiImageDeployment;
   const sources = options.originalImages?.filter(i => i.url || i.b64Json) ?? [];
 

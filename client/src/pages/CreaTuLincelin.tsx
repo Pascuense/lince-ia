@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import { trpc } from "@/lib/trpc";
+import { IMAGE_UNAVAILABLE_MSG, useFeatures } from "@/hooks/useFeatures";
 import { useGuest } from "@/contexts/GuestContext";
 import { toast } from "sonner";
 import ShareDownloadBar from "@/components/ShareDownloadBar";
@@ -281,6 +282,7 @@ export default function CreaTuLincelin() {
 
   const uploadMutation = trpc.lincelin.uploadPhoto.useMutation();
   const generateMutation = trpc.lincelin.generate.useMutation();
+  const { imageGeneration } = useFeatures();
 
   const handleFileSelect = useCallback(async (file: File) => {
     if (file.size > 10 * 1024 * 1024) {
@@ -305,6 +307,10 @@ export default function CreaTuLincelin() {
   const { isGuest, consumeTrial, canUseTrial, setShowConversionModal } = useGuest();
 
   const handleGenerate = useCallback(async () => {
+    if (!imageGeneration) {
+      toast.info(IMAGE_UNAVAILABLE_MSG);
+      return;
+    }
     if (!photoFile) {
       toast.error("Sube una foto primero");
       return;
@@ -354,7 +360,7 @@ export default function CreaTuLincelin() {
     } finally {
       setIsGenerating(false);
     }
-  }, [photoFile, selectedStyles, uploadMutation, generateMutation]);
+  }, [imageGeneration, photoFile, selectedStyles, uploadMutation, generateMutation]);
 
   const handleReset = useCallback(() => {
     setPhotoFile(null);
@@ -409,6 +415,13 @@ export default function CreaTuLincelin() {
 
       {/* Main Content */}
       <div className="container pb-24">
+        {!imageGeneration && (
+          <div className="max-w-2xl mx-auto mb-10 rounded-2xl border border-[#D4A843]/30 bg-[#D4A843]/5 p-6 text-center">
+            <p className="text-[#D4A843] font-bold text-lg mb-1">Próximamente</p>
+            <p className="text-white/60 text-sm">{IMAGE_UNAVAILABLE_MSG}</p>
+          </div>
+        )}
+        {imageGeneration && (<>
         {/* Step 1: Upload */}
         <div className="max-w-2xl mx-auto mb-10">
           <div className="flex items-center gap-4 mb-5">
@@ -497,7 +510,7 @@ export default function CreaTuLincelin() {
 
           </div>
         )}
-
+        </>)}
 
       </div>
 

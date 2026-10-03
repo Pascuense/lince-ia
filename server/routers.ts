@@ -1,12 +1,13 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { COOKIE_NAME } from "@shared/const";
+import { ADMIN_EMAILS, COOKIE_NAME, NOT_ADMIN_ERR_MSG } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { invokeLLM } from "./llm";
-import { generateImage } from "./imageGeneration";
+import { generateImage, isImageGenerationEnabled } from "./imageGeneration";
 import { storagePut } from "./storage";
+import { getRequestIP } from "./clientIp";
 import { SignJWT, jwtVerify } from "jose";
 import { ENV } from "./_core/env";
 import {
@@ -158,13 +159,33 @@ async function authenticateGamePlayer(ctx: any, claimedPlayerId: number): Promis
   return session;
 }
 
+/** Image features are hidden in the UI and refused here until an image model is deployed */
+function assertImageGenerationEnabled(): void {
+  if (!isImageGenerationEnabled()) {
+    throw new TRPCError({
+      code: "PRECONDITION_FAILED",
+      message: "La generación de imágenes no está disponible todavía.",
+    });
+  }
+}
+
+/** Require a game session belonging to one of the platform admin emails */
+async function requireGameAdmin(ctx: any): Promise<void> {
+  const token = ctx.req.headers["x-game-token"] as string | undefined;
+  if (!token) {
+    throw new TRPCError({ code: "UNAUTHORIZED", message: "Token de sesión de juego requerido. Inicia sesión." });
+  }
+  const session = await verifyGameToken(token);
+  const player = await getGamePlayerById(session.playerId);
+  const email = player?.email?.toLowerCase().trim();
+  if (!email || !ADMIN_EMAILS.includes(email)) {
+    throw new TRPCError({ code: "FORBIDDEN", message: NOT_ADMIN_ERR_MSG });
+  }
+}
+
 /** Helper to get client IP from request context */
 function getClientIP(ctx: any): string {
-  return (
-    (ctx.req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() ||
-    ctx.req.socket?.remoteAddress ||
-    "unknown"
-  );
+  return getRequestIP(ctx.req);
 }
 
 // ─── Evaluation Parameters ───
@@ -1039,8 +1060,9 @@ const promptStudioRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
+      assertImageGenerationEnabled();
       // Rate limit by IP or user
-      const clientKey = `gen:${ctx.user?.id || ctx.req.ip || "anon"}`;
+      const clientKey = `gen:${ctx.user?.id || getClientIP(ctx)}`;
       checkRateLimit(clientKey, RATE_LIMIT_MAX_GENERATE);
 
       // Sanitize all inputs
@@ -1116,7 +1138,7 @@ const promptStudioRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      const clientKey = `textprompt:${ctx.user?.id || ctx.req.ip || "anon"}`;
+      const clientKey = `textprompt:${ctx.user?.id || getClientIP(ctx)}`;
       checkRateLimit(clientKey, RATE_LIMIT_MAX_ENHANCE);
 
       const cleanRole = sanitizeText(input.role);
@@ -1146,7 +1168,7 @@ const promptStudioRouter = router({
     )
     .mutation(async ({ input, ctx }) => {
       // Rate limit
-      const clientKey = `enh:${ctx.user?.id || ctx.req.ip || "anon"}`;
+      const clientKey = `enh:${ctx.user?.id || getClientIP(ctx)}`;
       checkRateLimit(clientKey, RATE_LIMIT_MAX_ENHANCE);
 
       // Sanitize
@@ -1233,10 +1255,7 @@ const legalRouter = router({
       checkRateLimit(`legal:${ip}`, 5);
 
       // Extract IP and User-Agent from request headers (server-side)
-      const ipAddress =
-        (ctx.req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() ||
-        ctx.req.socket?.remoteAddress ||
-        null;
+      const ipAddress = getClientIP(ctx);
       const userAgent = (ctx.req.headers["user-agent"] as string) || null;
 
       // Get userId if user is authenticated
@@ -1830,6 +1849,7 @@ const lincelinRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
+      assertImageGenerationEnabled();
       const ip = getClientIP(ctx);
       checkRateLimit(`lincelin-upload:${ip}`, 5); // 5 uploads per minute
 
@@ -1859,6 +1879,7 @@ const lincelinRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
+      assertImageGenerationEnabled();
       const ip = getClientIP(ctx);
       checkRateLimit(`lincelin:${ip}`, 3); // 3 generations per minute max
 
@@ -1875,10 +1896,7 @@ const lincelinRouter = router({
       try {
         const { url: imageUrl } = await generateImage({
           prompt: fullPrompt,
-          originalImages: [{
-            url: input.photoUrl,
-            mimeType: "image/png",
-          }],
+          originalImages: [{ url: input.photoUrl }],
         });
 
         return {
@@ -1934,7 +1952,7 @@ const avatarChatRouter = router({
             role: z.enum(["user", "assistant"]),
             content: z.string(),
           })
-        ).max(20).default([]),
+        ).max(100).default([]),
         language: z.enum(["es", "en", "zh"]).default("es"),
         /** Optional: if provided, messages are persisted to DB */
         gamePlayerId: z.number().int().optional(),
@@ -2124,6 +2142,7 @@ const avatarChatRouter = router({
       avatarKey: z.string().min(1).max(50),
     }))
     .mutation(async ({ input, ctx }) => {
+      assertImageGenerationEnabled();
       // Rate limit image generation
       const ip = getClientIP(ctx);
       checkRateLimit(`chat-image:${ip}`, 5); // max 5 image generations per window
@@ -2179,7 +2198,8 @@ const pushNotificationsRouter = router({
         }).optional(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
+      await authenticateGamePlayer(ctx, input.playerId);
       const result = await savePushSubscription(
         input.playerId,
         input.subscription,
@@ -2197,7 +2217,8 @@ const pushNotificationsRouter = router({
         endpoint: z.string(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
+      await authenticateGamePlayer(ctx, input.playerId);
       await removePushSubscription(input.playerId, input.endpoint);
       return { success: true };
     }),
@@ -2217,7 +2238,8 @@ const pushNotificationsRouter = router({
         }),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
+      await authenticateGamePlayer(ctx, input.playerId);
       await updateSubscriptionPreferences(input.playerId, input.endpoint, input.preferences);
       return { success: true };
     }),
@@ -2229,7 +2251,8 @@ const pushNotificationsRouter = router({
         playerId: z.number(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
+      await authenticateGamePlayer(ctx, input.playerId);
       const result = await sendPushToPlayer(input.playerId, {
         title: "LINCE - Test",
         body: "Si ves esto, las notificaciones push funcionan correctamente.",
@@ -2246,18 +2269,21 @@ const pushNotificationsRouter = router({
 
   /** Admin: trigger streak reminders manually */
   triggerStreakReminders: publicProcedure.mutation(async ({ ctx }) => {
+    await requireGameAdmin(ctx);
     const result = await sendStreakReminders();
     return result;
   }),
 
   /** Admin: trigger daily reward reminders manually */
-  triggerRewardReminders: publicProcedure.mutation(async () => {
+  triggerRewardReminders: publicProcedure.mutation(async ({ ctx }) => {
+    await requireGameAdmin(ctx);
     const result = await sendDailyRewardReminders();
     return result;
   }),
 
   /** Admin: cleanup expired subscriptions */
-  cleanup: publicProcedure.mutation(async () => {
+  cleanup: publicProcedure.mutation(async ({ ctx }) => {
+    await requireGameAdmin(ctx);
     const count = await cleanupExpiredSubscriptions();
     return { cleaned: count };
   }),
@@ -2268,10 +2294,11 @@ const pushNotificationsRouter = router({
       z.object({
         title: z.string().min(1).max(100),
         body: z.string().min(1).max(500),
-        url: z.string().optional(),
+        url: z.string().startsWith("/").optional(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
+      await requireGameAdmin(ctx);
       const result = await sendPushBroadcast({
         title: input.title,
         body: input.body,
@@ -2284,6 +2311,10 @@ const pushNotificationsRouter = router({
 
 export const appRouter = router({
   system: systemRouter,
+  /** Which optional capabilities this deployment has configured */
+  features: publicProcedure.query(() => ({
+    imageGeneration: isImageGenerationEnabled(),
+  })),
   auth: router({
     me: publicProcedure.query((opts) => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
