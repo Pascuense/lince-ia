@@ -64,7 +64,7 @@ describe("promptStudio.enhanceTextPrompt", () => {
 
   it("accepts valid input with all required fields", async () => {
     // Mock the LLM to avoid actual API calls
-    vi.mock("./_core/llm", () => ({
+    vi.mock("./llm", () => ({
       invokeLLM: vi.fn().mockResolvedValue({
         choices: [
           {

@@ -20,6 +20,7 @@ var ENV = {
   azureOpenaiEndpoint: process.env.AZURE_OPENAI_ENDPOINT ?? "",
   azureOpenaiKey: process.env.AZURE_OPENAI_KEY ?? "",
   azureOpenaiDeployment: process.env.AZURE_OPENAI_DEPLOYMENT ?? "gpt-4o",
+  azureOpenaiImageDeployment: process.env.AZURE_OPENAI_IMAGE_DEPLOYMENT ?? "gpt-image-1",
   // Azure Blob Storage
   azureStorageConnectionString: process.env.AZURE_STORAGE_CONNECTION_STRING ?? "",
   azureStorageContainer: process.env.AZURE_STORAGE_CONTAINER ?? "lince-uploads",
@@ -996,224 +997,131 @@ var systemRouter = router({
   })
 });
 
-// server/_core/llm.ts
-var ensureArray = (value) => Array.isArray(value) ? value : [value];
-var normalizeContentPart = (part) => {
-  if (typeof part === "string") {
-    return { type: "text", text: part };
+// server/llm.ts
+import { AzureOpenAI } from "openai";
+var API_VERSION = "2025-04-01-preview";
+var client = null;
+function getAzureOpenAI() {
+  if (!client) {
+    if (!ENV.azureOpenaiEndpoint || !ENV.azureOpenaiKey) {
+      throw new Error(
+        "Azure OpenAI no est\xE1 configurado. Verifica AZURE_OPENAI_ENDPOINT y AZURE_OPENAI_KEY."
+      );
+    }
+    client = new AzureOpenAI({
+      endpoint: ENV.azureOpenaiEndpoint,
+      apiKey: ENV.azureOpenaiKey,
+      apiVersion: API_VERSION
+    });
   }
-  if (part.type === "text") {
-    return part;
-  }
-  if (part.type === "image_url") {
-    return part;
-  }
+  return client;
+}
+function normalizePart(part) {
+  if (typeof part === "string") return { type: "text", text: part };
   if (part.type === "file_url") {
-    return part;
+    return { type: "text", text: `[Archivo adjunto: ${part.file_url.url}]` };
   }
-  throw new Error("Unsupported message content part");
-};
-var normalizeMessage = (message) => {
+  return part;
+}
+function normalizeMessage(message) {
   const { role, name, tool_call_id } = message;
+  const parts = Array.isArray(message.content) ? message.content : [message.content];
   if (role === "tool" || role === "function") {
-    const content = ensureArray(message.content).map((part) => typeof part === "string" ? part : JSON.stringify(part)).join("\n");
     return {
-      role,
-      name,
+      role: "tool",
       tool_call_id,
-      content
+      content: parts.map((p) => typeof p === "string" ? p : JSON.stringify(p)).join("\n")
     };
   }
-  const contentParts = ensureArray(message.content).map(normalizeContentPart);
-  if (contentParts.length === 1 && contentParts[0].type === "text") {
-    return {
-      role,
-      name,
-      content: contentParts[0].text
-    };
+  const normalized = parts.map(normalizePart);
+  const content = normalized.length === 1 && normalized[0].type === "text" ? normalized[0].text : normalized;
+  return { role, content, ...name ? { name } : {} };
+}
+function normalizeToolChoice(choice, tools) {
+  if (!choice) return void 0;
+  if (choice === "none" || choice === "auto") return choice;
+  if (choice === "required") {
+    return tools?.length === 1 ? { type: "function", function: { name: tools[0].function.name } } : "required";
   }
-  return {
-    role,
-    name,
-    content: contentParts
-  };
-};
-var normalizeToolChoice = (toolChoice, tools) => {
-  if (!toolChoice) return void 0;
-  if (toolChoice === "none" || toolChoice === "auto") {
-    return toolChoice;
+  if ("name" in choice) {
+    return { type: "function", function: { name: choice.name } };
   }
-  if (toolChoice === "required") {
-    if (!tools || tools.length === 0) {
-      throw new Error(
-        "tool_choice 'required' was provided but no tools were configured"
-      );
-    }
-    if (tools.length > 1) {
-      throw new Error(
-        "tool_choice 'required' needs a single tool or specify the tool name explicitly"
-      );
-    }
-    return {
-      type: "function",
-      function: { name: tools[0].function.name }
-    };
-  }
-  if ("name" in toolChoice) {
-    return {
-      type: "function",
-      function: { name: toolChoice.name }
-    };
-  }
-  return toolChoice;
-};
-var resolveApiUrl = () => ENV2.forgeApiUrl && ENV2.forgeApiUrl.trim().length > 0 ? `${ENV2.forgeApiUrl.replace(/\/$/, "")}/v1/chat/completions` : "https://forge.manus.im/v1/chat/completions";
-var assertApiKey = () => {
-  if (!ENV2.forgeApiKey) {
-    throw new Error("OPENAI_API_KEY is not configured");
-  }
-};
-var normalizeResponseFormat = ({
-  responseFormat,
-  response_format,
-  outputSchema,
-  output_schema
-}) => {
-  const explicitFormat = responseFormat || response_format;
-  if (explicitFormat) {
-    if (explicitFormat.type === "json_schema" && !explicitFormat.json_schema?.schema) {
-      throw new Error(
-        "responseFormat json_schema requires a defined schema object"
-      );
-    }
-    return explicitFormat;
-  }
-  const schema = outputSchema || output_schema;
-  if (!schema) return void 0;
-  if (!schema.name || !schema.schema) {
-    throw new Error("outputSchema requires both name and schema");
-  }
-  return {
-    type: "json_schema",
-    json_schema: {
-      name: schema.name,
-      schema: schema.schema,
-      ...typeof schema.strict === "boolean" ? { strict: schema.strict } : {}
-    }
-  };
-};
+  return choice;
+}
 async function invokeLLM(params) {
-  assertApiKey();
-  const {
-    messages,
-    tools,
-    toolChoice,
-    tool_choice,
-    outputSchema,
-    output_schema,
-    responseFormat,
-    response_format
-  } = params;
-  const payload = {
-    model: "gemini-2.5-flash",
-    messages: messages.map(normalizeMessage)
+  const schema = params.outputSchema || params.output_schema;
+  const responseFormat = params.responseFormat || params.response_format || (schema ? { type: "json_schema", json_schema: schema } : void 0);
+  const request = {
+    model: ENV.azureOpenaiDeployment,
+    messages: params.messages.map(normalizeMessage),
+    max_completion_tokens: params.maxTokens ?? params.max_tokens ?? 4096
   };
-  if (tools && tools.length > 0) {
-    payload.tools = tools;
-  }
-  const normalizedToolChoice = normalizeToolChoice(
-    toolChoice || tool_choice,
-    tools
+  if (params.tools?.length) request.tools = params.tools;
+  const toolChoice = normalizeToolChoice(
+    params.toolChoice || params.tool_choice,
+    params.tools
   );
-  if (normalizedToolChoice) {
-    payload.tool_choice = normalizedToolChoice;
-  }
-  payload.max_tokens = 32768;
-  payload.thinking = {
-    "budget_tokens": 128
-  };
-  const normalizedResponseFormat = normalizeResponseFormat({
-    responseFormat,
-    response_format,
-    outputSchema,
-    output_schema
-  });
-  if (normalizedResponseFormat) {
-    payload.response_format = normalizedResponseFormat;
-  }
-  const response = await fetch(resolveApiUrl(), {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      authorization: `Bearer ${ENV2.forgeApiKey}`
-    },
-    body: JSON.stringify(payload)
-  });
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(
-      `LLM invoke failed: ${response.status} ${response.statusText} \u2013 ${errorText}`
-    );
-  }
-  return await response.json();
+  if (toolChoice) request.tool_choice = toolChoice;
+  if (responseFormat) request.response_format = responseFormat;
+  const response = await getAzureOpenAI().chat.completions.create(
+    request
+  );
+  return response;
 }
 
+// server/imageGeneration.ts
+import { toFile } from "openai";
+
 // server/storage.ts
-function getStorageConfig() {
-  const baseUrl = ENV2.forgeApiUrl;
-  const apiKey = ENV2.forgeApiKey;
-  if (!baseUrl || !apiKey) {
+import {
+  BlobSASPermissions,
+  BlobServiceClient
+} from "@azure/storage-blob";
+var SAS_TTL_MS = 10 * 365 * 24 * 60 * 60 * 1e3;
+var container = null;
+async function getContainer() {
+  if (container) return container;
+  if (!ENV.azureStorageConnectionString) {
     throw new Error(
-      "Storage proxy credentials missing: set BUILT_IN_FORGE_API_URL and BUILT_IN_FORGE_API_KEY"
+      "Azure Storage no est\xE1 configurado: define AZURE_STORAGE_CONNECTION_STRING"
     );
   }
-  return { baseUrl: baseUrl.replace(/\/+$/, ""), apiKey };
-}
-function buildUploadUrl(baseUrl, relKey) {
-  const url = new URL("v1/storage/upload", ensureTrailingSlash(baseUrl));
-  url.searchParams.set("path", normalizeKey(relKey));
-  return url;
-}
-function ensureTrailingSlash(value) {
-  return value.endsWith("/") ? value : `${value}/`;
+  const service = BlobServiceClient.fromConnectionString(
+    ENV.azureStorageConnectionString
+  );
+  const client2 = service.getContainerClient(ENV.azureStorageContainer);
+  await client2.createIfNotExists();
+  container = client2;
+  return client2;
 }
 function normalizeKey(relKey) {
   return relKey.replace(/^\/+/, "");
 }
-function toFormData(data, contentType, fileName) {
-  const blob = typeof data === "string" ? new Blob([data], { type: contentType }) : new Blob([data], { type: contentType });
-  const form = new FormData();
-  form.append("file", blob, fileName || "file");
-  return form;
-}
-function buildAuthHeaders(apiKey) {
-  return { Authorization: `Bearer ${apiKey}` };
+async function readUrl(key) {
+  const blob = (await getContainer()).getBlockBlobClient(key);
+  return blob.generateSasUrl({
+    permissions: BlobSASPermissions.parse("r"),
+    expiresOn: new Date(Date.now() + SAS_TTL_MS)
+  });
 }
 async function storagePut(relKey, data, contentType = "application/octet-stream") {
-  const { baseUrl, apiKey } = getStorageConfig();
   const key = normalizeKey(relKey);
-  const uploadUrl = buildUploadUrl(baseUrl, key);
-  const formData = toFormData(data, contentType, key.split("/").pop() ?? key);
-  const response = await fetch(uploadUrl, {
-    method: "POST",
-    headers: buildAuthHeaders(apiKey),
-    body: formData
+  const body = typeof data === "string" ? Buffer.from(data) : Buffer.from(data);
+  const blob = (await getContainer()).getBlockBlobClient(key);
+  await blob.uploadData(body, {
+    blobHTTPHeaders: {
+      blobContentType: contentType,
+      blobCacheControl: "public, max-age=31536000, immutable"
+    }
   });
-  if (!response.ok) {
-    const message = await response.text().catch(() => response.statusText);
-    throw new Error(
-      `Storage upload failed (${response.status} ${response.statusText}): ${message}`
-    );
-  }
-  const url = (await response.json()).url;
-  return { key, url };
+  return { key, url: await readUrl(key) };
 }
 
 // server/watermark.ts
 import fs from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
-var LINCE_LOGO = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032363896/hbjWdClTNpqzvCwu.png";
+var LINCE_LOGO = "/assets/hbjWdClTNpqzvCwu.png";
 var cachedLogoBuffer = null;
 async function getLogoBuffer() {
   if (cachedLogoBuffer) return cachedLogoBuffer;
@@ -1311,56 +1219,57 @@ async function addWatermark(imageBuffer) {
   return result;
 }
 
-// server/_core/imageGeneration.ts
-async function generateImage(options) {
-  if (!ENV2.forgeApiUrl) {
-    throw new Error("BUILT_IN_FORGE_API_URL is not configured");
-  }
-  if (!ENV2.forgeApiKey) {
-    throw new Error("BUILT_IN_FORGE_API_KEY is not configured");
-  }
-  const baseUrl = ENV2.forgeApiUrl.endsWith("/") ? ENV2.forgeApiUrl : `${ENV2.forgeApiUrl}/`;
-  const fullUrl = new URL(
-    "images.v1.ImageService/GenerateImage",
-    baseUrl
-  ).toString();
-  const response = await fetch(fullUrl, {
-    method: "POST",
-    headers: {
-      accept: "application/json",
-      "content-type": "application/json",
-      "connect-protocol-version": "1",
-      authorization: `Bearer ${ENV2.forgeApiKey}`
-    },
-    body: JSON.stringify({
-      prompt: options.prompt,
-      original_images: options.originalImages || []
-    })
-  });
-  if (!response.ok) {
-    const detail = await response.text().catch(() => "");
-    throw new Error(
-      `Image generation request failed (${response.status} ${response.statusText})${detail ? `: ${detail}` : ""}`
-    );
-  }
-  const result = await response.json();
-  const base64Data = result.image.b64Json;
-  const rawBuffer = Buffer.from(base64Data, "base64");
+// server/imageGeneration.ts
+async function loadImage(img, index2) {
+  const mimeType = img.mimeType || "image/png";
   let buffer;
-  try {
-    buffer = await addWatermark(rawBuffer);
-  } catch (err) {
-    console.error("[Watermark] Failed to apply watermark, using original:", err);
-    buffer = rawBuffer;
+  if (img.b64Json) {
+    buffer = Buffer.from(img.b64Json, "base64");
+  } else if (img.url) {
+    const res = await fetch(img.url);
+    if (!res.ok) throw new Error(`No se pudo descargar la imagen original (${res.status})`);
+    buffer = Buffer.from(await res.arrayBuffer());
+  } else {
+    throw new Error("Imagen original sin url ni datos");
   }
-  const { url } = await storagePut(
-    `generated/${Date.now()}.png`,
-    buffer,
-    "image/png"
-  );
-  return {
-    url
-  };
+  const ext = mimeType.split("/")[1] || "png";
+  return toFile(buffer, `original-${index2}.${ext}`, { type: mimeType });
+}
+async function generateImage(options) {
+  const ai = getAzureOpenAI();
+  const model = ENV.azureOpenaiImageDeployment;
+  const sources = options.originalImages?.filter((i) => i.url || i.b64Json) ?? [];
+  try {
+    const response = sources.length ? await ai.images.edit({
+      model,
+      prompt: options.prompt,
+      image: await Promise.all(sources.map(loadImage)),
+      size: "1024x1024"
+    }) : await ai.images.generate({
+      model,
+      prompt: options.prompt,
+      n: 1,
+      size: "1024x1024"
+    });
+    const b64 = response.data?.[0]?.b64_json;
+    if (!b64) throw new Error("No se recibi\xF3 imagen del servicio.");
+    const raw = Buffer.from(b64, "base64");
+    let buffer = raw;
+    try {
+      buffer = await addWatermark(raw);
+    } catch (err) {
+      console.error("[Watermark] No se pudo aplicar, se usa la original:", err);
+    }
+    const { url } = await storagePut(
+      `generated/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.png`,
+      buffer,
+      "image/png"
+    );
+    return { url };
+  } catch (error) {
+    console.error("[ImageGen] Error:", error.message);
+    throw new Error(`Error al generar imagen: ${error.message}`);
+  }
 }
 
 // server/routers.ts

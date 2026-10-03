@@ -12,31 +12,74 @@ DBUSER=lince_admin
 DBHOST="$DB.mysql.database.azure.com"
 CONTACT_EMAIL="${VAPID_CONTACT_EMAIL:-cristobalalisteg@gmail.com}"
 
+# Chat models in order of preference; all work with the app's chat-completions calls.
+CHAT_MODELS="gpt-4.1 gpt-4o gpt-5-mini gpt-5 gpt-4.1-mini gpt-4o-mini"
+IMAGE_MODELS="gpt-image-1 gpt-image-1-mini"
+
+find_deployment() { # $1=rg $2=account $3=space-separated model names
+  local m d
+  for m in $3; do
+    d=$(az cognitiveservices account deployment list -g "$1" -n "$2" \
+      --query "[?properties.model.name=='$m'].name | [0]" -o tsv 2>/dev/null || true)
+    if [ -n "$d" ]; then echo "$d"; return; fi
+  done
+}
+
+create_deployment() { # $1=rg $2=account $3=space-separated model names; prints deployment name
+  local m v
+  for m in $3; do
+    v=$(az cognitiveservices account list-models -g "$1" -n "$2" \
+      --query "[?name=='$m'].version | sort(@) | [-1]" -o tsv 2>/dev/null || true)
+    [ -z "$v" ] && continue
+    for SKU in GlobalStandard Standard; do
+      if az cognitiveservices account deployment create -g "$1" -n "$2" \
+        --deployment-name "$m" --model-name "$m" --model-version "$v" \
+        --model-format OpenAI --sku-name "$SKU" --sku-capacity 50 -o none 2>/dev/null; then
+        echo "$m"; return
+      fi
+    done
+  done
+}
+
 echo "== 1/4 Azure OpenAI"
 mapfile -t OAI < <(az cognitiveservices account list \
-  --query "[?kind=='OpenAI'].[name,resourceGroup,properties.endpoint]" -o tsv)
+  --query "[?kind=='OpenAI' || kind=='AIServices'].[name,resourceGroup,properties.endpoint]" -o tsv)
 if [ "${#OAI[@]}" -eq 0 ]; then
   echo "   No hay ningún recurso Azure OpenAI en la suscripción. Se omite este paso."
-  echo "   Crea uno en el portal y luego ejecuta:"
-  echo "   az webapp config appsettings set -g $RG -n $APP --settings AZURE_OPENAI_ENDPOINT=... AZURE_OPENAI_KEY=... AZURE_OPENAI_DEPLOYMENT=gpt-4o"
 else
-  OAI_NAME=""; OAI_RG=""; OAI_EP=""; OAI_DEPLOY=""
+  IFS=$'\t' read -r OAI_NAME OAI_RG OAI_EP <<<"${OAI[0]}"
   for LINE in "${OAI[@]}"; do
     IFS=$'\t' read -r N R E <<<"$LINE"
-    D=$(az cognitiveservices account deployment list -g "$R" -n "$N" \
-      --query "[?contains(properties.model.name,'gpt-4o')].name | [0]" -o tsv 2>/dev/null || true)
-    echo "   - $N ($R): deployment gpt-4o = ${D:-ninguno}"
-    if [ -n "$D" ] && [ -z "$OAI_NAME" ]; then
-      OAI_NAME=$N; OAI_RG=$R; OAI_EP=$E; OAI_DEPLOY=$D
+    echo "   - $N ($R). Deployments actuales:"
+    az cognitiveservices account deployment list -g "$R" -n "$N" \
+      --query "[].{deployment:name, modelo:properties.model.name}" -o tsv 2>/dev/null | sed 's/^/       /' || true
+    if [ -n "$(find_deployment "$R" "$N" "$CHAT_MODELS")" ]; then
+      OAI_NAME=$N; OAI_RG=$R; OAI_EP=$E
+      break
     fi
   done
-  if [ -z "$OAI_NAME" ]; then
-    echo "   Ningún recurso tiene un deployment gpt-4o. Créalo en Azure AI Foundry y relanza."
+  echo "   Recurso elegido: $OAI_NAME"
+
+  CHAT=$(find_deployment "$OAI_RG" "$OAI_NAME" "$CHAT_MODELS")
+  if [ -z "$CHAT" ]; then
+    echo "   No hay modelo de chat desplegado; creando uno..."
+    CHAT=$(create_deployment "$OAI_RG" "$OAI_NAME" "$CHAT_MODELS")
+  fi
+  IMAGE=$(find_deployment "$OAI_RG" "$OAI_NAME" "$IMAGE_MODELS")
+  if [ -z "$IMAGE" ]; then
+    echo "   No hay modelo de imagen desplegado; intentando crear gpt-image-1..."
+    IMAGE=$(create_deployment "$OAI_RG" "$OAI_NAME" "$IMAGE_MODELS")
+  fi
+
+  if [ -z "$CHAT" ]; then
+    echo "   No se pudo crear un deployment de chat en $OAI_NAME (región o cuota)."
+    echo "   Créalo a mano en https://ai.azure.com (modelo gpt-4.1 o gpt-4o) y relanza este script."
   else
     KEY=$(az cognitiveservices account keys list -g "$OAI_RG" -n "$OAI_NAME" --query key1 -o tsv)
-    az webapp config appsettings set -g "$RG" -n "$APP" -o none --settings \
-      AZURE_OPENAI_ENDPOINT="$OAI_EP" AZURE_OPENAI_KEY="$KEY" AZURE_OPENAI_DEPLOYMENT="$OAI_DEPLOY"
-    echo "   Configurado: $OAI_NAME / $OAI_DEPLOY"
+    SETTINGS=(AZURE_OPENAI_ENDPOINT="$OAI_EP" AZURE_OPENAI_KEY="$KEY" AZURE_OPENAI_DEPLOYMENT="$CHAT")
+    [ -n "$IMAGE" ] && SETTINGS+=(AZURE_OPENAI_IMAGE_DEPLOYMENT="$IMAGE")
+    az webapp config appsettings set -g "$RG" -n "$APP" -o none --settings "${SETTINGS[@]}"
+    echo "   Configurado: chat=$CHAT imagen=${IMAGE:-NINGUNO (generación de imágenes desactivada)}"
   fi
 fi
 
@@ -56,17 +99,21 @@ else
 fi
 
 echo "== 3/4 Esquema de la base de datos"
-MYIP=$(curl -s https://api.ipify.org)
-az mysql flexible-server firewall-rule create -g "$RG" -n "$DB" -r cloudshell \
-  --start-ip-address "$MYIP" --end-ip-address "$MYIP" -o none 2>/dev/null || true
-read -r -s -p "   Contraseña de MySQL ($DBUSER): " DBPASS; echo
-MYSQL="mysql -h $DBHOST -u $DBUSER -p$DBPASS --ssl-mode=REQUIRED $DBNAME"
-TABLES=$($MYSQL -N -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='$DBNAME'")
-if [ "$TABLES" -ge 9 ]; then
-  echo "   La base de datos ya tiene $TABLES tablas; no se importa nada."
+if [ "${SKIP_DB:-0}" = "1" ]; then
+  echo "   Omitido (SKIP_DB=1)."
 else
-  $MYSQL < schema.sql
-  echo "   schema.sql importado."
+  MYIP=$(curl -s https://api.ipify.org)
+  az mysql flexible-server firewall-rule create -g "$RG" -n "$DB" -r cloudshell \
+    --start-ip-address "$MYIP" --end-ip-address "$MYIP" -o none 2>/dev/null || true
+  read -r -s -p "   Contraseña de MySQL ($DBUSER): " DBPASS; echo
+  MYSQL="mysql -h $DBHOST -u $DBUSER -p$DBPASS --ssl-mode=REQUIRED $DBNAME"
+  TABLES=$($MYSQL -N -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='$DBNAME'")
+  if [ "$TABLES" -ge 9 ]; then
+    echo "   La base de datos ya tiene $TABLES tablas; no se importa nada."
+  else
+    $MYSQL < schema.sql
+    echo "   schema.sql importado."
+  fi
 fi
 
 echo "== 4/4 Reinicio de la app"

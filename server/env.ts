@@ -13,6 +13,7 @@ export const ENV = {
   azureOpenaiEndpoint: process.env.AZURE_OPENAI_ENDPOINT ?? "",
   azureOpenaiKey: process.env.AZURE_OPENAI_KEY ?? "",
   azureOpenaiDeployment: process.env.AZURE_OPENAI_DEPLOYMENT ?? "gpt-4o",
+  azureOpenaiImageDeployment: process.env.AZURE_OPENAI_IMAGE_DEPLOYMENT ?? "gpt-image-1",
 
   // Azure Blob Storage
   azureStorageConnectionString: process.env.AZURE_STORAGE_CONNECTION_STRING ?? "",

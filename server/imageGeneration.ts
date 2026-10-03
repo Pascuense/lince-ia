@@ -1,26 +1,8 @@
-/**
- * LINCE — Image Generation via Azure OpenAI DALL-E
- * Reemplaza la integración con forge.manus.im/images
- */
-import { AzureOpenAI } from "openai";
-import { storagePut } from "./storage";
+import { toFile } from "openai";
 import { ENV } from "./env";
-
-let client: AzureOpenAI | null = null;
-
-function getClient(): AzureOpenAI {
-  if (!client) {
-    if (!ENV.azureOpenaiEndpoint || !ENV.azureOpenaiKey) {
-      throw new Error("Azure OpenAI no está configurado para generación de imágenes.");
-    }
-    client = new AzureOpenAI({
-      endpoint: ENV.azureOpenaiEndpoint,
-      apiKey: ENV.azureOpenaiKey,
-      apiVersion: "2024-08-01-preview",
-    });
-  }
-  return client;
-}
+import { getAzureOpenAI } from "./llm";
+import { storagePut } from "./storage";
+import { addWatermark } from "./watermark";
 
 export type GenerateImageOptions = {
   prompt: string;
@@ -35,36 +17,64 @@ export type GenerateImageResponse = {
   url?: string;
 };
 
-/**
- * Generate an image using Azure OpenAI DALL-E.
- * Falls back gracefully if the deployment doesn't support image generation.
- */
+async function loadImage(
+  img: NonNullable<GenerateImageOptions["originalImages"]>[number],
+  index: number
+) {
+  const mimeType = img.mimeType || "image/png";
+  let buffer: Buffer;
+  if (img.b64Json) {
+    buffer = Buffer.from(img.b64Json, "base64");
+  } else if (img.url) {
+    const res = await fetch(img.url);
+    if (!res.ok) throw new Error(`No se pudo descargar la imagen original (${res.status})`);
+    buffer = Buffer.from(await res.arrayBuffer());
+  } else {
+    throw new Error("Imagen original sin url ni datos");
+  }
+  const ext = mimeType.split("/")[1] || "png";
+  return toFile(buffer, `original-${index}.${ext}`, { type: mimeType });
+}
+
+// gpt-image models always return base64; with originalImages the call becomes an edit.
 export async function generateImage(
   options: GenerateImageOptions
 ): Promise<GenerateImageResponse> {
-  const azureClient = getClient();
+  const ai = getAzureOpenAI();
+  const model = ENV.azureOpenaiImageDeployment;
+  const sources = options.originalImages?.filter(i => i.url || i.b64Json) ?? [];
 
   try {
-    const response = await azureClient.images.generate({
-      model: "dall-e-3",
-      prompt: options.prompt,
-      n: 1,
-      size: "1024x1024",
-      response_format: "b64_json",
-    });
+    const response = sources.length
+      ? await ai.images.edit({
+          model,
+          prompt: options.prompt,
+          image: await Promise.all(sources.map(loadImage)),
+          size: "1024x1024",
+        })
+      : await ai.images.generate({
+          model,
+          prompt: options.prompt,
+          n: 1,
+          size: "1024x1024",
+        });
 
-    const imageData = response.data?.[0];
-    if (!imageData?.b64_json) {
-      throw new Error("No se recibió imagen del servicio.");
+    const b64 = response.data?.[0]?.b64_json;
+    if (!b64) throw new Error("No se recibió imagen del servicio.");
+
+    const raw = Buffer.from(b64, "base64");
+    let buffer: Buffer = raw;
+    try {
+      buffer = await addWatermark(raw);
+    } catch (err) {
+      console.error("[Watermark] No se pudo aplicar, se usa la original:", err);
     }
 
-    const buffer = Buffer.from(imageData.b64_json, "base64");
     const { url } = await storagePut(
-      `generated/${Date.now()}.png`,
+      `generated/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.png`,
       buffer,
       "image/png"
     );
-
     return { url };
   } catch (error: any) {
     console.error("[ImageGen] Error:", error.message);

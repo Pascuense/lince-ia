@@ -3,7 +3,7 @@ import { appRouter } from "./routers";
 import type { TrpcContext } from "./_core/context";
 
 // Mock the LLM module - return structured JSON matching the new response_format
-vi.mock("./_core/llm", () => ({
+vi.mock("./llm", () => ({
   invokeLLM: vi.fn().mockResolvedValue({
     choices: [
       {
@@ -24,7 +24,7 @@ vi.mock("./_core/llm", () => ({
 }));
 
 // Mock the image generation module
-vi.mock("./_core/imageGeneration", () => ({
+vi.mock("./imageGeneration", () => ({
   generateImage: vi.fn().mockResolvedValue({
     url: "https://example.com/generated-image.png",
   }),
