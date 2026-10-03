@@ -31,8 +31,13 @@ export function useServerPush(playerId: number | null) {
   const updatePrefsMut = trpc.pushNotifications.updatePreferences.useMutation();
   const sendTestMut = trpc.pushNotifications.sendTest.useMutation();
 
-  // Get VAPID key from env (injected by Vite)
-  const vapidPublicKey = (import.meta as any).env?.VITE_VAPID_PUBLIC_KEY || '';
+  // Build-time key if present, otherwise the server's runtime key (no rebuild needed to rotate it)
+  const buildTimeKey: string = (import.meta as any).env?.VITE_VAPID_PUBLIC_KEY || '';
+  const vapidKeyQuery = trpc.pushNotifications.getVapidKey.useQuery(undefined, {
+    enabled: !buildTimeKey,
+    staleTime: Infinity,
+  });
+  const vapidPublicKey = buildTimeKey || vapidKeyQuery.data?.vapidPublicKey || '';
 
   // Check if push is supported
   const isSupported = typeof window !== 'undefined'

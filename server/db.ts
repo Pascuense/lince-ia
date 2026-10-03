@@ -6,11 +6,35 @@ import bcrypt from "bcryptjs";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
+// mysql2 JSON-parses each query param, and a non-JSON `ssl` value is looked up as a
+// named SSL profile ("Unknown SSL profile"). Accept the relaxed `ssl={rejectUnauthorized:true}`
+// form and require TLS for Azure MySQL, which enforces secure transport.
+export function normalizeDatabaseUrl(raw: string): string {
+  let url: URL;
+  try {
+    url = new URL(raw);
+  } catch {
+    return raw;
+  }
+  const ssl = url.searchParams.get("ssl");
+  if (ssl !== null) {
+    try {
+      JSON.parse(ssl);
+    } catch {
+      const reject = !/rejectUnauthorized\s*:\s*false/i.test(ssl);
+      url.searchParams.set("ssl", JSON.stringify({ rejectUnauthorized: reject }));
+    }
+  } else if (url.hostname.endsWith(".mysql.database.azure.com")) {
+    url.searchParams.set("ssl", JSON.stringify({ rejectUnauthorized: true }));
+  }
+  return url.toString();
+}
+
 // Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      _db = drizzle(process.env.DATABASE_URL);
+      _db = drizzle(normalizeDatabaseUrl(process.env.DATABASE_URL));
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;

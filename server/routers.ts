@@ -2241,7 +2241,7 @@ const pushNotificationsRouter = router({
 
   /** Get VAPID public key for client subscription */
   getVapidKey: publicProcedure.query(() => {
-    return { vapidPublicKey: process.env.VITE_VAPID_PUBLIC_KEY || "" };
+    return { vapidPublicKey: process.env.VAPID_PUBLIC_KEY || process.env.VITE_VAPID_PUBLIC_KEY || "" };
   }),
 
   /** Admin: trigger streak reminders manually */

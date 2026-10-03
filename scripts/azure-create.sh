@@ -51,7 +51,7 @@ az webapp config appsettings set -g "$RG" -n "$APP" -o none --settings \
   ENABLE_ORYX_BUILD=false \
   NODE_ENV=production \
   PORT=8080 \
-  DATABASE_URL="mysql://$DBUSER:$DBPASS@$DB.mysql.database.azure.com:3306/$DBNAME?ssl={rejectUnauthorized:true}" \
+  DATABASE_URL="mysql://$DBUSER:$DBPASS@$DB.mysql.database.azure.com:3306/$DBNAME?ssl={\"rejectUnauthorized\":true}" \
   JWT_SECRET="$(openssl rand -hex 32)" \
   AZURE_STORAGE_CONNECTION_STRING="$CONN" \
   AZURE_STORAGE_CONTAINER="$CONTAINER"

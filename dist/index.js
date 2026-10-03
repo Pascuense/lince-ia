@@ -286,10 +286,30 @@ var ENV2 = {
 // server/db.ts
 import bcrypt from "bcryptjs";
 var _db = null;
+function normalizeDatabaseUrl(raw) {
+  let url;
+  try {
+    url = new URL(raw);
+  } catch {
+    return raw;
+  }
+  const ssl = url.searchParams.get("ssl");
+  if (ssl !== null) {
+    try {
+      JSON.parse(ssl);
+    } catch {
+      const reject = !/rejectUnauthorized\s*:\s*false/i.test(ssl);
+      url.searchParams.set("ssl", JSON.stringify({ rejectUnauthorized: reject }));
+    }
+  } else if (url.hostname.endsWith(".mysql.database.azure.com")) {
+    url.searchParams.set("ssl", JSON.stringify({ rejectUnauthorized: true }));
+  }
+  return url.toString();
+}
 async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      _db = drizzle(process.env.DATABASE_URL);
+      _db = drizzle(normalizeDatabaseUrl(process.env.DATABASE_URL));
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
@@ -9251,7 +9271,7 @@ var pushNotificationsRouter = router({
   }),
   /** Get VAPID public key for client subscription */
   getVapidKey: publicProcedure.query(() => {
-    return { vapidPublicKey: process.env.VITE_VAPID_PUBLIC_KEY || "" };
+    return { vapidPublicKey: process.env.VAPID_PUBLIC_KEY || process.env.VITE_VAPID_PUBLIC_KEY || "" };
   }),
   /** Admin: trigger streak reminders manually */
   triggerStreakReminders: publicProcedure.mutation(async ({ ctx }) => {

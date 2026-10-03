@@ -30,13 +30,19 @@ create_deployment() { # $1=rg $2=account $3=space-separated model names; prints 
   for m in $3; do
     v=$(az cognitiveservices account list-models -g "$1" -n "$2" \
       --query "[?name=='$m'].version | sort(@) | [-1]" -o tsv 2>/dev/null || true)
-    [ -z "$v" ] && continue
+    if [ -z "$v" ]; then
+      echo "      $m: no disponible en este recurso/región" >&2
+      continue
+    fi
     for SKU in GlobalStandard Standard; do
-      if az cognitiveservices account deployment create -g "$1" -n "$2" \
+      local cap=50
+      case "$m" in gpt-image*) cap=1 ;; esac
+      if out=$(az cognitiveservices account deployment create -g "$1" -n "$2" \
         --deployment-name "$m" --model-name "$m" --model-version "$v" \
-        --model-format OpenAI --sku-name "$SKU" --sku-capacity 50 -o none 2>/dev/null; then
+        --model-format OpenAI --sku-name "$SKU" --sku-capacity "$cap" -o none 2>&1); then
         echo "$m"; return
       fi
+      echo "      $m ($SKU): $(echo "$out" | grep -v '^WARNING' | tail -1)" >&2
     done
   done
 }
@@ -106,7 +112,9 @@ else
   az mysql flexible-server firewall-rule create -g "$RG" -n "$DB" -r cloudshell \
     --start-ip-address "$MYIP" --end-ip-address "$MYIP" -o none 2>/dev/null || true
   read -r -s -p "   Contraseña de MySQL ($DBUSER): " DBPASS; echo
-  MYSQL="mysql -h $DBHOST -u $DBUSER -p$DBPASS --ssl-mode=REQUIRED $DBNAME"
+  # Cloud Shell ships the MariaDB client, which only understands --ssl
+  if mysql --version 2>/dev/null | grep -qi mariadb; then SSLFLAG="--ssl"; else SSLFLAG="--ssl-mode=REQUIRED"; fi
+  MYSQL="mysql -h $DBHOST -u $DBUSER -p$DBPASS $SSLFLAG $DBNAME"
   TABLES=$($MYSQL -N -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='$DBNAME'")
   if [ "$TABLES" -ge 9 ]; then
     echo "   La base de datos ya tiene $TABLES tablas; no se importa nada."
