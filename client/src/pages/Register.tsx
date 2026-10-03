@@ -33,6 +33,11 @@ const T: Record<string, Record<string, string>> = {
     alreadyAccount: "¿Ya tienes cuenta?",
     errorEmail: "Escribe un email válido",
     errorName: "Escribe tu nombre",
+    passwordLabel: "Contraseña",
+    passwordPlaceholder: "Mínimo 8 caracteres",
+    confirmLabel: "Repite la contraseña",
+    errorPassword: "La contraseña debe tener al menos 8 caracteres",
+    errorConfirm: "Las contraseñas no coinciden",
     adminAccess: "Acceso admin",
     explore: "Explora, aprende y diviértete con IA",
   },
@@ -60,6 +65,11 @@ const T: Record<string, Record<string, string>> = {
     alreadyAccount: "Already have an account?",
     errorEmail: "Enter a valid email",
     errorName: "Enter your name",
+    passwordLabel: "Password",
+    passwordPlaceholder: "At least 8 characters",
+    confirmLabel: "Repeat the password",
+    errorPassword: "Password must be at least 8 characters",
+    errorConfirm: "Passwords do not match",
     adminAccess: "Admin access",
     explore: "Explore, learn and have fun with AI",
   },
@@ -87,6 +97,11 @@ const T: Record<string, Record<string, string>> = {
     alreadyAccount: "已有账户？",
     errorEmail: "请输入有效邮箱",
     errorName: "请输入你的名字",
+    passwordLabel: "密码",
+    passwordPlaceholder: "至少8个字符",
+    confirmLabel: "再次输入密码",
+    errorPassword: "密码至少需要8个字符",
+    errorConfirm: "两次输入的密码不一致",
     adminAccess: "管理员访问",
     explore: "探索、学习并享受AI的乐趣",
   },
@@ -108,6 +123,8 @@ export default function Register() {
   // Admin form state
   const [realName, setRealName] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const registerMutation = trpc.gamePlayer.register.useMutation({
@@ -151,6 +168,8 @@ export default function Register() {
     const newErrors: Record<string, string> = {};
     if (!realName.trim() || realName.trim().length < 2) newErrors.realName = t.errorName;
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) newErrors.email = t.errorEmail;
+    if (password.length < 8) newErrors.password = t.errorPassword;
+    else if (password !== confirmPassword) newErrors.confirmPassword = t.errorConfirm;
     if (!ageConfirmed) newErrors.age = t.errorAge;
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
@@ -164,6 +183,7 @@ export default function Register() {
     registerMutation.mutate({
       email: email.toLowerCase().trim(),
       realName: realName.trim(),
+      password,
       language: lang,
     });
   };
@@ -297,6 +317,36 @@ export default function Register() {
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white text-lg placeholder-gray-500 focus:border-[#00E5FF] focus:ring-1 focus:ring-[#00E5FF] outline-none transition-colors"
                   />
                   {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
+                </div>
+
+                <div>
+                  <label htmlFor="password" className="block text-sm font-bold text-gray-200 mb-1.5">{t.passwordLabel}</label>
+                  <input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => { setPassword(e.target.value); setErrors(prev => ({ ...prev, password: "" })); }}
+                    placeholder={t.passwordPlaceholder}
+                    autoComplete="new-password"
+                    minLength={8}
+                    maxLength={128}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white text-lg placeholder-gray-500 focus:border-[#00E5FF] focus:ring-1 focus:ring-[#00E5FF] outline-none transition-colors"
+                  />
+                  {errors.password && <p className="text-red-400 text-xs mt-1">{errors.password}</p>}
+                </div>
+
+                <div>
+                  <label htmlFor="confirmPassword" className="block text-sm font-bold text-gray-200 mb-1.5">{t.confirmLabel}</label>
+                  <input
+                    id="confirmPassword"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => { setConfirmPassword(e.target.value); setErrors(prev => ({ ...prev, confirmPassword: "" })); }}
+                    autoComplete="new-password"
+                    maxLength={128}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white text-lg placeholder-gray-500 focus:border-[#00E5FF] focus:ring-1 focus:ring-[#00E5FF] outline-none transition-colors"
+                  />
+                  {errors.confirmPassword && <p className="text-red-400 text-xs mt-1">{errors.confirmPassword}</p>}
                 </div>
 
                 {/* Age confirmation */}

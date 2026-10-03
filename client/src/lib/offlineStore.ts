@@ -19,6 +19,8 @@ export interface SyncQueueItem {
   payload: Record<string, any>;
   playerId: number;
   timestamp: number;          // Unix ms
+  /** Game session token, kept so the service worker (no localStorage) can authenticate the sync */
+  gameToken?: string;
   retries: number;
   status: 'pending' | 'syncing' | 'failed';
 }
@@ -83,6 +85,7 @@ export async function addToSyncQueue(item: Omit<SyncQueueItem, 'id' | 'retries' 
     const store = tx.objectStore(SYNC_QUEUE_STORE);
     const request = store.add({
       ...item,
+      gameToken: item.gameToken ?? localStorage.getItem('lince-game-token') ?? undefined,
       retries: 0,
       status: 'pending',
     });
@@ -286,9 +289,13 @@ export async function processSyncQueue(): Promise<{ synced: number; failed: numb
       const mergedPayload = mergeProgressActions(playerId, items);
 
       // Send batch sync request
+      const gameToken = localStorage.getItem('lince-game-token');
       const response = await fetch('/api/trpc/gamePlayer.batchSyncProgress', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(gameToken ? { 'x-game-token': gameToken } : {}),
+        },
         credentials: 'include',
         body: JSON.stringify({ json: mergedPayload }),
       });

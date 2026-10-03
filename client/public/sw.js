@@ -290,9 +290,13 @@ async function syncProgressFromSW() {
             timestamp: item.timestamp,
           }));
 
+        const gameToken = [...items].reverse().find((i) => i.gameToken)?.gameToken;
         const response = await fetch('/api/trpc/gamePlayer.batchSyncProgress', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            ...(gameToken ? { 'x-game-token': gameToken } : {}),
+          },
           credentials: 'include',
           body: JSON.stringify({
             json: { playerId: Number(playerId), actions },

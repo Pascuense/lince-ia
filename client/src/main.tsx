@@ -7,6 +7,7 @@ import { trpc } from "@/lib/trpc";
 import { UNAUTHED_ERR_MSG } from "@shared/const";
 import App from "./App";
 import { getLoginUrl } from "./const";
+import { handleExpiredGameSession, isGameSessionError, refreshGameToken } from "@/lib/gameSession";
 import "./index.css";
 
 // After a deploy, an open tab may request code chunks that no longer exist; reload once to pick up the new build
@@ -26,6 +27,11 @@ const queryClient = new QueryClient();
 const redirectToLoginIfUnauthorized = (error: unknown) => {
   if (!(error instanceof TRPCClientError)) return;
   if (typeof window === "undefined") return;
+
+  if (isGameSessionError(error.message)) {
+    handleExpiredGameSession();
+    return;
+  }
 
   const isUnauthorized = error.message === UNAUTHED_ERR_MSG;
 
@@ -71,6 +77,8 @@ const trpcClient = trpc.createClient({
     }),
   ],
 });
+
+void refreshGameToken();
 
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

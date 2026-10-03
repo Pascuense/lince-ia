@@ -7413,7 +7413,7 @@ setInterval(() => {
   });
 }, 3e4);
 var GAME_TOKEN_SECRET = new TextEncoder().encode(ENV2.cookieSecret + "-game-session");
-var GAME_TOKEN_EXPIRY = "7d";
+var GAME_TOKEN_EXPIRY = "30d";
 async function generateGameToken(playerId, username) {
   return new SignJWT({ playerId, username }).setProtectedHeader({ alg: "HS256" }).setIssuedAt().setExpirationTime(GAME_TOKEN_EXPIRY).sign(GAME_TOKEN_SECRET);
 }
@@ -8012,6 +8012,19 @@ Registro simplificado: ${!input.password ? "S\xCD" : "NO"}`
     };
   }),
   /** Login a game player — RATE LIMITED */
+  /** Reissue the game token while the current one is still valid (sliding session) */
+  refreshToken: publicProcedure.mutation(async ({ ctx }) => {
+    const token = ctx.req.headers["x-game-token"];
+    if (!token) {
+      throw new TRPCError3({ code: "UNAUTHORIZED", message: "Token de sesi\xF3n de juego requerido. Inicia sesi\xF3n." });
+    }
+    const session = await verifyGameToken(token);
+    const player = await getGamePlayerById(session.playerId);
+    if (!player) {
+      throw new TRPCError3({ code: "UNAUTHORIZED", message: "Sesi\xF3n de juego inv\xE1lida o expirada. Inicia sesi\xF3n de nuevo." });
+    }
+    return { gameToken: await generateGameToken(player.id, player.username) };
+  }),
   login: publicProcedure.input(
     z2.object({
       email: z2.string().email().max(320),
@@ -9582,7 +9595,7 @@ async function startServer() {
           styleSrc: ["'self'", "'unsafe-inline'"],
           imgSrc: ["'self'", "data:", "blob:", "https://*.blob.core.windows.net"],
           fontSrc: ["'self'", "data:"],
-          connectSrc: ["'self'", "https://*.blob.core.windows.net", "https://*.openai.azure.com"],
+          connectSrc: ["'self'", "https://*.blob.core.windows.net", "https://ipapi.co"],
           frameSrc: ["'none'"],
           objectSrc: ["'none'"],
           baseUri: ["'self'"],

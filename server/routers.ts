@@ -122,7 +122,7 @@ setInterval(() => {
 
 // ─── Security: Game Session Token (JWT) ───
 const GAME_TOKEN_SECRET = new TextEncoder().encode(ENV.cookieSecret + "-game-session");
-const GAME_TOKEN_EXPIRY = "7d"; // 7 days
+const GAME_TOKEN_EXPIRY = "30d"; // sliding: renewed on each app start via gamePlayer.refreshToken
 
 /** Generate a signed game session token for a player */
 async function generateGameToken(playerId: number, username: string): Promise<string> {
@@ -700,6 +700,20 @@ const gamePlayerRouter = router({
     }),
 
   /** Login a game player — RATE LIMITED */
+  /** Reissue the game token while the current one is still valid (sliding session) */
+  refreshToken: publicProcedure.mutation(async ({ ctx }) => {
+    const token = ctx.req.headers["x-game-token"] as string | undefined;
+    if (!token) {
+      throw new TRPCError({ code: "UNAUTHORIZED", message: "Token de sesión de juego requerido. Inicia sesión." });
+    }
+    const session = await verifyGameToken(token);
+    const player = await getGamePlayerById(session.playerId);
+    if (!player) {
+      throw new TRPCError({ code: "UNAUTHORIZED", message: "Sesión de juego inválida o expirada. Inicia sesión de nuevo." });
+    }
+    return { gameToken: await generateGameToken(player.id, player.username) };
+  }),
+
   login: publicProcedure
     .input(
       z.object({

@@ -52,9 +52,13 @@ export function GameLanguageSelector({ onLanguageChange, variant = "pill", class
       if (user) {
         const parsed = JSON.parse(user);
         if (parsed.id) {
+          const gameToken = localStorage.getItem('lince-game-token');
           fetch('/api/trpc/gamePlayer.setLanguage', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+              ...(gameToken ? { 'x-game-token': gameToken } : {}),
+            },
             credentials: 'include',
             body: JSON.stringify({ json: { playerId: Number(parsed.id), language: code } }),
           }).catch(() => {});

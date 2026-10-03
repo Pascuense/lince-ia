@@ -203,6 +203,12 @@ export function PRDLanguageProvider({ children }: { children: ReactNode }) {
       localStorage.setItem("lince-country", "es");
       return "es";
     }
+    // Migración: la detección antigua fallaba siempre y guardaba España; se vuelve a detectar
+    if (geoSource === "FALLBACK_ES") {
+      localStorage.removeItem("lince-country");
+      localStorage.removeItem("lince-geo-detected");
+      return "es";
+    }
     if (saved && ["default","es","cl","mx","ar","co","pe","en","zh","br","pt"].includes(saved)) return saved as AvatarCountry;
     return "es"; // España por defecto
   });
@@ -225,41 +231,34 @@ export function PRDLanguageProvider({ children }: { children: ReactNode }) {
       CU: "mx", DO: "mx", PR: "mx",
     };
 
-    // Intentar múltiples APIs de geolocalización (fallback chain)
+    const save = (mapped: AvatarCountry, source: string) => {
+      setCountry(mapped);
+      localStorage.setItem("lince-country", mapped);
+      localStorage.setItem("lince-geo-detected", source);
+    };
+
     const tryGeo = async () => {
       try {
-        // API 1: ip-api.com (gratis, sin key, HTTP)
-        const r1 = await fetch("http://ip-api.com/json/?fields=countryCode", { signal: AbortSignal.timeout(3000) });
-        if (r1.ok) {
-          const d1 = await r1.json();
-          if (d1.countryCode) {
-            const mapped = ISO_TO_AVATAR[d1.countryCode] || "es";
-            setCountry(mapped);
-            localStorage.setItem("lince-country", mapped);
-            localStorage.setItem("lince-geo-detected", d1.countryCode);
+        // ipapi.co (HTTPS, permitido en la CSP del servidor)
+        const r = await fetch("https://ipapi.co/json/", { signal: AbortSignal.timeout(3000) });
+        if (r.ok) {
+          const d = await r.json();
+          if (d.country_code && ISO_TO_AVATAR[d.country_code]) {
+            save(ISO_TO_AVATAR[d.country_code], d.country_code);
             return;
           }
         }
-      } catch { /* silently fail, try next */ }
+      } catch { /* sin red o bloqueado: se usa el idioma del navegador */ }
 
-      try {
-        // API 2: ipapi.co (gratis, HTTPS)
-        const r2 = await fetch("https://ipapi.co/json/", { signal: AbortSignal.timeout(3000) });
-        if (r2.ok) {
-          const d2 = await r2.json();
-          if (d2.country_code) {
-            const mapped = ISO_TO_AVATAR[d2.country_code] || "es";
-            setCountry(mapped);
-            localStorage.setItem("lince-country", mapped);
-            localStorage.setItem("lince-geo-detected", d2.country_code);
-            return;
-          }
+      // Respaldo sin red: región del idioma del navegador ("es-CL" → Chile)
+      for (const tag of navigator.languages ?? [navigator.language]) {
+        const region = tag.split("-")[1]?.toUpperCase();
+        if (region && ISO_TO_AVATAR[region]) {
+          save(ISO_TO_AVATAR[region], `LANG_${region}`);
+          return;
         }
-      } catch { /* silently fail */ }
-
-      // Si todo falla → España por defecto
-      localStorage.setItem("lince-country", "es");
-      localStorage.setItem("lince-geo-detected", "FALLBACK_ES");
+      }
+      // Sin datos: España solo en memoria, para reintentar en la próxima visita
     };
 
     tryGeo();
@@ -273,6 +272,7 @@ export function PRDLanguageProvider({ children }: { children: ReactNode }) {
   const handleSetCountry = useCallback((c: AvatarCountry) => {
     setCountry(c);
     localStorage.setItem("lince-country", c);
+    localStorage.removeItem("lince-geo-detected");
   }, []);
 
   const t = useCallback((key: string): string => {

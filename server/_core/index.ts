@@ -46,7 +46,7 @@ async function startServer() {
           styleSrc: ["'self'", "'unsafe-inline'"],
           imgSrc: ["'self'", "data:", "blob:", "https://*.blob.core.windows.net"],
           fontSrc: ["'self'", "data:"],
-          connectSrc: ["'self'", "https://*.blob.core.windows.net", "https://*.openai.azure.com"],
+          connectSrc: ["'self'", "https://*.blob.core.windows.net", "https://ipapi.co"],
           frameSrc: ["'none'"],
           objectSrc: ["'none'"],
           baseUri: ["'self'"],

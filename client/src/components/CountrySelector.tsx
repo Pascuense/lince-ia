@@ -136,7 +136,7 @@ export function CountrySelector({ compact = false, className = "" }: CountrySele
               {geoDetected ? (
                 <>
                   <MapPin className="w-3 h-3" />
-                  {t.detected} ({geoDetected})
+                  {t.detected} ({geoDetected.replace(/^LANG_/, "")})
                 </>
               ) : (
                 <>

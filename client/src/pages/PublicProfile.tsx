@@ -213,7 +213,7 @@ function generateProfileCard(
     // Footer
     ctx.font = "11px sans-serif";
     ctx.fillStyle = "#6B728088";
-    ctx.fillText("lince.manus.space · Aprende IA jugando", 24, H - 14);
+    ctx.fillText(`${window.location.host} · Aprende IA jugando`, 24, H - 14);
 
     // Load and draw avatar
     const img = new Image();

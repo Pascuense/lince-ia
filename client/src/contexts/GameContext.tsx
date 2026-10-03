@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useCallback, useEffect, useRef, type ReactNode } from "react";
+import { handleExpiredGameSession } from "@/lib/gameSession";
 import { addToSyncQueue, requestBackgroundSync, isIndexedDBAvailable, saveOfflineState } from "@/lib/offlineStore";
 
 // ─── Types ───────────────────────────────────────────────────────────
@@ -295,6 +296,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
       headers: fetchHeaders,
       credentials: 'include',
       body: JSON.stringify({ json: payload }),
+    }).then((res) => {
+      if (res.status === 401) handleExpiredGameSession();
     }).catch(async (err) => {
       console.warn('[GameContext] Failed to sync progress to server, queuing offline:', err);
       // Queue for background sync when offline
