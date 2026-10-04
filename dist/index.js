@@ -7081,13 +7081,19 @@ function resolveReferralFromResponse(responseText, referralKeys) {
 // server/pushService.ts
 import webpush from "web-push";
 import { eq as eq2, and as and2, sql as sql2 } from "drizzle-orm";
+var vapidReady = false;
 if (ENV2.vapidPublicKey && ENV2.vapidPrivateKey) {
-  webpush.setVapidDetails(
-    "mailto:cristobal@acnb.es",
-    ENV2.vapidPublicKey,
-    ENV2.vapidPrivateKey
-  );
-  console.log("[PushService] VAPID keys configured");
+  try {
+    webpush.setVapidDetails(
+      "mailto:cristobal@acnb.es",
+      ENV2.vapidPublicKey,
+      ENV2.vapidPrivateKey
+    );
+    vapidReady = true;
+    console.log("[PushService] VAPID keys configured");
+  } catch (err) {
+    console.error("[PushService] Invalid VAPID keys \u2014 push notifications disabled:", err.message);
+  }
 } else {
   console.warn("[PushService] VAPID keys not configured \u2014 push notifications disabled");
 }
@@ -7144,7 +7150,7 @@ async function updateSubscriptionPreferences(gamePlayerId, endpoint, preferences
   );
 }
 async function sendToSubscription(sub, payload) {
-  if (!ENV2.vapidPublicKey || !ENV2.vapidPrivateKey) return false;
+  if (!vapidReady) return false;
   const pushSubscription = {
     endpoint: sub.endpoint,
     keys: {

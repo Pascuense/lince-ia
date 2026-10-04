@@ -10,13 +10,20 @@ import { pushSubscriptions, gamePlayers } from "../drizzle/schema";
 import { eq, and, sql } from "drizzle-orm";
 
 // ─── Configure web-push with VAPID keys ───
+let vapidReady = false;
 if (ENV.vapidPublicKey && ENV.vapidPrivateKey) {
-  webpush.setVapidDetails(
-    "mailto:cristobal@acnb.es",
-    ENV.vapidPublicKey,
-    ENV.vapidPrivateKey
-  );
-  console.log("[PushService] VAPID keys configured");
+  // A malformed key must only disable push, never stop the whole server from booting
+  try {
+    webpush.setVapidDetails(
+      "mailto:cristobal@acnb.es",
+      ENV.vapidPublicKey,
+      ENV.vapidPrivateKey
+    );
+    vapidReady = true;
+    console.log("[PushService] VAPID keys configured");
+  } catch (err) {
+    console.error("[PushService] Invalid VAPID keys — push notifications disabled:", (err as Error).message);
+  }
 } else {
   console.warn("[PushService] VAPID keys not configured — push notifications disabled");
 }
@@ -159,7 +166,7 @@ async function sendToSubscription(
   sub: { id: number; endpoint: string; p256dh: string; auth: string },
   payload: PushPayload
 ): Promise<boolean> {
-  if (!ENV.vapidPublicKey || !ENV.vapidPrivateKey) return false;
+  if (!vapidReady) return false;
 
   const pushSubscription: webpush.PushSubscription = {
     endpoint: sub.endpoint,
