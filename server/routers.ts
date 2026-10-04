@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { ADMIN_EMAILS, COOKIE_NAME, NOT_ADMIN_ERR_MSG } from "@shared/const";
+import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
+import { adminProcedure, publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { invokeLLM } from "./llm";
 import { generateImage, isImageGenerationEnabled } from "./imageGeneration";
 import { storagePut } from "./storage";
@@ -166,20 +166,6 @@ function assertImageGenerationEnabled(): void {
       code: "PRECONDITION_FAILED",
       message: "La generación de imágenes no está disponible todavía.",
     });
-  }
-}
-
-/** Require a game session belonging to one of the platform admin emails */
-async function requireGameAdmin(ctx: any): Promise<void> {
-  const token = ctx.req.headers["x-game-token"] as string | undefined;
-  if (!token) {
-    throw new TRPCError({ code: "UNAUTHORIZED", message: "Token de sesión de juego requerido. Inicia sesión." });
-  }
-  const session = await verifyGameToken(token);
-  const player = await getGamePlayerById(session.playerId);
-  const email = player?.email?.toLowerCase().trim();
-  if (!email || !ADMIN_EMAILS.includes(email)) {
-    throw new TRPCError({ code: "FORBIDDEN", message: NOT_ADMIN_ERR_MSG });
   }
 }
 
@@ -2282,28 +2268,25 @@ const pushNotificationsRouter = router({
   }),
 
   /** Admin: trigger streak reminders manually */
-  triggerStreakReminders: publicProcedure.mutation(async ({ ctx }) => {
-    await requireGameAdmin(ctx);
+  triggerStreakReminders: adminProcedure.mutation(async () => {
     const result = await sendStreakReminders();
     return result;
   }),
 
   /** Admin: trigger daily reward reminders manually */
-  triggerRewardReminders: publicProcedure.mutation(async ({ ctx }) => {
-    await requireGameAdmin(ctx);
+  triggerRewardReminders: adminProcedure.mutation(async () => {
     const result = await sendDailyRewardReminders();
     return result;
   }),
 
   /** Admin: cleanup expired subscriptions */
-  cleanup: publicProcedure.mutation(async ({ ctx }) => {
-    await requireGameAdmin(ctx);
+  cleanup: adminProcedure.mutation(async () => {
     const count = await cleanupExpiredSubscriptions();
     return { cleaned: count };
   }),
 
   /** Admin: send broadcast notification to all users */
-  broadcast: publicProcedure
+  broadcast: adminProcedure
     .input(
       z.object({
         title: z.string().min(1).max(100),
@@ -2311,8 +2294,7 @@ const pushNotificationsRouter = router({
         url: z.string().startsWith("/").optional(),
       })
     )
-    .mutation(async ({ ctx, input }) => {
-      await requireGameAdmin(ctx);
+    .mutation(async ({ input }) => {
       const result = await sendPushBroadcast({
         title: input.title,
         body: input.body,

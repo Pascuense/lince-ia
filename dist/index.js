@@ -890,7 +890,6 @@ var COOKIE_NAME2 = "app_session_id";
 var ONE_YEAR_MS = 1e3 * 60 * 60 * 24 * 365;
 var UNAUTHED_ERR_MSG = "Please login (10001)";
 var NOT_ADMIN_ERR_MSG = "You do not have required permission (10002)";
-var ADMIN_EMAILS = ["cristobalalisteg@gmail.com", "cristobal@acnb.es"];
 
 // server/_core/cookies.ts
 function isSecureRequest(req) {
@@ -7447,18 +7446,6 @@ function assertImageGenerationEnabled() {
     });
   }
 }
-async function requireGameAdmin(ctx) {
-  const token = ctx.req.headers["x-game-token"];
-  if (!token) {
-    throw new TRPCError3({ code: "UNAUTHORIZED", message: "Token de sesi\xF3n de juego requerido. Inicia sesi\xF3n." });
-  }
-  const session = await verifyGameToken(token);
-  const player = await getGamePlayerById(session.playerId);
-  const email = player?.email?.toLowerCase().trim();
-  if (!email || !ADMIN_EMAILS.includes(email)) {
-    throw new TRPCError3({ code: "FORBIDDEN", message: NOT_ADMIN_ERR_MSG });
-  }
-}
 function getClientIP(ctx) {
   return getRequestIP(ctx.req);
 }
@@ -9378,32 +9365,28 @@ var pushNotificationsRouter = router({
     return { vapidPublicKey: process.env.VAPID_PUBLIC_KEY || process.env.VITE_VAPID_PUBLIC_KEY || "" };
   }),
   /** Admin: trigger streak reminders manually */
-  triggerStreakReminders: publicProcedure.mutation(async ({ ctx }) => {
-    await requireGameAdmin(ctx);
+  triggerStreakReminders: adminProcedure.mutation(async () => {
     const result = await sendStreakReminders();
     return result;
   }),
   /** Admin: trigger daily reward reminders manually */
-  triggerRewardReminders: publicProcedure.mutation(async ({ ctx }) => {
-    await requireGameAdmin(ctx);
+  triggerRewardReminders: adminProcedure.mutation(async () => {
     const result = await sendDailyRewardReminders();
     return result;
   }),
   /** Admin: cleanup expired subscriptions */
-  cleanup: publicProcedure.mutation(async ({ ctx }) => {
-    await requireGameAdmin(ctx);
+  cleanup: adminProcedure.mutation(async () => {
     const count = await cleanupExpiredSubscriptions();
     return { cleaned: count };
   }),
   /** Admin: send broadcast notification to all users */
-  broadcast: publicProcedure.input(
+  broadcast: adminProcedure.input(
     z2.object({
       title: z2.string().min(1).max(100),
       body: z2.string().min(1).max(500),
       url: z2.string().startsWith("/").optional()
     })
-  ).mutation(async ({ ctx, input }) => {
-    await requireGameAdmin(ctx);
+  ).mutation(async ({ input }) => {
     const result = await sendPushBroadcast({
       title: input.title,
       body: input.body,
@@ -9470,7 +9453,13 @@ function preferWebp(distPath) {
       res.vary("Accept");
       if (req.headers.accept?.includes("image/webp")) {
         const webpPath = req.path.replace(/\.(png|jpe?g)$/i, ".webp");
-        const file = path2.join(distPath, decodeURIComponent(webpPath));
+        let decoded;
+        try {
+          decoded = decodeURIComponent(webpPath);
+        } catch {
+          return next();
+        }
+        const file = path2.join(distPath, decoded);
         if (file.startsWith(distPath + path2.sep) && fs2.existsSync(file)) {
           req.url = webpPath + req.url.slice(req.path.length);
         }
@@ -9624,11 +9613,16 @@ async function startServer() {
       onError({ path: path3, error }) {
         if (error.code !== "INTERNAL_SERVER_ERROR") return;
         const cause = error.cause;
-        console.error(
-          `[tRPC] ${path3 ?? "?"} failed:`,
-          cause?.query ?? error.message.split("\nparams:")[0],
-          cause?.cause ?? cause ?? error
-        );
+        if (typeof cause?.query === "string") {
+          const drv = cause.cause;
+          console.error(`[tRPC] ${path3 ?? "?"} failed:`, cause.query, {
+            code: drv?.code,
+            errno: drv?.errno,
+            sqlState: drv?.sqlState
+          });
+          return;
+        }
+        console.error(`[tRPC] ${path3 ?? "?"} failed:`, cause?.stack ?? error.stack);
       }
     })
   );

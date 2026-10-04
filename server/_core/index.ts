@@ -80,12 +80,20 @@ async function startServer() {
         const cause = error.cause as
           | (Error & { query?: string; cause?: unknown })
           | undefined;
-        // DrizzleQueryError keeps the driver error (code, sqlMessage) in .cause; params are not logged
-        console.error(
-          `[tRPC] ${path ?? "?"} failed:`,
-          cause?.query ?? error.message.split("\nparams:")[0],
-          cause?.cause ?? cause ?? error
-        );
+        // DrizzleQueryError: log the parameterized query and driver codes only.
+        // The driver error's .sql/.sqlMessage embed the values (emails, hashes).
+        if (typeof cause?.query === "string") {
+          const drv = cause.cause as
+            | { code?: string; errno?: number; sqlState?: string }
+            | undefined;
+          console.error(`[tRPC] ${path ?? "?"} failed:`, cause.query, {
+            code: drv?.code,
+            errno: drv?.errno,
+            sqlState: drv?.sqlState,
+          });
+          return;
+        }
+        console.error(`[tRPC] ${path ?? "?"} failed:`, cause?.stack ?? error.stack);
       },
     })
   );

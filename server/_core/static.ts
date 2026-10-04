@@ -22,7 +22,13 @@ function preferWebp(distPath: string) {
       res.vary("Accept");
       if (req.headers.accept?.includes("image/webp")) {
         const webpPath = req.path.replace(/\.(png|jpe?g)$/i, ".webp");
-        const file = path.join(distPath, decodeURIComponent(webpPath));
+        let decoded: string;
+        try {
+          decoded = decodeURIComponent(webpPath);
+        } catch {
+          return next();
+        }
+        const file = path.join(distPath, decoded);
         if (file.startsWith(distPath + path.sep) && fs.existsSync(file)) {
           req.url = webpPath + req.url.slice(req.path.length);
         }

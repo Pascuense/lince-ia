@@ -54,7 +54,8 @@ export function CountrySelector({ compact = false, className = "" }: CountrySele
   };
 
   const t = labels[lang] || labels.es;
-  const geoDetected = typeof window !== "undefined" ? localStorage.getItem("lince-geo-detected") : null;
+  const geoRaw = typeof window !== "undefined" ? localStorage.getItem("lince-geo-detected") : null;
+  const geoDetected = geoRaw && geoRaw !== "MANUAL" && !geoRaw.startsWith("FALLBACK") ? geoRaw : null;
 
   const handleSelect = (c: AvatarCountry) => {
     setCountry(c);

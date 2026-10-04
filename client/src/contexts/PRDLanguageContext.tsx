@@ -203,12 +203,6 @@ export function PRDLanguageProvider({ children }: { children: ReactNode }) {
       localStorage.setItem("lince-country", "es");
       return "es";
     }
-    // Migración: la detección antigua fallaba siempre y guardaba España; se vuelve a detectar
-    if (geoSource === "FALLBACK_ES") {
-      localStorage.removeItem("lince-country");
-      localStorage.removeItem("lince-geo-detected");
-      return "es";
-    }
     if (saved && ["default","es","cl","mx","ar","co","pe","en","zh","br","pt"].includes(saved)) return saved as AvatarCountry;
     return "es"; // España por defecto
   });
@@ -272,7 +266,7 @@ export function PRDLanguageProvider({ children }: { children: ReactNode }) {
   const handleSetCountry = useCallback((c: AvatarCountry) => {
     setCountry(c);
     localStorage.setItem("lince-country", c);
-    localStorage.removeItem("lince-geo-detected");
+    localStorage.setItem("lince-geo-detected", "MANUAL");
   }, []);
 
   const t = useCallback((key: string): string => {
